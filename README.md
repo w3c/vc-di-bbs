@@ -48,7 +48,7 @@ only that they are random generators. Generally in cryptography, public keys are
 Notice the only value in the public key `pk` that is tied to the private key `x` is `w`. 
 If we isolate this value as the public key `pk`, this is identical to the [BLS signature keys](https://crypto.stanford.edu/~dabo/pubs/papers/BLSmultisig.html) or ECDSA. 
 The remaining values could be computed at a later time, say during signing, verification, proof generation and verification.
-This means Key generation and storage is much smaller at the expense of computing the generators when they are needed.
+This means key generation and storage is much smaller at the expense of computing the generators when they are needed.
 Creating the remaining generators in this manner will require that all parties are able to arrive at the same values
 otherwise signatures and proofs will not validate. In this Spec, we describe an efficient and secure method for
 computing the public key generators on-the-fly.
