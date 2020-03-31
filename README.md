@@ -41,16 +41,16 @@ BBS+ keys function in the following way:
     1. Compute *r<sub>3</sub> &xlarr; 1&frasl;<sub>r<sub>1</sub></sub>*
     1. Compute *s' &xlarr; s - r<sub>2</sub> r<sub>3</sub>*
     1. Compute *&pi;<sub>1</sub> &xlarr; A'<sup>-&epsi;</sup> h<sub>0</sub><sup>r<sub>2</sub></sup>*
-    1. Compute for all hidden attributes *&pi;<sub>2</sub> &xlarr; d<sup>r<sub>3</sub></sup>h<sub>0</sub><sup>-s'</sup>&prod;<sub>i=1</sub><sup>A<sub>H</sub></sup> h<sub>i</sub><sup>m<sub>i</sub></sup>
+    1. Compute for all hidden attributes *&pi;<sub>2</sub> &xlarr; d<sup>r<sub>3</sub></sup>h<sub>0</sub><sup>-s'</sup>&prod;<sub>i=1</sub><sup>A<sub>H</sub></sup> h<sub>i</sub><sup>m<sub>i</sub></sup>*
 1. **Zero-Knowledge Proof Verification**
-    1. Check signature ![verify-sig-proof](img/verify-sig-proof.png)
-    1. Check hidden attributes ![verify-hidden](img/verify-hidden.png)
-    1. Check revealed attributes ![verify-disclosed](img/verify-disclosed.png)
+    1. Check signature *e(A', w) &#x225f; e(A&#773;, g<sub>2</sub>)*
+    1. Check hidden attributes *A&#773;&frasl;<sub>d</sub> &#x225f; &pi;<sub>1</sub>*
+    1. Check revealed attributes *g<sub>1</sub>&prod;<sub>i=1</sub><sup>A<sub>D</sub></sup> h<sub>i</sub><sup>m<sub>i</sub></sup> &#x225f; &pi;<sub>2</sub>*
 
-The BBS+ spec does not specify when the generators ![pk-generators](img/pk-generators.png)),
+The BBS+ spec does not specify when the generators *(h<sub>0</sub>, h<sub>1</sub>, ..., h<sub>L</sub>)*,
 only that they are random generators. Generally in cryptography, public keys are created entirely during the key generation step. However,
-Notice the only value in the public key `pk` that is tied to the private key `x` is `w`. 
-If we isolate this value as the public key `pk`, this is identical to the [BLS signature keys](https://crypto.stanford.edu/~dabo/pubs/papers/BLSmultisig.html) or ECDSA. 
+Notice the only value in the public key *p<sub>k</sub>* that is tied to the private key *x* is *w*. 
+If we isolate this value as the public key *p<sub>k</sub>*, this is identical to the [BLS signature keys](https://crypto.stanford.edu/~dabo/pubs/papers/BLSmultisig.html) or ECDSA. 
 The remaining values could be computed at a later time, say during signing, verification, proof generation and verification.
 This means key generation and storage is much smaller at the expense of computing the generators when they are needed.
 Creating the remaining generators in this manner will require that all parties are able to arrive at the same values
