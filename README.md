@@ -4,8 +4,8 @@ BBS+ is a pairing-based cryptographic signature used for signing 1 or more messa
 BBS+ keys function in the following way:
 
 1. A a prime field &integers;<sub>p</sub>
-1. A bilinear pairing-friendly curve `E` with three groups &#x1D53E;<sub>1</sub>, &#x1D53E;<sub>2</sub>, &#x1D53E;<sub>T</sub> ![pairing-image](img/pairing-image.png) of prime order `p`.
-1. A type-3 pairing function `e` such that ![pairing-function](img/pairing-function.png). More requirements for this can be found in section 4.1 in the [BBS+ spec](https://eprint.iacr.org/2016/663.pdf)
+1. A bilinear pairing-friendly curve `E` with three groups &#x1D53E;<sub>1</sub>, &#x1D53E;<sub>2</sub>, &#x1D53E;<sub>T</sub> of prime order `p`.
+1. A type-3 pairing function `e` such that `e : ` &#x1D53E;<sub>1</sub> `X` &#x1D53E; &xrarr; &#x1D53E;<sub>T</sub>.  More requirements for this can be found in section 4.1 in the [BBS+ spec](https://eprint.iacr.org/2016/663.pdf)
 1. A base generator ![generator-g1](img/generator-g1.png) for curve `E`
 1. A base generator ![generator-g2](img/generator-g2.png) for curve `E`
 1. *L* messages to be signed
