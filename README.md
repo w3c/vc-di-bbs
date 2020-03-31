@@ -70,23 +70,23 @@ Using these changes, the API changes to be identical to ECDSA and BLS except sig
 
 The API's change in the following way and compute the message specific generators by doing the following
 
-1. `H2C` is the hash to curve algorithm
-1. I2OSP: Thise function is used to convert a byte string to a non-negative integer as described in [RFC8017](https://tools.ietf.org/html/rfc8017).
-1. Compute ![h_0-on-the-fly](img/h_0-on-the-fly.png)
-1. Compute ![h_i-on-the-fly](img/h_i-on-the-fly.png)
+1. *H2C* is the hash to curve algorithm
+1. *I2OSP* Thise function is used to convert a byte string to a non-negative integer as described in [RFC8017](https://tools.ietf.org/html/rfc8017).
+1. Compute *h<sub>0</sub> &xlarr; H2C( w || I2OSP(0, 1) || I2OSP(L, 4) )*
+1. Compute *h<sub>i</sub> &xlarr; H2C( h<sub>i-1</sub> || I2OSP(0, 1) || I2OSP(i, 4) )*
 
 1. **Key Generation**
-    1. Inputs ![keygen-api](img/keygen-api.png)
-    1. Generate random ![secret-key](img/secret-key.png)
-    1. Compute ![commitment-secret](img/commitment-secret.png)
-    1. Secret key is `x` and public `pk` is `w`
-    1. Output (`pk`, `x`)
+    1. Inputs *()*
+    1. Generate random *x &xlarr; &integers;<sub>p</sub>*
+    1. Compute *w &xlarr; g<sub>2</sub><sup>x</sup>*
+    1. Secret key is *x* and public *p<sub>k</sub>* is *w*
+    1. Output *(p<sub>k</sub>, x)*
 1. **Signature**
-    1. Inputs ![sig-api2](img/sig-api2.png)
-    1. Compute ![commitment-secret](img/commitment-secret.png)
+    1. Inputs *(x, \{M<sub>1</sub>, ..., M<sub>L</sub>)*
+    1. Compute *w &xlarr; g<sub>2</sub><sup>x</sup>* 
     1. Compute message specific generators.
     1. Same as before
 1. **Verification**
-    1. Inputs ![]
+    1. Inputs *(p<sub>k</sub>, \{M<sub>1</sub>, ..., M<sub>L</sub>, &sigma;)*
     1. Compute message specific generators.
     1. Verify as before
