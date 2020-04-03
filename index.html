@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BBS+ Signature Suite 2020</title>
+    <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
+    <!--
+      === NOTA BENE ===
+      For the three scripts below, if your spec resides on dev.w3 you can check them
+      out in the same tree and use relative links so that they'll work offline,
+     -->
+    <script src='https://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
+    <script type="text/javascript" class="remove">
+      var respecConfig = {
+        // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
+        specStatus:           "CG-DRAFT",
+
+        // the specification's short name, as in http://www.w3.org/TR/short-name/
+        shortName:            "lds-bbs",
+
+        // if you wish the publication date to be other than today, set this
+        // publishDate:  "2009-08-06",
+
+        // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+        // and its maturity status
+        // previousPublishDate:  "1977-03-15",
+        // previousMaturity:  "WD",
+
+        // if there a publicly available Editor's Draft, this is the link
+        edDraftURI:           "https://mattrglobal.github.io/lds-bbs/",
+
+        // if this is a LCWD, uncomment and set the end of its review period
+        // lcEnd: "2009-08-05",
+
+        // if you want to have extra CSS, append them to this list
+        // it is recommended that the respec.css stylesheet be kept
+        //extraCSS:             ["spec.css", "prettify.css"],
+
+        // editors, add as many as you like
+        // only "name" is required
+        editors:  [
+          { name: "Tobias Looker", url: "https://mattr.global/",
+            company: "Mattr", companyURL: "https://mattr.global/" }
+        ],
+
+        // extend the bibliography entries
+        //localBiblio: webpayments.localBiblio,
+
+        // name of the WG
+        //wg:           "",
+
+        // URI of the public WG page
+        //wgURI:        "",
+
+        // name (with the @w3c.org) of the public mailing to which comments are due
+        //wgPublicList: "",
+
+        otherLinks: [{
+          key: "Source control",
+          data: [{
+            value: "https://github.com/mattr/lds-bbs/",
+            href: "https://github.com/mattr/lds-bbs/"
+          }]
+        }, {
+          key: "Issue Tracker",
+          data: [{
+            value: "https://github.com/mattr/lds-bbs/issues/",
+            href: "https://github.com/mattr/lds-bbs/issues/"
+          }]
+        }],
+
+        // URI of the patent status for this WG, for Rec-track documents
+        // !!!! IMPORTANT !!!!
+        // This is important for Rec-track documents, do not copy a patent URI from a random
+        // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+        // Team Contact.
+        wgPatentURI:  "",
+        maxTocLevel: 4,
+        /*preProcess: [ webpayments.preProcess ],
+        alternateFormats: [ {uri: "diff-20111214.html", label: "diff to previous version"} ],
+        */
+        localBiblio:  {
+          "RDF-DATASET-NORMALIZATION": {
+            title:    "RDF Dataset Normalization 1.0",
+            href:     "http://json-ld.github.io/normalization/spec/",
+            authors:  ["David Longley", "Manu Sporny"],
+            status:   "CGDRAFT",
+            publisher:  "JSON-LD Community Group"
+          },
+          "SECURITY-VOCABULARY": {
+            title:    "Security Linked Data Vocabulary",
+            href:     "https://web-payments.org/vocabs/security",
+            authors:  ["Manu Sporny","David Longley"],
+            status:   "CGDRAFT",
+            publisher:  "Web Payments Community Group"
+          },
+          "LD-SIGNATURES": {
+            title:    "Linked Data Signatures 1.0",
+            href:     "https://web-payments.org/specs/source/ld-signatures/",
+            authors:  ["David Longley", "Manu Sporny"],
+            status:   "CGDRAFT",
+            publisher:  "Web Payments Community Group"
+          }
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>
+This specification describes the BBS+ Signature Suite created in 2020
+for the Linked Data Signatures specification. The Signature Suite utilizes
+the BBS signature mechanism to provide signatures that feature zero knowledge
+proof disclosure capabilities.
+      </p>
+    </section>
+
+    <section id='sotd'>
+      <p>
+This is an experimental specification and is undergoing regular revisions. It
+is not fit for production deployment.
+      </p>
+    </section>
+
+    <section>
+      <h2>Introduction</h2>
+      <p>
+This specification describes the BBS+ Signature Suite created in 2020
+for the Linked Data Signatures [[LD-SIGNATURES]] specification. It uses the RDF
+Dataset Normalization Algorithm [[RDF-DATASET-NORMALIZATION]] to transform the
+input document into its canonical form. It uses (hash2Curve)//TODO [[RFC6234]] as the
+<a>message digest algorithm</a> and BBS+ Signatures //TODO [[]] as the
+<a>signature algorithm</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Terminology</h2>
+      <p>
+The following terms are used to describe concepts involved in the
+generation and verification of the Linked Data Signature
+<a>signature suite</a>.
+      </p>
+
+      <dl>
+        <dt><dfn>signature suite</dfn></dt>
+        <dd>
+A specified set of cryptographic primitives typically consisting of
+a canonicalization algorithm, a message digest algorithm, and a signature
+algorithm that are bundled together by cryptographers for developers
+for the purposes of safety and convenience.
+        </dd>
+        <dt><dfn>canonicalization algorithm</dfn></dt>
+        <dd>
+An algorithm that takes an input document that has more than one possible
+representation and always transforms it into a canonical form. This process is
+sometimes also called normalization.
+        </dd>
+        <dt><dfn>message digest algorithm</dfn></dt>
+        <dd>
+An algorithm that takes an input message and produces a cryptographic
+output message that is often many orders of magnitude smaller than the
+input message. These algorithms are often 1) very fast, 2)
+non-reversible, 3) cause the output to change significantly when even one
+bit of the input message changes, and 4) make it infeasible to find two
+different inputs for the same output.
+        </dd>
+        <dt><dfn>signature algorithm</dfn></dt>
+        <dd>
+An algorithm that takes an input message and produces an output value where the
+receiver of the message can mathematically verify that the message has not
+been modified in transit and came from someone possessing a particular secret.
+        </dd>
+      </dl>
+
+    </section>
+
+    <section>
+      <h2>The BLS12-381 Public Key Format</h2>
+        <h3>Examples</h3>
+        <p>
+A simple example of an BLS12-381 2020 Signature Verification Key:
+        </p>
+
+        <p>
+  The following terms are used to describe concepts involved in the
+  generation and verification of the Linked Data Signature
+  <a>signature suite</a>.
+        </p>
+
+        <pre class="example highlight">
+          {
+            "@context": ["https://w3id.org/security/v1"],
+            "id": "did:example:123456789abcdefghi#keys-1",
+            "type": "BLS12381VerificationKey2020",
+            "controller": "did:example:123456789abcdefghi",
+            "publicKeyBase64" : "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
+          }
+        </pre>
+    </section>
+
+    <section>
+      <h2>The 2020 BBS+ Signature Suite</h2>
+
+      <p>
+The 2020 BBS+ <a>signature suite</a> MUST be used in
+conjunction with the signing and verification algorithms in the
+Linked Data Signatures [[LD-SIGNATURES]] specification. The suite consists of
+the following algorithms:
+      </p>
+
+      <table class="simple">
+        <thead>
+          <th>Parameter</th>
+          <th>Value</th>
+          <th>Specification</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>canonicalizationAlgorithm</td>
+            <td>https://w3id.org/security#URDNA2015</td>
+            <td>[[RDF-DATASET-NORMALIZATION]]</td>
+          </tr>
+          <tr>
+            <td>digestAlgorithm</td>
+            <td>http://example.com/digests#sha256</td>
+            <td>[[RFC6234]]</td>
+          </tr>
+          <tr>
+            <td>signatureAlgorithm</td>
+            <td>//TODO</td>
+            <td>[[CAMLYS]]</td>
+          </tr>
+        </tbody>
+
+      </table>
+    </section>
+
+    <section>
+      <h2>The 2020 BBS+ Proof of Signature Suite</h2>
+      <p>
+The 2020 BBS+ proof of signature suite MUST be used in
+conjunction with the signing and verification algorithms in the
+Linked Data Signatures [[LD-SIGNATURES]] specification. The suite consists of
+the following algorithms:
+      </p>
+      <table class="simple">
+        <thead>
+          <th>Parameter</th>
+          <th>Value</th>
+          <th>Specification</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>canonicalizationAlgorithm</td>
+            <td>https://w3id.org/security#URDNA2015</td>
+            <td>[[RDF-DATASET-NORMALIZATION]]</td>
+          </tr>
+          <tr>
+            <td>digestAlgorithm</td>
+            <td>http://example.com/digests#sha256</td>
+            <td>[[RFC6234]]</td>
+          </tr>
+          <tr>
+            <td>signatureAlgorithm</td>
+            <td>//TODO</td>
+            <td>[[CAMLYS]]</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Modification to Algorithms</h2>
+
+      <p>
+No modifications to the Linked Data Signature algorithms are provided other
+than the algorithms specified in the previous signature suite section.
+      </p>
+    </section>
+
+    <section>
+      <h2>Security Considerations</h2>
+      <p>
+The following section describes security considerations that developers
+implementing this specification should be aware of in order to create secure
+software.
+      </p>
+
+<div class="issue">TODO: We need to add a complete list of security
+considerations.</div>
+    </section>
+
+
+    <section class="appendix">
+      <h2>Examples</h2>
+
+      <p>
+A simple example of an BBS+ 2020 signature:
+      </p>
+
+      <pre class="example highlight">
+{
+  "@context": "https://w3id.org/security/v1",
+  "homeState": "Virginia",
+  "signature": {
+    "type": "BBSSignature2020",
+    "signature": "IKwTJ...E37UsLgs=",
+    "created": "2016-09-22T22:38:03Z",
+    "verificationMethod": "https://blue.example.com/keys/1",
+    "proofPurpose": "assertionMethod",
+    "requiredRevealStatements": [ 1, 2],
+    "subjectVerificationMethod": "did:example13920596349402396#keys-5920692"
+  }
+}
+      </pre>
+    </section>
+
+  </body>
+</html>

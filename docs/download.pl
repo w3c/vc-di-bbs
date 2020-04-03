@@ -2,7 +2,7 @@
 
 use v5.18;
 
-open(my $IN, 'README.md') or die("Can't read README.md");
+open(my $IN, 'CRYPTOGRAPHY.md') or die("Can't read CRYPTOGRAPHY.md");
 binmode($IN);
 
 while (!eof($IN)) {
