@@ -99,6 +99,38 @@
             authors:  ["David Longley", "Manu Sporny"],
             status:   "CGDRAFT",
             publisher:  "Web Payments Community Group"
+          },
+          "PAIRING-FRIENDLY-CURVES": {
+            title:    "Pairing-Friendly Curves",
+            href:     "https://tools.ietf.org/html/draft-irtf-cfrg-pairing-friendly-curves-03",
+            authors:  ["Yumi Sakemi", "Tetsutaro Kobayashi", "Tsunekazu Saito"],
+            status:   "Internet Draft",
+            publisher:  "IETF"
+          },
+          "SHORT-GROUP-SIGNATURES": {
+            title:    "Short group signatures",
+            href:     "https://crypto.stanford.edu/~xb/crypto04a/groupsigs.pdf",
+            authors:  ["Dan Boneh", "Xavier Boyen", "Hovav Shacham"],
+            status:   "Published",
+            publisher:  "Advances in Cryptology—CRYPTO 2004"
+          },
+          "ASM": {
+            title:    "Constant-Size Dynamic k-TAA",
+            href:     "http://web.cs.iastate.edu/~wzhang/teach-552/ReadingList/552-14.pdf",
+            authors:  ["Man Ho Au", "Willy Susilo", "Yi Mu"],
+            status:   "Published"
+          },
+          "ANON-ATTESTATION-DH": {
+            title:    "Anonymous Attestation Using the Strong Diffie Hellman Assumption Revisited",
+            href:     "https://eprint.iacr.org/2016/663.pdf",
+            authors:  ["Jan Camenisch", "Manu Drijvers", "Anja Lehmann"],
+            status:   "Published"
+          },
+          "SHA-3": {
+            title:    "SHA-3 Standard: Permutation-Based Has and Extendable-Output Functions",
+            href:     "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf",
+            status:   "Published",
+            publisher:  "NIST"
           }
         }
       };
@@ -124,12 +156,22 @@ is not fit for production deployment.
     <section>
       <h2>Introduction</h2>
       <p>
-This specification describes the BBS+ Signature Suite created in 2020
-for the Linked Data Signatures [[LD-SIGNATURES]] specification. It uses the RDF
-Dataset Normalization Algorithm [[RDF-DATASET-NORMALIZATION]] to transform the
-input document into its canonical form. It uses (hash2Curve)//TODO [[RFC6234]] as the
-<a>message digest algorithm</a> and BBS+ Signatures //TODO [[]] as the
-<a>signature algorithm</a>.
+This specification defines a set of cryptographic suites for the purpose of creating, verifying and deriving proofs
+for BBS+ Signatures in conformance with the Linked Data Signatures [[LD-SIGNATURES]] specification. 
+      </p>
+      <p>
+In general the suites uses the RDF Dataset Normalization Algorithm [[RDF-DATASET-NORMALIZATION]] to transform an
+input document into its canonical form. It then uses the <a>statement digest algorithm</a> 
+to digest each statement to be signed individually, finally the digested statements are signed
+using the defined <a>signature algorithm</a>.
+      </p>
+      <p>
+BBS Signatures were first defined in [[SHORT-GROUP-SIGNATURES]]
+and later improved on in [[ASM]] as BBS+ and touched on again in section 4.3 in [[ANON-ATTESTATION-DH]].
+      </p>
+      <p>
+BBS+ signatures are compatible with any pairing friendly elliptic curve, however the cryptographic 
+suites defined in this document elect to only allow the usage of the BLS12-381 for interoperability purposes.
       </p>
     </section>
 
@@ -155,9 +197,13 @@ An algorithm that takes an input document that has more than one possible
 representation and always transforms it into a canonical form. This process is
 sometimes also called normalization.
         </dd>
-        <dt><dfn>message digest algorithm</dfn></dt>
+        <dt><dfn>statement</dfn></dt>
         <dd>
-An algorithm that takes an input message and produces a cryptographic
+//TODO
+        </dd>
+        <dt><dfn>statement digest algorithm</dfn></dt>
+        <dd>
+An algorithm that takes a <a>statement</a> and produces a cryptographic
 output message that is often many orders of magnitude smaller than the
 input message. These algorithms are often 1) very fast, 2)
 non-reversible, 3) cause the output to change significantly when even one
@@ -171,14 +217,19 @@ receiver of the message can mathematically verify that the message has not
 been modified in transit and came from someone possessing a particular secret.
         </dd>
       </dl>
-
     </section>
 
     <section>
       <h2>The BLS12-381 Public Key Format</h2>
-
-  <div class="issue">TODO: Add this as a reference which defines BLS 12-381 https://tools.ietf.org/html/draft-irtf-cfrg-pairing-friendly-curves-03</div>
-
+      <p>
+Defined in [[PAIRING-FRIENDLY-CURVES]], BLS12-381 is an elliptic curve that features a unique property 
+only present in a subset of elliptic curves known as being pairing friendly.  
+      </p>
+      <p>
+Because of the pairing friendly property, BLS12-381 can be used to construct digital signatures
+that have unique properties, such as aggregatable (TODO reference) signatures and or signatures
+that support zero knowledge proof (TODO reference) disclosure.
+      </p>
         <h3>Examples</h3>
         <p>
 A simple example of an BLS12-381 2020 Signature Verification Key:
@@ -201,31 +252,39 @@ A simple example of an BLS12-381 2020 Signature Verification Key:
         </pre>
     </section>
     <p>
-  With pairing friendly elliptic curves, there are two fields often denoted G1 and G2 for 
+        <p>
+The public key is defined as a commitment using the private key to the base generator point in the G2 field.
+        </p>
+        <p>
+The public key is represented in base58 encoding, where the base58 string decodes to the raw bytes of the public key, 
+which represent the following information in a compressed form. 
+        </p>
+      <p>
+The concatenation of the 2 raw 48 byte x co-ordinates. 
+      </p>
+
+<div class="issue">TODO: Is the the below the correct place for the rationale?</div>
+      
+      <p>
+  With pairing friendly elliptic curves, there are two fields, denoted G1 and G2, for 
   which signatures and public keys can exist. Importantly however both the public
-  key and a signature generated by the public key cannot exist in the same field.
-  
+  key and a signature generated using the public key cannot exist in the same field.
+      </p>
+      <p>
   Due to the properties of the two fields, there are different associated performance
   characteristics to selecting which field to use for signatures vs which field to use 
   for public key generation. In general operations are faster in G1 and the resulting commitments 
   are smaller. With this definition of BBS+ signatures we have opted for signatures to be faster
-  and smaller to create rather that key generation.
+  and smaller to create rather than key generation.
+      </p>
 
-  The public key is a commitment using the private key to the base generator point in G2.
+<div class="issue">TODO: We could trim the leading zeros of the public key more saving a further 32 bytes</div>
 
-  The public key is represented in base58 encoding, where the base58 string decodes to the raw bytes of the public key, 
-  in the following compressed public key form. 
-  
-  The concatentation of the 2 raw 48byte x co-ordinates. 
-
-  <div class="issue">TODO: We could trim the leading zeros of the public key more saving a further 32 bytes</div>
-  
-    </p>
     <section>
-      <h2>The BLS BBS+ Signature Suite 2020</h2>
+      <h2>The BBS+ Signature Suite 2020</h2>
 
       <p>
-The BLS BBS+ <a>signature suite</a> 2020 MUST be used in
+The BBS+ <a>signature suite</a> 2020 MUST be used in
 conjunction with the signing and verification algorithms in the
 Linked Data Signatures [[LD-SIGNATURES]] specification. The suite consists of
 the following algorithms:
@@ -244,28 +303,33 @@ the following algorithms:
             <td>[[RDF-DATASET-NORMALIZATION]]</td>
           </tr>
           <tr>
-            <td>messageDigestAlgorithm</td>
-            <td>https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf</td>
-            <td>[[SHAKE-256]]</td>
+            <td>statementDigestAlgorithm</td>
+            <td>SHAKE-256</td>
+            <td>[[SHA-3]]</td>
           </tr>
           <tr>
             <td>signatureAlgorithm</td>
-            <td>//TODO</td>
-            <td>[[BBS-PLUS]]</td>
+            <td>BBS+ Signature</td>
+            <td>[[ANON-ATTESTATION-DH]]</td>
+          </tr>
+          <tr>
+            <td>namedCurve</td>
+            <td>BLS12-381</td>
+            <td>[[PAIRING-FRIENDLY-CURVES]]</td>
           </tr>
         </tbody>
       </table>
 
       <h3>Term Definitions</h3>
 
-      <div class="issue">TODO: define the BlsBbsSignature2020 term</div>
+      <div class="issue">TODO: define the BbsSignature2020 term</div>
 
       <div class="issue">TODO: define the requiredRevealStatements term</div>
 
       <h3>Create Verify Data Algorithm Algorithm</h3>
 
       <a>
-  The algorithm defined below, outlines the process of obtaining the data in a form
+  The algorithm defined below, outlines the process of obtaining the data in the form
   required for both signing and verifying.
       </a>
 
@@ -273,7 +337,7 @@ the following algorithms:
         <li>Normalize the input document to a set of statements represented as N-Quads.</li>
         <li>For every statement in the <a>normalized form</a>, whilst preserving the ordering:
           <ol class="algorithm">
-            <li>Apply the <a>messageDigestAlgorithm</a> to obtain a digest</li>
+            <li>Apply the <a>statementDigestAlgorithm</a> to obtain a digest</li>
           </ol>
         <li>Returned the digested statements in an ordered array that preserves that of the normalized state</li>
 
@@ -287,7 +351,7 @@ the following algorithms:
           "firstName": "John",
           "lastName": "Doe",
           "proof": {
-            "type": "BlsBbsSignature2020",
+            "type": "BbsSignature2020",
             "signature": "IKwTJ...E37UsLgs=",
             "created": "2016-09-22T22:38:03Z",
             "verificationMethod": "did:example:12345#key-id",
@@ -300,7 +364,7 @@ the following algorithms:
     </section>
 
     <section>
-      <h2>The BLS BBS+ Signature Proof of Knowledge Suite 2020</h2>
+      <h2>The BBS+ Signature Proof of Knowledge Suite 2020</h2>
       <p>
 The 2020 BBS+ proof of signature suite MUST be used in
 conjunction with the signing and verification algorithms in the
@@ -320,14 +384,19 @@ the following algorithms:
             <td>[[RDF-DATASET-NORMALIZATION]]</td>
           </tr>
           <tr>
-            <td>messageDigestAlgorithm</td>
-            <td>https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf</td>
-            <td>[[SHAKE-256]]</td>
+            <td>statementDigestAlgorithm</td>
+            <td>SHAKE-256</td>
+            <td>[[SHA-3]]</td>
           </tr>
           <tr>
             <td>signatureAlgorithm</td>
-            <td>//TODO</td>
-            <td>[[BBS-PLUS]]</td>
+            <td>BBS+ Signature</td>
+            <td>[[ANON-ATTESTATION-DH]]</td>
+          </tr>
+          <tr>
+            <td>namedCurve</td>
+            <td>BLS12-381</td>
+            <td>[[PAIRING-FRIENDLY-CURVES]]</td>
           </tr>
         </tbody>
       </table>
@@ -338,7 +407,7 @@ the following algorithms:
       
       <h3>Term Definitions</h3>
 
-      <div class="issue">TODO: define the BlsBbsSignatureProof2020 term</div>
+      <div class="issue">TODO: define the BbsSignatureProof2020 term</div>
 
       <div class="issue">TODO: define the revealedStatements term</div>
   
@@ -360,7 +429,7 @@ The algorithm defined below, outlines the process of creating a proof
           "firstName": "John",
           "lastName": "Doe",
           "proof": {
-            "type": "BlsBbsSignatureProof2020",
+            "type": "BbsSignatureProof2020",
             "requiredRevealStatements": [ 1, 2, 3, 4, 10],
             "revealedStatements": [ 1, 2, 3, 4, 5 ],
             "totalStatements": 10,
