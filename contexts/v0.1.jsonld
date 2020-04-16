@@ -5,9 +5,9 @@
     "type": "@type",
     "lds": "https://w3c-ccg.github.io/lds-bbsbls2020/contexts/#",
 
-    "BbsSignature2020": "lds:BlsBbsSignature2020",
-    "BbsSignatureProof2020": "lds:BlsBbsSignatureProof2020",
-    "Bls12381G2VerificationKey2020": "lds:Bls12381G2VerificationKey2020"
+    "BbsBlsSignature2020": "lds:BbsBlsSignature2020",
+    "BbsBlsSignatureProof2020": "lds:BbsBlsSignatureProof2020",
+    "Bls12381G2Key2020": "lds:Bls12381G2Key2020"
 
     "requiredRevealStatements": "lds:requiredRevealStatements"
     "revealedStatements": "lds:revealedStatements"

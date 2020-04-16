@@ -245,7 +245,7 @@ A simple example of an BLS12-381 2020 Signature Verification Key:
           {
             "@context": ["https://w3id.org/security/v1"],
             "id": "did:example:123456789abcdefghi#keys-1",
-            "type": "Bls12381G2VerificationKey2020",
+            "type": "Bls12381G2Key2020",
             "controller": "did:example:123456789abcdefghi",
             "publicKeyBase58" : "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
           }
@@ -351,12 +351,12 @@ the following algorithms:
           "firstName": "John",
           "lastName": "Doe",
           "proof": {
-            "type": "BbsSignature2020",
+            "type": "BbsBlsSignature2020",
             "signature": "IKwTJ...E37UsLgs=",
             "created": "2016-09-22T22:38:03Z",
             "verificationMethod": "did:example:12345#key-id",
             "proofPurpose": "assertionMethod",
-            "requiredRevealStatements": [ 1, 2 ],
+            "requiredRevealStatements": [ 1, 2 ]
           }
         }
       </pre>
@@ -429,7 +429,7 @@ The algorithm defined below, outlines the process of creating a proof
           "firstName": "John",
           "lastName": "Doe",
           "proof": {
-            "type": "BbsSignatureProof2020",
+            "type": "BbsBlsSignatureProof2020",
             "requiredRevealStatements": [ 1, 2, 3, 4, 10],
             "revealedStatements": [ 1, 2, 3, 4, 5 ],
             "totalStatements": 10,
