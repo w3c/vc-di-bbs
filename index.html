@@ -235,7 +235,10 @@ This value MUST always be present in a proof, and its value MUST be empty if the
 
         <dt><a>revealedStatements</a></dt>
         <dd>
-An array of <a>statement</a>s which are reaveled in the proof of knowledge linked data proof.
+An ordered array of <a>statement</a>s which are reaveled in the proof of knowledge linked data proof, 
+where the elements in the array correspond to the statements in the normalized form of the proof, 
+and the index in the array maps that statement back to what number message it was when it was 
+originally signed.
         </dd>
   
       <dt><a>totalStatements</a></dt>
