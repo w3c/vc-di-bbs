@@ -45,14 +45,17 @@
         // extend the bibliography entries
         //localBiblio: webpayments.localBiblio,
 
-        // name of the WG
-        //wg:           "",
-
+        wg:           "Credentials Community Group",
         // URI of the public WG page
-        //wgURI:        "",
-
+        wgURI:        "https://www.w3.org/community/credentials/",
         // name (with the @w3c.org) of the public mailing to which comments are due
-        //wgPublicList: "",
+        wgPublicList: "public-credentials",
+        // URI of the patent status for this WG, for Rec-track documents
+        // !!!! IMPORTANT !!!!
+        // This is important for Rec-track documents, do not copy a patent URI from a random
+        // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+        // Team Contact.
+        wgPatentURI:  "https://www.w3.org/community/about/agreements/cla/",
 
         otherLinks: [{
           key: "Source control",
@@ -73,7 +76,7 @@
         // This is important for Rec-track documents, do not copy a patent URI from a random
         // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
         // Team Contact.
-        wgPatentURI:  "",
+        // wgPatentURI:  "",
         maxTocLevel: 4,
         /*preProcess: [ webpayments.preProcess ],
         alternateFormats: [ {uri: "diff-20111214.html", label: "diff to previous version"} ],
@@ -199,7 +202,8 @@ sometimes also called normalization.
         </dd>
         <dt><dfn>statement</dfn></dt>
         <dd>
-//TODO
+          [[N-quads]] statements are a sequence of RDF terms representing the subject, predicate, object and graph label.
+          See the grammar definition <a href="https://www.w3.org/TR/n-quads/#grammar-production-statement">here</a>.
         </dd>
         <dt><dfn>statement digest algorithm</dfn></dt>
         <dd>
@@ -220,147 +224,207 @@ been modified in transit and came from someone possessing a particular secret.
     </section>
 
     <section>
-      <h2>The BLS12-381 Public Key Format</h2>
+      <h2>BLS12-381</h2>
       <p>
-Defined in [[PAIRING-FRIENDLY-CURVES]], BLS12-381 is an elliptic curve that features a unique property 
-only present in a subset of elliptic curves known as being pairing friendly.  
+      Defined in [[PAIRING-FRIENDLY-CURVES]], BLS12-381 is an elliptic curve that features a unique property 
+      only present in a subset of elliptic curves known as being pairing friendly.  
       </p>
       <p>
-Because of the pairing friendly property, BLS12-381 can be used to construct digital signatures
-that have unique properties, such as aggregatable (TODO reference) signatures and or signatures
-that support zero knowledge proof (TODO reference) disclosure.
+      Because of the pairing friendly property, BLS12-381 can be used to construct digital signatures
+      that have unique properties, such as aggregatable (TODO reference) signatures and or signatures
+      that support zero knowledge proof (TODO reference) disclosure.
       </p>
-        <h3>Examples</h3>
-        <p>
-A simple example of an BLS12-381 2020 Signature Verification Key:
-        </p>
-
-        <p>
-  The following terms are used to describe concepts involved in the
-  generation and verification of the Linked Data Signature
-  <a>signature suite</a>.
-        </p>
-
-        <pre class="example highlight">
-          {
-            "@context": ["https://w3id.org/security/v1"],
-            "id": "did:example:123456789abcdefghi#keys-1",
-            "type": "Bls12381G2Key2020",
-            "controller": "did:example:123456789abcdefghi",
-            "publicKeyBase58" : "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-          }
-        </pre>
-    </section>
-    <p>
-        <p>
-The public key is defined as a commitment using the private key to the base generator point in the G2 field.
-        </p>
-        <p>
+      <p>
+        The public key is defined as a commitment using the private key to the base generator point in the G2 field.
+      </p>
+<p>
 The public key is represented in base58 encoding, where the base58 string decodes to the raw bytes of the public key, 
 which represent the following information in a compressed form. 
-        </p>
-      <p>
+</p>
+<p>
 The concatenation of the 2 raw 48 byte x co-ordinates. 
-      </p>
+</p>
 
 <div class="issue">TODO: Is the the below the correct place for the rationale?</div>
-      
-      <p>
-  With pairing friendly elliptic curves, there are two fields, denoted G1 and G2, for 
-  which signatures and public keys can exist. Importantly however both the public
-  key and a signature generated using the public key cannot exist in the same field.
-      </p>
-      <p>
-  Due to the properties of the two fields, there are different associated performance
-  characteristics to selecting which field to use for signatures vs which field to use 
-  for public key generation. In general operations are faster in G1 and the resulting commitments 
-  are smaller. With this definition of BBS+ signatures we have opted for signatures to be faster
-  and smaller to create rather than key generation.
-      </p>
 
-<div class="issue">TODO: We could trim the leading zeros of the public key more saving a further 32 bytes</div>
+<p>
+With pairing friendly elliptic curves, there are two fields, denoted G1 and G2, for 
+which signatures and public keys can exist. Importantly however both the public
+key and a signature generated using the public key cannot exist in the same field.
+</p>
+<p>
+Due to the properties of the two fields, there are different associated performance
+characteristics to selecting which field to use for signatures vs which field to use 
+for public key generation. In general operations are faster in G1 and the resulting commitments 
+are smaller. With this definition of BBS+ signatures we have opted for signatures to be faster
+and smaller to create rather than key generation.
+</p>
+        
+        <div class="issue">TODO: We could trim the leading zeros of the public key more saving a further 32 bytes</div>
+  
+<section>
+  <h3><dfn>Bls12381G2Key2020</dfn></h3>
+  <p>
+    The verificationMethod key used for <a>BbsSignature2020</a>.
+    The key MUST have a property <code>publicKeyBase58</code> and its value MUST be a base58 encoded BLS12-381 G2 key.
+  </p>
+    <p>
+    A simple example of a <a>Bls12381G2Key2020</a>:
+    </p>
+    <pre class="example highlight" title="base58 encoded BLS12-381 G2 Key">
+      {
+        "id": "did:example:123456789abcdefghi#keys-1",
+        "type": "Bls12381G2Key2020",
+        "controller": "did:example:123456789abcdefghi",
+        "publicKeyBase58" : "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
+      }
+    </pre>
+    <div class="issue">TODO: Add more detail on key encoding.</div>
+</section>
+        
+    </section>
 
+    
+   
     <section>
       <h2>The BBS+ Signature Suite 2020</h2>
 
+
       <p>
-The BBS+ <a>signature suite</a> 2020 MUST be used in
-conjunction with the signing and verification algorithms in the
-Linked Data Signatures [[LD-SIGNATURES]] specification. The suite consists of
-the following algorithms:
-      </p>
+        The BBS+ <a>signature suite</a> 2020 MUST be used in
+        conjunction with the signing and verification algorithms in the
+        Linked Data Signatures [[LD-SIGNATURES]] specification. The suite consists of
+        the following algorithms:
+              </p>
+        
+              <table class="simple">
+                <thead>
+                  <th>Parameter</th>
+                  <th>Value</th>
+                  <th>Specification</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>canonicalizationAlgorithm</td>
+                    <td>https://w3id.org/security#URDNA2015</td>
+                    <td>[[RDF-DATASET-NORMALIZATION]]</td>
+                  </tr>
+                  <tr>
+                    <td>statementDigestAlgorithm</td>
+                    <td>SHAKE-256</td>
+                    <td>[[SHA-3]]</td>
+                  </tr>
+                  <tr>
+                    <td>signatureAlgorithm</td>
+                    <td>BBS+ Signature</td>
+                    <td>[[ANON-ATTESTATION-DH]]</td>
+                  </tr>
+                  <tr>
+                    <td>namedCurve</td>
+                    <td>BLS12-381</td>
+                    <td>[[PAIRING-FRIENDLY-CURVES]]</td>
+                  </tr>
+                </tbody>
+              </table>
+        
+      <section>
+        <h3>Modification to Algorithms</h3>
 
-      <table class="simple">
-        <thead>
-          <th>Parameter</th>
-          <th>Value</th>
-          <th>Specification</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>canonicalizationAlgorithm</td>
-            <td>https://w3id.org/security#URDNA2015</td>
-            <td>[[RDF-DATASET-NORMALIZATION]]</td>
-          </tr>
-          <tr>
-            <td>statementDigestAlgorithm</td>
-            <td>SHAKE-256</td>
-            <td>[[SHA-3]]</td>
-          </tr>
-          <tr>
-            <td>signatureAlgorithm</td>
-            <td>BBS+ Signature</td>
-            <td>[[ANON-ATTESTATION-DH]]</td>
-          </tr>
-          <tr>
-            <td>namedCurve</td>
-            <td>BLS12-381</td>
-            <td>[[PAIRING-FRIENDLY-CURVES]]</td>
-          </tr>
-        </tbody>
-      </table>
+        <section>
+          <h4>Create Verify Data Algorithm Algorithm</h4>
 
-      <h3>Term Definitions</h3>
+          <p>
+            In order to support selective disclosure of <a>statement</a>s, 
+            the create verify data algorithm has been modified from 
+            its original defintion <a href="https://w3c-ccg.github.io/ld-proofs/#create-verify-hash-algorithm">here</a>.
+          </p>
 
-      <div class="issue">TODO: define the BbsSignature2020 term</div>
+          <p>
+            The following defintions are relied on by the signature suite and used 
+            in the modifcations to create verify data to support selective disclosure.
+          </p>
+          <dl>
+          <dt><dfn>statementDigest</dfn></dt>
+          <dd>
+          The result of the application of the <a>statement digest algorithm</a> to a <a>statement</a>
+          </dd>
+          </dl>
 
-      <div class="issue">TODO: define the requiredRevealStatements term</div>
+          <p>
+          The algorithm defined below, outlines the process of obtaining the data in the form
+          required for both signing and verifying.
+          </p>
 
-      <h3>Create Verify Data Algorithm Algorithm</h3>
-
-      <a>
-  The algorithm defined below, outlines the process of obtaining the data in the form
-  required for both signing and verifying.
-      </a>
-
-      <ol class="algorithm">
-        <li>Normalize the input document to a set of statements represented as N-Quads.</li>
-        <li>For every statement in the <a>normalized form</a>, whilst preserving the ordering:
-          <ol class="algorithm">
-            <li>Apply the <a>statementDigestAlgorithm</a> to obtain a digest</li>
-          </ol>
-        <li>Returned the digested statements in an ordered array that preserves that of the normalized state</li>
-
-      <h3>A Simple Example</h3>
+            <ol class="algorithm">
+              <li>Normalize the input document to a set of statements represented as N-Quads.</li>
+              <li>Initialize <a>statementDigests</a> as an empty array of length equal to the number of statements.</li>
+              <li>For each statement in order:
+                <ol class="algorithm">
+                  <li>Apply the <a>statement digest algorithm</a> to obtain a <a>statementDigest</a></li>
+                  <li>Insert the <a>statementDigest</a> into the <a>statementDigests</a> array in the same order</li>
+                </ol>
+              <li>Returned the <a>statementDigests</a> array.</li>
       
-      //TODO make this example valid...????
 
-      <pre class="example highlight">
-        {
-          "@context": "https://w3id.org/security/v1",
-          "firstName": "John",
-          "lastName": "Doe",
-          "proof": {
-            "type": "BbsBlsSignature2020",
-            "signature": "IKwTJ...E37UsLgs=",
-            "created": "2016-09-22T22:38:03Z",
-            "verificationMethod": "did:example:12345#key-id",
-            "proofPurpose": "assertionMethod",
-            "requiredRevealStatements": [ 1, 2 ]
+            <div class="issue">TODO: Add pseudo code, or fix algorithm description.</div>
+        </section>
+        
+      </section>
+
+
+      <section>
+        <h3><dfn>BbsSignature2020</dfn></h3>
+        <p>
+          A JSON-LD Document has been signed with <a>BbsSignature2020</a>, when it contains a proof field with type <a>BbsSignature2020</a>. 
+          The proof must contain a key <code>signature</code> with value defined by the signing algorithm described in this specification.
+        </p>
+        <div class="issue">TODO: Add a better example</div>
+
+        <pre class="example highlight">
+          {
+            "@context": "https://w3id.org/security/v1",
+            "firstName": "John",
+            "lastName": "Doe",
+            "proof": {
+              "type": "BbsBlsSignature2020",
+              "signature": "IKwTJ...E37UsLgs=",
+              "created": "2016-09-22T22:38:03Z",
+              "verificationMethod": "did:example:12345#key-id",
+              "proofPurpose": "assertionMethod",
+              "requiredRevealStatements": [ 1, 2 ]
+            }
           }
-        }
-      </pre>
+        </pre>
 
+      </section>
+
+      <section>
+        <h3><dfn>requiredRevealStatements</dfn></h3>
+        <p>
+          The <a>statement</a>s that are required to be revealed when a seletive disclosure proof is created from the Verifiable Credential.
+        </p>
+        <div class="issue">TODO: Add a better example, fix language above.</div>
+
+        <pre class="example highlight">
+          {
+            "@context": "https://w3id.org/security/v1",
+            "firstName": "John",
+            "lastName": "Doe",
+            "proof": {
+              "type": "BbsBlsSignature2020",
+              "signature": "IKwTJ...E37UsLgs=",
+              "created": "2016-09-22T22:38:03Z",
+              "verificationMethod": "did:example:12345#key-id",
+              "proofPurpose": "assertionMethod",
+              "requiredRevealStatements": [ 1, 2 ]
+            }
+          }
+        </pre>
+
+      </section>
+
+  
+     
     </section>
 
     <section>
@@ -441,13 +505,8 @@ The algorithm defined below, outlines the process of creating a proof
 
     </section>
 
-    <section>
-      <h2>Modification to Algorithms</h2>
+    <section id="conformance">
 
-      <p>
-No modifications to the Linked Data Signature algorithms are provided other
-than the algorithms specified in the previous signature suite section.
-      </p>
     </section>
 
     <section>
