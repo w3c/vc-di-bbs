@@ -372,7 +372,7 @@ and smaller to create rather than key generation.
         <h3>Modification to Algorithms</h3>
 
         <section>
-          <h4>Create Verify Data Algorithm Algorithm</h4>
+          <h4>Create Verify Data Algorithm</h4>
 
           <p>
             In order to support selective disclosure of <a>statement</a>s, 
@@ -391,7 +391,8 @@ and smaller to create rather than key generation.
               <li>For each statement in order:
                 <ol class="algorithm">
                   <li>Apply the <a>statement digest algorithm</a> to obtain a <a>statementDigest</a></li>
-                  <li>Insert the <a>statementDigest</a> into the <a>statementDigests</a> array in the same order</li>
+                  <li>Insert the <a>statementDigest</a> into the <a>statementDigests</a> array which MUST maintain same order as the order 
+                    of the statements returned from the <a>canonicalization algorithm</a>.</li>
                 </ol>
               <li>Returned the <a>statementDigests</a> array.</li>
       
