@@ -199,8 +199,12 @@ for the purposes of safety and convenience.
         <dt><dfn>canonicalization algorithm</dfn></dt>
         <dd>
 An algorithm that takes an input document that has more than one possible
-representation and always transforms it into a canonical form. This process is
+representation and always transforms it into a <a>canonical form</a>. This process is
 sometimes also called normalization.
+        </dd>
+        <dt><dfn>canonical form</dfn></dt>
+        <dd>
+The output of applying a <a>canonicalization algorithm</a> to an input document.
         </dd>
         <dt><dfn>statement</dfn></dt>
         <dd>
@@ -226,28 +230,31 @@ An algorithm that takes an input message and produces an output value where the
 receiver of the message can mathematically verify that the message has not
 been modified in transit and came from someone possessing a particular secret.
         </dd>
-
         <dt><a>requiredRevealStatements</a></dt>
         <dd>
 An array of <a>statement</a>s which must be revealed in the proof of knowledge linked data proof.
 This value MUST always be present in a proof, and its value MUST be empty if there are no statements which MUST be revealed.
         </dd>
-
         <dt><a>revealedStatements</a></dt>
         <dd>
-An ordered array of <a>statement</a>s which are reaveled in the proof of knowledge linked data proof, 
-where the elements in the array correspond to the statements in the normalized form of the proof, 
-and the index in the array maps that statement back to what number message it was when it was 
-originally signed.
+An ordered array indicating the <a>statement</a>s being revealed in the proof of knowledge linked data 
+proof. The order of the elements in the array correspond to the order of the <a>statement</a>s in the 
+<a>canonical form</a>. The value of each element in the array indicates the identified statement's original 
+position in the signed document for which the proof is derived from.
         </dd>
-  
       <dt><a>totalStatements</a></dt>
         <dd>
 The total number of <a>statement</a>s which are present in the original linked data proof. 
         </dd>
+      <dt><a>inputProofDocument</a></dt>
+      <dd>
+A document featuring a compatible linked data proof for which a new proof is derived from using the <a>derive proof algorithm</a>. 
+      </dd>
+      <dt><a>revealDocument</a></dt>
+      <dd>
+The reveal document defines the <a>statement</a>s from the <a>inputProofDocument</a> that should be revealed using the <a>derive proof algorithm</a>. 
+      </dd>
       </dl>
-
-      
     </section>
 
     <section>
@@ -366,15 +373,13 @@ and smaller to create rather than key generation.
             its original defintion <a href="https://w3c-ccg.github.io/ld-proofs/#create-verify-hash-algorithm">here</a>.
           </p>
 
-      
-
           <p>
           The algorithm defined below, outlines the process of obtaining the data in the form
           required for both signing and verifying.
           </p>
 
             <ol class="algorithm">
-              <li>Normalize the input document to a set of statements represented as N-Quads.</li>
+              <li>Canonicalize the input document to a set of statements represented as N-Quads.</li>
               <li>Initialize <a>statementDigests</a> as an empty array of length equal to the number of statements.</li>
               <li>For each statement in order:
                 <ol class="algorithm">
@@ -445,8 +450,6 @@ and smaller to create rather than key generation.
 
       </section>
 
-  
-     
     </section>
 
     <section>
@@ -505,7 +508,7 @@ the following algorithms:
           </p>
 
             <ol class="algorithm">
-              <li>Normalize the input document to a set of statements represented as N-Quads.</li>
+              <li>Canonicalize the input document to a set of statements represented as N-Quads.</li>
               <li>Initialize <a>statementDigests</a> as an empty array of length equal to the number of statements.</li>
               <li>For each statement in order:
                 <ol class="algorithm">
@@ -520,12 +523,8 @@ the following algorithms:
         
       </section>
 
-
       <section>
 
-       
-
-    
       <h3><dfn>BbsBlsSignatureProof2020</dfn></h3>
       <p>
         A JSON-LD Document has been signed with <a>BbsBlsSignatureProof2020</a>, when it contains a proof field with type <a>BbsBlsSignatureProof2020</a>. 
