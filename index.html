@@ -199,8 +199,12 @@ for the purposes of safety and convenience.
         <dt><dfn>canonicalization algorithm</dfn></dt>
         <dd>
 An algorithm that takes an input document that has more than one possible
-representation and always transforms it into a canonical form. This process is
+representation and always transforms it into a <a>canonical form</a>. This process is
 sometimes also called normalization.
+        </dd>
+        <dt><dfn>canonical form</dfn></dt>
+        <dd>
+The output of applying a <a>canonicalization algorithm</a> to an input document.
         </dd>
         <dt><dfn>statement</dfn></dt>
         <dd>
@@ -216,12 +220,47 @@ non-reversible, 3) cause the output to change significantly when even one
 bit of the input message changes, and 4) make it infeasible to find two
 different inputs for the same output.
         </dd>
+        <dt><dfn>statementDigest</dfn></dt>
+          <dd>
+          The result of the application of the <a>statement digest algorithm</a> to a <a>statement</a>
+          </dd>
         <dt><dfn>signature algorithm</dfn></dt>
         <dd>
 An algorithm that takes an input message and produces an output value where the
 receiver of the message can mathematically verify that the message has not
 been modified in transit and came from someone possessing a particular secret.
         </dd>
+        <dt><a>requiredRevealStatements</a></dt>
+        <dd>
+An array of <a>statement</a>s which must be revealed in the proof of knowledge linked data proof.
+This value MUST always be present in a proof, and its value MUST be empty if there are no statements which MUST be revealed.
+        </dd>
+        <dt><a>revealedStatements</a></dt>
+        <dd>
+An ordered array indicating the <a>statement</a>s being revealed in the proof of knowledge linked data 
+proof. The order of the elements in the array correspond to the order of the <a>statement</a>s in the 
+<a>canonical form</a>. The value of each element in the array indicates the identified statement's original 
+position in the signed document for which the proof is derived from.
+        </dd>
+      <dt><a>totalStatements</a></dt>
+        <dd>
+The total number of <a>statement</a>s which are present in the original linked data proof. 
+        </dd>
+      <dt><dfn>input proof document</dfn></dt>
+      <dd>
+A document featuring a compatible linked data proof for which a new 
+proof is derived from using the <a>derive proof algorithm</a>. 
+      </dd>
+      <dt><dfn>reveal document</dfn></dt>
+      <dd>
+The reveal document defines the <a>statement</a>s from the <a>input proof document</a> 
+that should be revealed using the <a>derive proof algorithm</a>. 
+      </dd>
+      <dt><dfn>derive proof algorithm</dfn></dt>
+      <dd>
+An algorithm that takes in an <a>input proof document</a> along side a <a>reveal document</a> 
+and derives a proof only revealing the <a>statement</a>s defined in the <a>reveal document</a>. 
+      </dd>
       </dl>
     </section>
 
@@ -333,7 +372,7 @@ and smaller to create rather than key generation.
         <h3>Modification to Algorithms</h3>
 
         <section>
-          <h4>Create Verify Data Algorithm Algorithm</h4>
+          <h4>Create Verify Data Algorithm</h4>
 
           <p>
             In order to support selective disclosure of <a>statement</a>s, 
@@ -342,28 +381,18 @@ and smaller to create rather than key generation.
           </p>
 
           <p>
-            The following defintions are relied on by the signature suite and used 
-            in the modifcations to create verify data to support selective disclosure.
-          </p>
-          <dl>
-          <dt><dfn>statementDigest</dfn></dt>
-          <dd>
-          The result of the application of the <a>statement digest algorithm</a> to a <a>statement</a>
-          </dd>
-          </dl>
-
-          <p>
           The algorithm defined below, outlines the process of obtaining the data in the form
           required for both signing and verifying.
           </p>
 
             <ol class="algorithm">
-              <li>Normalize the input document to a set of statements represented as N-Quads.</li>
+              <li>Canonicalize the input document to a set of statements represented as N-Quads.</li>
               <li>Initialize <a>statementDigests</a> as an empty array of length equal to the number of statements.</li>
               <li>For each statement in order:
                 <ol class="algorithm">
                   <li>Apply the <a>statement digest algorithm</a> to obtain a <a>statementDigest</a></li>
-                  <li>Insert the <a>statementDigest</a> into the <a>statementDigests</a> array in the same order</li>
+                  <li>Insert the <a>statementDigest</a> into the <a>statementDigests</a> array which MUST maintain same order as the order 
+                    of the statements returned from the <a>canonicalization algorithm</a>.</li>
                 </ol>
               <li>Returned the <a>statementDigests</a> array.</li>
       
@@ -403,30 +432,32 @@ and smaller to create rather than key generation.
       <section>
         <h3><dfn>requiredRevealStatements</dfn></h3>
         <p>
-          The <a>statement</a>s that are required to be revealed when a seletive disclosure proof is created from the Verifiable Credential.
+          The <a>statement</a>s that are required to be revealed when a seletive disclosure proof is created from the linked data proof.
         </p>
         <div class="issue">TODO: Add a better example, fix language above.</div>
 
         <pre class="example highlight">
-          {
-            "@context": "https://w3id.org/security/v1",
-            "firstName": "John",
-            "lastName": "Doe",
-            "proof": {
-              "type": "BbsBlsSignature2020",
-              "signature": "IKwTJ...E37UsLgs=",
-              "created": "2016-09-22T22:38:03Z",
-              "verificationMethod": "did:example:12345#key-id",
-              "proofPurpose": "assertionMethod",
-              "requiredRevealStatements": [ 1, 2 ]
-            }
-          }
+{
+  "@context": [ "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts/v1" ],
+  "firstName": "Jane",
+  "lastName": "Does",
+  "jobTitle": "Professor",
+  "telephone": "(425) 123-4567",
+  "email": "jane.doe@example.com",
+  "proof": {
+      "type": "BBSSignature2020",
+      "signature": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
+      "requiredRevealStatements": [ 1, 3 ],
+      "proofPurpose": "assertionMethod",
+      "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8",
+  }
+}
         </pre>
 
       </section>
 
-  
-     
     </section>
 
     <section>
@@ -467,10 +498,132 @@ the following algorithms:
         </tbody>
       </table>
 
+      <section>
+        <h3>Modification to Algorithms</h3>
+
+        <section>
+          <h4>Create Verify Data Algorithm Algorithm</h4>
+
+          <p>
+            In order to support selective disclosure of <a>statement</a>s, 
+            the create verify data algorithm has been modified from 
+            its original defintion <a href="https://w3c-ccg.github.io/ld-proofs/#create-verify-hash-algorithm">here</a>.
+          </p>
+
+          <p>
+          The algorithm defined below, outlines the process of obtaining the data in the form
+          required for both signing and verifying.
+          </p>
+
+            <ol class="algorithm">
+              <li>Canonicalize the input document to a set of statements represented as N-Quads.</li>
+              <li>Initialize <a>statementDigests</a> as an empty array of length equal to the number of statements.</li>
+              <li>For each statement in order:
+                <ol class="algorithm">
+                  <li>Apply the <a>statement digest algorithm</a> to obtain a <a>statementDigest</a></li>
+                  <li>Insert the <a>statementDigest</a> into the <a>statementDigests</a> array in the same order</li>
+                </ol>
+              <li>Returned the <a>statementDigests</a> array.</li>
+      
+
+            <div class="issue">TODO: Add pseudo code, or fix algorithm description.</div>
+        </section>
+        
+      </section>
+
+      <section>
+
+      <h3><dfn>BbsBlsSignatureProof2020</dfn></h3>
+      <p>
+        A JSON-LD Document has been signed with <a>BbsBlsSignatureProof2020</a>, when it contains a proof field with type <a>BbsBlsSignatureProof2020</a>. 
+        The proof must contain a key <code>signature</code> with value defined by the signing algorithm described in this specification.
+      </p>
+      <div class="issue">TODO: Add a better example</div>
+
+      <pre class="example highlight">
+{
+  "@context": [ "http://schema.org/", 
+                "https://w3id.org/security/v2", 
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts/v1" ],
+  "firstName": "Jane",
+  "lastName": "Does",
+  "proof": {
+      "type": "BBSSignatureProof2020",
+      "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
+      "requiredRevealStatements": [ 1, 3 ],
+      "revealedStatements": [ 1, 3 ],
+      "totalStatements": 10,
+      "proofPurpose": "assertionMethod",
+      "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"
+    }
+}
+      </pre>
+
+    </section>
+
+      <section>
+        <h3><dfn>revealedStatements</dfn></h3>
+        <p>
+          The <a>statement</a>s that are revealed in the proof of knowledge linked data proof.
+        </p>
+        <div class="issue">TODO: Add a better example, fix language above.</div>
+  
+        <pre class="example highlight">
+{
+  "@context": [ "http://schema.org/", 
+                "https://w3id.org/security/v2", 
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts/v1" ],
+  "firstName": "Jane",
+  "lastName": "Does",
+  "proof": {
+      "type": "BBSSignatureProof2020",
+      "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
+      "requiredRevealStatements": [ 1, 3 ],
+      "revealedStatements": [ 1, 3 ],
+      "totalStatements": 10,
+      "proofPurpose": "assertionMethod",
+      "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"
+    }
+}
+        </pre>
+  
+      </section>
+  
+      <section>
+        <h3><dfn>totalStatements</dfn></h3>
+        <p>
+          The total number of statements produced by the 
+        </p>
+        <div class="issue">TODO: Add a better example, fix language above.</div>
+  
+<pre class="example highlight">
+{
+  "@context": [ "http://schema.org/", 
+                "https://w3id.org/security/v2", 
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts/v1" ],
+  "firstName": "Jane",
+  "lastName": "Does",
+  "proof": {
+      "type": "BBSSignatureProof2020",
+      "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
+      "requiredRevealStatements": [ 1, 3 ],
+      "revealedStatements": [ 1, 3 ],
+      "totalStatements": 10,
+      "proofPurpose": "assertionMethod",
+      "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"
+    }
+}
+</pre>
+      </section>
+    </section>
+
+  
       <div class="issue">TODO: Describe the two proof components
         - Proof of knowledge of the signature
         - Proof of knowledge of the hidden messages</div>
       
+
+        
       <h3>Term Definitions</h3>
 
       <div class="issue">TODO: define the BbsSignatureProof2020 term</div>
