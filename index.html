@@ -91,6 +91,12 @@
             status:   "CGDRAFT",
             publisher:  "JSON-LD Community Group"
           },
+          "RDF-N-Quads": {
+            title:    "RDF 1.1 N-Quads",
+            href:     "http://json-ld.github.io/normalization/spec/",
+            authors:  ["Gaven Carothers"],
+            status:   "Recommendation",
+          },
           "SECURITY-VOCABULARY": {
             title:    "Security Linked Data Vocabulary",
             href:     "https://web-payments.org/vocabs/security",
@@ -261,53 +267,56 @@ that should be revealed using the <a>derive proof algorithm</a>.
 An algorithm that takes in an <a>input proof document</a> along side a <a>reveal document</a> 
 and derives a proof only revealing the <a>statement</a>s defined in the <a>reveal document</a>. 
       </dd>
+      <dt><dfn>quad</dfn></dt>
+      <dd>
+A <a href="https://json-ld.github.io/normalization/spec/index.html#dfn-quad" class="externalDFN">quad</a> as specified by [[RDF-DATASET-NORMALIZATION]]
+      </dd>
+      <dt><dfn>N-Quad</dfn></dt>
+      <dd>
+An <a href="https://www.w3.org/TR/n-quads/" class="externalDFN">N-Quad</a> which is a line based, plain text format encoding of a <a>quad</a> as defined by [[RDF-N-Quads]].
+      </dd>
       </dl>
     </section>
 
     <section>
       <h2>BLS12-381</h2>
       <p>
-      Defined in [[PAIRING-FRIENDLY-CURVES]], BLS12-381 is an elliptic curve that features a unique property 
-      only present in a subset of elliptic curves known as being pairing friendly.  
+Defined in [[PAIRING-FRIENDLY-CURVES]], BLS12-381 is an elliptic curve that features a unique property 
+only present in a subset of elliptic curves known as being pairing friendly.  
       </p>
       <p>
-      Because of the pairing friendly property, BLS12-381 can be used to construct digital signatures
-      that have unique properties, such as aggregatable (TODO reference) signatures and or signatures
-      that support zero knowledge proof (TODO reference) disclosure.
+Because of the pairing friendly property, BLS12-381 can be used to construct digital signatures
+that have unique properties, such as aggregatable (TODO reference) signatures and or signatures
+that support zero knowledge proof (TODO reference) disclosure.
       </p>
-      <p>
-        The public key is defined as a commitment using the private key to the base generator point in the G2 field.
-      </p>
-<p>
-The public key is represented in base58 encoding, where the base58 string decodes to the raw bytes of the public key, 
-which represent the following information in a compressed form. 
-</p>
-<p>
-The concatenation of the 2 raw 48 byte x co-ordinates. 
-</p>
+      
 
 <div class="issue">TODO: Is the the below the correct place for the rationale?</div>
 
-<p>
+      <p>
 With pairing friendly elliptic curves, there are two fields, denoted G1 and G2, for 
 which signatures and public keys can exist. Importantly however both the public
 key and a signature generated using the public key cannot exist in the same field.
-</p>
-<p>
+      </p>
+      <p>
 Due to the properties of the two fields, there are different associated performance
 characteristics to selecting which field to use for signatures vs which field to use 
 for public key generation. In general operations are faster in G1 and the resulting commitments 
 are smaller. With this definition of BBS+ signatures we have opted for signatures to be faster
 and smaller to create rather than key generation.
-</p>
+      </p>
         
-        <div class="issue">TODO: We could trim the leading zeros of the public key more saving a further 32 bytes</div>
   
 <section>
   <h3><dfn>Bls12381G2Key2020</dfn></h3>
   <p>
     The verificationMethod key used for <a>BbsSignature2020</a>.
-    The key MUST have a property <code>publicKeyBase58</code> and its value MUST be a base58 encoded BLS12-381 G2 key.
+  </p>
+  <p>
+    The key MUST have a property <code>publicKeyBase58</code> and its value 
+    MUST be a base58 encoded BLS12-381 public key in the G2 field. Where the 
+    BLS12-381 public key is the concatenation of the 2 raw 48 byte x co-ordinates
+    defining the commitment. 
   </p>
     <p>
     A simple example of a <a>Bls12381G2Key2020</a>:
@@ -320,7 +329,6 @@ and smaller to create rather than key generation.
         "publicKeyBase58" : "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
       }
     </pre>
-    <div class="issue">TODO: Add more detail on key encoding.</div>
 </section>
         
     </section>
@@ -377,7 +385,7 @@ and smaller to create rather than key generation.
           <p>
             In order to support selective disclosure of <a>statement</a>s, 
             the create verify data algorithm has been modified from 
-            its original defintion <a href="https://w3c-ccg.github.io/ld-proofs/#create-verify-hash-algorithm">here</a>.
+            its original definition <a href="https://w3c-ccg.github.io/ld-proofs/#create-verify-hash-algorithm">here</a>.
           </p>
 
           <p>
@@ -386,7 +394,7 @@ and smaller to create rather than key generation.
           </p>
 
             <ol class="algorithm">
-              <li>Canonicalize the input document to a set of statements represented as N-Quads.</li>
+              <li>Canonicalize the input document using the <a>canonicalization algorithm</a> to a set of statements represented as <a>N-Quad</a>s.</li>
               <li>Initialize <a>statementDigests</a> as an empty array of length equal to the number of statements.</li>
               <li>For each statement in order:
                 <ol class="algorithm">
@@ -406,8 +414,10 @@ and smaller to create rather than key generation.
       <section>
         <h3><dfn>BbsSignature2020</dfn></h3>
         <p>
-          A JSON-LD Document has been signed with <a>BbsSignature2020</a>, when it contains a proof field with type <a>BbsSignature2020</a>. 
-          The proof must contain a key <code>signature</code> with value defined by the signing algorithm described in this specification.
+          A JSON-LD document features a linked data proof of <a>BbsSignature2020</a>, when the document contains a proof element with type <a>BbsSignature2020</a>. 
+        </p>
+        <p>
+          The proof MUST contain a key <code>signature</code> with value defined by the signing algorithm described in this specification.
         </p>
         <div class="issue">TODO: Add a better example</div>
 
@@ -432,9 +442,8 @@ and smaller to create rather than key generation.
       <section>
         <h3><dfn>requiredRevealStatements</dfn></h3>
         <p>
-          The <a>statement</a>s that are required to be revealed when a seletive disclosure proof is created from the linked data proof.
+          The <a>statement</a>s that are required to be revealed when a proof is derived from <a>BbsSignature2020</a> linked data proof.
         </p>
-        <div class="issue">TODO: Add a better example, fix language above.</div>
 
         <pre class="example highlight">
 {
@@ -502,29 +511,19 @@ the following algorithms:
         <h3>Modification to Algorithms</h3>
 
         <section>
-          <h4>Create Verify Data Algorithm Algorithm</h4>
+          <h4>Derive Proof Algorithm</h4>
 
           <p>
-            In order to support selective disclosure of <a>statement</a>s, 
-            the create verify data algorithm has been modified from 
-            its original defintion <a href="https://w3c-ccg.github.io/ld-proofs/#create-verify-hash-algorithm">here</a>.
+            In order to support selective information disclosure 
+            the following algorithm has been defined.
           </p>
 
           <p>
-          The algorithm defined below, outlines the process of obtaining the data in the form
-          required for both signing and verifying.
+          The algorithm defined below, outlines the process of the <a>derive proof algorithm</a> for a obtaining a derived proof from a BBS+ signature.
           </p>
 
             <ol class="algorithm">
-              <li>Canonicalize the input document to a set of statements represented as N-Quads.</li>
-              <li>Initialize <a>statementDigests</a> as an empty array of length equal to the number of statements.</li>
-              <li>For each statement in order:
-                <ol class="algorithm">
-                  <li>Apply the <a>statement digest algorithm</a> to obtain a <a>statementDigest</a></li>
-                  <li>Insert the <a>statementDigest</a> into the <a>statementDigests</a> array in the same order</li>
-                </ol>
-              <li>Returned the <a>statementDigests</a> array.</li>
-      
+              <li>Canonicalize the <a>input proof document</a> to a set of statements represented as <a>N-Quad</a>s.</li>
 
             <div class="issue">TODO: Add pseudo code, or fix algorithm description.</div>
         </section>
@@ -617,20 +616,7 @@ the following algorithms:
       </section>
     </section>
 
-  
-      <div class="issue">TODO: Describe the two proof components
-        - Proof of knowledge of the signature
-        - Proof of knowledge of the hidden messages</div>
-      
-
-        
       <h3>Term Definitions</h3>
-
-      <div class="issue">TODO: define the BbsSignatureProof2020 term</div>
-
-      <div class="issue">TODO: define the revealedStatements term</div>
-  
-      <div class="issue">TODO: define the totalStatements term</div>
 
       <h3>Algorithm</h3>
 
