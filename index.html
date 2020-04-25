@@ -146,6 +146,32 @@
         }
       };
     </script>
+        <style>
+          pre .highlight {
+            font-weight: bold;
+            color: green;
+          }
+          pre .comment {
+            font-weight: bold;
+            color: Gray;
+          }
+          .color-text {
+            font-weight: bold;
+            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+          }
+          ol.algorithm {
+            counter-reset: numsection;
+            list-style-type: none;
+          }
+          ol.algorithm li {
+            margin: 0.5em 0;
+          }
+          ol.algorithm li:before {
+            font-weight: bold;
+            counter-increment: numsection;
+            content: counters(numsection, ".") ") ";
+          }
+              </style>
   </head>
   <body>
     <section id='abstract'>
@@ -273,6 +299,16 @@ A document comprised of Linked Data.
 The name defining a particular cryptographic curve.
       </dd>
       </dl>
+      <dt><dfn data-lt="selective disclosure">selective disclosure</dfn></dt>
+      <dd>
+A cryptographic capability whereby a subset of attributes can be verified independently.
+      </dd>
+      </dl>
+      <dt><dfn data-lt="derived proof">derived proof</dfn></dt>
+      <dd>
+A cryptographic proof which is derived from another proof.
+      </dd>
+      </dl>
     </section>
 
     <section>
@@ -329,7 +365,6 @@ and smaller to create rather than key generation.
     </section>
 
     
-   
     <section>
       <h2>The BBS+ Signature Suite 2020</h2>
 
@@ -414,7 +449,7 @@ and smaller to create rather than key generation.
           <h4>Proof Type</h4>
           
           <p>
-            To identify the type of <a>linked data proof</a> that is attached to a <a>linked data document</a>, the <code>type</code> attribute is used.
+            To identify the <code>type</code> of <a>linked data proof</a> that is attached to a <a>linked data document</a>, the <code>type</code> attribute is used.
           </p>
 
           <p>
@@ -426,9 +461,8 @@ and smaller to create rather than key generation.
             MUST contain a proof element thats has a type equal to <code>BbsSignature2020</code>.
           </p>
 
-          <div class="issue">TODO: Fix section highlight</div>
 
-          <pre class="example highlight">
+          <pre class="example nohighlight">
             {
               "@context": "https://w3id.org/security/v1",
               "firstName": "John",
@@ -457,9 +491,7 @@ and smaller to create rather than key generation.
             attribute with value defined by the signing algorithm described in this specification.
           </p>
 
-          <div class="issue">TODO: Fix section highlight</div>
-
-          <pre class="example highlight">
+          <pre class="example nohighlight">
             {
               "@context": "https://w3id.org/security/v1",
               "firstName": "John",
@@ -489,9 +521,7 @@ and smaller to create rather than key generation.
             attribute with value a value corresponding to an [[!ISO8601]] combined date and time string.
           </p>
 
-          <div class="issue">TODO: Fix section highlight</div>
-
-          <pre class="example highlight">
+          <pre class="example nohighlight">
             {
               "@context": "https://w3id.org/security/v1",
               "firstName": "John",
@@ -522,9 +552,8 @@ and smaller to create rather than key generation.
             results in the verification method required to verify the </a>linked data proof</a>. The verification method MUST be of <code>type</code> <a>Bls12381G2Key2020</a>.
           </p>
 
-          <div class="issue">TODO: Fix section highlight</div>
-
-          <pre class="example highlight">
+      
+          <pre class="example nohighlight">
             {
               "@context": "https://w3id.org/security/v1",
               "firstName": "John",
@@ -554,9 +583,8 @@ and smaller to create rather than key generation.
             attribute with a value that is defined by https://w3c-ccg.github.io/ld-proofs/#proof-purpose.
           </p>
 
-          <div class="issue">TODO: Fix section highlight</div>
-
-          <pre class="example highlight">
+       
+          <pre class="example nohighlight">
             {
               "@context": "https://w3id.org/security/v1",
               "firstName": "John",
@@ -588,9 +616,8 @@ and smaller to create rather than key generation.
             as apart of the </a>linked data proof</a> MUST always be present.
           </p>
 
-          <div class="issue">TODO: Fix section highlight</div>
-
-          <pre class="example highlight">
+    
+          <pre class="example nohighlight">
             {
               "@context": "https://w3id.org/security/v1",
               "firstName": "John",
@@ -606,12 +633,9 @@ and smaller to create rather than key generation.
             }
           </pre>
         </section>
-
-        <section>
-      </section>
       </section>
     </section>
-    
+
     <section>
       <h2>The BBS+ Signature Proof Suite 2020</h2>
       <p>
@@ -688,7 +712,7 @@ the following algorithms:
           </p>
 
           <p>
-            The term of <code>BbsSignatureProof2020</code> is used to indicate when a <a>linked data proof</a> is of type BBS+ proof of knowledge.
+            The property of <code>typeo</code> with value of <code>BbsSignatureProof2020</code> is used to indicate when a <a>linked data proof</a> is of type BBS+ proof of knowledge.
           </p>
 
           <p>
@@ -696,47 +720,8 @@ the following algorithms:
             MUST contain a proof element thats has a type equal to <code>BbsSignatureProof2020</code>.
           </p>
 
-          <div class="issue">TODO: Fix section highlight</div>
-
-          <pre class="example highlight">
-            {
-              "@context": [ "http://schema.org/", 
-                            "https://w3id.org/security/v2", 
-                            "https://w3c-ccg.github.io/lds-bbsbls2020/contexts/v1" ],
-              "firstName": "Jane",
-              "lastName": "Does",
-              "proof": {
-                  <span class="highlight">"type": "BBSSignatureProof2020"</span>,
-                  "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
-                  "requiredRevealStatements": [ 1, 3 ],
-                  "revealedStatements": [ 1, 3 ],
-                  "totalStatements": 10,
-                  "proofPurpose": "assertionMethod",
-                  "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"
-                }
-            }
-          </pre>
-        </section>
-
-        <section>
-          <h4>Proof</h4>
-
-          <p>
-            TODO
-          </p>
-
-          <p>
-            The term of <code>BbsSignatureProof2020</code> is used to indicate when a <a>linked data proof</a> is of type BBS+ proof of knowledge.
-          </p>
-
-          <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
-            MUST contain a proof element thats has a type equal to <code>BbsSignatureProof2020</code>.
-          </p>
-
-          <div class="issue">TODO: Fix section highlight</div>
-
-          <pre class="example highlight">
+   
+          <pre class="example nohighlight">
             {
               "@context": [ "http://schema.org/", 
                             "https://w3id.org/security/v2", 
@@ -759,25 +744,16 @@ the following algorithms:
         <section>
           <h4>Revealed Statements</h4>
 
-          <p>
-            TODO
-          </p>
+          <div class="issue">TODO: Add paragraph</div>
 
           <p>
-              An ordered array indicating the <a>statement</a>s being revealed in the proof of knowledge linked data 
+              The property <code>revealedStatements</code> is an ordered array indicating the <a>statement</a>s being revealed in the proof of knowledge linked data 
               proof. The order of the elements in the array correspond to the order of the <a>statement</a>s in the 
               <a>canonical form</a>. The value of each element in the array indicates the identified statement's original 
               position in the signed document for which the proof is derived from.
           </p>
         
-          <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
-            MUST contain a proof element thats has a type equal to <code>BbsSignatureProof2020</code>.
-          </p>
-
-          <div class="issue">TODO: Fix section highlight</div>
-
-          <pre class="example highlight">
+          <pre class="example nohighlight">
             {
               "@context": [ "http://schema.org/", 
                             "https://w3id.org/security/v2", 
@@ -785,10 +761,10 @@ the following algorithms:
               "firstName": "Jane",
               "lastName": "Does",
               "proof": {
-                  <span class="highlight">"type": "BBSSignatureProof2020"</span>,
+                  "type": "BBSSignatureProof2020",
                   "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
                   "requiredRevealStatements": [ 1, 3 ],
-                  "revealedStatements": [ 1, 3 ],
+                  <span class="highlight">"revealedStatements": [ 1, 3 ]</span>,
                   "totalStatements": 10,
                   "proofPurpose": "assertionMethod",
                   "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"
@@ -800,22 +776,13 @@ the following algorithms:
         <section>
           <h4>Total Statements</h4>
 
-          <p>
-            TODO
-          </p>
+          <div class="issue">TODO: Add paragraph</div>
 
           <dd>
-             The total number of <a>statement</a>s which are present in the original <a>linked data proof</a>. 
+             The property <code>totalStatements</code> is the total number of <a>statement</a>s which are present in the original <a>linked data proof</a>. 
           </dd>
           
-          <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
-            MUST contain a proof element thats has a type equal to <code>BbsSignatureProof2020</code>.
-          </p>
-
-          <div class="issue">TODO: Fix section highlight</div>
-
-          <pre class="example highlight">
+          <pre class="example nohighlight">
             {
               "@context": [ "http://schema.org/", 
                             "https://w3id.org/security/v2", 
@@ -823,11 +790,11 @@ the following algorithms:
               "firstName": "Jane",
               "lastName": "Does",
               "proof": {
-                  <span class="highlight">"type": "BBSSignatureProof2020"</span>,
+                  "type": "BBSSignatureProof2020",
                   "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
                   "requiredRevealStatements": [ 1, 3 ],
                   "revealedStatements": [ 1, 3 ],
-                  "totalStatements": 10,
+                  <span class="highlight">"totalStatements": 10</span>,
                   "proofPurpose": "assertionMethod",
                   "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"
                 }
@@ -838,22 +805,18 @@ the following algorithms:
         <section>
           <h4>Proof Purpose</h4>
 
-          <p>
-            TODO
-          </p>
+          <div class="issue">TODO: Add paragraph?</div>
 
           <p>
-            The term of <code>BbsSignatureProof2020</code> is used to indicate when a <a>linked data proof</a> is of type BBS+ proof of knowledge.
+            The property <code>proofPurpose</code> is used to indicate the purpose of the proof.
           </p>
 
-          <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
-            MUST contain a proof element thats has a type equal to <code>BbsSignatureProof2020</code>.
+          <p class="note">
+            <code>assertionMethod</code> should be used for creating verifiable credentials.
           </p>
 
-          <div class="issue">TODO: Fix section highlight</div>
-
-          <pre class="example highlight">
+        
+          <pre class="example nohighlight">
             {
               "@context": [ "http://schema.org/", 
                             "https://w3id.org/security/v2", 
@@ -861,12 +824,12 @@ the following algorithms:
               "firstName": "Jane",
               "lastName": "Does",
               "proof": {
-                  <span class="highlight">"type": "BBSSignatureProof2020"</span>,
+                  "type": "BBSSignatureProof2020",
                   "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
                   "requiredRevealStatements": [ 1, 3 ],
                   "revealedStatements": [ 1, 3 ],
                   "totalStatements": 10,
-                  "proofPurpose": "assertionMethod",
+                  <span class="highlight">"proofPurpose": "assertionMethod"</span>,
                   "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"
                 }
             }
@@ -877,21 +840,12 @@ the following algorithms:
           <h4>Verification Method</h4>
 
           <p>
-            TODO
+            The property <code>verificationMethod</code> is used to refer to key material used to verify the proof.
           </p>
 
-          <p>
-            The term of <code>BbsSignatureProof2020</code> is used to indicate when a <a>linked data proof</a> is of type BBS+ proof of knowledge.
-          </p>
+          <div class="issue">TODO: Add paragraph?</div>
 
-          <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
-            MUST contain a proof element thats has a type equal to <code>BbsSignatureProof2020</code>.
-          </p>
-
-          <div class="issue">TODO: Fix section highlight</div>
-
-          <pre class="example highlight">
+          <pre class="example nohighlight">
             {
               "@context": [ "http://schema.org/", 
                             "https://w3id.org/security/v2", 
@@ -899,13 +853,13 @@ the following algorithms:
               "firstName": "Jane",
               "lastName": "Does",
               "proof": {
-                  <span class="highlight">"type": "BBSSignatureProof2020"</span>,
+                  "type": "BBSSignatureProof2020",
                   "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
                   "requiredRevealStatements": [ 1, 3 ],
                   "revealedStatements": [ 1, 3 ],
                   "totalStatements": 10,
                   "proofPurpose": "assertionMethod",
-                  "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"
+                  <span class="highlight">"verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"</span>
                 }
             }
           </pre>
@@ -913,6 +867,9 @@ the following algorithms:
       </section>
     </section>
 
+    
+ 
+   
     <section id="conformance">
 
     </section>
