@@ -26,7 +26,7 @@
         // previousMaturity:  "WD",
 
         // if there a publicly available Editor's Draft, this is the link
-        edDraftURI:           "https://mattrglobal.github.io/lds-bbs/",
+        edDraftURI:           "https://mattrglobal.github.io/jsonld-signatures-bbs-spec/",
 
         // if this is a LCWD, uncomment and set the end of its review period
         // lcEnd: "2009-08-05",
@@ -240,8 +240,8 @@ The output of applying a <a>canonicalization algorithm</a> to an input document.
         </dd>
         <dt><dfn>statement</dfn></dt>
         <dd>
-          <a>n-quads</a> statements are a sequence of RDF terms representing the subject, predicate, object and graph label.
-          See the grammar definition <a href="https://www.w3.org/TR/n-quads/#grammar-production-statement">here</a>.
+<a>n-quads</a> statements are a sequence of RDF terms representing the subject, predicate, object and graph label.
+See the grammar definition <a href="https://www.w3.org/TR/n-quads/#grammar-production-statement">here</a>.
         </dd>
         <dt><dfn data-lt="statement digest algorithm | statement digest algorithms">statement digest algorithm</dfn></dt>
         <dd>
@@ -254,7 +254,7 @@ different inputs for the same output.
         </dd>
         <dt><dfn data-lt="statement digest | statement digests">statement digest</dfn></dt>
           <dd>
-          The result of the application of the <a>statement digest algorithm</a> to a <a>statement</a>
+The result of the application of the <a>statement digest algorithm</a> to a <a>statement</a>
           </dd>
         <dt><dfn>signature algorithm</dfn></dt>
         <dd>
@@ -262,20 +262,33 @@ An algorithm that takes an input message and produces an output value where the
 receiver of the message can mathematically verify that the message has not
 been modified in transit and came from someone possessing a particular secret.
         </dd>
-      <dt><dfn>input proof document</dfn></dt>
+        <dt><dfn>selective disclosure</dfn></dt>
+        <dd>
+An information disclosure technique which is the process of deciding and disclosing
+a sub-set of information from an original information set.
+        </dd>
+      <dt><dfn>linked data proof document</dfn></dt>
       <dd>
-A document featuring a compatible <a>linked data proof</a> for which a new 
-proof is derived from using the <a>derive proof algorithm</a>. 
+A <a>linked data document</a> featuring one or more <a>linked data proofs</a>.
       </dd>
       <dt><dfn>reveal document</dfn></dt>
       <dd>
-The reveal document defines the <a>statement</a>s from the <a>input proof document</a> 
-that should be revealed using the <a>derive proof algorithm</a>. 
+The application of a <a>linked data document</a> defines the <a>statements</a> from a <a>linked data proof document</a> 
+to be revealed using the <a>derive proof algorithm</a>.
+      </dd>
+      <dt><dfn data-lt="revealed statements">revealed statements</dfn></dt>
+      <dd>
+The set of <a>statements</a> produced by applying the <a>canonicalization algorithm</a> to the <a>reveal document</a>. 
       </dd>
       <dt><dfn>derive proof algorithm</dfn></dt>
       <dd>
-An algorithm that takes in an <a>input proof document</a> along side a <a>reveal document</a> 
+An algorithm that takes in a <a>linked data proof document</a> featuring a <a>linked data proof</a> that supports a 
+<a>derive proof algorithm</a> along side a <a>reveal document</a> 
 and derives a proof only revealing the <a>statement</a>s defined in the <a>reveal document</a>. 
+      </dd>
+      <dt><dfn>derived proof</dfn></dt>
+      <dd>
+The product of apply the <a>derive proof algorithm</a> to an <a>linked data proof document</a> and <a>reveal document</a>. 
       </dd>
       <dt><dfn data-lt="quad|quads">quad</dfn></dt>
       <dd>
@@ -292,21 +305,11 @@ which is a set of attributes that represent a linked data digital proof and the 
       </dd>
       <dt><dfn data-lt="linked data document|linked data documents">linked data document</dfn></dt>
       <dd>
-A document comprised of Linked Data.
+A document comprised of linked data.
       </dd>
       <dt><dfn data-lt="curve name">curve name</dfn></dt>
       <dd>
 The name defining a particular cryptographic curve.
-      </dd>
-      </dl>
-      <dt><dfn data-lt="selective disclosure">selective disclosure</dfn></dt>
-      <dd>
-A cryptographic capability whereby a subset of attributes can be verified independently.
-      </dd>
-      </dl>
-      <dt><dfn data-lt="derived proof">derived proof</dfn></dt>
-      <dd>
-A cryptographic proof which is derived from another proof.
       </dd>
       </dl>
     </section>
@@ -344,7 +347,7 @@ and smaller to create rather than key generation.
   <h3><dfn>Bls12381G2Key2020</dfn></h3>
 
   <p>
-    The key MUST have a property <code>publicKeyBase58</code> and its value 
+    The keys definition MUST have an attribute of <code>publicKeyBase58</code> and its value 
     MUST be a base58 encoded BLS12-381 public key in the G2 field. Where the 
     BLS12-381 public key is the concatenation of the 2 raw 48 byte x co-ordinates
     defining the commitment. 
@@ -412,9 +415,9 @@ and smaller to create rather than key generation.
           <h4>Create Verify Data Algorithm</h4>
 
           <p>
-            In order to support selective disclosure of <a>statement</a>s, 
+            In order to support <a>selective disclosure</a> of <a>statements</a>, 
             the create verify data algorithm has been modified from 
-            its original definition <a href="https://w3c-ccg.github.io/ld-proofs/#create-verify-hash-algorithm">here</a>.
+            its original <a href="https://w3c-ccg.github.io/ld-proofs/#create-verify-hash-algorithm"></a>definition</a>.
           </p>
 
           <p>
@@ -449,11 +452,13 @@ and smaller to create rather than key generation.
           <h4>Proof Type</h4>
           
           <p>
-            To identify the <code>type</code> of <a>linked data proof</a> that is attached to a <a>linked data document</a>, the <code>type</code> attribute is used.
+            To identify the type of <a>linked data proof</a> that is attached to a <a>linked data document</a>, 
+            the <code>type</code> attribute <a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a> in
+            [[LD-PROOFS]].
           </p>
 
           <p>
-            The term of <code>BbsSignature2020</code> is used to indicate when a <a>linked data proof</a> is of type BBS+ Signature.
+            The term of <code><dfn>BbsSignature2020</dfn></code> is used to indicate when a <a>linked data proof</a> is of type BBS+ Signature.
           </p>
 
           <p>
@@ -464,16 +469,186 @@ and smaller to create rather than key generation.
 
           <pre class="example nohighlight">
             {
-              "@context": "https://w3id.org/security/v1",
-              "firstName": "John",
-              "lastName": "Doe",
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "@type": "Person",
+              "firstName": "Jane",
+              "lastName": "Does",
+              "jobTitle": "Professor",
+              "telephone": "(425) 123-4567",
+              "email": "jane.doe@example.com",
               "proof": {
                 <span class="highlight">"type": "BbsBlsSignature2020"</span>,
-                "signature": "IKwTJ...E37UsLgs=",
-                "created": "2016-09-22T22:38:03Z",
-                "verificationMethod": "did:example:12345#key-id",
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
                 "proofPurpose": "assertionMethod",
-                "requiredRevealStatements": [ 1, 2 ]
+                "requiredRevealStatements": [ 4, 5 ],
+                "signature": "F9uMuJzNBqj4j+HPTvWjUN/MNoe6KRH0818WkvDn2Sf7kg1P17YpNyzSB+CH57AWDFunU13tL8oTBDpBhODckelTxHIaEfG0rNmqmjK6DOs0/ObksTZh7W3OTbqfD2h4C/wqqMQHSWdXXnojwyFDEg=="
+              }
+            }
+          </pre>
+        </section>
+
+        <section>
+          <h4>Created</h4>
+
+          <p>
+            When a digital signature is produced, it is often useful to capture when this occurred, the <code>created</code> attribute
+            can be used to communicate this as <a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a> in
+            [[LD-PROOFS]].
+          </p>
+
+          <p>
+            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MAY contain a <code>created</code> 
+            attribute with value a value corresponding to an [[!ISO8601]] combined date and time string.
+          </p>
+
+          <pre class="example nohighlight">
+            {
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "@type": "Person",
+              "firstName": "Jane",
+              "lastName": "Does",
+              "jobTitle": "Professor",
+              "telephone": "(425) 123-4567",
+              "email": "jane.doe@example.com",
+              "proof": {
+                "type": "BbsBlsSignature2020",
+                <span class="highlight">"created": "2020-04-25"</span>,
+                "verificationMethod": "did:example:489398593#test",
+                "proofPurpose": "assertionMethod",
+                "requiredRevealStatements": [ 4, 5 ],
+                "signature": "F9uMuJzNBqj4j+HPTvWjUN/MNoe6KRH0818WkvDn2Sf7kg1P17YpNyzSB+CH57AWDFunU13tL8oTBDpBhODckelTxHIaEfG0rNmqmjK6DOs0/ObksTZh7W3OTbqfD2h4C/wqqMQHSWdXXnojwyFDEg=="
+              }
+            }
+          </pre>
+        </section>
+
+
+        <section>
+          <h4>Verification Method</h4>
+
+          <p>
+            When verifying a digital signature, public key material of the signer is required, the <code>verificationMethod</code> attribute is
+            used to communicate this as <a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-proof-overview">defined</a> in [[LD-PROOFS]].
+          </p>
+
+          <p>
+            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>verificationMethod</code> 
+            attribute with a value that is either the verification method required to verify the </a>linked data proof</a> or a URI that when dereferenced
+            results in the verification method required to verify the </a>linked data proof</a>. 
+          </p>
+          <p>
+            The verification method MUST be of <code>type</code> <a>Bls12381G2Key2020</a>.
+          </p>
+
+      
+          <pre class="example nohighlight">
+            {
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "@type": "Person",
+              "firstName": "Jane",
+              "lastName": "Does",
+              "jobTitle": "Professor",
+              "telephone": "(425) 123-4567",
+              "email": "jane.doe@example.com",
+              "proof": {
+                "type": "BbsBlsSignature2020",
+                "created": "2020-04-25",
+                <span class="highlight">"verificationMethod": "did:example:489398593#test"</span>,
+                "proofPurpose": "assertionMethod",
+                "requiredRevealStatements": [ 4, 5 ],
+                "signature": "F9uMuJzNBqj4j+HPTvWjUN/MNoe6KRH0818WkvDn2Sf7kg1P17YpNyzSB+CH57AWDFunU13tL8oTBDpBhODckelTxHIaEfG0rNmqmjK6DOs0/ObksTZh7W3OTbqfD2h4C/wqqMQHSWdXXnojwyFDEg=="
+              }
+            }
+          </pre>
+        </section>
+
+        <section>
+          <h4>Proof Purpose</h4>
+
+          <p>
+            A proof purpose defines what the purpose of the created proof was and is used to detect whether the verification method
+            has been used correctly.
+          </p>
+
+          <p>
+            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>proofPurpose</code> 
+            attribute with a value that is <a href="https://w3c-ccg.github.io/ld-proofs/#proof-purpose">defined</a> in [[LD-PROOFS]].
+          </p>
+
+          <pre class="example nohighlight">
+            {
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "@type": "Person",
+              "firstName": "Jane",
+              "lastName": "Does",
+              "jobTitle": "Professor",
+              "telephone": "(425) 123-4567",
+              "email": "jane.doe@example.com",
+              "proof": {
+                "type": "BbsBlsSignature2020",
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
+                <span class="highlight">"proofPurpose": "assertionMethod"</span>,
+                "requiredRevealStatements": [ 4, 5 ],
+                "signature": "F9uMuJzNBqj4j+HPTvWjUN/MNoe6KRH0818WkvDn2Sf7kg1P17YpNyzSB+CH57AWDFunU13tL8oTBDpBhODckelTxHIaEfG0rNmqmjK6DOs0/ObksTZh7W3OTbqfD2h4C/wqqMQHSWdXXnojwyFDEg=="
+              }
+            }
+          </pre>
+        </section>
+
+        <section>
+          <h4>Required Reveal Statements</h4>
+
+          <p>
+            When producing a digital signature that is capable of <a>selective disclosure</a> with a set signed statements, it is useful for the
+            signer to be able to express as apart of the proof which statements must be revealed in a <a>derived proof</a>
+          </p>
+
+          <p>
+            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>requiredRevealStatements</code> 
+            attribute with a value that is an array of un-signed integers representing the indicies of the statements in the <a>canonical form</a> 
+            that MUST always be revealed in a <a>derived proof</a>. The indicies corresponding to the statements for the <code>verificationMethod</code> 
+            and <code>proofPurpose</code> as apart of the </a>linked data proof</a> MUST always be present.
+          </p>
+
+    
+          <pre class="example nohighlight">
+            {
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "@type": "Person",
+              "firstName": "Jane",
+              "lastName": "Does",
+              "jobTitle": "Professor",
+              "telephone": "(425) 123-4567",
+              "email": "jane.doe@example.com",
+              "proof": {
+                "type": "BbsBlsSignature2020",
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
+                "proofPurpose": "assertionMethod",
+                <span class="highlight">"requiredRevealStatements": [ 4, 5 ]</span>,
+                "signature": "F9uMuJzNBqj4j+HPTvWjUN/MNoe6KRH0818WkvDn2Sf7kg1P17YpNyzSB+CH57AWDFunU13tL8oTBDpBhODckelTxHIaEfG0rNmqmjK6DOs0/ObksTZh7W3OTbqfD2h4C/wqqMQHSWdXXnojwyFDEg=="
               }
             }
           </pre>
@@ -493,142 +668,24 @@ and smaller to create rather than key generation.
 
           <pre class="example nohighlight">
             {
-              "@context": "https://w3id.org/security/v1",
-              "firstName": "John",
-              "lastName": "Doe",
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "@type": "Person",
+              "firstName": "Jane",
+              "lastName": "Does",
+              "jobTitle": "Professor",
+              "telephone": "(425) 123-4567",
+              "email": "jane.doe@example.com",
               "proof": {
                 "type": "BbsBlsSignature2020",
-                <span class="highlight">"signature": "IKwTJ...E37UsLgs="</span>,
-                "created": "2016-09-22T22:38:03Z",
-                "verificationMethod": "did:example:12345#key-id",
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
                 "proofPurpose": "assertionMethod",
-                "requiredRevealStatements": [ 1, 2 ]
-              }
-            }
-          </pre>
-        </section>
-
-        <section>
-          <h4>Created</h4>
-
-          <p>
-            When a digital signature is created, it is often useful to capture when this occured, the <code>created</code> attribute
-            can be used to communicate this.
-          </p>
-
-          <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MAY contain a <code>created</code> 
-            attribute with value a value corresponding to an [[!ISO8601]] combined date and time string.
-          </p>
-
-          <pre class="example nohighlight">
-            {
-              "@context": "https://w3id.org/security/v1",
-              "firstName": "John",
-              "lastName": "Doe",
-              "proof": {
-                "type": "BbsBlsSignature2020",
-                "signature": "IKwTJ...E37UsLgs=",
-                <span class="highlight">"created": "2016-09-22T22:38:03Z"</span>,
-                "verificationMethod": "did:example:12345#key-id",
-                "proofPurpose": "assertionMethod",
-                "requiredRevealStatements": [ 1, 2 ]
-              }
-            }
-          </pre>
-        </section>
-
-        <section>
-          <h4>Verification Method</h4>
-
-          <p>
-            When verifying a digital signature, public key material of the signer is required, the <code>verificationMethod</code> attribute is
-            used to communicate this.
-          </p>
-
-          <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>verificationMethod</code> 
-            attribute with a value that is either the verification method required to verify the </a>linked data proof</a> or a URI that when dereferenced
-            results in the verification method required to verify the </a>linked data proof</a>. The verification method MUST be of <code>type</code> <a>Bls12381G2Key2020</a>.
-          </p>
-
-      
-          <pre class="example nohighlight">
-            {
-              "@context": "https://w3id.org/security/v1",
-              "firstName": "John",
-              "lastName": "Doe",
-              "proof": {
-                "type": "BbsBlsSignature2020",
-                "signature": "IKwTJ...E37UsLgs=",
-                "created": "2016-09-22T22:38:03Z",
-                <span class="highlight">"verificationMethod": "did:example:12345#key-id"</span>,
-                "proofPurpose": "assertionMethod",
-                "requiredRevealStatements": [ 1, 2 ]
-              }
-            }
-          </pre>
-        </section>
-
-        <section>
-          <h4>Proof Purpose</h4>
-
-          <p>
-            A proof purpose defines what the purpose of the created proof was and is used to detect whether the verification method
-            has been used correctly.
-          </p>
-
-          <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>proofPurpose</code> 
-            attribute with a value that is defined by https://w3c-ccg.github.io/ld-proofs/#proof-purpose.
-          </p>
-
-       
-          <pre class="example nohighlight">
-            {
-              "@context": "https://w3id.org/security/v1",
-              "firstName": "John",
-              "lastName": "Doe",
-              "proof": {
-                "type": "BbsBlsSignature2020",
-                "signature": "IKwTJ...E37UsLgs=",
-                "created": "2016-09-22T22:38:03Z",
-                "verificationMethod": "did:example:12345#key-id",
-                <span class="highlight"></span>"proofPurpose": "assertionMethod"</span>,
-                "requiredRevealStatements": [ 1, 2 ]
-              }
-            }
-          </pre>
-        </section>
-
-        <section>
-          <h4>Required Reveal Statements</h4>
-
-          <p>
-            When producing a digital signature that is capable of <a>selective disclosure</a> with a set signed statements, it is useful for the
-            signer to be able to express as apart of the proof which statements must be revealed in a <a>derived proof</a>
-          </p>
-
-          <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>requiredRevealStatements</code> 
-            attribute with a value that is an array of un-signed integers representing the indicies of the statements in the <a>canonical form</a> 
-            that must be revealed. Both the indicies corresponding to the statement for the <code>verificationMethod</code> and <code>proofPurpose</code> 
-            as apart of the </a>linked data proof</a> MUST always be present.
-          </p>
-
-    
-          <pre class="example nohighlight">
-            {
-              "@context": "https://w3id.org/security/v1",
-              "firstName": "John",
-              "lastName": "Doe",
-              "proof": {
-                "type": "BbsBlsSignature2020",
-                "signature": "IKwTJ...E37UsLgs=",
-                "created": "2016-09-22T22:38:03Z",
-                "verificationMethod": "did:example:12345#key-id",
-                "proofPurpose": "assertionMethod",
-                <span class="highlight"></span>"requiredRevealStatements": [ 1, 2 ]</span>
+                "requiredRevealStatements": [ 4, 5 ],
+                <span class="highlight">"signature": "F9uMuJzNBqj4j+HPTvWjUN/MNoe6KRH0818WkvDn2Sf7kg1P17YpNyzSB+CH57AWDFunU13tL8oTBDpBhODckelTxHIaEfG0rNmqmjK6DOs0/ObksTZh7W3OTbqfD2h4C/wqqMQHSWdXXnojwyFDEg=="</span>
               }
             }
           </pre>
@@ -638,6 +695,11 @@ and smaller to create rather than key generation.
 
     <section>
       <h2>The BBS+ Signature Proof Suite 2020</h2>
+      <p>
+A BBS proof of knowledge <a>linked data proof</a> is a proof that
+is derived from a <a>BBSSignature2020</a> <a>linked data proof</a>
+where by a sub-set of the original <a>statements</a> are revealed.
+      </p>
       <p>
 The BBS+ proof of knowledge <a>signature suite</a> MUST be used in
 conjunction with the signing and verification algorithms in the
@@ -679,20 +741,33 @@ the following algorithms:
 
         <section>
           <h4>Derive Proof Algorithm</h4>
-
+          
           <p>
-            In order to support selective information disclosure 
-            the following algorithm has been defined.
+            The following algorithm defines how a <a>linked data proof</a>
+            can be derived given a <a>reveal document</a> and <a>linked data proof document</a>
+            which features a <a>linked data proof</a> supporting proof derivation.
           </p>
 
           <p>
-          The algorithm defined below, outlines the process of the <a>derive proof algorithm</a> for a obtaining a derived proof from a BBS+ signature.
+          The algorithm defined below, outlines the process of the <a>derive proof algorithm</a> 
+          for a obtaining a <a>derived proof</a> from a BBS+ signature.
           </p>
 
             <ol class="algorithm">
-              <li>Canonicalize the <a>input proof document</a> to a set of statements represented as <a>N-Quad</a>s.</li>
-
-            <div class="issue">TODO: Add pseudo code, or fix algorithm description.</div>
+              <li>
+                Canonicalize the input <a>linked data proof document</a> using the <a>canonicalization algorithm</a> 
+                to a set of statements represented as <a>n-quads</a>.
+              </li>
+              <li>
+                Canonicalize the <a>reveal document</a> using the <a>canonicalization algorithm</a> 
+                to a set of statements represented as <a>n-quads</a>.
+              </li>
+              
+            </ol>
+            <div class="issue">TODO: Define how we have to validate the requiredRevealStatements</div>
+            
+            <div class="issue">TODO: Add a comment on how we diff the input proof document and the reveal
+              document to produce get the correct node identifiers for the reveal document</div>
         </section>
         
       </section>
@@ -708,96 +783,117 @@ the following algorithms:
           <h4>Proof Type</h4>
 
           <p>
-            To identify the type of <a>linked data proof</a> that is attached to a <a>linked data document</a>, the <code>type</code> attribute is used.
+            To identify the type of <a>linked data proof</a> that is attached to a <a>linked data document</a>, 
+            the <code>type</code> attribute is used as <a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a> in
+            [[LD-PROOFS]].
           </p>
 
           <p>
-            The property of <code>typeo</code> with value of <code>BbsSignatureProof2020</code> is used to indicate when a <a>linked data proof</a> is of type BBS+ proof of knowledge.
+            The term of <code>BbsSignatureProof2020</code> is used to indicate when a <a>linked data proof</a> is of type BBS+ proof of knowledge.
           </p>
 
           <p>
             A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
-            MUST contain a proof element thats has a type equal to <code>BbsSignatureProof2020</code>.
+            MUST contain a <code>type</code> attribute thats has a type equal to <code>BbsSignatureProof2020</code>.
           </p>
 
-   
           <pre class="example nohighlight">
             {
-              "@context": [ "http://schema.org/", 
-                            "https://w3id.org/security/v2", 
-                            "https://w3c-ccg.github.io/lds-bbsbls2020/contexts/v1" ],
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "id": "urn:bnid:_:c14n0",
+              "email": "jane.doe@example.com",
               "firstName": "Jane",
+              "jobTitle": "Professor",
               "lastName": "Does",
+              "telephone": "(425) 123-4567",
               "proof": {
-                  <span class="highlight">"type": "BBSSignatureProof2020"</span>,
-                  "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
-                  "requiredRevealStatements": [ 1, 3 ],
-                  "revealedStatements": [ 1, 3 ],
-                  "totalStatements": 10,
-                  "proofPurpose": "assertionMethod",
-                  "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"
-                }
+                <span class="highlight">"type": "BbsBlsSignatureProof2020"</span>,
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
+                "proofPurpose": "assertionMethod",
+                "proof": "kTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDBEh5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1ouNAhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIMaG0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6obaojEnaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYGNQnu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBklMOh6lvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/QcoD3Tgmy+z0hN+4eky1RnJsEg=",
+                "revealStatements": [ 0, 1, 2, 3, 4, 5, 6, 7 ],
+                "totalStatements": 8,
+                "nonce": "6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdBCDd/l6tIY="
+              }
             }
           </pre>
         </section>
 
         <section>
-          <h4>Revealed Statements</h4>
+          <h4>Created</h4>
 
-          <div class="issue">TODO: Add paragraph</div>
+          <div class="issue">TODO: Add paragraph?</div>
 
           <p>
-              The property <code>revealedStatements</code> is an ordered array indicating the <a>statement</a>s being revealed in the proof of knowledge linked data 
-              proof. The order of the elements in the array correspond to the order of the <a>statement</a>s in the 
-              <a>canonical form</a>. The value of each element in the array indicates the identified statement's original 
-              position in the signed document for which the proof is derived from.
+            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MAY contain a <code>created</code> 
+            attribute with value a value corresponding to an [[!ISO8601]] combined date and time string.
           </p>
-        
+
           <pre class="example nohighlight">
             {
-              "@context": [ "http://schema.org/", 
-                            "https://w3id.org/security/v2", 
-                            "https://w3c-ccg.github.io/lds-bbsbls2020/contexts/v1" ],
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "id": "urn:bnid:_:c14n0",
+              "email": "jane.doe@example.com",
               "firstName": "Jane",
+              "jobTitle": "Professor",
               "lastName": "Does",
+              "telephone": "(425) 123-4567",
               "proof": {
-                  "type": "BBSSignatureProof2020",
-                  "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
-                  "requiredRevealStatements": [ 1, 3 ],
-                  <span class="highlight">"revealedStatements": [ 1, 3 ]</span>,
-                  "totalStatements": 10,
-                  "proofPurpose": "assertionMethod",
-                  "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"
-                }
+                "type": "BbsBlsSignatureProof2020",
+                <span class="highlight">"created": "2020-04-25"</span>,
+                "verificationMethod": "did:example:489398593#test",
+                "proofPurpose": "assertionMethod",
+                "proof": "kTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDBEh5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1ouNAhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIMaG0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6obaojEnaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYGNQnu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBklMOh6lvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/QcoD3Tgmy+z0hN+4eky1RnJsEg=",
+                "revealStatements": [ 0, 1, 2, 3, 4, 5, 6, 7 ],
+                "totalStatements": 8,
+                "nonce": "6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdBCDd/l6tIY="
+              }
             }
           </pre>
         </section>
 
         <section>
-          <h4>Total Statements</h4>
+          <h4>Verification Method</h4>
 
-          <div class="issue">TODO: Add paragraph</div>
-
-          <dd>
-             The property <code>totalStatements</code> is the total number of <a>statement</a>s which are present in the original <a>linked data proof</a>. 
-          </dd>
+          <p>
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> MUST contain a <code>verificationMethod</code> 
+            attribute with a value that is equal to that of the <a>BBSSignature2020</a> for which the proof is derived from.
+          </p>
           
+          <div class="issue">TODO: Add paragraph?</div>
+
           <pre class="example nohighlight">
             {
-              "@context": [ "http://schema.org/", 
-                            "https://w3id.org/security/v2", 
-                            "https://w3c-ccg.github.io/lds-bbsbls2020/contexts/v1" ],
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "id": "urn:bnid:_:c14n0",
+              "email": "jane.doe@example.com",
               "firstName": "Jane",
+              "jobTitle": "Professor",
               "lastName": "Does",
+              "telephone": "(425) 123-4567",
               "proof": {
-                  "type": "BBSSignatureProof2020",
-                  "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
-                  "requiredRevealStatements": [ 1, 3 ],
-                  "revealedStatements": [ 1, 3 ],
-                  <span class="highlight">"totalStatements": 10</span>,
-                  "proofPurpose": "assertionMethod",
-                  "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"
-                }
+                "type": "BbsBlsSignatureProof2020",
+                "created": "2020-04-25",
+                <span class="highlight">"verificationMethod": "did:example:489398593#test"</span>,
+                "proofPurpose": "assertionMethod",
+                "proof": "kTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDBEh5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1ouNAhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIMaG0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6obaojEnaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYGNQnu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBklMOh6lvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/QcoD3Tgmy+z0hN+4eky1RnJsEg=",
+                "revealStatements": [ 0, 1, 2, 3, 4, 5, 6, 7 ],
+                "totalStatements": 8,
+                "nonce": "6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdBCDd/l6tIY="
+              }
             }
           </pre>
         </section>
@@ -808,69 +904,212 @@ the following algorithms:
           <div class="issue">TODO: Add paragraph?</div>
 
           <p>
-            The property <code>proofPurpose</code> is used to indicate the purpose of the proof.
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> MUST contain a <code>proofPurpose</code> 
+            attribute with a value that is equal to that of the <a>BBSSignature2020</a> for which the proof is derived from.
           </p>
 
-          <p class="note">
-            <code>assertionMethod</code> should be used for creating verifiable credentials.
-          </p>
-
-        
           <pre class="example nohighlight">
             {
-              "@context": [ "http://schema.org/", 
-                            "https://w3id.org/security/v2", 
-                            "https://w3c-ccg.github.io/lds-bbsbls2020/contexts/v1" ],
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "id": "urn:bnid:_:c14n0",
+              "email": "jane.doe@example.com",
               "firstName": "Jane",
+              "jobTitle": "Professor",
               "lastName": "Does",
+              "telephone": "(425) 123-4567",
               "proof": {
-                  "type": "BBSSignatureProof2020",
-                  "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
-                  "requiredRevealStatements": [ 1, 3 ],
-                  "revealedStatements": [ 1, 3 ],
-                  "totalStatements": 10,
-                  <span class="highlight">"proofPurpose": "assertionMethod"</span>,
-                  "verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"
-                }
+                "type": "BbsBlsSignatureProof2020",
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
+                <span class="highlight">"proofPurpose": "assertionMethod"</span>,
+                "proof": "kTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDBEh5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1ouNAhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIMaG0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6obaojEnaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYGNQnu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBklMOh6lvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/QcoD3Tgmy+z0hN+4eky1RnJsEg=",
+                "revealStatements": [ 0, 1, 2, 3, 4, 5, 6, 7 ],
+                "totalStatements": 8,
+                "nonce": "6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdBCDd/l6tIY="
+              }
             }
           </pre>
         </section>
 
         <section>
-          <h4>Verification Method</h4>
+          <h4>Proof</h4>
 
           <p>
-            The property <code>verificationMethod</code> is used to refer to key material used to verify the proof.
+            The raw value outputted by computing a derive proof operation must feature in the proof, in order for parties to be able to verify the proof.
           </p>
 
-          <div class="issue">TODO: Add paragraph?</div>
+          <p>
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
+            MUST contain a <code>proof</code> attribute with value defined by the derive proof algorithm 
+            described in this specification.
+          </p>
+
+   
+          <pre class="example nohighlight">
+            {
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "id": "urn:bnid:_:c14n0",
+              "email": "jane.doe@example.com",
+              "firstName": "Jane",
+              "jobTitle": "Professor",
+              "lastName": "Does",
+              "telephone": "(425) 123-4567",
+              "proof": {
+                "type": "BbsBlsSignatureProof2020",
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
+                "proofPurpose": "assertionMethod",
+                <span class="highlight">"proof": "kTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDBEh5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1ouNAhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIMaG0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6obaojEnaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYGNQnu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBklMOh6lvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/QcoD3Tgmy+z0hN+4eky1RnJsEg="</span>,
+                "revealStatements": [ 0, 1, 2, 3, 4, 5, 6, 7 ],
+                "totalStatements": 8,
+                "nonce": "6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdBCDd/l6tIY="
+              }
+            }
+          </pre>
+        </section>
+
+        <section>
+          <h4>Revealed Statements</h4>
+
+          <div class="issue">TODO: Add paragraph</div>
+
+          <p>
+              An ordered array indicating the <a>statements</a> being revealed in the proof of knowledge <a>linked data 
+              proof</a>. The order of the elements in the array correspond to the order of the revealed <a>statements</a> in their
+              <a>canonical form</a>. The value of each element in the array indicates the identified statement's original 
+              position in the signed documents <a>canonical form</a> for which the proof is derived from.
+          </p>
+        
+          <p>
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
+            MUST contain a <code>revealStatements</code> attribute with value of type array.
+          </p>
 
           <pre class="example nohighlight">
             {
-              "@context": [ "http://schema.org/", 
-                            "https://w3id.org/security/v2", 
-                            "https://w3c-ccg.github.io/lds-bbsbls2020/contexts/v1" ],
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "id": "urn:bnid:_:c14n0",
+              "email": "jane.doe@example.com",
               "firstName": "Jane",
+              "jobTitle": "Professor",
               "lastName": "Does",
+              "telephone": "(425) 123-4567",
               "proof": {
-                  "type": "BBSSignatureProof2020",
-                  "proof": "eyJhbGciOiJFZERTQSIsI...wRG2fNmAx60Vi4Ag",
-                  "requiredRevealStatements": [ 1, 3 ],
-                  "revealedStatements": [ 1, 3 ],
-                  "totalStatements": 10,
-                  "proofPurpose": "assertionMethod",
-                  <span class="highlight">"verificationMethod": "did:example:28394728934792387#keys-7f83he7s8"</span>
-                }
+                "type": "BbsBlsSignatureProof2020",
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
+                "proofPurpose": "assertionMethod",
+                "proof": "kTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDBEh5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1ouNAhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIMaG0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6obaojEnaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYGNQnu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBklMOh6lvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/QcoD3Tgmy+z0hN+4eky1RnJsEg=",
+                <span class="highlight">"revealStatements": [ 0, 1, 2, 3, 4, 5, 6, 7 ]</span>,
+                "totalStatements": 8,
+                "nonce": "6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdBCDd/l6tIY="
+              }
+            }
+          </pre>
+        </section>
+
+        <section>
+          <h4>Total Statements</h4>
+
+          <div class="issue">TODO: Add paragraph</div>
+
+          <p>
+            The attribute <code>totalStatements</code> is the total number of <a>statement</a>s which are present in the original <a>linked data proof</a>. 
+          </p>
+
+          <p>
+             The total number of <a>statements</a> that were originally signed in the input proof document that was used to derive the <a>linked data proof</a>. 
+          </p>
+          
+          <p>
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
+            MUST contain a <code>totalStatements</code> attribute.
+          </p>
+
+          <pre class="example nohighlight">
+            {
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "id": "urn:bnid:_:c14n0",
+              "email": "jane.doe@example.com",
+              "firstName": "Jane",
+              "jobTitle": "Professor",
+              "lastName": "Does",
+              "telephone": "(425) 123-4567",
+              "proof": {
+                "type": "BbsBlsSignatureProof2020",
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
+                "proofPurpose": "assertionMethod",
+                "proof": "kTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDBEh5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1ouNAhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIMaG0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6obaojEnaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYGNQnu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBklMOh6lvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/QcoD3Tgmy+z0hN+4eky1RnJsEg=",
+                "revealStatements": [ 0, 1, 2, 3, 4, 5, 6, 7 ],
+                <span class="highlight">"totalStatements": 8</span>,
+                "nonce": "6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdBCDd/l6tIY="
+              }
+            }
+          </pre>
+        </section>
+
+        <section>
+          <h4>Nonce</h4>
+
+          <p>
+            When a proof is derived it is often useful to prove to the audience of the proof
+            the uniqueness or freshness of proof, the nonce attribute can be used to communicate this.
+          </p>
+
+          <p>
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
+            MAY contain a <code>nonce</code> attribute.
+          </p>
+
+          <pre class="example nohighlight">
+            {
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+              ],
+              "id": "urn:bnid:_:c14n0",
+              "email": "jane.doe@example.com",
+              "firstName": "Jane",
+              "jobTitle": "Professor",
+              "lastName": "Does",
+              "telephone": "(425) 123-4567",
+              "proof": {
+                "type": "BbsBlsSignatureProof2020",
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
+                "proofPurpose": "assertionMethod",
+                "proof": "kTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDBEh5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1ouNAhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIMaG0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6obaojEnaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYGNQnu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBklMOh6lvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/QcoD3Tgmy+z0hN+4eky1RnJsEg=",
+                "revealStatements": [ 0, 1, 2, 3, 4, 5, 6, 7 ],
+                "totalStatements": 8,
+                <span class="highlight">"nonce": "6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdBCDd/l6tIY="</span>
+              }
             }
           </pre>
         </section>
       </section>
     </section>
 
-    
- 
-   
     <section id="conformance">
+
+    <div class="issue">TODO: Add paragraph</div>
 
     </section>
 
