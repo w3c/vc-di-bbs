@@ -192,8 +192,8 @@
       <p>
 This specification describes the BBS+ Signature Suite created in 2020
 for the Linked Data Proof specification. The Signature Suite utilizes
-the BBS signature mechanism to provide signatures that feature zero knowledge
-proof disclosure capabilities.
+BBS+ signatures to provide the capability of zero knowledge
+proof disclosures.
       </p>
     </section>
 
@@ -355,8 +355,8 @@ only present in a subset of elliptic curves known as being pairing friendly.
       </p>
       <p>
 Because of the pairing friendly property, BLS12-381 can be used to construct digital signatures
-that have unique properties, such as aggregatable (TODO reference) signatures and or signatures
-that support zero knowledge proof (TODO reference) disclosure.
+that have unique properties, such as aggregatable signatures and or signatures
+that support zero knowledge proof disclosure.
       </p>
       
 
@@ -460,8 +460,8 @@ and smaller to create rather than key generation.
 
             <ol class="algorithm">
               <li>Canonicalize the input document using the <a>canonicalization algorithm</a> to a set of <a>statements</a> represented as <a>n-quads</a>.</li>
-              <li>Initialize an empty array of length equal to the number of statements this will be referred to as the <a>statement digests</a> array.</li>
-              <li>For each <a>statements</a> in order:
+              <li>Initialize an empty array of length equal to the number of statements, let this be known as the <a>statement digests</a> array.</li>
+              <li>For each <a>statement</a> in order:
                 <ol class="algorithm">
                   <li>Apply the <a>statement digest algorithm</a> to obtain a <a>statement digest</a></li>
                   <li>Insert the <a>statement digest</a> into the <a>statement digests</a> array which MUST maintain same order as the order 
@@ -472,7 +472,6 @@ and smaller to create rather than key generation.
         </section>
         
       </section>
-
 
       <section>
         <h3>Terms</h3>
@@ -699,6 +698,8 @@ and smaller to create rather than key generation.
             attribute with value defined by the signing algorithm described in this specification.
           </p>
 
+          <div class="issue">TODO: Define the encoding scheme for the signature value</div>
+
           <pre class="example nohighlight">
             {
               "@context": [
@@ -768,68 +769,6 @@ the following algorithms:
           </tr>
         </tbody>
       </table>
-
-      <section>
-        <h3>Modification to Algorithms</h3>
-
-        <section>
-          <h4>Create Derive Proof Data Algorithm</h4>
-          
-          <p>
-            The following algorithm defined below outlines the process of obtaining the inputs into the <a>derive proof algorithm</a>.
-          </p>
-
-          <dt><dfn>input proof document</dfn></dt>
-              <dd>
-        A <a>linked data proof document</a> featuring a <a>linked data proof</a> that supports proof derivation.
-              </dd>
-
-          <dt><dfn>reveal document</dfn></dt>
-              <dd>
-        A <a>JSON-LD document</a> in the form of a <a>frame</a> which describes the desired transform to apply to the <a>input proof document</a> using
-        the <a>framing algorithm</a> defined in [[JSON-LD-FRAMING]].
-              </dd>
-
-          <dt><dfn>revealed document</dfn></dt>
-              <dd>
-        A <a>linked data proof document</a> which is the product of the <a>derive proof algorithm</a>.
-              </dd>
-
-            <ol class="algorithm">
-              <li>
-                Apply the <a>canonicalization algorithm</a> to the <a>input proof document</a> to obtain a set of <a>statements</a>
-                represented as <a>n-quads</a>. Let this set be known as the <a>input proof document statements</a>.
-              </li>
-              <li>
-                Record the total number of <a>statements</a> in the <a>input proof document statements</a>. 
-                Let this be known as the <a>total statements</a>.
-              </li>
-              <li>
-                Apply the <a>framing algorithm</a> to the <a>input proof document</a>. Let the product of the <a>framing algorithm</a> be
-                known as the <a>revealed document</a>.
-              </li>
-              <li>
-                Canonicalize the <a>revealed document</a> using the <a>canonicalization algorithm</a> to obtain the set of <a>statements</a> 
-                represented as <a>n-quads</a>. Let these be known as the <a>revealed statements</a>.
-              </li>
-              <li>
-                Initialize an empty array of length equal to the number of <a>revealed statements</a>. 
-                Let this be known as the <a>revealed indicies</a> array.
-              </li>
-              <li>For each <a>statement</a> in order:
-                <ol class="algorithm">
-                  <li>Find the numerical index the <a>statement</a> occupies in the set <a>input proof document statements</a>.
-                  <li>Insert this numerical index into the <a>revealed indicies</a> array</li>
-                </ol>
-              <li>Returned the <a>revealed indicies</a> array, <a>total statements</a> and <a>input proof document statements</a>.</li>
-            </ol>
-            <div class="issue">TODO: Define how we have to validate the requiredRevealStatements</div>
-            
-            <div class="issue">TODO: Add a comment on how we diff the input proof document and the reveal
-              document to produce get the correct node identifiers for the reveal document</div>
-        </section>
-        
-      </section>
 
       <section>
         <h3>Terms</h3>
@@ -1037,9 +976,7 @@ the following algorithms:
 
         <section>
           <h4><dfn>Revealed Indicies</dfn></h4>
-
-          <div class="issue">TODO: Add paragraph</div>
-
+          
           <p>
               An ordered array indicating the <a>statements</a> being revealed in the proof of knowledge <a>linked data 
               proof</a>. The order of the elements in the array correspond to the order of the revealed <a>statements</a> in their
@@ -1158,6 +1095,75 @@ the following algorithms:
           </pre>
         </section>
       </section>
+    </section>
+
+    <section>
+      <h2>Derive Proof Algorithm</h2>
+
+      <p>
+        In order to support <a>selective disclosure</a> of <a>statements</a>, 
+        the following <a>derive proof algorithm</a> has been defined.
+      </p>
+
+      <div class="issue">TODO: Add examples and full definition of this algorithm</div>
+
+      <section>
+        <h4>Create Derive Proof Data Algorithm</h4>
+        
+        <p>
+          The following algorithm defined below outlines the process of obtaining the inputs into the <a>derive proof algorithm</a>.
+        </p>
+
+        <dt><dfn>input proof document</dfn></dt>
+            <dd>
+      A <a>linked data proof document</a> featuring a <a>linked data proof</a> that supports proof derivation.
+            </dd>
+
+        <dt><dfn>reveal document</dfn></dt>
+            <dd>
+      A <a>JSON-LD document</a> in the form of a <a>frame</a> which describes the desired transform to apply to the <a>input proof document</a> using
+      the <a>framing algorithm</a> defined in [[JSON-LD-FRAMING]].
+            </dd>
+
+        <dt><dfn>revealed document</dfn></dt>
+            <dd>
+      A <a>linked data proof document</a> which is the product of the <a>derive proof algorithm</a>.
+            </dd>
+
+          <ol class="algorithm">
+            <li>
+              Apply the <a>canonicalization algorithm</a> to the <a>input proof document</a> to obtain a set of <a>statements</a>
+              represented as <a>n-quads</a>. Let this set be known as the <dfn>input proof document statements</dfn>.
+            </li>
+            <li>
+              Record the total number of <a>statements</a> in the <a>input proof document statements</a>. 
+              Let this be known as the <a>total statements</a>.
+            </li>
+            <li>
+              Apply the <a>framing algorithm</a> to the <a>input proof document</a>. Let the product of the <a>framing algorithm</a> be
+              known as the <a>revealed document</a>.
+            </li>
+            <li>
+              Canonicalize the <a>revealed document</a> using the <a>canonicalization algorithm</a> to obtain the set of <a>statements</a> 
+              represented as <a>n-quads</a>. Let these be known as the <a>revealed statements</a>.
+            </li>
+            <li>
+              Initialize an empty array of length equal to the number of <a>revealed statements</a>. 
+              Let this be known as the <a>revealed indicies</a> array.
+            </li>
+            <li>For each <a>statement</a> in order:
+              <ol class="algorithm">
+                <li>Find the numerical index the <a>statement</a> occupies in the set <a>input proof document statements</a>.
+                <li>Insert this numerical index into the <a>revealed indicies</a> array</li>
+              </ol>
+            <li>Returned the <a>revealed indicies</a> array, <a>total statements</a> and <a>input proof document statements</a>.</li>
+          </ol>
+          <div class="issue">TODO: Define how we have to validate the requiredRevealStatements</div>
+          
+          <div class="issue">TODO: Add a comment on how we diff the input proof document and the reveal
+            document to produce get the correct node identifiers for the reveal document</div>
+      </section>
+
     </section>
 
     <section id="conformance">
