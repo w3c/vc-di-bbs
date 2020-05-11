@@ -1,6 +1,6 @@
-# jsonld-signatures-bbs
+# BBS+ Signature Linked Data Proofs
 
-Link to spec https://mattrglobal.github.io/jsonld-signatures-bbs-spec/
+[Latest Draft](https://w3c-ccg.github.io/ldp-bbs2020)
 
 The following repository contains the specification for a [linked data signature](https://w3c-ccg.github.io/ld-proofs/) using the [BBS+ Signature Algorithm](https://eprint.iacr.org/2009/095.pdf) using [BLS12-381](https://tools.ietf.org/id/draft-yonezawa-pairing-friendly-curves-00.html#rfc.section.2.4) elliptic curve based key pairs.
 
