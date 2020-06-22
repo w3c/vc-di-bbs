@@ -139,17 +139,11 @@
             status:   "Published",
             publisher:  "Advances in Cryptology—CRYPTO 2004"
           },
-          "ASM": {
-            title:    "Constant-Size Dynamic k-TAA",
-            href:     "http://web.cs.iastate.edu/~wzhang/teach-552/ReadingList/552-14.pdf",
-            authors:  ["Man Ho Au", "Willy Susilo", "Yi Mu"],
-            status:   "Published"
-          },
-          "ANON-ATTESTATION-DH": {
-            title:    "Anonymous Attestation Using the Strong Diffie Hellman Assumption Revisited",
-            href:     "https://eprint.iacr.org/2016/663.pdf",
-            authors:  ["Jan Camenisch", "Manu Drijvers", "Anja Lehmann"],
-            status:   "Published"
+          "BBS": {
+            title:    "BBS+ Signatures",
+            href:     "https://mattrglobal.github.io/bbs-signatures-spec/",
+            authors:  ["Michael Lodder", "Tobias Looker"],
+            status:   "Draft"
           },
           "SHA-3": {
             title:    "SHA-3 Standard: Permutation-Based Has and Extendable-Output Functions",
@@ -217,11 +211,7 @@ to digest each statement to be signed individually, finally the digested stateme
 using the defined <a>signature algorithm</a>.
       </p>
       <p>
-BBS Signatures were first defined in [[SHORT-GROUP-SIGNATURES]]
-and later improved on in [[ASM]] as BBS+ and touched on again in section 4.3 in [[ANON-ATTESTATION-DH]].
-      </p>
-      <p>
-BBS+ signatures are compatible with any pairing friendly elliptic curve, however the cryptographic 
+BBS+ signatures [[BBS]] are compatible with any pairing friendly elliptic curve, however the cryptographic 
 suites defined in this document elect to only allow the usage of the BLS12-381 for interoperability purposes.
       </p>
     </section>
@@ -431,7 +421,7 @@ and smaller to create rather than key generation.
                   <tr>
                     <td><a>signature algorithm</a></td>
                     <td>BBS+ Signature</td>
-                    <td>[[ANON-ATTESTATION-DH]]</td>
+                    <td>[[BBS]]</td>
                   </tr>
                   <tr>
                     <td><a>curve name</a></td>
@@ -760,7 +750,7 @@ the following algorithms:
           <tr>
             <td><a>signature algorithm</a></td>
             <td>BBS+ Signature</td>
-            <td>[[ANON-ATTESTATION-DH]]</td>
+            <td>[[BBS]]</td>
           </tr>
           <tr>
             <td><a>curve name</a></td>
