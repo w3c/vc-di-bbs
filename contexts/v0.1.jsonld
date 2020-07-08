@@ -42,14 +42,12 @@
             }
           }
         },
-        "proofValue": "sec:proofValue",
         "verificationMethod": {
           "@id": "sec:verificationMethod",
           "@type": "@id"
         }
       }
     },
-    "BbsBlsSignatureProof2020": "lds:BbsBlsSignatureProof2020",
     "Bls12381G2Key2020": "lds:Bls12381G2Key2020",
     "requiredRevealStatements": "lds:requiredRevealStatements"
   }
