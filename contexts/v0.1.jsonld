@@ -19,10 +19,6 @@
           "@type": "xsd:dateTime"
         },
         "domain": "sec:domain",
-        "expires": {
-          "@id": "sec:expiration",
-          "@type": "xsd:dateTime"
-        },
         "signature": "sec:signature",
         "nonce": "sec:nonce",
         "proofPurpose": {
