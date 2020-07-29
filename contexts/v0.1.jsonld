@@ -19,7 +19,6 @@
           "@type": "xsd:dateTime"
         },
         "domain": "sec:domain",
-        "signature": "sec:signature",
         "nonce": "sec:nonce",
         "proofPurpose": {
           "@id": "sec:proofPurpose",
@@ -42,6 +41,7 @@
             }
           }
         },
+        "proofValue": "sec:proofValue",
         "verificationMethod": {
           "@id": "sec:verificationMethod",
           "@type": "@id"
