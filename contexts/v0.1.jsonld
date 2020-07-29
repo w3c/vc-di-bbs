@@ -92,6 +92,7 @@
         }
       }
     },
+    "Bls12381G1Key2020": "lds:Bls12381G1Key2020",
     "Bls12381G2Key2020": "lds:Bls12381G2Key2020",
     "requiredRevealStatements": "lds:requiredRevealStatements"
   }
