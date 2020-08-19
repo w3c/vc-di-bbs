@@ -365,28 +365,56 @@ are smaller. With this definition of BBS+ signatures we have opted for signature
 and smaller to create rather than key generation.
       </p>
         
-  
-<section>
-  <h3><dfn>Bls12381G2Key2020</dfn></h3>
+  <section>
+    <h3><dfn>Bls 12-381 G1 Public Key</dfn></h3>
 
-  <p>
-    The keys definition MUST have an attribute of <code>publicKeyBase58</code> and its value 
-    MUST be a base58 encoded BLS12-381 public key in the G2 field. Where the 
-    BLS12-381 public key is the concatenation of the 2 raw 48 byte x co-ordinates
-    defining the commitment. 
-  </p>
     <p>
-    A simple example of a <a>Bls12381G2Key2020</a>:
+      The following section defines the representation of the <dfn>Bls12381G1Key2020</dfn>
     </p>
-    <pre class="example highlight" title="base58 encoded BLS12-381 G2 Key">
-      {
-        "id": "did:example:123456789abcdefghi#keys-1",
-        "type": "Bls12381G2Key2020",
-        "controller": "did:example:123456789abcdefghi",
-        "publicKeyBase58" : "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
-      }
-    </pre>
-</section>
+
+    <p>
+      The keys definition MUST have an attribute of <code>publicKeyBase58</code> and its value 
+      MUST be a base58 encoded BLS12-381 public key in the G1 field. Where the 
+      BLS12-381 public key is the raw 48 byte x co-ordinate defining the commitment. 
+    </p>
+      <p>
+      A simple example of a <a>Bls12381G1Key2020</a>:
+      </p>
+      <pre class="example highlight" title="base58 encoded BLS12-381 G1 Key">
+        {
+          "id": "did:example:123456789abcdefghi#keys-1",
+          "type": "Bls12381G1Key2020",
+          "controller": "did:example:123456789abcdefghi",
+          "publicKeyBase58" : "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
+        }
+      </pre>
+  </section>
+
+  <section>
+    <h3><dfn>Bls 12-381 G2 Public Key</dfn></h3>
+
+    <p>
+      The following section defines the representation of the <dfn>Bls12381G2Key2020</dfn>
+    </p>
+
+    <p>
+      The keys definition MUST have an attribute of <code>publicKeyBase58</code> and its value 
+      MUST be a base58 encoded BLS12-381 public key in the G2 field. Where the 
+      BLS12-381 public key is the concatenation of the 2 raw 48 byte x co-ordinates
+      defining the commitment. 
+    </p>
+      <p>
+      A simple example of a <a>Bls12381G2Key2020</a>:
+      </p>
+      <pre class="example highlight" title="base58 encoded BLS12-381 G2 Key">
+        {
+          "id": "did:example:123456789abcdefghi#keys-1",
+          "type": "Bls12381G2Key2020",
+          "controller": "did:example:123456789abcdefghi",
+          "publicKeyBase58" : "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
+        }
+      </pre>
+  </section>
         
     </section>
 
@@ -480,12 +508,12 @@ and smaller to create rather than key generation.
           </p>
 
           <p>
-            The term of <code><dfn>BbsSignature2020</dfn></code> is used to indicate when a <a>linked data proof</a> is of type BBS+ Signature.
+            The term of <code><dfn>BbsBlsSignature2020</dfn></code> is used to indicate when a <a>linked data proof</a> is of type BBS+ Signature.
           </p>
 
           <p>
             A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> 
-            MUST contain a proof element thats has a type equal to <code>BbsSignature2020</code>.
+            MUST contain a proof element thats has a type equal to <code>BbsBlsSignature2020</code>.
           </p>
 
 
@@ -721,7 +749,7 @@ and smaller to create rather than key generation.
       <h2>The BBS+ Signature Proof Suite 2020</h2>
       <p>
 A BBS proof of knowledge <a>linked data proof</a> is a proof that
-is derived from a <a>BBSSignature2020</a> <a>linked data proof</a>
+is derived from a <a>BbsBlsSignature2020</a> <a>linked data proof</a>
 where by a sub-set of the original <a>statements</a> are revealed.
       </p>
       <p>
@@ -850,7 +878,7 @@ the following algorithms:
 
           <p>
             A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> MUST contain a <code>verificationMethod</code> 
-            attribute with a value that is equal to that of the <a>BBSSignature2020</a> for which the proof is derived from.
+            attribute with a value that is equal to that of the <a>BbsBlsSignature2020</a> for which the proof is derived from.
           </p>
           
           <div class="issue">TODO: Add paragraph?</div>
@@ -887,7 +915,7 @@ the following algorithms:
 
           <p>
             A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> MUST contain a <code>proofPurpose</code> 
-            attribute with a value that is equal to that of the <a>BBSSignature2020</a> for which the proof is derived from.
+            attribute with a value that is equal to that of the <a>BbsBlsSignature2020</a> for which the proof is derived from.
           </p>
 
           <pre class="example nohighlight">
