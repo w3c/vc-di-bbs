@@ -382,10 +382,24 @@ and smaller to create rather than key generation.
       </p>
       <pre class="example highlight" title="base58 encoded BLS12-381 G1 Key">
         {
-          "id": "did:example:123456789abcdefghi#keys-1",
+          "id": "did:example:489398593#test",
           "type": "Bls12381G1Key2020",
-          "controller": "did:example:123456789abcdefghi",
-          "publicKeyBase58" : "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
+          "controller": "did:example:489398593",
+          "publicKeyBase58": "7cJGQwV5XyzUjJEzY5doVhv62Qqou6qW7G4eh9YbUywgyeDCobiXjN8CnQ7wpWBrGR",
+        }
+      </pre>
+
+      <pre class="example highlight" title="JWK encoded BLS12-381 G1 Key">
+        {
+          "id": "did:example:489398593#test",
+          "type": "Bls12381G1Key2020",
+          "controller": "did:example:489398593",
+          "publicKeyJwk": {
+            "kid": "did:example:489398593#test",
+            "kty": "EC",
+            "crv": "BLS12381_G1",
+            "x": "tCgCNuUYQotPEsrljWi-lIRIPpzhqsnJV1NPnE7je6glUb-FJm9IYkuv2hbHw22i"
+          }
         }
       </pre>
   </section>
@@ -408,10 +422,24 @@ and smaller to create rather than key generation.
       </p>
       <pre class="example highlight" title="base58 encoded BLS12-381 G2 Key">
         {
-          "id": "did:example:123456789abcdefghi#keys-1",
+          "id": "did:example:489398593#test",
           "type": "Bls12381G2Key2020",
-          "controller": "did:example:123456789abcdefghi",
+          "controller": "did:example:489398593",
           "publicKeyBase58" : "oqpWYKaZD9M1Kbe94BVXpr8WTdFBNZyKv48cziTiQUeuhm7sBhCABMyYG4kcMrseC68YTFFgyhiNeBKjzdKk9MiRWuLv5H4FFujQsQK2KTAtzU8qTBiZqBHMmnLF4PL7Ytu"
+        }
+      </pre>
+
+      <pre class="example highlight" title="JWK encoded BLS12-381 G2 Key">
+        {
+          "id": "did:example:489398593#test",
+          "type": "Bls12381G2Key2020",
+          "controller": "did:example:489398593",
+          "publicKeyJwk": {
+            "kid": "did:example:489398593#test",
+            "crv": "BLS12381_G2",
+            "kty": "EC",
+            "x": "h_rkcTKXXzRbOPr9UxSfegCbid2U_cVNXQUaKeGF7UhwrMJFP70uMH0VQ9-3-_2zDPAAjflsdeLkOXW3-ShktLxuPy8UlXSNgKNmkfb-rrj-FRwbs13pv_WsIf-eV66-"
+          }
         }
       </pre>
   </section>
