@@ -1,0 +1,22 @@
+{
+  "name": "ldp-bbs2020",
+  "version": "0.0.1",
+  "description": "[Latest Draft](https://w3c-ccg.github.io/ldp-bbs2020)",
+  "main": "index.js",
+  "scripts": {
+    "lint": "jsonld-lint contexts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/w3c-ccg/ldp-bbs2020.git"
+  },
+  "author": "W3C CCG",
+  "bugs": {
+    "url": "https://github.com/w3c-ccg/ldp-bbs2020/issues"
+  },
+  "homepage": "https://github.com/w3c-ccg/ldp-bbs2020#readme",
+  "devDependencies": {
+    "jsonld-lint-cli": "^0.3.0"
+  }
+}

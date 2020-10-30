@@ -1,2 +1,6 @@
-# Default ignored files
-/workspace.xml
+*.sw[nop]
+*~
+.DS_Store
+TAGS
+dist
+node_modules
