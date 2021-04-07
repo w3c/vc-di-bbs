@@ -125,6 +125,13 @@
             status:   "Candidate Recommendation",
             publisher:  "W3C"
           },
+          "JSON-LD": {
+            title:    "JSON-LD 1.1",
+            href:     "https://www.w3.org/TR/json-ld11",
+            authors:  ["Dave Longley", "Gregg Kellogg", "Pierre-Antoine Champin"],
+            status:   "Candidate Recommendation",
+            publisher:  "W3C"
+          },
           "PAIRING-FRIENDLY-CURVES": {
             title:    "Pairing-Friendly Curves",
             href:     "https://tools.ietf.org/html/draft-irtf-cfrg-pairing-friendly-curves-03",
@@ -546,7 +553,7 @@ and smaller to create rather than key generation.
               "@context": [
                 "http://schema.org/",
                 "https://w3id.org/security/v2",
-                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+                "https://w3id.org/security/bbs/v1"
               ],
               "@type": "Person",
               "firstName": "Jane",
@@ -585,7 +592,7 @@ and smaller to create rather than key generation.
               "@context": [
                 "http://schema.org/",
                 "https://w3id.org/security/v2",
-                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+                "https://w3id.org/security/bbs/v1"
               ],
               "@type": "Person",
               "firstName": "Jane",
@@ -605,6 +612,41 @@ and smaller to create rather than key generation.
           </pre>
         </section>
 
+        <section>
+          <h4>@context</h4>
+
+          <p> 
+            When using [[JSON-LD]] to exchange data between more than one software system, it's important to use terminology that both of the software systems can understand. 
+            In [[JSON-LD]] this common terminology is identified with the usage of URIs. However, those URIs can be long and not human friendly for implementors to work with.
+            In such cases, aliases that are presented in a short-form can be used to ease this burden. This specification relies on the <code>@context</code> property in [[JSON-LD]]
+            to short-form aliases to long form URIs required by this <a>signature suite</a>. It's RECOMMENDED that <code>https://w3id.org/security/bbs/v1</code> is used within the 
+            <code>@context</code> property to map the short-form aliases to long form URIs.
+          </p>
+
+          <pre class="example nohighlight">
+            {
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                <span class="highlight">"https://w3id.org/security/bbs/v1"</span>
+              ],
+              "@type": "Person",
+              "firstName": "Jane",
+              "lastName": "Does",
+              "jobTitle": "Professor",
+              "telephone": "(425) 123-4567",
+              "email": "jane.doe@example.com",
+              "proof": {
+                "type": "BbsBlsSignature2020",
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
+                "proofPurpose": "assertionMethod",
+                "requiredRevealStatements": [ 4, 5 ],
+                "signature": "F9uMuJzNBqj4j+HPTvWjUN/MNoe6KRH0818WkvDn2Sf7kg1P17YpNyzSB+CH57AWDFunU13tL8oTBDpBhODckelTxHIaEfG0rNmqmjK6DOs0/ObksTZh7W3OTbqfD2h4C/wqqMQHSWdXXnojwyFDEg=="
+              }
+            }
+          </pre>
+        </section>
 
         <section>
           <h4>Verification Method</h4>
@@ -629,7 +671,7 @@ and smaller to create rather than key generation.
               "@context": [
                 "http://schema.org/",
                 "https://w3id.org/security/v2",
-                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+                "https://w3id.org/security/bbs/v1"
               ],
               "@type": "Person",
               "firstName": "Jane",
@@ -667,7 +709,7 @@ and smaller to create rather than key generation.
               "@context": [
                 "http://schema.org/",
                 "https://w3id.org/security/v2",
-                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+                "https://w3id.org/security/bbs/v1"
               ],
               "@type": "Person",
               "firstName": "Jane",
@@ -708,7 +750,7 @@ and smaller to create rather than key generation.
               "@context": [
                 "http://schema.org/",
                 "https://w3id.org/security/v2",
-                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+                "https://w3id.org/security/bbs/v1"
               ],
               "@type": "Person",
               "firstName": "Jane",
@@ -747,7 +789,7 @@ and smaller to create rather than key generation.
               "@context": [
                 "http://schema.org/",
                 "https://w3id.org/security/v2",
-                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+                "https://w3id.org/security/bbs/v1"
               ],
               "@type": "Person",
               "firstName": "Jane",
@@ -842,7 +884,7 @@ the following algorithms:
               "@context": [
                 "http://schema.org/",
                 "https://w3id.org/security/v2",
-                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+                "https://w3id.org/security/bbs/v1"
               ],
               "id": "urn:bnid:_:c14n0",
               "email": "jane.doe@example.com",
@@ -877,7 +919,7 @@ the following algorithms:
               "@context": [
                 "http://schema.org/",
                 "https://w3id.org/security/v2",
-                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+                "https://w3id.org/security/bbs/v1"
               ],
               "id": "urn:bnid:_:c14n0",
               "email": "jane.doe@example.com",
@@ -912,7 +954,7 @@ the following algorithms:
               "@context": [
                 "http://schema.org/",
                 "https://w3id.org/security/v2",
-                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+                "https://w3id.org/security/bbs/v1"
               ],
               "id": "urn:bnid:_:c14n0",
               "email": "jane.doe@example.com",
@@ -947,7 +989,7 @@ the following algorithms:
               "@context": [
                 "http://schema.org/",
                 "https://w3id.org/security/v2",
-                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+                "https://w3id.org/security/bbs/v1"
               ],
               "id": "urn:bnid:_:c14n0",
               "email": "jane.doe@example.com",
@@ -986,7 +1028,7 @@ the following algorithms:
               "@context": [
                 "http://schema.org/",
                 "https://w3id.org/security/v2",
-                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+                "https://w3id.org/security/bbs/v1"
               ],
               "id": "urn:bnid:_:c14n0",
               "email": "jane.doe@example.com",
@@ -1024,7 +1066,7 @@ the following algorithms:
               "@context": [
                 "http://schema.org/",
                 "https://w3id.org/security/v2",
-                "https://w3c-ccg.github.io/lds-bbsbls2020/contexts"
+                "https://w3id.org/security/bbs/v1"
               ],
               "id": "urn:bnid:_:c14n0",
               "email": "jane.doe@example.com",
