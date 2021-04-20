@@ -6,9 +6,9 @@ The following repository contains the specification for a [linked data signature
 
 Due to the properties of a [BBS+ Signatures](https://mattrglobal.github.io/bbs-signatures-spec/) a zero knowledge proof can be derived from the signature, whereby the party generating the proof can elect to selectively disclose statements from the originally signed payload.
 
-## Reference Implementations
+## Known Implementations
 
-The following is a list of known reference implementations of this specification
+The following is a list of known implementations of this specification
 
 - [jsonld-signatures-bbs](https://github.com/mattrglobal/jsonld-signatures-bbs) (Typescript + Rust)
 - [aries-framework-go](https://github.com/hyperledger/aries-framework-go) (Golang)
