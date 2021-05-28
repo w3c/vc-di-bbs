@@ -1093,9 +1093,9 @@ the following algorithms:
       <h2>The BBS+ Bound Signature Suite 2020</h2>
 
       <p>
-The BBS+ Bound <a>signature suite</a> 2020 is identical to the BBS+
-<a>signature suite</a> 2020 with the addition of a mechanism for recipient
-binding. It MUST be used in conjunction with the signing and verification
+The BBS+ Bound <a>signature suite</a> 2020 adds a mechanism for recipient
+binding, and is otherwise identical, to the BBS+ <a>signature suite</a>
+2020. It MUST be used in conjunction with the signing and verification
 algorithms in the Linked Data Proofs [[LD-PROOFS]] specification. The suite
 consists of the following algorithms:
       </p>
@@ -1142,7 +1142,7 @@ addition of steps to include recipient binding.
           </p>
 
           <p>
-The algorithm defined below, outlines the process of obtaining the data in the
+The algorithm defined below outlines the process of obtaining the data in the
 form required for both signing and verifying, plus the data required to bind to
 a recipient
           </p>
@@ -1153,11 +1153,11 @@ Obtain a blind message which is a commitment to a secret value as described in
             </li>
             <li>
 Initialize an empty array of length equal to the number of statements not
-including the recipient binding commitment, let this be known as the
+including the recipient binding commitment; let this be known as the
 <a>statement digests</a> array.
             </li>
             <li>
-Canonicalize the input document using the <a>canonicalization algorithm</a> to a
+Use the <a>canonicalization algorithm</a> to canonicalize the input document to a
 set of <a>statements</a> represented as <a>n-quads</a>.
             </li>
             <li>
@@ -1195,14 +1195,14 @@ are the same in both suites.
           <h4>Proof Type</h4>
 
           <p>
-To identify the type of <a>linked data proof</a> that is attached to a
-<a>linked data document</a>, use the <code>type</code> attribute
+Use the <code>type</code> attribute
 <a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a>
-in [[LD-PROOFS]].
+in [[LD-PROOFS]] to identify the type of <a>linked data proof</a> that is attached
+to a <a>linked data document</a>.
           </p>
 
           <p>
-The term of <code><dfn>BbsBlsBoundSignature2020</dfn></code> is used to indicate
+The term <code><dfn>BbsBlsBoundSignature2020</dfn></code> is used to indicate
 when a <a>linked data proof</a> is of type BBS+ Bound Signature.
           </p>
 
@@ -1248,9 +1248,9 @@ a sub-set of the original <a>statements</a> are revealed.
       <p>
 The BBS+ bound proof of knowledge <a>signature suite</a> MUST be used in
 conjunction with the signing and verification algorithms in the Linked Data
-Proofs [[LD-PROOFS]] specification. It is identical to the BBS+ proof of
-knowledge <a>signature suite</a> with the addition of a proof of recipient
-binding. The suite consists of the following algorithms:
+Proofs [[LD-PROOFS]] specification. It adds a proof of recipient binding,
+and is otherwise identical, to the BBS+ proof of knowledge <a>signature
+suite</a>. The suite consists of the following algorithms:
       </p>
       <table class="simple">
         <thead>
@@ -1296,14 +1296,14 @@ proof of knowledge. All other terms are the same in both suites.
           <h4>Proof Type</h4>
 
           <p>
-To identify the type of <a>linked data proof</a> that is attached to a
-<a>linked data document</a>, the <code>type</code> attribute is used as
-<a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a>
+The <code>type</code> attribute is used to identify the type of <a>linked
+data proof</a> that is attached to a <a>linked data document</a> as <a
+href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a>
 in [[LD-PROOFS]].
           </p>
 
           <p>
-The term of <code>BbsBoundSignatureProof2020</code> is used to indicate when a
+The term <code>BbsBoundSignatureProof2020</code> is used to indicate when a
 <a>linked data proof</a> is of type BBS+ bound proof of knowledge.
           </p>
 
