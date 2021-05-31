@@ -207,16 +207,16 @@ is not fit for production deployment.
       <h2>Introduction</h2>
       <p>
 This specification defines a set of cryptographic suites for the purpose of creating, verifying and deriving proofs
-for BBS+ Signatures in conformance with the Linked Data Proofs [[LD-PROOFS]] specification. 
+for BBS+ Signatures in conformance with the Linked Data Proofs [[LD-PROOFS]] specification.
       </p>
       <p>
 In general the suites uses the RDF Dataset Normalization Algorithm [[RDF-DATASET-NORMALIZATION]] to transform an
-input document into its canonical form. It then uses the <a>statement digest algorithm</a> 
+input document into its canonical form. It then uses the <a>statement digest algorithm</a>
 to digest each statement to be signed individually, finally the digested statements are signed
 using the defined <a>signature algorithm</a>.
       </p>
       <p>
-BBS+ signatures [[BBS]] are compatible with any pairing friendly elliptic curve, however the cryptographic 
+BBS+ signatures [[BBS]] are compatible with any pairing friendly elliptic curve, however the cryptographic
 suites defined in this document elect to only allow the usage of the BLS12-381 for interoperability purposes.
       </p>
     </section>
@@ -282,17 +282,17 @@ A <a>linked data document</a> featuring one or more <a>linked data proofs</a>.
       </dd>
       <dt><dfn data-lt="revealed statements">revealed statements</dfn></dt>
       <dd>
-The set of <a>statements</a> produced by applying the <a>canonicalization algorithm</a> to the <a>reveal document</a>. 
+The set of <a>statements</a> produced by applying the <a>canonicalization algorithm</a> to the <a>reveal document</a>.
       </dd>
       <dt><dfn>derive proof algorithm</dfn></dt>
       <dd>
-An algorithm that takes in a <a>linked data proof document</a> featuring a <a>linked data proof</a> that supports a 
-<a>derive proof algorithm</a> along side a <a>reveal document</a> 
-and derives a proof only revealing the <a>statement</a>s defined in the <a>reveal document</a>. 
+An algorithm that takes in a <a>linked data proof document</a> featuring a <a>linked data proof</a> that supports a
+<a>derive proof algorithm</a> along side a <a>reveal document</a>
+and derives a proof only revealing the <a>statement</a>s defined in the <a>reveal document</a>.
       </dd>
       <dt><dfn>derived proof</dfn></dt>
       <dd>
-The product of apply the <a>derive proof algorithm</a> to an <a>linked data proof document</a> and <a>reveal document</a>. 
+The product of apply the <a>derive proof algorithm</a> to an <a>linked data proof document</a> and <a>reveal document</a>.
       </dd>
       <dt><dfn data-lt="quad|quads">quad</dfn></dt>
       <dd>
@@ -304,7 +304,7 @@ An <a href="https://www.w3.org/TR/n-quads/" class="externalDFN">n-quad</a> which
       </dd>
       <dt><dfn data-lt="linked data proof|linked data proofs">linked data proof</dfn></dt>
       <dd>
-A <a href="https://w3c-ccg.github.io/ld-proofs/#dfn-linked-data-proof" class="externalDFN">linked data proof</a> 
+A <a href="https://w3c-ccg.github.io/ld-proofs/#dfn-linked-data-proof" class="externalDFN">linked data proof</a>
 which is a set of attributes that represent a linked data digital proof and the parameters required to verify it as defined by [[RDF-N-Quads]].
       </dd>
       <dt><dfn data-lt="linked data document|linked data documents">linked data document</dfn></dt>
@@ -318,8 +318,8 @@ The name defining a particular cryptographic curve.
       <dt><dfn data-lt="frame">frame</dfn></dt>
       <dd>
 A <a href="https://www.w3.org/TR/json-ld11/#dfn-frame" class="externalDFN">frame</a> as specified by [[JSON-LD-FRAMING]]
-is a <a>JSON-LD document</a>, which describes the form for transforming another JSON-LD 
-document using matching and embedding rules. A frame document allows additional 
+is a <a>JSON-LD document</a>, which describes the form for transforming another JSON-LD
+document using matching and embedding rules. A frame document allows additional
 keywords and certain map entries to describe the matching and transforming process.
       </dd>
       <dt><dfn>JSON-LD document</dfn></dt>
@@ -340,36 +340,36 @@ In short, it is a node in a graph that is neither an IRI, nor a literal.
       </dl>
     </section>
 
-    
+
 
     <section>
       <h2>BLS12-381</h2>
       <p>
-Defined in [[PAIRING-FRIENDLY-CURVES]], BLS12-381 is an elliptic curve that features a unique property 
-only present in a subset of elliptic curves known as being pairing friendly.  
+Defined in [[PAIRING-FRIENDLY-CURVES]], BLS12-381 is an elliptic curve that features a unique property
+only present in a subset of elliptic curves known as being pairing friendly.
       </p>
       <p>
 Because of the pairing friendly property, BLS12-381 can be used to construct digital signatures
 that have unique properties, such as aggregatable signatures and or signatures
 that support zero knowledge proof disclosure.
       </p>
-      
+
 
 <div class="issue">TODO: Is the the below the correct place for the rationale?</div>
 
       <p>
-With pairing friendly elliptic curves, there are two fields, denoted G1 and G2, for 
+With pairing friendly elliptic curves, there are two fields, denoted G1 and G2, for
 which signatures and public keys can exist. Importantly however both the public
 key and a signature generated using the public key cannot exist in the same field.
       </p>
       <p>
 Due to the properties of the two fields, there are different associated performance
-characteristics to selecting which field to use for signatures vs which field to use 
-for public key generation. In general operations are faster in G1 and the resulting commitments 
+characteristics to selecting which field to use for signatures vs which field to use
+for public key generation. In general operations are faster in G1 and the resulting commitments
 are smaller. With this definition of BBS+ signatures we have opted for signatures to be faster
 and smaller to create rather than key generation.
       </p>
-        
+
   <section>
     <h3><dfn>Bls 12-381 G1 Public Key</dfn></h3>
 
@@ -378,9 +378,9 @@ and smaller to create rather than key generation.
     </p>
 
     <p>
-      The keys definition MUST have an attribute of <code>publicKeyBase58</code> and its value 
-      MUST be a base58 encoded BLS12-381 public key in the G1 field. Where the 
-      BLS12-381 public key is the raw 48 byte x co-ordinate defining the commitment. 
+      The keys definition MUST have an attribute of <code>publicKeyBase58</code> and its value
+      MUST be a base58 encoded BLS12-381 public key in the G1 field. Where the
+      BLS12-381 public key is the raw 48 byte x co-ordinate defining the commitment.
     </p>
       <p>
       A simple example of a <a>Bls12381G1Key2020</a>:
@@ -416,10 +416,10 @@ and smaller to create rather than key generation.
     </p>
 
     <p>
-      The keys definition MUST have an attribute of <code>publicKeyBase58</code> and its value 
-      MUST be a base58 encoded BLS12-381 public key in the G2 field. Where the 
+      The keys definition MUST have an attribute of <code>publicKeyBase58</code> and its value
+      MUST be a base58 encoded BLS12-381 public key in the G2 field. Where the
       BLS12-381 public key is the concatenation of the 2 raw 48 byte x co-ordinates
-      defining the commitment. 
+      defining the commitment.
     </p>
       <p>
       A simple example of a <a>Bls12381G2Key2020</a>:
@@ -446,10 +446,10 @@ and smaller to create rather than key generation.
         }
       </pre>
   </section>
-        
+
     </section>
 
-    
+
     <section>
       <h2>The BBS+ Signature Suite 2020</h2>
 
@@ -459,7 +459,7 @@ and smaller to create rather than key generation.
         Linked Data Proofs [[LD-PROOFS]] specification. The suite consists of
         the following algorithms:
               </p>
-        
+
               <table class="simple">
                 <thead>
                   <th>Parameter</th>
@@ -489,7 +489,7 @@ and smaller to create rather than key generation.
                   </tr>
                 </tbody>
               </table>
-        
+
       <section>
         <h3>Modification to Algorithms</h3>
 
@@ -497,8 +497,8 @@ and smaller to create rather than key generation.
           <h4>Create Verify Data Algorithm</h4>
 
           <p>
-            In order to support <a>selective disclosure</a> of <a>statements</a>, 
-            the create verify data algorithm has been modified from 
+            In order to support <a>selective disclosure</a> of <a>statements</a>,
+            the create verify data algorithm has been modified from
             its original <a href="https://w3c-ccg.github.io/ld-proofs/#create-verify-hash-algorithm"></a>definition</a>.
           </p>
 
@@ -513,27 +513,27 @@ and smaller to create rather than key generation.
               <li>For each <a>statement</a> in order:
                 <ol class="algorithm">
                   <li>Apply the <a>statement digest algorithm</a> to obtain a <a>statement digest</a></li>
-                  <li>Insert the <a>statement digest</a> into the <a>statement digests</a> array which MUST maintain same order as the order 
+                  <li>Insert the <a>statement digest</a> into the <a>statement digests</a> array which MUST maintain same order as the order
                     of the statements returned from the <a>canonicalization algorithm</a>.</li>
                 </ol>
               <li>Returned the <a>statement digests</a> array.</li>
 
         </section>
-        
+
       </section>
 
       <section>
         <h3>Terms</h3>
-        
+
         <p>
           The following section outlines the terms used by the BBS+ Signature Suite.
         </p>
 
         <section>
           <h4>Proof Type</h4>
-          
+
           <p>
-            To identify the type of <a>linked data proof</a> that is attached to a <a>linked data document</a>, 
+            To identify the type of <a>linked data proof</a> that is attached to a <a>linked data document</a>,
             the <code>type</code> attribute <a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a> in
             [[LD-PROOFS]].
           </p>
@@ -543,7 +543,7 @@ and smaller to create rather than key generation.
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> 
+            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a>
             MUST contain a proof element thats has a type equal to <code>BbsBlsSignature2020</code>.
           </p>
 
@@ -583,7 +583,7 @@ and smaller to create rather than key generation.
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MAY contain a <code>created</code> 
+            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MAY contain a <code>created</code>
             attribute with value a value corresponding to an [[!ISO8601]] combined date and time string.
           </p>
 
@@ -615,11 +615,11 @@ and smaller to create rather than key generation.
         <section>
           <h4>@context</h4>
 
-          <p> 
-            When using [[JSON-LD]] to exchange data between more than one software system, it's important to use terminology that both of the software systems can understand. 
+          <p>
+            When using [[JSON-LD]] to exchange data between more than one software system, it's important to use terminology that both of the software systems can understand.
             In [[JSON-LD]] this common terminology is identified with the usage of URIs. However, those URIs can be long and not human friendly for implementors to work with.
             In such cases, aliases that are presented in a short-form can be used to ease this burden. This specification relies on the <code>@context</code> property in [[JSON-LD]]
-            to short-form aliases to long form URIs required by this <a>signature suite</a>. It's RECOMMENDED that <code>https://w3id.org/security/bbs/v1</code> is used within the 
+            to short-form aliases to long form URIs required by this <a>signature suite</a>. It's RECOMMENDED that <code>https://w3id.org/security/bbs/v1</code> is used within the
             <code>@context</code> property to map the short-form aliases to long form URIs.
           </p>
 
@@ -657,15 +657,15 @@ and smaller to create rather than key generation.
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>verificationMethod</code> 
+            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>verificationMethod</code>
             attribute with a value that is either the verification method required to verify the </a>linked data proof</a> or a URI that when dereferenced
-            results in the verification method required to verify the </a>linked data proof</a>. 
+            results in the verification method required to verify the </a>linked data proof</a>.
           </p>
           <p>
             The verification method MUST be of <code>type</code> <a>Bls12381G2Key2020</a>.
           </p>
 
-      
+
           <pre class="example nohighlight">
             {
               "@context": [
@@ -700,7 +700,7 @@ and smaller to create rather than key generation.
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>proofPurpose</code> 
+            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>proofPurpose</code>
             attribute with a value that is <a href="https://w3c-ccg.github.io/ld-proofs/#proof-purpose">defined</a> in [[LD-PROOFS]].
           </p>
 
@@ -738,13 +738,13 @@ and smaller to create rather than key generation.
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>requiredRevealStatements</code> 
-            attribute with a value that is an array of un-signed integers representing the indicies of the statements in the <a>canonical form</a> 
-            that MUST always be revealed in a <a>derived proof</a>. The indicies corresponding to the statements for the <code>verificationMethod</code> 
+            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>requiredRevealStatements</code>
+            attribute with a value that is an array of un-signed integers representing the indicies of the statements in the <a>canonical form</a>
+            that MUST always be revealed in a <a>derived proof</a>. The indicies corresponding to the statements for the <code>verificationMethod</code>
             and <code>proofPurpose</code> as apart of the </a>linked data proof</a> MUST always be present.
           </p>
 
-    
+
           <pre class="example nohighlight">
             {
               "@context": [
@@ -778,7 +778,7 @@ and smaller to create rather than key generation.
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>proofValue</code> 
+            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>proofValue</code>
             attribute with value defined by the signing algorithm described in this specification.
           </p>
 
@@ -856,7 +856,7 @@ the following algorithms:
 
       <section>
         <h3>Terms</h3>
-        
+
         <p>
           The following section outlines the terms used by the BBS+ proof of knowledge <a>signature suite</a>.
         </p>
@@ -865,7 +865,7 @@ the following algorithms:
           <h4>Proof Type</h4>
 
           <p>
-            To identify the type of <a>linked data proof</a> that is attached to a <a>linked data document</a>, 
+            To identify the type of <a>linked data proof</a> that is attached to a <a>linked data document</a>,
             the <code>type</code> attribute is used as <a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a> in
             [[LD-PROOFS]].
           </p>
@@ -875,7 +875,7 @@ the following algorithms:
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a>
             MUST contain a <code>type</code> attribute thats has a type equal to <code>BbsSignatureProof2020</code>.
           </p>
 
@@ -910,7 +910,7 @@ the following algorithms:
           <div class="issue">TODO: Add paragraph?</div>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MAY contain a <code>created</code> 
+            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MAY contain a <code>created</code>
             attribute with value a value corresponding to an [[!ISO8601]] combined date and time string.
           </p>
 
@@ -943,10 +943,10 @@ the following algorithms:
           <h4>Verification Method</h4>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> MUST contain a <code>verificationMethod</code> 
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> MUST contain a <code>verificationMethod</code>
             attribute with a value that is equal to that of the <a>BbsBlsSignature2020</a> for which the proof is derived from.
           </p>
-          
+
           <div class="issue">TODO: Add paragraph?</div>
 
           <pre class="example nohighlight">
@@ -980,7 +980,7 @@ the following algorithms:
           <div class="issue">TODO: Add paragraph?</div>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> MUST contain a <code>proofPurpose</code> 
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> MUST contain a <code>proofPurpose</code>
             attribute with a value that is equal to that of the <a>BbsBlsSignature2020</a> for which the proof is derived from.
           </p>
 
@@ -1017,12 +1017,12 @@ the following algorithms:
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
-            MUST contain a <code>proofValue</code> attribute with value defined by the derive proof algorithm 
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a>
+            MUST contain a <code>proofValue</code> attribute with value defined by the derive proof algorithm
             described in this specification.
           </p>
 
-   
+
           <pre class="example nohighlight">
             {
               "@context": [
@@ -1057,7 +1057,7 @@ the following algorithms:
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a>
             MUST contain a <code>nonce</code> attribute.
           </p>
 
@@ -1092,7 +1092,7 @@ the following algorithms:
       <h2>Derive Proof Algorithm</h2>
 
       <p>
-        In order to support <a>selective disclosure</a> of <a>statements</a>, 
+        In order to support <a>selective disclosure</a> of <a>statements</a>,
         the following <a>derive proof algorithm</a> has been defined.
       </p>
 
@@ -1100,7 +1100,7 @@ the following algorithms:
 
       <section>
         <h4>Create Derive Proof Data Algorithm</h4>
-        
+
         <p>
           The following algorithm defined below outlines the process of obtaining the inputs into the <a>derive proof algorithm</a>.
         </p>
@@ -1127,7 +1127,7 @@ the following algorithms:
               represented as <a>n-quads</a>. Let this set be known as the <dfn>input proof document statements</dfn>.
             </li>
             <li>
-              Record the total number of <a>statements</a> in the <a>input proof document statements</a>. 
+              Record the total number of <a>statements</a> in the <a>input proof document statements</a>.
               Let this be known as the <a>total statements</a>.
             </li>
             <li>
@@ -1135,11 +1135,11 @@ the following algorithms:
               known as the <a>revealed document</a>.
             </li>
             <li>
-              Canonicalize the <a>revealed document</a> using the <a>canonicalization algorithm</a> to obtain the set of <a>statements</a> 
+              Canonicalize the <a>revealed document</a> using the <a>canonicalization algorithm</a> to obtain the set of <a>statements</a>
               represented as <a>n-quads</a>. Let these be known as the <a>revealed statements</a>.
             </li>
             <li>
-              Initialize an empty array of length equal to the number of <a>revealed statements</a>. 
+              Initialize an empty array of length equal to the number of <a>revealed statements</a>.
               Let this be known as the <a>revealed indicies</a> array.
             </li>
             <li>For each <a>statement</a> in order:
@@ -1150,7 +1150,7 @@ the following algorithms:
             <li>Returned the <a>revealed indicies</a> array, <a>total statements</a> and <a>input proof document statements</a>.</li>
           </ol>
           <div class="issue">TODO: Define how we have to validate the requiredRevealStatements</div>
-          
+
           <div class="issue">TODO: Add a comment on how we diff the input proof document and the reveal
             document to produce get the correct node identifiers for the reveal document</div>
       </section>
@@ -1173,6 +1173,18 @@ software.
 
 <div class="issue">TODO: We need to add a complete list of security
 considerations.</div>
+    </section>
+
+    <section class="appendix">
+      <h2>Acknowledgements</h2>
+      <p>
+        Portions of the work on this specification have been funded by the
+        United States Department of Homeland Security's (US DHS) Silicon Valley
+        Innovation Program under contracts 70RSAT20T00000003, and
+        70RSAT20T00000033. The content of this specification does not
+        necessarily reflect the position or the policy of the U.S. Government
+        and no official endorsement should be inferred.
+      </p>
     </section>
   </body>
 </html>
