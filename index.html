@@ -517,6 +517,7 @@ and smaller to create rather than key generation.
                     of the statements returned from the <a>canonicalization algorithm</a>.</li>
                 </ol>
               <li>Returned the <a>statement digests</a> array.</li>
+            </ol>
 
         </section>
         
@@ -1017,12 +1018,12 @@ the following algorithms:
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
-            MUST contain a <code>proofValue</code> attribute with value defined by the derive proof algorithm 
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge <a>linked data proof</a>
+            MUST contain a <code>proofValue</code> attribute with value defined by the derive proof algorithm
             described in this specification.
           </p>
 
-   
+
           <pre class="example nohighlight">
             {
               "@context": [
@@ -1081,6 +1082,257 @@ the following algorithms:
                 "proofPurpose": "assertionMethod",
                 "proof": "kTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDBEh5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1ouNAhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIMaG0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6obaojEnaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYGNQnu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBklMOh6lvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/QcoD3Tgmy+z0hN+4eky1RnJsEg=",
                 <span class="highlight">"nonce": "6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdBCDd/l6tIY="</span>
+              }
+            }
+          </pre>
+        </section>
+      </section>
+    </section>
+
+    <section>
+      <h2>The BBS+ Bound Signature Suite 2020</h2>
+
+      <p>
+The BBS+ Bound <a>signature suite</a> 2020 adds a mechanism for recipient
+binding, and is otherwise identical, to the BBS+ <a>signature suite</a>
+2020. It MUST be used in conjunction with the signing and verification
+algorithms in the Linked Data Proofs [[LD-PROOFS]] specification. The suite
+consists of the following algorithms:
+      </p>
+      <table class="simple">
+        <thead>
+        <th>Parameter</th>
+        <th>Value</th>
+        <th>Specification</th>
+        </thead>
+        <tbody>
+        <tr>
+          <td><a>canonicalization algorithm</a></td>
+          <td>https://w3id.org/security#URDNA2015</td>
+          <td>[[RDF-DATASET-NORMALIZATION]]</td>
+        </tr>
+        <tr>
+          <td><a>statement digest algorithm</a></td>
+          <td>Blake2b</td>
+          <td>[[BLAKE2]]</td>
+        </tr>
+        <tr>
+          <td><a>signature algorithm</a></td>
+          <td>BBS+ Signature</td>
+          <td>[[BBS]]</td>
+        </tr>
+        <tr>
+          <td><a>curve name</a></td>
+          <td>BLS12-381</td>
+          <td>[[PAIRING-FRIENDLY-CURVES]]</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <section>
+        <h3>Modification to Algorithms</h3>
+
+        <section>
+          <h4>Create Verify Data Algorithm</h4>
+
+          <p>
+The create verify data algorithm defined below is identical to the create verify
+data algorithm defined for the BBS+ <a>signature suite</a> 2020, with the
+addition of steps to include recipient binding.
+          </p>
+
+          <p>
+The algorithm defined below outlines the process of obtaining the data in the
+form required for both signing and verifying, plus the data required to bind to
+a recipient
+          </p>
+          <ol class="algorithm">
+            <li>
+Obtain a blind message which is a commitment to a secret value as described in
+[[BBS]] section 3.9. This is the recipient binding commitment.
+            </li>
+            <li>
+Initialize an empty array of length equal to the number of statements not
+including the recipient binding commitment; let this be known as the
+<a>statement digests</a> array.
+            </li>
+            <li>
+Use the <a>canonicalization algorithm</a> to canonicalize the input document to a
+set of <a>statements</a> represented as <a>n-quads</a>.
+            </li>
+            <li>
+For each <a>statement</a> in order:
+              <ol class="algorithm">
+                <li>
+Apply the <a>statement digest algorithm</a> to obtain a <a>statement digest</a>
+                </li>
+                <li>
+Insert the <a>statement digest</a> into the <a>statement digests</a> array which
+MUST maintain same order as the order of the statements returned from the
+<a>canonicalization algorithm</a>.
+                </li>
+              </ol>
+            </li>
+            <li>
+Return the <a>statement digests</a> array and the recipient binding commitment.
+            </li>
+          </ol>
+
+        </section>
+
+      </section>
+
+      <section>
+        <h3>Terms</h3>
+
+        <p>
+The following section outlines the terms used by the BBS+ Bound Signature Suite
+which differ from those terms used by the BBS+ Signature Suite. All other terms
+are the same in both suites.
+        </p>
+
+        <section>
+          <h4>Proof Type</h4>
+
+          <p>
+Use the <code>type</code> attribute
+<a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a>
+in [[LD-PROOFS]] to identify the type of <a>linked data proof</a> that is attached
+to a <a>linked data document</a>.
+          </p>
+
+          <p>
+The term <code><dfn>BbsBlsBoundSignature2020</dfn></code> is used to indicate
+when a <a>linked data proof</a> is of type BBS+ Bound Signature.
+          </p>
+
+          <p>
+A <a>linked data document</a> featuring a BBS+ Bound Signature
+<a>linked data proof</a> MUST contain a proof element that has a type equal to
+<code>BbsBlsBoundSignature2020</code>.
+          </p>
+
+          <pre class="example nohighlight">
+            {
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3id.org/security/bbs/v1"
+              ],
+              "@type": "Person",
+              "firstName": "Jane",
+              "lastName": "Does",
+              "jobTitle": "Professor",
+              "telephone": "(425) 123-4567",
+              "email": "jane.doe@example.com",
+              "proof": {
+                <span class="highlight">"type": "BbsBlsBoundSignature2020"</span>,
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
+                "proofPurpose": "assertionMethod",
+                "proofValue": "F9uMuJzNBqj4j+HPTvWjUN/MNoe6KRH0818WkvDn2Sf7kg1P17YpNyzSB+CH57AWDFunU13tL8oTBDpBhODckelTxHIaEfG0rNmqmjK6DOs0/ObksTZh7W3OTbqfD2h4C/wqqMQHSWdXXnojwyFDEg=="
+              }
+            }
+          </pre>
+        </section>
+      </section>
+    </section>
+
+    <section>
+      <h2>The BBS+ Bound Signature Proof Suite 2020</h2>
+      <p>
+A BBS bound proof of knowledge <a>linked data proof</a> is a proof that is
+derived from a <a>BbsBlsBoundSignature2020</a> <a>linked data proof</a> where
+a sub-set of the original <a>statements</a> are revealed.
+      </p>
+      <p>
+The BBS+ bound proof of knowledge <a>signature suite</a> MUST be used in
+conjunction with the signing and verification algorithms in the Linked Data
+Proofs [[LD-PROOFS]] specification. It adds a proof of recipient binding,
+and is otherwise identical, to the BBS+ proof of knowledge <a>signature
+suite</a>. The suite consists of the following algorithms:
+      </p>
+      <table class="simple">
+        <thead>
+          <th>Parameter</th>
+          <th>Value</th>
+          <th>Specification</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a>canonicalization algorithm</a></td>
+            <td>https://w3id.org/security#URDNA2015</td>
+            <td>[[RDF-DATASET-NORMALIZATION]]</td>
+          </tr>
+          <tr>
+            <td><a>statement digest algorithm</a></td>
+            <td>Blake2b</td>
+            <td>[[BLAKE2]]</td>
+          </tr>
+          <tr>
+            <td><a>signature algorithm</a></td>
+            <td>BBS+ Signature</td>
+            <td>[[BBS]]</td>
+          </tr>
+          <tr>
+            <td><a>curve name</a></td>
+            <td>BLS12-381</td>
+            <td>[[PAIRING-FRIENDLY-CURVES]]</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <section>
+        <h3>Terms</h3>
+
+        <p>
+The following section outlines the terms used by the BBS+ bound proof of
+knowledge <a>signature suite</a> which differ from those terms used by the BBS+
+proof of knowledge. All other terms are the same in both suites.
+
+        </p>
+
+        <section>
+          <h4>Proof Type</h4>
+
+          <p>
+The <code>type</code> attribute is used to identify the type of <a>linked
+data proof</a> that is attached to a <a>linked data document</a> as <a
+href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a>
+in [[LD-PROOFS]].
+          </p>
+
+          <p>
+The term <code>BbsBoundSignatureProof2020</code> is used to indicate when a
+<a>linked data proof</a> is of type BBS+ bound proof of knowledge.
+          </p>
+
+          <p>
+A <a>linked data document</a> featuring a BBS+ bound proof of knowledge
+</a>linked data proof</a> MUST contain a <code>type</code> attribute with a
+value of <code>BbsBoundSignatureProof2020</code>.
+          </p>
+
+          <pre class="example nohighlight">
+            {
+              "@context": [
+                "http://schema.org/",
+                "https://w3id.org/security/v2",
+                "https://w3id.org/security/bbs/v1"
+              ],
+              "id": "urn:bnid:_:c14n0",
+              "email": "jane.doe@example.com",
+              "firstName": "Jane",
+              "jobTitle": "Professor",
+              "lastName": "Does",
+              "telephone": "(425) 123-4567",
+              "proof": {
+                <span class="highlight">"type": "BbsBlsBoundSignatureProof2020"</span>,
+                "created": "2020-04-25",
+                "verificationMethod": "did:example:489398593#test",
+                "proofPurpose": "assertionMethod",
+                "proofValue": "kTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDBEh5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1ouNAhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIMaG0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6obaojEnaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYGNQnu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBklMOh6lvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/QcoD3Tgmy+z0hN+4eky1RnJsEg=",
+                "nonce": "6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdBCDd/l6tIY="
               }
             }
           </pre>
