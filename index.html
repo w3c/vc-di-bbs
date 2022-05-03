@@ -111,12 +111,12 @@
             status:   "CGDRAFT",
             publisher:  "Web Payments Community Group"
           },
-          "LD-PROOFS": {
-            title:    "Linked Data Proofs 1.0",
-            href:     "https://w3c-ccg.github.io/ld-proofs",
+          "DATA-INTEGRITY": {
+            title:    "Data Integrity 1.0",
+            href:     "https://w3c-ccg.github.io/data-integrity-spec/",
             authors:  ["David Longley", "Manu Sporny"],
             status:   "CGDRAFT",
-            publisher:  "Web Payments Community Group"
+            publisher:  "Credentials Community Group"
           },
           "JSON-LD-FRAMING": {
             title:    "JSON-LD 1.1 Framing",
@@ -190,7 +190,7 @@
     <section id='abstract'>
       <p>
 This specification describes the BBS+ Signature Suite created in 2020
-for the Linked Data Proof specification. The Signature Suite utilizes
+for the Data Integrity specification. The Signature Suite utilizes
 BBS+ signatures to provide the capability of zero knowledge
 proof disclosures.
       </p>
@@ -207,7 +207,7 @@ is not fit for production deployment.
       <h2>Introduction</h2>
       <p>
 This specification defines a set of cryptographic suites for the purpose of creating, verifying and deriving proofs
-for BBS+ Signatures in conformance with the Linked Data Proofs [[LD-PROOFS]] specification. 
+for BBS+ Signatures in conformance with the Data Integrity [[DATA-INTEGRITY]] specification. 
       </p>
       <p>
 In general the suites uses the RDF Dataset Normalization Algorithm [[RDF-DATASET-NORMALIZATION]] to transform an
@@ -225,7 +225,7 @@ suites defined in this document elect to only allow the usage of the BLS12-381 f
       <h2>Terminology</h2>
       <p>
 The following terms are used to describe concepts involved in the
-generation and verification of the Linked Data Proof
+generation and verification of the Data Integrity
 <a>signature suite</a>.
       </p>
 
@@ -276,9 +276,9 @@ been modified in transit and came from someone possessing a particular secret.
 An information disclosure technique which is the process of deciding and disclosing
 a sub-set of information from an original information set.
         </dd>
-      <dt><dfn>linked data proof document</dfn></dt>
+      <dt><dfn>data integrity proof document</dfn></dt>
       <dd>
-A <a>linked data document</a> featuring one or more <a>linked data proofs</a>.
+A <a>linked data document</a> featuring one or more <a>data integrity proofs</a>.
       </dd>
       <dt><dfn data-lt="revealed statements">revealed statements</dfn></dt>
       <dd>
@@ -286,13 +286,13 @@ The set of <a>statements</a> produced by applying the <a>canonicalization algori
       </dd>
       <dt><dfn>derive proof algorithm</dfn></dt>
       <dd>
-An algorithm that takes in a <a>linked data proof document</a> featuring a <a>linked data proof</a> that supports a 
+An algorithm that takes in a <a>data integrity proof document</a> featuring a <a>data integrity proof</a> that supports a 
 <a>derive proof algorithm</a> along side a <a>reveal document</a> 
 and derives a proof only revealing the <a>statement</a>s defined in the <a>reveal document</a>. 
       </dd>
       <dt><dfn>derived proof</dfn></dt>
       <dd>
-The product of apply the <a>derive proof algorithm</a> to an <a>linked data proof document</a> and <a>reveal document</a>. 
+The product of apply the <a>derive proof algorithm</a> to an <a>data integrity proof document</a> and <a>reveal document</a>. 
       </dd>
       <dt><dfn data-lt="quad|quads">quad</dfn></dt>
       <dd>
@@ -302,9 +302,9 @@ A <a href="https://json-ld.github.io/normalization/spec/index.html#dfn-quad" cla
       <dd>
 An <a href="https://www.w3.org/TR/n-quads/" class="externalDFN">n-quad</a> which is a line based, plain text format encoding of a <a>quad</a> as defined by [[RDF-N-Quads]].
       </dd>
-      <dt><dfn data-lt="linked data proof|linked data proofs">linked data proof</dfn></dt>
+      <dt><dfn data-lt="data integrity proof|data integrity proofs">data integrity proof</dfn></dt>
       <dd>
-A <a href="https://w3c-ccg.github.io/ld-proofs/#dfn-linked-data-proof" class="externalDFN">linked data proof</a> 
+A <a href="https://w3c-ccg.github.io/data-integrity-spec/#dfn-data-integrity-proof" class="externalDFN">data integrity proof</a> 
 which is a set of attributes that represent a linked data digital proof and the parameters required to verify it as defined by [[RDF-N-Quads]].
       </dd>
       <dt><dfn data-lt="linked data document|linked data documents">linked data document</dfn></dt>
@@ -456,7 +456,7 @@ and smaller to create rather than key generation.
       <p>
         The BBS+ <a>signature suite</a> 2020 MUST be used in
         conjunction with the signing and verification algorithms in the
-        Linked Data Proofs [[LD-PROOFS]] specification. The suite consists of
+        Data Integrity [[DATA-INTEGRITY]] specification. The suite consists of
         the following algorithms:
               </p>
         
@@ -499,7 +499,7 @@ and smaller to create rather than key generation.
           <p>
             In order to support <a>selective disclosure</a> of <a>statements</a>, 
             the create verify data algorithm has been modified from 
-            its original <a href="https://w3c-ccg.github.io/ld-proofs/#create-verify-hash-algorithm"></a>definition</a>.
+            its original <a href="https://w3c-ccg.github.io/data-integrity-spec/#create-verify-hash-algorithm"></a>definition</a>.
           </p>
 
           <p>
@@ -534,17 +534,17 @@ and smaller to create rather than key generation.
           <h4>Proof Type</h4>
           
           <p>
-            To identify the type of <a>linked data proof</a> that is attached to a <a>linked data document</a>, 
-            the <code>type</code> attribute <a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a> in
-            [[LD-PROOFS]].
+            To identify the type of <a>data integrity proof</a> that is attached to a <a>linked data document</a>, 
+            the <code>type</code> attribute <a href="https://w3c-ccg.github.io/data-integrity-spec/#proofs">defined</a> in
+            [[DATA-INTEGRITY]].
           </p>
 
           <p>
-            The term of <code><dfn>BbsBlsSignature2020</dfn></code> is used to indicate when a <a>linked data proof</a> is of type BBS+ Signature.
+            The term of <code><dfn>BbsBlsSignature2020</dfn></code> is used to indicate when a <a>data integrity proof</a> is of type BBS+ Signature.
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> 
+            A <a>linked data document</a> featuring a BBS+ Signature <a>data integrity proof</a> 
             MUST contain a proof element thats has a type equal to <code>BbsBlsSignature2020</code>.
           </p>
 
@@ -579,12 +579,12 @@ and smaller to create rather than key generation.
 
           <p>
             When a digital signature is produced, it is often useful to capture when this occurred, the <code>created</code> attribute
-            can be used to communicate this as <a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a> in
-            [[LD-PROOFS]].
+            can be used to communicate this as <a href="https://w3c-ccg.github.io/data-integrity-spec/#proofs">defined</a> in
+            [[DATA-INTEGRITY]].
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MAY contain a <code>created</code> 
+            A <a>linked data document</a> featuring a BBS+ Signature <a>data integrity proof</a> MAY contain a <code>created</code> 
             attribute with value a value corresponding to an [[!ISO8601]] combined date and time string.
           </p>
 
@@ -654,13 +654,13 @@ and smaller to create rather than key generation.
 
           <p>
             When verifying a digital signature, public key material of the signer is required, the <code>verificationMethod</code> attribute is
-            used to communicate this as <a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-proof-overview">defined</a> in [[LD-PROOFS]].
+            used to communicate this as <a href="https://w3c-ccg.github.io/data-integrity-spec/#linked-data-proof-overview">defined</a> in [[DATA-INTEGRITY]].
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>verificationMethod</code> 
-            attribute with a value that is either the verification method required to verify the </a>linked data proof</a> or a URI that when dereferenced
-            results in the verification method required to verify the </a>linked data proof</a>. 
+            A <a>linked data document</a> featuring a BBS+ Signature <a>data integrity proof</a> MUST contain a <code>verificationMethod</code> 
+            attribute with a value that is either the verification method required to verify the <a>data integrity proof</a> or a URI that when dereferenced
+            results in the verification method required to verify the <a>data integrity proof</a>. 
           </p>
           <p>
             The verification method MUST be of <code>type</code> <a>Bls12381G2Key2020</a>.
@@ -701,8 +701,8 @@ and smaller to create rather than key generation.
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>proofPurpose</code> 
-            attribute with a value that is <a href="https://w3c-ccg.github.io/ld-proofs/#proof-purpose">defined</a> in [[LD-PROOFS]].
+            A <a>linked data document</a> featuring a BBS+ Signature <a>data integrity proof</a> MUST contain a <code>proofPurpose</code> 
+            attribute with a value that is <a href="https://w3c-ccg.github.io/data-integrity-spec/#proof-purpose">defined</a> in [[DATA-INTEGRITY]].
           </p>
 
           <pre class="example nohighlight">
@@ -739,10 +739,10 @@ and smaller to create rather than key generation.
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>requiredRevealStatements</code> 
+            A <a>linked data document</a> featuring a BBS+ Signature <a>data integrity proof</a> MUST contain a <code>requiredRevealStatements</code> 
             attribute with a value that is an array of un-signed integers representing the indicies of the statements in the <a>canonical form</a> 
             that MUST always be revealed in a <a>derived proof</a>. The indicies corresponding to the statements for the <code>verificationMethod</code> 
-            and <code>proofPurpose</code> as apart of the </a>linked data proof</a> MUST always be present.
+            and <code>proofPurpose</code> as apart of the <a>data integrity proof</a> MUST always be present.
           </p>
 
     
@@ -779,7 +779,7 @@ and smaller to create rather than key generation.
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MUST contain a <code>proofValue</code> 
+            A <a>linked data document</a> featuring a BBS+ Signature <a>data integrity proof</a> MUST contain a <code>proofValue</code> 
             attribute with value defined by the signing algorithm described in this specification.
           </p>
 
@@ -815,14 +815,14 @@ and smaller to create rather than key generation.
     <section>
       <h2>The BBS+ Signature Proof Suite 2020</h2>
       <p>
-A BBS proof of knowledge <a>linked data proof</a> is a proof that
-is derived from a <a>BbsBlsSignature2020</a> <a>linked data proof</a>
+A BBS proof of knowledge <a>data integrity proof</a> is a proof that
+is derived from a <a>BbsBlsSignature2020</a> <a>data integrity proof</a>
 where by a sub-set of the original <a>statements</a> are revealed.
       </p>
       <p>
 The BBS+ proof of knowledge <a>signature suite</a> MUST be used in
 conjunction with the signing and verification algorithms in the
-Linked Data Proofs [[LD-PROOFS]] specification. The suite consists of
+Data Integrity [[DATA-INTEGRITY]] specification. The suite consists of
 the following algorithms:
       </p>
       <table class="simple">
@@ -866,17 +866,17 @@ the following algorithms:
           <h4>Proof Type</h4>
 
           <p>
-            To identify the type of <a>linked data proof</a> that is attached to a <a>linked data document</a>, 
-            the <code>type</code> attribute is used as <a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a> in
-            [[LD-PROOFS]].
+            To identify the type of <a>data integrity proof</a> that is attached to a <a>linked data document</a>, 
+            the <code>type</code> attribute is used as <a href="https://w3c-ccg.github.io/data-integrity-spec/#proofs">defined</a> in
+            [[DATA-INTEGRITY]].
           </p>
 
           <p>
-            The term of <code>BbsSignatureProof2020</code> is used to indicate when a <a>linked data proof</a> is of type BBS+ proof of knowledge.
+            The term of <code>BbsSignatureProof2020</code> is used to indicate when a <a>data integrity proof</a> is of type BBS+ proof of knowledge.
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge <a>data integrity proof</a> 
             MUST contain a <code>type</code> attribute thats has a type equal to <code>BbsSignatureProof2020</code>.
           </p>
 
@@ -911,7 +911,7 @@ the following algorithms:
           <div class="issue">TODO: Add paragraph?</div>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ Signature </a>linked data proof</a> MAY contain a <code>created</code> 
+            A <a>linked data document</a> featuring a BBS+ Signature <a>data integrity proof</a> MAY contain a <code>created</code> 
             attribute with value a value corresponding to an [[!ISO8601]] combined date and time string.
           </p>
 
@@ -944,7 +944,7 @@ the following algorithms:
           <h4>Verification Method</h4>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> MUST contain a <code>verificationMethod</code> 
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge <a>data integrity proof</a> MUST contain a <code>verificationMethod</code> 
             attribute with a value that is equal to that of the <a>BbsBlsSignature2020</a> for which the proof is derived from.
           </p>
           
@@ -981,7 +981,7 @@ the following algorithms:
           <div class="issue">TODO: Add paragraph?</div>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> MUST contain a <code>proofPurpose</code> 
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge <a>data integrity proof</a> MUST contain a <code>proofPurpose</code> 
             attribute with a value that is equal to that of the <a>BbsBlsSignature2020</a> for which the proof is derived from.
           </p>
 
@@ -1018,7 +1018,7 @@ the following algorithms:
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge <a>linked data proof</a>
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge <a>data integrity proof</a>
             MUST contain a <code>proofValue</code> attribute with value defined by the derive proof algorithm
             described in this specification.
           </p>
@@ -1058,7 +1058,7 @@ the following algorithms:
           </p>
 
           <p>
-            A <a>linked data document</a> featuring a BBS+ proof of knowledge </a>linked data proof</a> 
+            A <a>linked data document</a> featuring a BBS+ proof of knowledge <a>data integrity proof</a> 
             MUST contain a <code>nonce</code> attribute.
           </p>
 
@@ -1096,7 +1096,7 @@ the following algorithms:
 The BBS+ Bound <a>signature suite</a> 2020 adds a mechanism for recipient
 binding, and is otherwise identical, to the BBS+ <a>signature suite</a>
 2020. It MUST be used in conjunction with the signing and verification
-algorithms in the Linked Data Proofs [[LD-PROOFS]] specification. The suite
+algorithms in the Data Integrity [[DATA-INTEGRITY]] specification. The suite
 consists of the following algorithms:
       </p>
       <table class="simple">
@@ -1196,19 +1196,19 @@ are the same in both suites.
 
           <p>
 Use the <code>type</code> attribute
-<a href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a>
-in [[LD-PROOFS]] to identify the type of <a>linked data proof</a> that is attached
+<a href="https://w3c-ccg.github.io/data-integrity-spec/#proofs">defined</a>
+in [[DATA-INTEGRITY]] to identify the type of <a>data integrity proof</a> that is attached
 to a <a>linked data document</a>.
           </p>
 
           <p>
 The term <code><dfn>BbsBlsBoundSignature2020</dfn></code> is used to indicate
-when a <a>linked data proof</a> is of type BBS+ Bound Signature.
+when a <a>data integrity proof</a> is of type BBS+ Bound Signature.
           </p>
 
           <p>
 A <a>linked data document</a> featuring a BBS+ Bound Signature
-<a>linked data proof</a> MUST contain a proof element that has a type equal to
+<a>data integrity proof</a> MUST contain a proof element that has a type equal to
 <code>BbsBlsBoundSignature2020</code>.
           </p>
 
@@ -1241,14 +1241,14 @@ A <a>linked data document</a> featuring a BBS+ Bound Signature
     <section>
       <h2>The BBS+ Bound Signature Proof Suite 2020</h2>
       <p>
-A BBS bound proof of knowledge <a>linked data proof</a> is a proof that is
-derived from a <a>BbsBlsBoundSignature2020</a> <a>linked data proof</a> where
+A BBS bound proof of knowledge <a>data integrity proof</a> is a proof that is
+derived from a <a>BbsBlsBoundSignature2020</a> <a>data integrity proof</a> where
 a sub-set of the original <a>statements</a> are revealed.
       </p>
       <p>
 The BBS+ bound proof of knowledge <a>signature suite</a> MUST be used in
 conjunction with the signing and verification algorithms in the Linked Data
-Proofs [[LD-PROOFS]] specification. It adds a proof of recipient binding,
+Proofs [[DATA-INTEGRITY]] specification. It adds a proof of recipient binding,
 and is otherwise identical, to the BBS+ proof of knowledge <a>signature
 suite</a>. The suite consists of the following algorithms:
       </p>
@@ -1296,20 +1296,20 @@ proof of knowledge. All other terms are the same in both suites.
           <h4>Proof Type</h4>
 
           <p>
-The <code>type</code> attribute is used to identify the type of <a>linked
-data proof</a> that is attached to a <a>linked data document</a> as <a
-href="https://w3c-ccg.github.io/ld-proofs/#linked-data-signatures">defined</a>
-in [[LD-PROOFS]].
+The <code>type</code> attribute is used to identify the type of <a>data
+integrity proof</a> that is attached to a <a>linked data document</a> as <a
+href="https://w3c-ccg.github.io/data-integrity-spec/#proofs">defined</a>
+in [[DATA-INTEGRITY]].
           </p>
 
           <p>
 The term <code>BbsBoundSignatureProof2020</code> is used to indicate when a
-<a>linked data proof</a> is of type BBS+ bound proof of knowledge.
+<a>data integrity proof</a> is of type BBS+ bound proof of knowledge.
           </p>
 
           <p>
 A <a>linked data document</a> featuring a BBS+ bound proof of knowledge
-</a>linked data proof</a> MUST contain a <code>type</code> attribute with a
+<a>data integrity proof</a> MUST contain a <code>type</code> attribute with a
 value of <code>BbsBoundSignatureProof2020</code>.
           </p>
 
@@ -1359,7 +1359,7 @@ value of <code>BbsBoundSignatureProof2020</code>.
 
         <dt><dfn>input proof document</dfn></dt>
             <dd>
-      A <a>linked data proof document</a> featuring a <a>linked data proof</a> that supports proof derivation.
+      A <a>data integrity proof document</a> featuring a <a>data integrity proof</a> that supports proof derivation.
             </dd>
 
         <dt><dfn>reveal document</dfn></dt>
@@ -1370,7 +1370,7 @@ value of <code>BbsBoundSignatureProof2020</code>.
 
         <dt><dfn>revealed document</dfn></dt>
             <dd>
-      A <a>linked data proof document</a> which is the product of the <a>derive proof algorithm</a>.
+      A <a>data integrity proof document</a> which is the product of the <a>derive proof algorithm</a>.
             </dd>
 
           <ol class="algorithm">
