@@ -8,7 +8,9 @@
       For the three scripts below, if your spec resides on dev.w3 you can check them
       out in the same tree and use relative links so that they'll work offline,
      -->
-    <script src='https://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
+    <script src='https://www.w3.org/Tools/respec/respec-w3c' class='remove'></script>
+    <script class='remove' src="https://w3c.github.io/vc-data-integrity/common.js"></script>
+
     <script type="text/javascript" class="remove">
       var respecConfig = {
         // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
@@ -16,6 +18,8 @@
 
         // the specification's short name, as in http://www.w3.org/TR/short-name/
         shortName:            "lds-bbs",
+        subtitle: "Achieving Data Integrity using Unlinkable BBS Signatures",
+        group: "credentials",
 
         // if you wish the publication date to be other than today, set this
         // publishDate:  "2009-08-06",
@@ -139,12 +143,37 @@
             status:   "Internet Draft",
             publisher:  "IETF"
           },
+          "VC-DATA-MODEL-2": {
+            title: "Verifiable Credentials Data Model v2.0",
+            href: "https://www.w3.org/TR/vc-data-model-2.0/",
+            authors: [
+              "Manu Sporny", "Dave Longley", "Grant Noble", "Dan Burnett",
+              "Ted Thibodeau", "Brent Zundel", "David Chadwick",
+              "Kyle Den Hartog"
+            ],
+            status: "Working Draft",
+            publisher: "W3C Verifiable Credentials Working Group"
+          },
           "SHORT-GROUP-SIGNATURES": {
             title:    "Short group signatures",
             href:     "https://crypto.stanford.edu/~xb/crypto04a/groupsigs.pdf",
             authors:  ["Dan Boneh", "Xavier Boyen", "Hovav Shacham"],
             status:   "Published",
             publisher:  "Advances in Cryptology—CRYPTO 2004"
+          },
+          MULTIBASE: {
+            title: "Multibase",
+            href: "https://tools.ietf.org/html/draft-multiformats-multibase-01",
+          },
+          MULTICODEC: {
+            title: "Multicodec",
+            href: "https://github.com/multiformats/multicodec/",
+          },
+          "CFRG-BBS-SIGNATURE": {
+            title:    "The BBS Signature Scheme",
+            href:     "https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html",
+            authors:  ["Tobias Looker", "Vasilis Kalos", "Andrew Whitehead", "Mike Lodder"],
+            status:   "Draft"
           },
           "BBS": {
             title:    "BBS+ Signatures",
@@ -156,7 +185,9 @@
             title:    "Blake2 - fast secure hashing",
             href:     "https://www.blake2.net/",
           }
-        }
+        },
+        lint: {"no-unused-dfns": false},
+        postProcess: [restrictRefs]
       };
     </script>
         <style>
@@ -227,6 +258,8 @@ The following terms are used to describe concepts involved in the
 generation and verification of the Data Integrity
 <a>signature suite</a>.
       </p>
+
+      <div data-include="https://w3c.github.io/vc-data-integrity/terms.html"></div>
 
       <dl>
         <dt><dfn>signature suite</dfn></dt>
@@ -300,11 +333,6 @@ A <a href="https://json-ld.github.io/normalization/spec/index.html#dfn-quad" cla
       <dt><dfn data-lt="n-quad|n-quads">n-quad</dfn></dt>
       <dd>
 An <a href="https://www.w3.org/TR/n-quads/" class="externalDFN">n-quad</a> which is a line based, plain text format encoding of a <a>quad</a> as defined by [[RDF-N-Quads]].
-      </dd>
-      <dt><dfn data-lt="data integrity proof|data integrity proofs">data integrity proof</dfn></dt>
-      <dd>
-A <a href="https://w3c-ccg.github.io/data-integrity-spec/#dfn-data-integrity-proof" class="externalDFN">data integrity proof</a>
-which is a set of attributes that represent a linked data digital proof and the parameters required to verify it as defined by [[RDF-N-Quads]].
       </dd>
       <dt><dfn data-lt="linked data document|linked data documents">linked data document</dfn></dt>
       <dd>
@@ -584,7 +612,7 @@ match the verification relationship expressed by the verification method
         </p>
         <p>
 The `proofValue` property of the proof MUST be a detached BBS Signature
-produced according to [[CFRG-BBS-SIGNATURES]], encoded according to
+produced according to [[CFRG-BBS-SIGNATURE]], encoded according to
 [[MULTIBASE]] using the base64 base encoding with no padding.
         </p>
 
@@ -855,7 +883,7 @@ Section 4: Retrieving Cryptographic Material</a>.
         </li>
         <li>
 Let <var>proofBytes</var> be the result of applying the BBS Signature
-Algorithm [[CFRG-BBS]], with <var>hashData</var> as the data
+Algorithm [[CFRG-BBS-SIGNATURE]], with <var>hashData</var> as the data
 to be signed using the private key specified by <var>privateKeyBytes</var>.
 <var>proofBytes</var> will be exactly 64 bytes in size for a P-256 key, and
 96 bytes in size for a P-384 key.
@@ -894,7 +922,7 @@ Section 4: Retrieving Cryptographic Material</a>.
         </li>
         <li>
 Let <var>verificationResult</var> be the result of applying the verification
-algorithm defined in the BBS Signature specification [[CFRG-BBS]],
+algorithm defined in the BBS Signature specification [[CFRG-BBS-SIGNATURE]],
 with <var>hashData</var> as the data to be verified against the
 <var>proofBytes</var> using the public key specified by
 <var>publicKeyBytes</var>.
@@ -1961,7 +1989,7 @@ value of <code>BbsBoundSignatureProof2020</code>.
             </li>
             <li>
               Record the total number of <a>statements</a> in the <a>input proof document statements</a>.
-              Let this be known as the <a>total statements</a>.
+              Let this be known as the <dfn>total statements</dfn>.
             </li>
             <li>
               Apply the <a>framing algorithm</a> to the <a>input proof document</a>. Let the product of the <a>framing algorithm</a> be
@@ -1973,7 +2001,7 @@ value of <code>BbsBoundSignatureProof2020</code>.
             </li>
             <li>
               Initialize an empty array of length equal to the number of <a>revealed statements</a>.
-              Let this be known as the <a>revealed indicies</a> array.
+              Let this be known as the <dfn>revealed indicies</dfn> array.
             </li>
             <li>For each <a>statement</a> in order:
               <ol class="algorithm">
