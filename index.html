@@ -774,21 +774,16 @@ series of bytes is produced as output.
       </p>
 
       <ol class="algorithm">
-        <li>
-Let <var>transformedDocumentHash</var> be the result of applying the
-SHA-256 (SHA-2 with 256-bit output) cryptographic hashing algorithm [[RFC6234]]
-to the <var>transformedDocument</var>. <var>transformedDocumentHash</var> will
-be exactly 32 bytes in size.
+        <li class="issue">
+Specify how each item in the canonicalized input is hashed and included a set
+that is then signed over in <a href="#proof-serialization-bbs-2023"></a>.
         </li>
-        <li>
-Let <var>proofConfigHash</var> be the result of applying the
-SHA-256 (SHA-2 with 256-bit output) cryptographic hashing algorithm [[RFC6234]]
-to the <var>proofConfig</var>. <var>proofConfigHash</var> will be
-exactly 32 bytes in size.
+        <li class="issue">
+Specify how <var>proofConfigHash</var> is generated.
         </li>
-        <li>
-Let <var>hashData</var> be the result of joining <var>proofConfigHash</var> (the
-first hash) with <var>transformedDocumentHash</var> (the second hash).
+        <li class="issue">
+Specify how <var>hashData</var> is composed in a way that can be signed over in
+<a href="#proof-serialization-bbs-2023"></a>.
         </li>
         <li>
 Return <var>hashData</var> as the <em>hash data</em>.
@@ -881,12 +876,9 @@ Data Integrity [[VC-DATA-INTEGRITY]] specification,
 <a href="https://w3c.github.io/vc-data-integrity/#algorithms">
 Section 4: Retrieving Cryptographic Material</a>.
         </li>
-        <li>
-Let <var>proofBytes</var> be the result of applying the BBS Signature
-Algorithm [[CFRG-BBS-SIGNATURE]], with <var>hashData</var> as the data
-to be signed using the private key specified by <var>privateKeyBytes</var>.
-<var>proofBytes</var> will be exactly 64 bytes in size for a P-256 key, and
-96 bytes in size for a P-384 key.
+        <li class="issue">
+Specify how <var>proofBytes</var> is generated and consumed by Section
+<a href="#proof-verification-bbs-2023"></a>.
         </li>
         <li>
 Return <var>proofBytes</var> as the <em>digital proof</em>.
