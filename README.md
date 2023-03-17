@@ -1,4 +1,4 @@
-# BBS+ Signature Linked Data Proofs
+# BBS Data Integrity Cryptosuite
 
 [Latest Draft](https://w3c-ccg.github.io/vc-di-bbs/)
 
