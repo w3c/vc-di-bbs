@@ -29,7 +29,7 @@ The following is a list of known implementations of this specification
 - [aries-framework-go](https://github.com/hyperledger/aries-framework-go) (Golang)
 - [go-bbs](https://github.com/suutaku/go-bbs) (Golang)
 
-### Other Relevant Working Group Repositories
+### Other Relevant VC Working Group Repositories
 * [Use Cases](https://www.w3.org/TR/vc-use-cases)
 * [Data Model](https://www.w3.org/TR/vc-data-model)
 * [Data Integrity](https://www.w3.org/TR/vc-data-integrity)
@@ -38,7 +38,7 @@ The following is a list of known implementations of this specification
 * [W3C Credentials Community Group Mailing List (Incubation)](https://lists.w3.org/Archives/Public/public-credentials/)
 * [W3C Verifiable Credentials WG Mailing List (Standardization)](https://lists.w3.org/Archives/Public/public-vc-wg/)
 
-## Process Overview for VC Data Model Pull Requests
+## Process Overview for Pull Requests
 1. Anyone can open a PR on the repository. Note that for the PR to be merged,
    the individual must agree to the
    [W3C Patent Policy](https://www.w3.org/Consortium/Patent-Policy/).
