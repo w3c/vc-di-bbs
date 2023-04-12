@@ -144,7 +144,7 @@ dd{margin-left:0}
 for the Data Integrity specification. The Signature Suite utilizes
 BBS+ signatures to provide the capability of zero knowledge
 proof disclosures.">
-<link rel="canonical" href="https://www.w3.org/community/reports/credentials/CG-FINAL-lds-bbs20230405/">
+<link rel="canonical" href="https://www.w3.org/community/reports/credentials/CG-FINAL-vc-di-bbs-20230405/">
 <style>
 .hljs{display:block;overflow-x:auto;padding:.5em;color:#383a42;background:#fafafa}
 .hljs-comment,.hljs-quote{color:#717277;font-style:italic}
@@ -168,11 +168,11 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 </style>
 <script id="initialUserConfig" type="application/json">{
   "specStatus": "CG-FINAL",
-  "shortName": "lds-bbs",
+  "shortName": "vc-di-bbs",
   "subtitle": "Achieving Data Integrity using Unlinkable BBS Signatures",
   "group": "credentials",
-  "latestVersion": "https://www.w3.org/community/reports/credentials/CG-FINAL-lds-bbs20230405/",
-  "edDraftURI": "https://w3c-ccg.github.io/ldp-bbs2020/",
+  "latestVersion": "https://www.w3.org/community/reports/credentials/CG-FINAL-vc-di-bbs-20230405/",
+  "edDraftURI": "https://w3c-ccg.github.io/vc-di-bbs/",
   "editors": [
     {
       "name": "Tobias Looker",
@@ -196,8 +196,8 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       "key": "Source control",
       "data": [
         {
-          "value": "https://github.com/w3c-ccg/ldp-bbs2020/",
-          "href": "https://github.com/w3c-ccg/ldp-bbs2020/"
+          "value": "https://github.com/w3c-ccg/vc-di-bbs/",
+          "href": "https://github.com/w3c-ccg/vc-di-bbs/"
         }
       ]
     },
@@ -205,8 +205,8 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       "key": "Issue Tracker",
       "data": [
         {
-          "value": "https://github.com/w3c-ccg/ldp-bbs2020/issues/",
-          "href": "https://github.com/w3c-ccg/ldp-bbs2020/issues/"
+          "value": "https://github.com/w3c-ccg/vc-di-bbs/issues/",
+          "href": "https://github.com/w3c-ccg/vc-di-bbs/issues/"
         }
       ]
     }
@@ -374,8 +374,8 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   "postProcess": [
     null
   ],
-  "publishISODate": "2023-04-05T00:00:00.000Z",
-  "generatedSubtitle": "Final Community Group Report 05 April 2023"
+  "publishISODate": "2023-04-12T00:00:00.000Z",
+  "generatedSubtitle": "Final Community Group Report 12 April 2023"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/cg-final"></head>
   <body class="h-entry"><div class="head">
@@ -383,16 +383,16 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <h1 id="title" class="title">BBS Cryptosuite v2023</h1> <h2 id="subtitle" class="subtitle">Achieving Data Integrity using Unlinkable BBS Signatures</h2>
     <p id="w3c-state">
       <a href="https://www.w3.org/standards/types#reports">Final Community Group Report</a>
-      <time class="dt-published" datetime="2023-04-05">05 April 2023</time>
+      <time class="dt-published" datetime="2023-04-12">12 April 2023</time>
     </p>
     <dl>
       <dt>This version:</dt><dd>
-              <a class="u-url" href="https://www.w3.org/community/reports/credentials/CG-FINAL-lds-bbs-20230405/">https://www.w3.org/community/reports/credentials/CG-FINAL-lds-bbs-20230405/</a>
+              <a class="u-url" href="https://www.w3.org/community/reports/credentials/CG-FINAL-vc-di-bbs-20230412/">https://www.w3.org/community/reports/credentials/CG-FINAL-vc-di-bbs-20230412/</a>
             </dd>
       <dt>Latest published version:</dt><dd>
-              <a href="https://www.w3.org/community/reports/credentials/CG-FINAL-lds-bbs20230405/">https://www.w3.org/community/reports/credentials/CG-FINAL-lds-bbs20230405/</a>
+              <a href="https://www.w3.org/community/reports/credentials/CG-FINAL-vc-di-bbs-20230405/">https://www.w3.org/community/reports/credentials/CG-FINAL-vc-di-bbs-20230405/</a>
             </dd>
-      <dt>Latest editor's draft:</dt><dd><a href="https://w3c-ccg.github.io/ldp-bbs2020/">https://w3c-ccg.github.io/ldp-bbs2020/</a></dd>
+      <dt>Latest editor's draft:</dt><dd><a href="https://w3c-ccg.github.io/vc-di-bbs/">https://w3c-ccg.github.io/vc-di-bbs/</a></dd>
       
       
       
@@ -404,7 +404,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   </dd>
       
       
-      <dt>Feedback:</dt><dd><a href="mailto:public-credentials@w3.org?subject=%5Blds-bbs%5D%20YOUR%20TOPIC%20HERE">public-credentials@w3.org</a> with subject line <kbd>[lds-bbs] <em>… message topic …</em></kbd> (<a rel="discussion" href="https://lists.w3.org/Archives/Public/public-credentials">archives</a>)</dd>
+      <dt>Feedback:</dt><dd><a href="mailto:public-credentials@w3.org?subject=%5Bvc-di-bbs%5D%20YOUR%20TOPIC%20HERE">public-credentials@w3.org</a> with subject line <kbd>[vc-di-bbs] <em>… message topic …</em></kbd> (<a rel="discussion" href="https://lists.w3.org/Archives/Public/public-credentials">archives</a>)</dd>
     </dl>
     
     <p class="copyright">
@@ -2451,7 +2451,7 @@ value of <code>BbsBoundSignatureProof2020</code>.
     </dd><dt id="bib-pairing-friendly-curves">[PAIRING-FRIENDLY-CURVES]</dt><dd>
       <a href="https://tools.ietf.org/html/draft-irtf-cfrg-pairing-friendly-curves-03"><cite>Pairing-Friendly Curves</cite></a>. Yumi Sakemi; Tetsutaro Kobayashi; Tsunekazu Saito.  IETF. Internet Draft. URL: <a href="https://tools.ietf.org/html/draft-irtf-cfrg-pairing-friendly-curves-03">https://tools.ietf.org/html/draft-irtf-cfrg-pairing-friendly-curves-03</a>
     </dd><dt id="bib-rdf-canon">[RDF-CANON]</dt><dd>
-      <a href="https://www.w3.org/TR/rdf-canon/"><cite>RDF Dataset Canonicalization</cite></a>. Dave Longley; Gregg Kellogg; Dan Yamamoto.  W3C. 15 March 2023. W3C Working Draft. URL: <a href="https://www.w3.org/TR/rdf-canon/">https://www.w3.org/TR/rdf-canon/</a>
+      <a href="https://www.w3.org/TR/rdf-canon/"><cite>RDF Dataset Canonicalization</cite></a>. Dave Longley; Gregg Kellogg; Dan Yamamoto.  W3C. 10 April 2023. W3C Working Draft. URL: <a href="https://www.w3.org/TR/rdf-canon/">https://www.w3.org/TR/rdf-canon/</a>
     </dd><dt id="bib-rdf-concepts">[RDF-CONCEPTS]</dt><dd>
       <a href="https://www.w3.org/TR/rdf11-concepts/"><cite>RDF 1.1 Concepts and Abstract Syntax</cite></a>. Richard Cyganiak; David Wood; Markus Lanthaler.  W3C. Recommendation. URL: <a href="https://www.w3.org/TR/rdf11-concepts/">https://www.w3.org/TR/rdf11-concepts/</a>
     </dd><dt id="bib-rdf-dataset-normalization">[RDF-DATASET-NORMALIZATION]</dt><dd>
@@ -2467,7 +2467,7 @@ value of <code>BbsBoundSignatureProof2020</code>.
     </dd><dt id="bib-rfc8174">[RFC8174]</dt><dd>
       <a href="https://www.rfc-editor.org/rfc/rfc8174"><cite>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</cite></a>. B. Leiba.  IETF. May 2017. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>
     </dd><dt id="bib-vc-data-integrity">[VC-DATA-INTEGRITY]</dt><dd>
-      <a href="https://www.w3.org/TR/vc-data-integrity/"><cite>Verifiable Credential Data Integrity 1.0</cite></a>. Manu Sporny; Dave Longley; Michael Prorock.  W3C. 17 March 2023. W3C Working Draft. URL: <a href="https://www.w3.org/TR/vc-data-integrity/">https://www.w3.org/TR/vc-data-integrity/</a>
+      <a href="https://www.w3.org/TR/vc-data-integrity/"><cite>Verifiable Credential Data Integrity 1.0</cite></a>. Manu Sporny; Dave Longley; Michael Prorock.  W3C. 8 April 2023. W3C Working Draft. URL: <a href="https://www.w3.org/TR/vc-data-integrity/">https://www.w3.org/TR/vc-data-integrity/</a>
     </dd><dt id="bib-xmlschema11-2">[XMLSCHEMA11-2]</dt><dd>
       <a href="https://www.w3.org/TR/xmlschema11-2/"><cite>W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes</cite></a>. David Peterson; Sandy Gao; Ashok Malhotra; Michael Sperberg-McQueen; Henry Thompson; Paul V. Biron et al.  W3C. 5 April 2012. W3C Recommendation. URL: <a href="https://www.w3.org/TR/xmlschema11-2/">https://www.w3.org/TR/xmlschema11-2/</a>
     </dd></dl>
