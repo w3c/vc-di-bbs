@@ -1,4 +1,4 @@
-# EdDSA Data Integrity Cryptosuites
+# BBS Data Integrity Cryptosuites
 
 Contributions to this repository are intended to become part of
 Recommendation-track documents governed by the [W3C Patent
