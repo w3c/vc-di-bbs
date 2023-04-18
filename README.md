@@ -1,6 +1,6 @@
 # BBS Data Integrity Cryptosuite
 
-[Latest Draft](https://w3c-ccg.github.io/vc-di-bbs/)
+[Latest Draft](https://w3c.github.io/vc-di-bbs/)
 
 This specification describes a
 [Data Integrity Cryptosuite](https://www.w3.org/TR/vc-data-integrity/)
