@@ -182,6 +182,12 @@
             authors:  ["Michael Lodder", "Tobias Looker"],
             status:   "Draft"
           },
+          "BLS-JOSE-COSE": {
+            title:    "Barreto-Lynn-Scott Elliptic Curve Key Representations for JOSE and COSE",
+            href:     "https://datatracker.ietf.org/doc/draft-ietf-cose-bls-key-representations/",
+            authors:  ["Michael B. Jones", "Tobias Looker"],
+            status:   "Draft"
+          },
           "BLAKE2": {
             title:    "Blake2 - fast secure hashing",
             href:     "https://www.blake2.net/",
@@ -221,7 +227,7 @@
   <body>
     <section id='abstract'>
       <p>
-This specification describes the BBS+ Signature Suite created in 2020
+This specification describes the BBS+ Signature Suite created in 2023
 for the Data Integrity specification. The Signature Suite utilizes
 BBS+ signatures to provide the capability of zero knowledge
 proof disclosures.
@@ -388,15 +394,82 @@ for <a>verification methods</a> and <a>data integrity proof</a> formats.
         <p>
 The cryptographic material used to verify a <a>data integrity proof</a> is
 called the <a>verification method</a>. This suite relies on public key material
-represented using [[MULTIBASE]], [[MULTICODEC]], and JSON Web Key [[RFC7517]].
+represented using [[MULTIBASE]], [[MULTICODEC]], and JSON Web Key [[RFC7517]] and [[BLS-JOSE-COSE]].
         </p>
 
         <p>
 This suite MAY be used to verify Data Integrity Proofs [[VC-DATA-INTEGRITY]]
 produced by BLS12-381 public key material encoded as a
-<a href="#multikey">Multikey</a>. Loss-less key transformation processes that
+<a href="#jsonwebkey">JsonWebKey</a>. Loss-less key transformation processes that
 result in equivalent cryptographic material MAY be utilized.
         </p>
+
+        <section>
+          <h3>JsonWebKey</h3>
+
+          <p class="issue">
+This definition should go in the Data Integrity specification and referenced
+from there.
+          </p>
+
+          <p>
+The `type` of the verification method MUST be `JsonWebKey`.
+          </p>
+
+          <p>
+The `controller` of the verification method MUST be a URL.
+          </p>
+
+          <p>
+The `publicKeyJwk` property of the verification method MUST be a public
+key encoded according to [[RFC7517]].
+          </p>
+
+          <p class="issue">
+The specific encoding of public keys is still being refined in [[BLS-JOSE-COSE]].
+          </p>
+
+          <p class="advisement">
+Developers are advised to not accidentally publish a representation of a private
+key. Implementations of this specification MUST raise errors in the event of
+the expression of a key parameter that is marked as `Private` in the IANA
+JSON Web Key Parameters registry in public key information.
+          </p>
+
+          <pre class="example" title="A BLS12-381 public key containing the
+            G1 and G2 values, encoded as a JsonWebKey in a controller document">
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/data-integrity/v1"
+  ],
+  "id": "https://example.com/issuer/123",
+  "verificationMethod": [{
+    "id": "https://example.com/issuer/123#key-0",
+    "type": "JsonWebKey",
+    "controller": "https://example.com/issuer/123",
+    "publicKeyJwk": {
+      "kty": "OKP",
+      "crv": "Bls12381G1",
+      "x": "Ed4GBGLVasEp4ejPz44CvllbTldfLLcm2QcIJluBL6p_SQmRrZvJNa3YaJ-Wx8Im",
+      "y": "AbdYAsAb20CHzlVW6VBO9i16BcGOmcYiMLlBEh9DfAiDu_1ZIAd1zewSi9f6517g"
+    }
+  }, {
+    "id": "https://example.com/issuer/123#key-1",
+    "type": "JsonWebKey",
+    "controller": "https://example.com/issuer/123",
+    "publicKeyJwk": {
+      "kty": "OKP",
+      "crv": "Bls12381G2",
+      "x": "Ajs8lstTgoTgXMF6QXdyh3m8k2ixxURGYLMaYylVK_x0F8HhE8zk0YWiGV3CHwpQ
+    Ea2sH4PBZLaYCn8se-1clmCORDsKxbbw3Js_Alu4OmkV9gmbJsy1YF2rt7Vxzs6S",
+      "y": "BVkkrVEib-P_FMPHNtqxJymP3pV-H8fCdvPkoWInpFfM9tViyqD8JAmwDf64zU2h
+    BV_vvCQ632ScAooEExXuz1IeQH9D2o-uY_dAjZ37YHuRMEyzh8Tq-90JHQvicOqx"
+    }
+  }]
+}
+          </pre>
+        </section>
 
         <section>
           <h3>Multikey</h3>
@@ -450,140 +523,24 @@ value.
     "https://www.w3.org/ns/did/v1",
     "https://w3id.org/security/data-integrity/v1"
   ],
-  "id": "did:example:123",
+  "id": "https://example.com/issuer/123",
   "verificationMethod": [{
     "id": "https://example.com/issuer/123#key-1",
-    "type": "Multikey",
-    "controller": "https://example.com/issuer/123",
-    "publicKeyMultibase": "zDnaerx9CtbPJ1q36T5Ln5wYt3MQYeGRG5ehnPAmxcf5mDZpv"
-  }, {
-    "id": "https://example.com/issuer/123#key-2",
     "type": "Multikey",
     "controller": "https://example.com/issuer/123",
     "publicKeyMultibase": "u7ljnAxKdp7YVqJvcMU9GtnmrMc1XZztXHsTsZ2LsmGJ67SsdbmNc
       S2SDs0daEPfhVXgODk0IVrgguJ-TJACHyXYa9Ae8DaxcvRy89KLgmWsyOOJn2oY7vCE2gt
       JoebMJiQsdbmNcS2SDs0daEPfhVXgODk0IVrgguJ-TJACHyXYa9Ae8DaxcvRy89KLgm"
-  }],
-  "authentication": [
-    "did:example:123#key-1"
-  ],
-  "assertionMethod": [
-    "did:example:123#key-2"
-  ],
-  "capabilityDelegation": [
-    "did:example:123#key-1"
-  ],
-  "capabilityInvocation": [
-    "did:example:123#key-1"
-  ]
-}
-          </pre>
-        </section>
-
-        <section>
-          <h3>JsonWebKey</h3>
-
-          <p class="issue">
-This definition should go in the Data Integrity specification and referenced
-from there.
-          </p>
-
-          <p>
-The `type` of the verification method MUST be `JsonWebKey`.
-          </p>
-
-          <p>
-The `controller` of the verification method MUST be a URL.
-          </p>
-
-          <p>
-The `publicKeyJwk` property of the verification method MUST be a public
-key encoded according to [[RFC7517]]. Any other encodings MUST NOT be allowed.
-          </p>
-
-          <p class="issue">
-The specific encoding of BBS public key parameters are being discussed in the
-JOSE Working Group.
-          </p>
-
-          <p class="advisement">
-Developers are advised to not accidentally publish a representation of a private
-key. Implementations of this specification MUST raise errors in the event of
-the expression of a key parameter that is marked as `Private` in the IANA
-JSON Web Key Parameters registry in public key information.
-          </p>
-
-          <pre class="example"
-            title="An BLS12-381 public key containing the G1 and G2 values, encoded as a JsonWebKey">
-{
-  "id": "did:example:123#key-3",
-  "type": "JsonWebKey",
-  "controller": "did:example:123",
-  "publicKeyJwk": [{
-    "kty": "EC",
-    "crv": "BLS12381_G1",
-    "x": "tCgCNuUYQotPEsrljWi-lIRIPpzhqsnJV1NPnE7je6glUb-FJm9IYkuv2hbHw22i"
-  }, {
-    "kty": "EC",
-    "crv": "BLS12381_G2",
-    "x": "h_rkcTKXXzRbOPr9UxSfegCbid2U_cVNXQUaKeGF7UhwrMJFP70uMH0VQ9-3-_2zDP
-      AAjflsdeLkOXW3-ShktLxuPy8UlXSNgKNmkfb-rrj-FRwbs13pv_WsIf-eV66-"
   }]
 }
           </pre>
-
-          <pre class="example" title="A BLS12-381 public key containing the
-            G1 and G2 values, encoded as a JsonWebKey in a controller document">
-{
-  "@context": [
-    "https://www.w3.org/ns/did/v1",
-    "https://w3id.org/security/data-integrity/v1"
-  ],
-  "id": "did:example:123",
-  "verificationMethod": [{
-    "id": "https://example.com/issuer/123#key-3",
-    "type": "Multikey",
-    "controller": "https://example.com/issuer/123",
-    "publicKeyMultibase": "zDnaerx9CtbPJ1q36T5Ln5wYt3MQYeGRG5ehnPAmxcf5mDZpv"
-  }, {
-    "id": "did:example:123#key-3",
-    "type": "JsonWebKey",
-    "controller": "did:example:123",
-    "publicKeyJwk": [{
-      "kty": "EC",
-      "crv": "BLS12381_G1",
-      "x": "tCgCNuUYQotPEsrljWi-lIRIPpzhqsnJV1NPnE7je6glUb-FJm9IYkuv2hbHw22i"
-    }, {
-      "kty": "EC",
-      "crv": "BLS12381_G2",
-      "x": "h_rkcTKXXzRbOPr9UxSfegCbid2U_cVNXQUaKeGF7UhwrMJFP70uMH0VQ9-3-_2zDP
-        AAjflsdeLkOXW3-ShktLxuPy8UlXSNgKNmkfb-rrj-FRwbs13pv_WsIf-eV66-"
-    }]
-  }],
-  "authentication": [
-    "did:example:123#key-3"
-  ],
-  "assertionMethod": [
-    "did:example:123#key-4"
-  ],
-  "capabilityDelegation": [
-    "did:example:123#key-3"
-  ],
-  "capabilityInvocation": [
-    "did:example:123#key-3"
-  ]
-}
-          </pre>
         </section>
-
       </section>
-
     <section>
       <h2>Proof Representations</h2>
 
       <p>
-This suite relies on detached digital signatures represented using [[MULTIBASE]]
-and [[MULTICODEC]].
+This suite relies on detached digital signatures represented using [[MULTIBASE]].
       </p>
 
       <section>
@@ -632,7 +589,7 @@ produced according to [[CFRG-BBS-SIGNATURE]], encoded according to
     "created": "2020-11-05T19:23:24Z",
     "verificationMethod": "https://example.com/issuer/123#key-2",
     "proofPurpose": "assertionMethod",
-    "proofValue": "mU6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdB
+    "proofValue": "uU6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdB
       Dd/l6tIYkTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDB
       5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1o
       AhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIM
@@ -660,6 +617,11 @@ that utilize the BBS Signature Algorithm [[CFRG-BBS-SIGNATURE]].
 
     <section>
     <h3>bbs-2023</h3>
+
+    <p class="issue" >
+      <!-- data-number="75" -->
+      Need separate "cryptosuite" for "signature" and "proof".
+    </p>
 
     <p>
 The `bbs-2023` cryptographic suite takes an input document, canonicalizes
@@ -989,18 +951,18 @@ and smaller to create rather than key generation.
       </p>
       <pre class="example highlight" title="base58 encoded BLS12-381 G1 Key">
         {
-          "id": "did:example:123#key-0",
+          "id": "https://example.com/issuer/123#key-0",
           "type": "Bls12381G1Key2020",
-          "controller": "did:example:123",
+          "controller": "https://example.com/issuer/123",
           "publicKeyBase58": "7cJGQwV5XyzUjJEzY5doVhv62Qqou6qW7G4eh9YbUywgyeDCobiXjN8CnQ7wpWBrGR",
         }
       </pre>
 
       <pre class="example highlight" title="JWK encoded BLS12-381 G1 Key">
         {
-          "id": "did:example:123#key-0",
+          "id": "https://example.com/issuer/123#key-0",
           "type": "Bls12381G1Key2020",
-          "controller": "did:example:123",
+          "controller": "https://example.com/issuer/123",
           "publicKeyJwk": {
             "kty": "EC",
             "crv": "BLS12381_G1",
@@ -1028,18 +990,18 @@ and smaller to create rather than key generation.
       </p>
       <pre class="example highlight" title="base58 encoded BLS12-381 G2 Key">
         {
-          "id": "did:example:123#key-1",
+          "id": "https://example.com/issuer/123#key-1",
           "type": "Bls12381G2Key2020",
-          "controller": "did:example:123",
+          "controller": "https://example.com/issuer/123",
           "publicKeyBase58" : "oqpWYKaZD9M1Kbe94BVXpr8WTdFBNZyKv48cziTiQUeuhm7sBhCABMyYG4kcMrseC68YTFFgyhiNeBKjzdKk9MiRWuLv5H4FFujQsQK2KTAtzU8qTBiZqBHMmnLF4PL7Ytu"
         }
       </pre>
 
       <pre class="example highlight" title="JWK encoded BLS12-381 G2 Key">
         {
-          "id": "did:example:123#key-1",
+          "id": "https://example.com/issuer/123#key-1",
           "type": "Bls12381G2Key2020",
-          "controller": "did:example:123",
+          "controller": "https://example.com/issuer/123",
           "publicKeyJwk": {
             "crv": "BLS12381_G2",
             "kty": "EC",
