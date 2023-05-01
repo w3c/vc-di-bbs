@@ -431,9 +431,9 @@ The specific encoding of public keys is still being refined in [[BLS-JOSE-COSE]]
 
           <p class="advisement">
 Developers are advised to not accidentally publish a representation of a private
-key. Implementations of this specification MUST raise errors in the event of
-the expression of a key parameter that is marked as `Private` in the IANA
-JSON Web Key Parameters registry in public key information.
+key. Implementations of this specification MUST raise errors if expression
+of public key information includes a key parameter that is marked as 
+`Private` in the IANA JSON Web Key Parameters registry.
           </p>
 
           <pre class="example" title="A BLS12-381 public key containing the
