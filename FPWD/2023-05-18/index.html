@@ -648,11 +648,11 @@ The product of apply the <a href="#dfn-derive-proof-algorithm" class="internalDF
       </dd>
       <dt><dfn data-lt="quad|quads" id="dfn-quad" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">quad</dfn></dt>
       <dd>
-A <a href="https://json-ld.github.io/normalization/spec/index.html#dfn-quad" class="externalDFN">quad</a> as specified by [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-dataset-normalization" title="RDF Dataset Normalization 1.0">RDF-DATASET-NORMALIZATION</a></cite>]
+A quad as specified by [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-dataset-normalization" title="RDF Dataset Normalization 1.0">RDF-DATASET-NORMALIZATION</a></cite>]
       </dd>
       <dt><dfn data-lt="n-quad|n-quads" id="dfn-n-quad" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">n-quad</dfn></dt>
       <dd>
-An <a href="https://www.w3.org/TR/n-quads/" class="externalDFN">n-quad</a> which is a line based, plain text format encoding of a <a href="#dfn-quad" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-quad-1">quad</a> as defined by [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-n-quads" title="RDF 1.1 N-Quads">RDF-N-Quads</a></cite>].
+An n-quad which is a line based, plain text format encoding of a <a href="#dfn-quad" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-quad-1">quad</a> as defined by [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-n-quads" title="RDF 1.1 N-Quads">RDF-N-Quads</a></cite>].
       </dd>
       <dt><dfn data-lt="linked data document|linked data documents" id="dfn-linked-data-document" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">linked data document</dfn></dt>
       <dd>
@@ -709,7 +709,7 @@ In short, it is a node in a graph that is neither an IRI, nor a literal.
         when, and only when, they appear in all capitals, as shown here.
       </p>
 
-      <div class="issue" id="issue-container-generatedID"><div role="heading" class="issue-title marker" id="h-issue" aria-level="4"><span>Issue</span></div><div class="">TODO: Add paragraph</div></div>
+      <div class="issue" id="issue-container-generatedID"><div role="heading" class="issue-title marker" id="h-issue" aria-level="4"><span>Issue</span></div><p class="">TODO: Add paragraph</p></div>
 
       </section>
     </section>
@@ -907,7 +907,7 @@ match the verification relationship expressed by the verification method
         </p>
         <p>
 The <code>proofValue</code> property of the proof <em class="rfc2119">MUST</em> be a detached BBS Signature
-produced according to <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html##name-sign">Sign</a>, encoded according to
+produced according to <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html#name-sign">Sign</a>, encoded according to
 [<cite><a class="bibref" data-link-type="biblio" href="#bib-multibase" title="Multibase">MULTIBASE</a></cite>] using the base64 base encoding with no padding.
         </p>
 
@@ -1083,36 +1083,36 @@ hashing algorithm in Section <a href="#hashing-bbs-signature-2023" class="sec-re
 
 
 Required inputs to this algorithm are an
-<a href="https://w3c.github.io/vc-data-integrity/#dfn-unsecured-data-document">
-unsecured data document</a> (<var>unsecuredDocument</var>) and
-<a href="https://w3c.github.io/vc-data-integrity/#dfn-transformation-options">
-transformation options</a> (<var>options</var>). The
-<a href="https://w3c.github.io/vc-data-integrity/#dfn-unsecured-data-document">
+<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-unsecured-data-document">
+unsecured data document</a> (<code>unsecuredDocument</code>) and
+<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-transformation-options">
+transformation options</a> (<code>options</code>). The
+<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-unsecured-data-document">
 transformation options</a> <em class="rfc2119">MUST</em> contain a type identifier for the
-<a href="https://w3c.github.io/vc-data-integrity/#dfn-cryptographic-suite">
-cryptographic suite</a> (<var>type</var>) and a cryptosuite
-identifier (<var>cryptosuite</var>). A <em>transformed data document</em> is
+<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-cryptographic-suite">
+cryptographic suite</a> (<code>type</code>) and a cryptosuite
+identifier (<code>cryptosuite</code>). A <em>transformed data document</em> is
 produced as output. Whenever this algorithm encodes strings, it <em class="rfc2119">MUST</em> use UTF-8
 encoding.
       <p></p>
 
       <ol class="algorithm">
         <li>
-If <var>options</var>.<var>type</var> is not set to the string
-<code>DataIntegrityProof</code> and <var>options</var>.<var>cryptosuite</var> is not
+If <code>options</code>.<code>type</code> is not set to the string
+<code>DataIntegrityProof</code> and <code>options</code>.<code>cryptosuite</code> is not
 set to the string <code>bbs-signature-2023</code> then a <code>PROOF_TRANSFORMATION_ERROR</code> <em class="rfc2119">MUST</em> be
 raised.
         </li>
         <li>
-Let <var>canonicalDocument</var> be the result of applying the
+Let <code>canonicalDocument</code> be the result of applying the
 Universal RDF Dataset Canonicalization Algorithm
-[<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-canon" title="RDF Dataset Canonicalization">RDF-CANON</a></cite>] to the <var>unsecuredDocument</var>.
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-canon" title="RDF Dataset Canonicalization">RDF-CANON</a></cite>] to the <code>unsecuredDocument</code>.
         </li>
         <li>
-Set <var>output</var> to the value of <var>canonicalDocument</var>.
+Set <code>output</code> to the value of <code>canonicalDocument</code>.
         </li>
         <li>
-Return <var>canonicalDocument</var> as the <em>transformed data document</em>.
+Return <code>canonicalDocument</code> as the <em>transformed data document</em>.
         </li>
       </ol>
     </section>
@@ -1130,25 +1130,33 @@ Section <a href="#proof-verification-bbs-signature-2023" class="sec-ref"><bdi cl
 
       <p>
 The required inputs to this algorithm are a <em>transformed data document</em>
-(<var>transformedDocument</var>) and <em>proof configuration</em>
-(<var>proofConfig</var>). A single <em>hash data</em> value represented as
+(<code>transformedDocument</code>) and <em>proof configuration</em>
+(<code>proofConfig</code>). A single <em>hash data</em> value represented as
 series of bytes is produced as output.
       </p>
 
       <ol class="algorithm">
-        <div class="issue" id="issue-container-generatedID-3"><div role="heading" class="issue-title marker" id="h-issue-3" aria-level="5"><span>Issue</span></div><li class="">
-Specify how each item in the canonicalized input is hashed and included a set
-that is then signed over in <a href="#proof-serialization-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.6 </bdi>Proof Serialization</a>.
-        </li></div>
-        <div class="issue" id="issue-container-generatedID-4"><div role="heading" class="issue-title marker" id="h-issue-4" aria-level="5"><span>Issue</span></div><li class="">
-Specify how <var>proofConfigHash</var> is generated.
-        </li></div>
-        <div class="issue" id="issue-container-generatedID-5"><div role="heading" class="issue-title marker" id="h-issue-5" aria-level="5"><span>Issue</span></div><li class="">
-Specify how <var>hashData</var> is composed in a way that can be signed over in
-<a href="#proof-serialization-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.6 </bdi>Proof Serialization</a>.
-        </li></div>
         <li>
-Return <var>hashData</var> as the <em>hash data</em>.
+<div class="issue" id="issue-container-generatedID-3"><div role="heading" class="issue-title marker" id="h-issue-3" aria-level="5"><span>Issue</span></div><p class="">
+  Specify how each item in the canonicalized input is hashed and included a set
+that is then signed over in <a href="#proof-serialization-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.6 </bdi>Proof Serialization</a>.
+</p></div>
+        </li>
+        <li>
+<div class="issue" id="issue-container-generatedID-4"><div role="heading" class="issue-title marker" id="h-issue-4" aria-level="5"><span>Issue</span></div><p class="">
+  Specify how <code>proofConfigHash</code> is generated.
+</p></div>
+
+        </li>
+        <li>
+<div class="issue" id="issue-container-generatedID-5"><div role="heading" class="issue-title marker" id="h-issue-5" aria-level="5"><span>Issue</span></div><p class="">
+  Specify how <code>hashData</code> is composed in a way that can be signed over in
+  <a href="#proof-serialization-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.6 </bdi>Proof Serialization</a>.
+</p></div>
+
+        </li>
+        <li>
+Return <code>hashData</code> as the <em>hash data</em>.
         </li>
       </ol>
 
@@ -1165,46 +1173,46 @@ that is used as input to the <a href="#hashing-bbs-signature-2023">proof hashing
 
       <p>
 The required inputs to this algorithm are <em>proof options</em>
-(<var>options</var>). The <em>proof options</em> <em class="rfc2119">MUST</em> contain a type identifier
+(<code>options</code>). The <em>proof options</em> <em class="rfc2119">MUST</em> contain a type identifier
 for the
-<a href="https://w3c.github.io/vc-data-integrity/#dfn-cryptographic-suite">
-cryptographic suite</a> (<var>type</var>) and <em class="rfc2119">MUST</em> contain a cryptosuite
-identifier (<var>cryptosuite</var>). A <em>proof configuration</em>
+<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-cryptographic-suite">
+cryptographic suite</a> (<code>type</code>) and <em class="rfc2119">MUST</em> contain a cryptosuite
+identifier (<code>cryptosuite</code>). A <em>proof configuration</em>
 object is produced as output.
       </p>
 
       <ol class="algorithm">
         <li>
-Let <var>proofConfig</var> be an empty object.
+Let <code>proofConfig</code> be an empty object.
         </li>
         <li>
-Set <var>proofConfig</var>.<var>type</var> to
-<var>options</var>.<var>type</var>.
+Set <code>proofConfig</code>.<code>type</code> to
+<code>options</code>.<code>type</code>.
         </li>
         <li>
-If <var>options</var>.<var>cryptosuite</var> is set, set
-<var>proofConfig</var>.<var>cryptosuite</var> to its value.
+If <code>options</code>.<code>cryptosuite</code> is set, set
+<code>proofConfig</code>.<code>cryptosuite</code> to its value.
         </li>
         <li>
-If <var>options</var>.<var>type</var> is not set to <code>DataIntegrityProof</code> and
-<var>proofConfig</var>.<var>cryptosuite</var> is not set to <code>bbs-signature-2023</code>, an
+If <code>options</code>.<code>type</code> is not set to <code>DataIntegrityProof</code> and
+<code>proofConfig</code>.<code>cryptosuite</code> is not set to <code>bbs-signature-2023</code>, an
 <code>INVALID_PROOF_CONFIGURATION</code> error <em class="rfc2119">MUST</em> be raised.
         </li>
         <li>
-Set <var>proofConfig</var>.<var>created</var> to
-<var>options</var>.<var>created</var>. If the value is not a valid
+Set <code>proofConfig</code>.<code>created</code> to
+<code>options</code>.<code>created</code>. If the value is not a valid
 [<cite><a class="bibref" data-link-type="biblio" href="#bib-xmlschema11-2" title="W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes">XMLSCHEMA11-2</a></cite>] datetime, an <code>INVALID_PROOF_DATETIME</code> error <em class="rfc2119">MUST</em> be raised.
         </li>
         <li>
-Set <var>proofConfig</var>.<var>verificationMethod</var> to
-<var>options</var>.<var>verificationMethod</var>.
+Set <code>proofConfig</code>.<code>verificationMethod</code> to
+<code>options</code>.<code>verificationMethod</code>.
         </li>
         <li>
-Set <var>proofConfig</var>.<var>proofPurpose</var> to
-<var>options</var>.<var>proofPurpose</var>.
+Set <code>proofConfig</code>.<code>proofPurpose</code> to
+<code>options</code>.<code>proofPurpose</code>.
         </li>
         <li>
-Return <var>proofConfig</var>.
+Return <code>proofConfig</code>.
         </li>
       </ol>
 
@@ -1218,32 +1226,34 @@ The following algorithm specifies how to serialize a digital signature from
 a set of cryptographic hash data. This
 algorithm is designed to be used in conjunction with the algorithms defined
 in the Data Integrity [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification,
-<a href="https://w3c.github.io/vc-data-integrity/#algorithms">
+<a href="https://www.w3.org/TR/vc-data-integrity/#algorithms">
 Section 4: Algorithms</a>. Required inputs are
-cryptographic hash data (<var>hashData</var>) and
-<em>proof options</em> (<var>options</var>). The
+cryptographic hash data (<code>hashData</code>) and
+<em>proof options</em> (<code>options</code>). The
 <em>proof options</em> <em class="rfc2119">MUST</em> contain a type identifier for the
-<a href="https://w3c.github.io/vc-data-integrity/#dfn-cryptographic-suite">
-cryptographic suite</a> (<var>type</var>) and <em class="rfc2119">MAY</em> contain a cryptosuite
-identifier (<var>cryptosuite</var>). A single <em>digital proof</em> value
+<a data-cte="VC-DATA-INTEGRITY#dfn-cryptographic-suite" href="#dfn-cryptosuite" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-cryptosuite-2">
+cryptographic suite</a> (<code>type</code>) and <em class="rfc2119">MAY</em> contain a cryptosuite
+identifier (<code>cryptosuite</code>). A single <em>digital proof</em> value
 represented as series of bytes is produced as output.
       </p>
 
       <ol class="algorithm">
         <li>
-Let <var>privateKeyBytes</var> be the result of retrieving the
+Let <code>privateKeyBytes</code> be the result of retrieving the
 private key bytes associated with the
-<var>options</var>.<var>verificationMethod</var> value as described in the
+<code>options</code>.<code>verificationMethod</code> value as described in the
 Data Integrity [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification,
-<a href="https://w3c.github.io/vc-data-integrity/#algorithms">
-Section 4: Retrieving Cryptographic Material</a>.
+<a href="VC-DATA-INTEGRITY#retrieve-verification-method">
+Section 4.3: Retrieve Verification Method</a>.
         </li>
-        <div class="issue" id="issue-container-generatedID-6"><div role="heading" class="issue-title marker" id="h-issue-6" aria-level="5"><span>Issue</span></div><li class="">
-Specify how <var>proofBytes</var> is generated and consumed by Section
-<a href="#proof-verification-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.7 </bdi>Proof Verification</a>.
-        </li></div>
         <li>
-Return <var>proofBytes</var> as the <em>digital proof</em>.
+<div class="issue" id="issue-container-generatedID-6"><div role="heading" class="issue-title marker" id="h-issue-6" aria-level="5"><span>Issue</span></div><p class="">
+  Specify how <code>proofBytes</code> is generated and consumed by Section
+<a href="#proof-verification-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.7 </bdi>Proof Verification</a>.
+</p></div>
+        </li>
+        <li>
+Return <code>proofBytes</code> as the <em>digital proof</em>.
         </li>
       </ol>
 
@@ -1257,32 +1267,32 @@ The following algorithm specifies how to verify a digital signature from
 a set of cryptographic hash data. This
 algorithm is designed to be used in conjunction with the algorithms defined
 in the Data Integrity [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification,
-<a href="https://w3c.github.io/vc-data-integrity/#algorithms">
+<a href="https://www.w3.org/TR/vc-data-integrity/#algorithms">
 Section 4: Algorithms</a>. Required inputs are
-cryptographic hash data (<var>hashData</var>),
-a digital signature (<var>proofBytes</var>) and
-proof options (<var>options</var>). A <em>verification result</em>
+cryptographic hash data (<code>hashData</code>),
+a digital signature (<code>proofBytes</code>) and
+proof options (<code>options</code>). A <em>verification result</em>
 represented as a boolean value is produced as output.
       </p>
 
       <ol class="algorithm">
         <li>
-Let <var>publicKeyBytes</var> be the result of retrieving the
+Let <code>publicKeyBytes</code> be the result of retrieving the
 public key bytes associated with the
-<var>options</var>.<var>verificationMethod</var> value as described in the
+<code>options</code>.<code>verificationMethod</code> value as described in the
 Data Integrity [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification,
-<a href="https://w3c.github.io/vc-data-integrity/#algorithms">
+<a href="https://www.w3.org/TR/vc-data-integrity/#algorithms">
 Section 4: Retrieving Cryptographic Material</a>.
         </li>
         <li>
-Let <var>verificationResult</var> be the result of applying the verification
+Let <code>verificationResult</code> be the result of applying the verification
 algorithm defined in the BBS Signature specification [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-SIGNATURE</a></cite>],
-with <var>hashData</var> as the data to be verified against the
-<var>proofBytes</var> using the public key specified by
-<var>publicKeyBytes</var>.
+with <code>hashData</code> as the data to be verified against the
+<code>proofBytes</code> using the public key specified by
+<code>publicKeyBytes</code>.
         </li>
         <li>
-Return <var>verificationResult</var> as the <em>verification result</em>.
+Return <code>verificationResult</code> as the <em>verification result</em>.
         </li>
       </ol>
 
@@ -1313,10 +1323,10 @@ Return <var>verificationResult</var> as the <em>verification result</em>.
       </li>
     </ul>
     <p>This operation can be applied by any 
-      <a href="https://www.w3.org/TR/vc-data-model-2.0/#holder">holder</a> of a <code>bbs-signature-2023</code>
+      <a href="https://www.w3.org/TR/vc-data-model-2.0/#dfn-holders">holder</a> of a <code>bbs-signature-2023</code>
       secured document, and as such, <code>bbs-proof-2023</code> <em class="rfc2119">MUST</em> be implemented with
       awareness of the mandatory to disclose fields the original 
-      <a href="https://www.w3.org/TR/vc-data-model-2.0/#issuers">issuer</a> required.
+      <a href="https://www.w3.org/TR/vc-data-model-2.0/#dfn-issuers">issuer</a> required.
     </p>
     <div class="issue" id="issue-container-number-3"><div role="heading" class="issue-title marker" id="h-issue-7" aria-level="4"><a href="https://github.com/w3c/vc-di-bbs/issues/3"><span class="issue-number">Issue 3</span></a><span class="issue-label">: Included rationale for `requiredRevealStatements` <a class="respec-gh-label" href="https://github.com/w3c/vc-di-bbs/issues/?q=is%3Aissue+is%3Aopen+label%3A%22ready-for-pr%22" style="background-color: rgb(22, 224, 95); color: rgb(0, 0, 0);" aria-label="GitHub label: ready-for-pr">ready-for-pr</a></span></div><p dir="auto">In a BBS Signature we must define the term <code class="notranslate">requiredRevealStatements</code> which communicates which statments must be revealed when generating a proof as according to the issuer.</p></div>
     <section id="add-proof-0"><div class="header-wrapper"><h4 id="x3-2-1-add-proof"><bdi class="secno">3.2.1 </bdi>Add Proof </h4><a class="self-link" href="#add-proof-0" aria-label="Permalink for Section 3.2.1"></a></div>
@@ -1355,14 +1365,14 @@ Return <var>verificationResult</var> as the <em>verification result</em>.
 
 <section id="privacy-considerations"><div class="header-wrapper"><h2 id="x4-privacy-considerations"><bdi class="secno">4. </bdi>Privacy Considerations</h2><a class="self-link" href="#privacy-considerations" aria-label="Permalink for Section 4."></a></div>
   
-  <div class="issue" id="issue-container-generatedID-7"><div role="heading" class="issue-title marker" id="h-issue-15" aria-level="3"><span>Issue</span></div><div class="">TODO: We need to add a complete list of privacy
-  considerations.</div></div>
+  <div class="issue" id="issue-container-generatedID-7"><div role="heading" class="issue-title marker" id="h-issue-15" aria-level="3"><span>Issue</span></div><p class="">TODO: We need to add a complete list of privacy
+  considerations.</p></div>
 </section>
 
 <section id="security-considerations"><div class="header-wrapper"><h2 id="x5-security-considerations"><bdi class="secno">5. </bdi>Security Considerations</h2><a class="self-link" href="#security-considerations" aria-label="Permalink for Section 5."></a></div>
   
-  <div class="issue" id="issue-container-generatedID-8"><div role="heading" class="issue-title marker" id="h-issue-16" aria-level="3"><span>Issue</span></div><div class="">TODO: We need to add a complete list of security
-  considerations.</div></div>
+  <div class="issue" id="issue-container-generatedID-8"><div role="heading" class="issue-title marker" id="h-issue-16" aria-level="3"><span>Issue</span></div><p class="">TODO: We need to add a complete list of security
+  considerations.</p></div>
 </section>
       
 
@@ -1489,6 +1499,8 @@ Return <var>verificationResult</var> as the <em>verification result</em>.
       <ul>
     <li>
      
+  </li><li>
+    <a href="#ref-for-dfn-cryptosuite-2" title="§ 3.1.6 Proof Serialization">§ 3.1.6 Proof Serialization</a> 
   </li>
   </ul>
     </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-decentralized-identifiers" aria-label="Links in this document to definition: decentralized identifier">
