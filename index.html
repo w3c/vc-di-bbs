@@ -18,7 +18,7 @@
 
         // the specification's short name, as in http://www.w3.org/TR/short-name/
         shortName: "vc-di-bbs",
-        subtitle: "Achieving Data Integrity using Unlinkable BBS Signatures",
+        subtitle: "Securing Verifiable Credentials with Selective Disclosure using BBS Signatures",
         group: "vc",
         // latestVersion: "https://www.w3.org/community/reports/credentials/CG-FINAL-vc-di-bbs-20230405/",
 
@@ -109,19 +109,12 @@
             authors:  ["Gaven Carothers"],
             status:   "Recommendation",
           },
-          "SECURITY-VOCABULARY": {
-            title:    "Security Linked Data Vocabulary",
-            href:     "https://web-payments.org/vocabs/security",
-            authors:  ["Manu Sporny","David Longley"],
-            status:   "CGDRAFT",
-            publisher:  "Web Payments Community Group"
-          },
-          "DATA-INTEGRITY": {
-            title:    "Data Integrity 1.0",
-            href:     "https://w3c-ccg.github.io/data-integrity-spec/",
+          "VC-DATA-INTEGRITY": {
+            title:    "Verifiable Credential Data Integrity 1.0",
+            href:     "https://www.w3.org/TR/vc-data-integrity/",
             authors:  ["David Longley", "Manu Sporny"],
-            status:   "CGDRAFT",
-            publisher:  "Credentials Community Group"
+            status:   "Working Draft",
+            publisher:  "W3C Verifiable Credentials Working Group"
           },
           "JSON-LD-FRAMING": {
             title:    "JSON-LD 1.1 Framing",
@@ -137,13 +130,6 @@
             status:   "Candidate Recommendation",
             publisher:  "W3C"
           },
-          "PAIRING-FRIENDLY-CURVES": {
-            title:    "Pairing-Friendly Curves",
-            href:     "https://tools.ietf.org/html/draft-irtf-cfrg-pairing-friendly-curves-03",
-            authors:  ["Yumi Sakemi", "Tetsutaro Kobayashi", "Tsunekazu Saito"],
-            status:   "Internet Draft",
-            publisher:  "IETF"
-          },
           "VC-DATA-MODEL-2": {
             title: "Verifiable Credentials Data Model v2.0",
             href: "https://www.w3.org/TR/vc-data-model-2.0/",
@@ -154,13 +140,6 @@
             ],
             status: "Working Draft",
             publisher: "W3C Verifiable Credentials Working Group"
-          },
-          "SHORT-GROUP-SIGNATURES": {
-            title:    "Short group signatures",
-            href:     "https://crypto.stanford.edu/~xb/crypto04a/groupsigs.pdf",
-            authors:  ["Dan Boneh", "Xavier Boyen", "Hovav Shacham"],
-            status:   "Published",
-            publisher:  "Advances in Cryptology—CRYPTO 2004"
           },
           MULTIBASE: {
             title: "Multibase",
@@ -176,21 +155,11 @@
             authors:  ["Tobias Looker", "Vasilis Kalos", "Andrew Whitehead", "Mike Lodder"],
             status:   "Draft"
           },
-          "BBS": {
-            title:    "BBS+ Signatures",
-            href:     "https://mattrglobal.github.io/bbs-signatures-spec/",
-            authors:  ["Michael Lodder", "Tobias Looker"],
-            status:   "Draft"
-          },
           "BLS-JOSE-COSE": {
             title:    "Barreto-Lynn-Scott Elliptic Curve Key Representations for JOSE and COSE",
             href:     "https://datatracker.ietf.org/doc/draft-ietf-cose-bls-key-representations/",
             authors:  ["Michael B. Jones", "Tobias Looker"],
             status:   "Draft"
-          },
-          "BLAKE2": {
-            title:    "Blake2 - fast secure hashing",
-            href:     "https://www.blake2.net/",
           }
         },
         lint: {"no-unused-dfns": false},
@@ -245,7 +214,7 @@ is not fit for production deployment.
       <h2>Introduction</h2>
       <p>
 This specification defines a set of cryptographic suites for the purpose of creating, verifying and deriving proofs
-for BBS+ Signatures in conformance with the Data Integrity [[DATA-INTEGRITY]] specification.
+for BBS+ Signatures in conformance with the Data Integrity [[VC-DATA-INTEGRITY]] specification.
       </p>
       <p>
 In general the suites uses the RDF Dataset Normalization Algorithm [[RDF-DATASET-NORMALIZATION]] to transform an
@@ -254,7 +223,7 @@ to digest each statement to be signed individually, finally the digested stateme
 using the defined <a>signature algorithm</a>.
       </p>
       <p>
-BBS+ signatures [[BBS]] are compatible with any pairing friendly elliptic curve, however the cryptographic
+BBS+ signatures [[CFRG-BBS-SIGNATURE]] are compatible with any pairing friendly elliptic curve, however the cryptographic
 suites defined in this document elect to only allow the usage of the BLS12-381 for interoperability purposes.
       </p>
 
@@ -551,15 +520,14 @@ value.
         </section>
       </section>
     <section>
-      <h2>Proof Representations</h2>
-
-      <p>
-This suite relies on detached digital signatures represented using [[MULTIBASE]].
-      </p>
+      <h2>Data Integrity Proof</h2>
 
       <section>
-        <h3>DataIntegrityProof</h3>
-
+        <h3>bbs-signature-2023</h3>
+<p>
+  This suite relies on detached digital signatures represented using [[MULTIBASE]].
+</p>
+          
         <p>
 The `verificationMethod` property of the proof MUST be a URL.
 Dereferencing the `verificationMethod` MUST result in an object
@@ -571,7 +539,7 @@ containing a `type` property with the value set to
 The `type` property of the proof MUST be `DataIntegrityProof`.
         </p>
         <p>
-The `cryptosuite` property of the proof MUST be `bbs-2023`.
+The `cryptosuite` property of the proof MUST be `bbs-signature-2023`.
         </p>
         <p>
 The `created` property of the proof MUST be an [[XMLSCHEMA11-2]]
@@ -584,7 +552,7 @@ match the verification relationship expressed by the verification method
         </p>
         <p>
 The `proofValue` property of the proof MUST be a detached BBS Signature
-produced according to [[CFRG-BBS-SIGNATURE]], encoded according to
+produced according to <a data-cite="CFRG-BBS-SIGNATURE##name-sign">Sign</a>, encoded according to
 [[MULTIBASE]] using the base64 base encoding with no padding.
         </p>
 
@@ -599,10 +567,75 @@ produced according to [[CFRG-BBS-SIGNATURE]], encoded according to
   "title": "Hello world!",
   "proof": {
     "type": "DataIntegrityProof",
-    "cryptosuite": "bbs-2023",
+    "cryptosuite": "bbs-signature-2023",
     "created": "2020-11-05T19:23:24Z",
     "verificationMethod": "https://example.com/issuer/123#key-2",
     "proofPurpose": "assertionMethod",
+    "proofValue": "uU6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdB
+      Dd/l6tIYkTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDB
+      5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1o
+      AhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIM
+      0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6oba
+      Enaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYG
+      nu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBk
+      Oh6ojlvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/aGQcoD3Tgmy+z0hN+4elMky1RnJEhCuN
+      QNsEg"
+  }
+}
+        </pre>
+
+      </section>
+      <section>
+        <h3>bbs-proof-2023</h3>
+<p>
+  This suite relies on detached digital signatures represented using [[MULTIBASE]].
+</p>
+          
+        <p>
+The `verificationMethod` property of the proof MUST be a URL.
+Dereferencing the `verificationMethod` MUST result in an object
+containing a `type` property with the value set to
+`Multikey` or `JsonWebKey`.
+        </p>
+
+        <p>
+The `type` property of the proof MUST be `DataIntegrityProof`.
+        </p>
+        <p>
+The `cryptosuite` property of the proof MUST be `bbs-proof-2023`.
+        </p>
+        <p>
+The `created` property of the proof MUST be an [[XMLSCHEMA11-2]]
+formated date string.
+        </p>
+        <p>
+The `proofPurpose` property of the proof MUST be a string, and MUST
+match the verification relationship expressed by the verification method
+`controller`.
+        </p>
+        <p>
+The `proofValue` property of the proof MUST be a detached BBS Signature
+produced according to <a data-cite="CFRG-BBS-SIGNATURE#name-proofgen">ProofGen</a>,
+encoded according to [[MULTIBASE]] using the base64 base encoding with no padding.
+        </p>
+
+        <pre class="example highlight" style="overflow-x:
+          auto; white-space: pre-wrap; word-wrap: break-word;"
+          title="An BBS zero-knowledge proof-of-knowledge of a signature expressed as a DataIntegrityProof">
+{
+  "@context": [
+    {"title": "https://schema.org/title"},
+    "https://w3id.org/security/data-integrity/v1"
+  ],
+  "title": "Hello world!",
+  "proof": {
+    "type": "DataIntegrityProof",
+    "cryptosuite": "bbs-proof-2023",
+    "created": "2020-11-05T19:23:24Z",
+    "verificationMethod": "https://example.com/issuer/123#key-2",
+    "proofPurpose": "assertionMethod",
+    "generators": 3,
+    "disclosed": [ 2 ],
     "proofValue": "uU6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdB
       Dd/l6tIYkTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDB
       5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1o
@@ -630,15 +663,10 @@ that utilize the BBS Signature Algorithm [[CFRG-BBS-SIGNATURE]].
     </p>
 
     <section>
-    <h3>bbs-2023</h3>
-
-    <p class="issue" >
-      <!-- data-number="75" -->
-      Need separate "cryptosuite" for "signature" and "proof".
-    </p>
+    <h3>bbs-signature-2023</h3>
 
     <p>
-The `bbs-2023` cryptographic suite takes an input document, canonicalizes
+The `bbs-signature-2023` cryptographic suite takes an input document, canonicalizes
 the document using the Universal RDF Dataset Canonicalization Algorithm
 [[RDF-CANON]], and then cryptographically hashes and signs the output
 resulting in the production of a data integrity proof. The algorithms in this
@@ -646,7 +674,7 @@ section also include the verification of such a data integrity proof.
     </p>
 
     <section>
-      <h2>Add Proof (bbs-2023)</h2>
+      <h2>Add Proof </h2>
 
       <p>
 To generate a proof, the algorithm in
@@ -656,18 +684,18 @@ Section 4.1: Add Proof</a> in the Data Integrity
 For that algorithm, the cryptographic suite specific
 <a href="https://www.w3.org/TR/vc-data-integrity/#dfn-transformation-algorithm">
 transformation algorithm</a> is defined in Section
-<a href="#transformation-bbs-2023"></a>, the
+<a href="#transformation-bbs-signature-2023"></a>, the
 <a href="https://www.w3.org/TR/vc-data-integrity/#dfn-hashing-algorithm">
-hashing algorithm</a> is defined in Section <a href="#hashing-bbs-2023"></a>,
+hashing algorithm</a> is defined in Section <a href="#hashing-bbs-signature-2023"></a>,
 and the
 <a href="https://www.w3.org/TR/vc-data-integrity/#dfn-proof-serialization-algorithm">
 proof serialization algorithm</a> is defined in Section
-<a href="#proof-serialization-bbs-2023"></a>.
+<a href="#proof-serialization-bbs-signature-2023"></a>.
       </p>
     </section>
 
     <section>
-      <h2>Verify Proof (bbs-2023)</h2>
+      <h2>Verify Proof </h2>
 
       <p>
 To verify a proof, the algorithm in
@@ -677,23 +705,23 @@ Section 4.2: Verify Proof</a> in the Data Integrity
 For that algorithm, the cryptographic suite specific
 <a href="https://www.w3.org/TR/vc-data-integrity/#dfn-transformation-algorithm">
 transformation algorithm</a> is defined in Section
-<a href="#transformation-bbs-2023"></a>, the
+<a href="#transformation-bbs-signature-2023"></a>, the
 <a href="https://www.w3.org/TR/vc-data-integrity/#dfn-hashing-algorithm">
-hashing algorithm</a> is defined in Section <a href="#hashing-bbs-2023"></a>,
+hashing algorithm</a> is defined in Section <a href="#hashing-bbs-signature-2023"></a>,
 and the
 <a href="https://www.w3.org/TR/vc-data-integrity/#dfn-proof-serialization-algorithm">
 proof verification algorithm</a> is defined in Section
-<a href="#proof-verification-bbs-2023"></a>.
+<a href="#proof-verification-bbs-signature-2023"></a>.
       </p>
     </section>
 
-    <section>
-      <h3>Transformation (bbs-2023)</h3>
+    <section id="transformation-bbs-signature-2023">
+      <h3>Transformation </h3>
 
       <p>
 The following algorithm specifies how to transform an unsecured input document
 into a transformed document that is ready to be provided as input to the
-hashing algorithm in Section <a href="#hashing-bbs-2023"></a>.
+hashing algorithm in Section <a href="#hashing-bbs-signature-2023"></a>.
       </p>
 
 
@@ -715,7 +743,7 @@ encoding.
         <li>
 If <var>options</var>.<var>type</var> is not set to the string
 `DataIntegrityProof` and <var>options</var>.<var>cryptosuite</var> is not
-set to the string `bbs-2023` then a `PROOF_TRANSFORMATION_ERROR` MUST be
+set to the string `bbs-signature-2023` then a `PROOF_TRANSFORMATION_ERROR` MUST be
 raised.
         </li>
         <li>
@@ -732,15 +760,15 @@ Return <var>canonicalDocument</var> as the <em>transformed data document</em>.
       </ol>
     </section>
 
-    <section>
-      <h3>Hashing (bbs-2023)</h3>
+    <section id="hashing-bbs-signature-2023">
+      <h3>Hashing </h3>
 
       <p>
 The following algorithm specifies how to cryptographically hash a
 <em>transformed data document</em> and <em>proof configuration</em>
 into cryptographic hash data that is ready to be provided as input to the
-algorithms in Section <a href="#proof-serialization-bbs-2023"></a> or
-Section <a href="#proof-verification-bbs-2023"></a>.
+algorithms in Section <a href="#proof-serialization-bbs-signature-2023"></a> or
+Section <a href="#proof-verification-bbs-signature-2023"></a>.
       </p>
 
       <p>
@@ -753,14 +781,14 @@ series of bytes is produced as output.
       <ol class="algorithm">
         <li class="issue">
 Specify how each item in the canonicalized input is hashed and included a set
-that is then signed over in <a href="#proof-serialization-bbs-2023"></a>.
+that is then signed over in <a href="#proof-serialization-bbs-signature-2023"></a>.
         </li>
         <li class="issue">
 Specify how <var>proofConfigHash</var> is generated.
         </li>
         <li class="issue">
 Specify how <var>hashData</var> is composed in a way that can be signed over in
-<a href="#proof-serialization-bbs-2023"></a>.
+<a href="#proof-serialization-bbs-signature-2023"></a>.
         </li>
         <li>
 Return <var>hashData</var> as the <em>hash data</em>.
@@ -770,12 +798,12 @@ Return <var>hashData</var> as the <em>hash data</em>.
     </section>
 
     <section>
-      <h3>Proof Configuration (bbs-2023)</h3>
+      <h3>Proof Configuration </h3>
 
       <p>
 The following algorithm specifies how to generate a
 <em>proof configuration</em> from a set of <em>proof options</em>
-that is used as input to the <a href="#hashing-bbs-2023">proof hashing algorithm</a>.
+that is used as input to the <a href="#hashing-bbs-signature-2023">proof hashing algorithm</a>.
       </p>
 
       <p>
@@ -802,7 +830,7 @@ If <var>options</var>.<var>cryptosuite</var> is set, set
         </li>
         <li>
 If <var>options</var>.<var>type</var> is not set to `DataIntegrityProof` and
-<var>proofConfig</var>.<var>cryptosuite</var> is not set to `bbs-2023`, an
+<var>proofConfig</var>.<var>cryptosuite</var> is not set to `bbs-signature-2023`, an
 `INVALID_PROOF_CONFIGURATION` error MUST be raised.
         </li>
         <li>
@@ -825,8 +853,8 @@ Return <var>proofConfig</var>.
 
     </section>
 
-    <section>
-      <h3>Proof Serialization (bbs-2023)</h3>
+    <section id="proof-serialization-bbs-signature-2023">
+      <h3>Proof Serialization </h3>
 
       <p>
 The following algorithm specifies how to serialize a digital signature from
@@ -855,7 +883,7 @@ Section 4: Retrieving Cryptographic Material</a>.
         </li>
         <li class="issue">
 Specify how <var>proofBytes</var> is generated and consumed by Section
-<a href="#proof-verification-bbs-2023"></a>.
+<a href="#proof-verification-bbs-signature-2023"></a>.
         </li>
         <li>
 Return <var>proofBytes</var> as the <em>digital proof</em>.
@@ -864,8 +892,8 @@ Return <var>proofBytes</var> as the <em>digital proof</em>.
 
     </section>
 
-    <section>
-      <h3>Proof Verification (bbs-2023)</h3>
+    <section id="proof-verification-bbs-signature-2023">
+      <h3>Proof Verification </h3>
 
       <p>
 The following algorithm specifies how to verify a digital signature from
@@ -902,6 +930,67 @@ Return <var>verificationResult</var> as the <em>verification result</em>.
       </ol>
 
     </section>
+  </section>
+  <section>
+    <h3>bbs-proof-2023</h3>
+    <p>
+      The `bbs-proof-2023` cryptographic suite takes an input document, 
+      that has previously been secured using `bbs-signature-2023`,
+      derives from this original document a set of messages to be disclosed 
+      representing a redacted form of the original document, and 
+      applies the <a data-cite="CFRG-BBS-SIGNATURE#name-proofgen">Proof Gen</a>
+      algorithm to produce a proof of knowledge for the disclosed messages.
+      The result is a new `proof`, containing the following attributes:
+    </p>
+
+    
+    <ul>
+      <li>
+        `generators`
+      </li>
+      <li>
+        `disclosed`
+      </li>
+      <li>
+        `proofValue`
+      </li>
+    </ul>
+    <p>This operation can be applied by any 
+      <a data-cite="VC-DATA-MODEL-2#holder">holder</a> of a `bbs-signature-2023`
+      secured document, and as such, `bbs-proof-2023` MUST be implemented with
+      awareness of the mandatory to disclose fields the original 
+      <a data-cite="VC-DATA-MODEL-2#issuers">issuer</a> required.
+    </p>
+    <p class="issue" data-number="3"></p>
+    <section>
+      <h3>Add Proof </h3>
+      <p class="issue" data-number="81"></p>
+    </section>
+    <section>
+      <h3>Verify Proof </h3>
+      <p class="issue" data-number="82"></p>
+    </section>
+    <section>
+      <h3>Transformation </h3>
+      <p class="issue" data-number="83"></p>
+    </section>
+    <section>
+      <h3>Hashing </h3>
+      <p class="issue" data-number="84"></p>
+    </section>
+    <section>
+      <h3>Proof Configuration </h3>
+      <p class="issue" data-number="85"></p>
+    </section>
+    <section>
+      <h3>Proof Serialization </h3>
+      <p class="issue" data-number="85"></p>
+    </section>
+    <section>
+      <h3>Proof Verification </h3>
+      <p class="issue" data-number="85"></p>
+    </section>
+      
   </section>
 </section>
 
