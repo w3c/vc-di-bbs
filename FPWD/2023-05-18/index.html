@@ -1,0 +1,1986 @@
+<!DOCTYPE html><html lang="en" dir="ltr"><head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta name="generator" content="ReSpec 34.1.1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<style>
+span.example-title{text-transform:none}
+:is(aside,div).example,div.illegal-example{padding:.5em;margin:1em 0;position:relative;clear:both}
+div.illegal-example{color:red}
+div.illegal-example p{color:#000}
+:is(aside,div).example{border-left-width:.5em;border-left-style:solid;border-color:#e0cb52;background:#fcfaee}
+aside.example div.example{border-left-width:.1em;border-color:#999;background:#fff}
+.example pre{background-color:rgba(0,0,0,.03)}
+</style>
+<style>
+.issue-label{text-transform:initial}
+.warning>p:first-child{margin-top:0}
+.warning{padding:.5em;border-left-width:.5em;border-left-style:solid}
+span.warning{padding:.1em .5em .15em}
+.issue.closed span.issue-number{text-decoration:line-through}
+.issue.closed span.issue-number::after{content:" (Closed)";font-size:smaller}
+.warning{border-color:#f11;border-width:.2em;border-style:solid;background:#fbe9e9}
+.warning-title:before{content:"⚠";font-size:1.3em;float:left;padding-right:.3em;margin-top:-.3em}
+li.task-list-item{list-style:none}
+input.task-list-item-checkbox{margin:0 .35em .25em -1.6em;vertical-align:middle}
+.issue a.respec-gh-label{padding:5px;margin:0 2px 0 2px;font-size:10px;text-transform:none;text-decoration:none;font-weight:700;border-radius:4px;position:relative;bottom:2px;border:none;display:inline-block}
+</style>
+<style>
+dfn{cursor:pointer}
+.dfn-panel{position:absolute;z-index:35;min-width:300px;max-width:500px;padding:.5em .75em;margin-top:.6em;font-family:"Helvetica Neue",sans-serif;font-size:small;background:#fff;color:#000;box-shadow:0 1em 3em -.4em rgba(0,0,0,.3),0 0 1px 1px rgba(0,0,0,.05);border-radius:2px}
+.dfn-panel:not(.docked)>.caret{position:absolute;top:-9px}
+.dfn-panel:not(.docked)>.caret::after,.dfn-panel:not(.docked)>.caret::before{content:"";position:absolute;border:10px solid transparent;border-top:0;border-bottom:10px solid #fff;top:0}
+.dfn-panel:not(.docked)>.caret::before{border-bottom:9px solid #a2a9b1}
+.dfn-panel *{margin:0}
+.dfn-panel b{display:block;color:#000;margin-top:.25em}
+.dfn-panel ul a[href]{color:#333}
+.dfn-panel>div{display:flex}
+.dfn-panel a.self-link{font-weight:700;margin-right:auto}
+.dfn-panel .marker{padding:.1em;margin-left:.5em;border-radius:.2em;text-align:center;white-space:nowrap;font-size:90%;color:#040b1c}
+.dfn-panel .marker.dfn-exported{background:#d1edfd;box-shadow:0 0 0 .125em #1ca5f940}
+.dfn-panel .marker.idl-block{background:#8ccbf2;box-shadow:0 0 0 .125em #0670b161}
+.dfn-panel a:not(:hover){text-decoration:none!important;border-bottom:none!important}
+.dfn-panel a[href]:hover{border-bottom-width:1px}
+.dfn-panel ul{padding:0}
+.dfn-panel li{margin-left:1em}
+.dfn-panel.docked{position:fixed;left:.5em;top:unset;bottom:2em;margin:0 auto;max-width:calc(100vw - .75em * 2 - .5em - .2em * 2);max-height:30vh;overflow:auto}
+</style>
+    
+<title>BBS Cryptosuite v2023</title>
+    
+    
+    
+<style id="respec-mainstyle">
+@keyframes pop{
+0%{transform:scale(1,1)}
+25%{transform:scale(1.25,1.25);opacity:.75}
+100%{transform:scale(1,1)}
+}
+:is(h1,h2,h3,h4,h5,h6,a) abbr{border:none}
+dfn{font-weight:700}
+a.internalDFN{color:inherit;border-bottom:1px solid #99c;text-decoration:none}
+a.externalDFN{color:inherit;border-bottom:1px dotted #ccc;text-decoration:none}
+a.bibref{text-decoration:none}
+.respec-offending-element:target{animation:pop .25s ease-in-out 0s 1}
+.respec-offending-element,a[href].respec-offending-element{text-decoration:red wavy underline}
+@supports not (text-decoration:red wavy underline){
+.respec-offending-element:not(pre){display:inline-block}
+.respec-offending-element{background:url(data:image/gif;base64,R0lGODdhBAADAPEAANv///8AAP///wAAACwAAAAABAADAEACBZQjmIAFADs=) bottom repeat-x}
+}
+#references :target{background:#eaf3ff;animation:pop .4s ease-in-out 0s 1}
+cite .bibref{font-style:normal}
+a[href].orcid{padding-left:4px;padding-right:4px}
+a[href].orcid>svg{margin-bottom:-2px}
+.toc a,.tof a{text-decoration:none}
+a .figno,a .secno{color:#000}
+ol.tof,ul.tof{list-style:none outside none}
+.caption{margin-top:.5em;font-style:italic}
+table.simple{border-spacing:0;border-collapse:collapse;border-bottom:3px solid #005a9c}
+.simple th{background:#005a9c;color:#fff;padding:3px 5px;text-align:left}
+.simple th a{color:#fff;padding:3px 5px;text-align:left}
+.simple th[scope=row]{background:inherit;color:inherit;border-top:1px solid #ddd}
+.simple td{padding:3px 10px;border-top:1px solid #ddd}
+.simple tr:nth-child(even){background:#f0f6ff}
+.section dd>p:first-child{margin-top:0}
+.section dd>p:last-child{margin-bottom:0}
+.section dd{margin-bottom:1em}
+.section dl.attrs dd,.section dl.eldef dd{margin-bottom:0}
+#issue-summary>ul{column-count:2}
+#issue-summary li{list-style:none;display:inline-block}
+details.respec-tests-details{margin-left:1em;display:inline-block;vertical-align:top}
+details.respec-tests-details>*{padding-right:2em}
+details.respec-tests-details[open]{z-index:999999;position:absolute;border:thin solid #cad3e2;border-radius:.3em;background-color:#fff;padding-bottom:.5em}
+details.respec-tests-details[open]>summary{border-bottom:thin solid #cad3e2;padding-left:1em;margin-bottom:1em;line-height:2em}
+details.respec-tests-details>ul{width:100%;margin-top:-.3em}
+details.respec-tests-details>li{padding-left:1em}
+.self-link:hover{opacity:1;text-decoration:none;background-color:transparent}
+aside.example .marker>a.self-link{color:inherit}
+.header-wrapper{display:flex;align-items:baseline}
+:is(h2,h3,h4,h5,h6):not(#toc>h2,#abstract>h2,#sotd>h2,.head>h2){position:relative;left:-.5em}
+:is(h2,h3,h4,h5,h6):not(#toch2)+a.self-link{color:inherit;order:-1;position:relative;left:-1.1em;font-size:1rem;opacity:.5}
+:is(h2,h3,h4,h5,h6)+a.self-link::before{content:"§";text-decoration:none;color:var(--heading-text)}
+:is(h2,h3)+a.self-link{top:-.2em}
+:is(h4,h5,h6)+a.self-link::before{color:#000}
+@media (max-width:767px){
+dd{margin-left:0}
+}
+@media print{
+.removeOnSave{display:none}
+}
+</style>
+    
+
+    
+        
+<style>
+
+          pre .highlight {
+            font-weight: bold;
+            color: green;
+          }
+          pre .comment {
+            font-weight: bold;
+            color: Gray;
+          }
+          .color-text {
+            font-weight: bold;
+            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+          }
+          ol.algorithm {
+            counter-reset: numsection;
+            list-style-type: none;
+          }
+          ol.algorithm li {
+            margin: 0.5em 0;
+          }
+          ol.algorithm li:before {
+            font-weight: bold;
+            counter-increment: numsection;
+            content: counters(numsection, ".") ") ";
+          }
+              
+</style>
+  
+<meta name="description" content="This specification describes the BBS+ Signature Suite created in 2023
+for the Data Integrity specification. The Signature Suite utilizes
+BBS+ signatures to provide the capability of zero knowledge
+proof disclosures.">
+<link rel="canonical" href="https://www.w3.org/TR/vc-di-bbs/">
+<style>
+.hljs{display:block;overflow-x:auto;padding:.5em;color:#383a42;background:#fafafa}
+.hljs-comment,.hljs-quote{color:#717277;font-style:italic}
+.hljs-doctag,.hljs-formula,.hljs-keyword{color:#a626a4}
+.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{color:#ca4706;font-weight:700}
+.hljs-literal{color:#0b76c5}
+.hljs-addition,.hljs-attribute,.hljs-meta-string,.hljs-regexp,.hljs-string{color:#42803c}
+.hljs-built_in,.hljs-class .hljs-title{color:#9a6a01}
+.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{color:#986801}
+.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{color:#336ae3}
+.hljs-emphasis{font-style:italic}
+.hljs-strong{font-weight:700}
+.hljs-link{text-decoration:underline}
+</style>
+<style>
+var{position:relative;cursor:pointer}
+var[data-type]::after,var[data-type]::before{position:absolute;left:50%;top:-6px;opacity:0;transition:opacity .4s;pointer-events:none}
+var[data-type]::before{content:"";transform:translateX(-50%);border-width:4px 6px 0 6px;border-style:solid;border-color:transparent;border-top-color:#000}
+var[data-type]::after{content:attr(data-type);transform:translateX(-50%) translateY(-100%);background:#000;text-align:center;font-family:"Dank Mono","Fira Code",monospace;font-style:normal;padding:6px;border-radius:3px;color:#daca88;text-indent:0;font-weight:400}
+var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
+</style>
+<script id="initialUserConfig" type="application/json">{
+  "specStatus": "FPWD",
+  "shortName": "vc-di-bbs",
+  "subtitle": "Securing Verifiable Credentials with Selective Disclosure using BBS Signatures",
+  "group": "vc",
+  "publishDate": "2023-05-18",
+  "edDraftURI": "https://w3c.github.io/vc-di-bbs/",
+  "editors": [
+    {
+      "name": "Tobias Looker",
+      "url": "https://mattr.global/",
+      "company": "Mattr",
+      "companyURL": "https://mattr.global/",
+      "w3cid": 109171
+    },
+    {
+      "name": "Orie Steele",
+      "url": "https://transmute.industries",
+      "company": "Transmute",
+      "companyURL": "https://transmute.industries",
+      "w3cid": 109171
+    }
+  ],
+  "github": "https://github.com/w3c/vc-di-bbs",
+  "maxTocLevel": 4,
+  "localBiblio": {
+    "RDF-DATASET-NORMALIZATION": {
+      "title": "RDF Dataset Normalization 1.0",
+      "href": "http://json-ld.github.io/normalization/spec/",
+      "authors": [
+        "David Longley",
+        "Manu Sporny"
+      ],
+      "status": "CGDRAFT",
+      "publisher": "JSON-LD Community Group",
+      "id": "rdf-dataset-normalization"
+    },
+    "RDF-CONCEPTS": {
+      "title": "RDF 1.1 Concepts and Abstract Syntax",
+      "href": "https://www.w3.org/TR/rdf11-concepts/",
+      "authors": [
+        "Richard Cyganiak",
+        "David Wood",
+        "Markus Lanthaler"
+      ],
+      "status": "Recommendation",
+      "publisher": "W3C",
+      "id": "rdf-concepts"
+    },
+    "RDF-N-Quads": {
+      "title": "RDF 1.1 N-Quads",
+      "href": "http://json-ld.github.io/normalization/spec/",
+      "authors": [
+        "Gaven Carothers"
+      ],
+      "status": "Recommendation",
+      "id": "rdf-n-quads"
+    },
+    "VC-DATA-INTEGRITY": {
+      "title": "Verifiable Credential Data Integrity 1.0",
+      "href": "https://www.w3.org/TR/vc-data-integrity/",
+      "authors": [
+        "David Longley",
+        "Manu Sporny"
+      ],
+      "status": "Working Draft",
+      "publisher": "W3C Verifiable Credentials Working Group",
+      "id": "vc-data-integrity"
+    },
+    "JSON-LD-FRAMING": {
+      "title": "JSON-LD 1.1 Framing",
+      "href": "https://www.w3.org/TR/json-ld11-framing",
+      "authors": [
+        "Dave Longley",
+        "Gregg Kellogg",
+        "Pierre-Antoine Champin"
+      ],
+      "status": "Candidate Recommendation",
+      "publisher": "W3C",
+      "id": "json-ld-framing"
+    },
+    "JSON-LD": {
+      "title": "JSON-LD 1.1",
+      "href": "https://www.w3.org/TR/json-ld11",
+      "authors": [
+        "Dave Longley",
+        "Gregg Kellogg",
+        "Pierre-Antoine Champin"
+      ],
+      "status": "Candidate Recommendation",
+      "publisher": "W3C"
+    },
+    "VC-DATA-MODEL-2": {
+      "title": "Verifiable Credentials Data Model v2.0",
+      "href": "https://www.w3.org/TR/vc-data-model-2.0/",
+      "authors": [
+        "Manu Sporny",
+        "Dave Longley",
+        "Grant Noble",
+        "Dan Burnett",
+        "Ted Thibodeau",
+        "Brent Zundel",
+        "David Chadwick",
+        "Kyle Den Hartog"
+      ],
+      "status": "Working Draft",
+      "publisher": "W3C Verifiable Credentials Working Group",
+      "id": "vc-data-model-2"
+    },
+    "MULTIBASE": {
+      "title": "Multibase",
+      "href": "https://tools.ietf.org/html/draft-multiformats-multibase-01",
+      "id": "multibase"
+    },
+    "MULTICODEC": {
+      "title": "Multicodec",
+      "href": "https://github.com/multiformats/multicodec/",
+      "id": "multicodec"
+    },
+    "CFRG-BBS-SIGNATURE": {
+      "title": "The BBS Signature Scheme",
+      "href": "https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html",
+      "authors": [
+        "Tobias Looker",
+        "Vasilis Kalos",
+        "Andrew Whitehead",
+        "Mike Lodder"
+      ],
+      "status": "Draft",
+      "id": "cfrg-bbs-signature"
+    },
+    "BLS-JOSE-COSE": {
+      "title": "Barreto-Lynn-Scott Elliptic Curve Key Representations for JOSE and COSE",
+      "href": "https://datatracker.ietf.org/doc/draft-ietf-cose-bls-key-representations/",
+      "authors": [
+        "Michael B. Jones",
+        "Tobias Looker"
+      ],
+      "status": "Draft",
+      "id": "bls-jose-cose"
+    }
+  },
+  "lint": {
+    "no-unused-dfns": false
+  },
+  "postProcess": [
+    null
+  ],
+  "publishISODate": "2023-05-18T00:00:00.000Z",
+  "generatedSubtitle": "W3C First Public Working Draft 18 May 2023"
+}</script>
+<link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-WD"></head>
+  <body class="h-entry"><div class="head">
+    <p class="logos"><a class="logo" href="https://www.w3.org/"><img crossorigin="" alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
+  </a></p>
+    <h1 id="title" class="title">BBS Cryptosuite v2023</h1> <h2 id="subtitle" class="subtitle">Securing Verifiable Credentials with Selective Disclosure using BBS Signatures</h2>
+    <p id="w3c-state"><a href="https://www.w3.org/standards/types#FPWD">W3C First Public Working Draft</a> <time class="dt-published" datetime="2023-05-18">18 May 2023</time></p>
+    <details open="">
+      <summary>More details about this document</summary>
+      <dl>
+        <dt>This version:</dt><dd>
+                <a class="u-url" href="https://www.w3.org/TR/2023/WD-vc-di-bbs-20230518/">https://www.w3.org/TR/2023/WD-vc-di-bbs-20230518/</a>
+              </dd>
+        <dt>Latest published version:</dt><dd>
+                <a href="https://www.w3.org/TR/vc-di-bbs/">https://www.w3.org/TR/vc-di-bbs/</a>
+              </dd>
+        <dt>Latest editor's draft:</dt><dd><a href="https://w3c.github.io/vc-di-bbs/">https://w3c.github.io/vc-di-bbs/</a></dd>
+        <dt>History:</dt><dd>
+                    <a href="https://www.w3.org/standards/history/vc-di-bbs">https://www.w3.org/standards/history/vc-di-bbs</a>
+                  </dd><dd>
+                    <a href="https://github.com/w3c/vc-di-bbs/commits/">Commit history</a>
+                  </dd>
+        
+        
+        
+        
+        
+        <dt>Editors:</dt><dd class="editor p-author h-card vcard" data-editor-id="109171">
+    <a class="u-url url p-name fn" href="https://mattr.global/">Tobias Looker</a> (<a class="p-org org h-org" href="https://mattr.global/">Mattr</a>)
+  </dd><dd class="editor p-author h-card vcard" data-editor-id="109171">
+    <a class="u-url url p-name fn" href="https://transmute.industries">Orie Steele</a> (<a class="p-org org h-org" href="https://transmute.industries">Transmute</a>)
+  </dd>
+        
+        
+        <dt>Feedback:</dt><dd>
+        <a href="https://github.com/w3c/vc-di-bbs/">GitHub w3c/vc-di-bbs</a>
+        (<a href="https://github.com/w3c/vc-di-bbs/pulls/">pull requests</a>,
+        <a href="https://github.com/w3c/vc-di-bbs/issues/new/choose">new issue</a>,
+        <a href="https://github.com/w3c/vc-di-bbs/issues/">open issues</a>)
+      </dd>
+        
+        
+      </dl>
+    </details>
+    
+    
+    <p class="copyright">
+    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a>
+    ©
+    2023
+    
+    <a href="https://www.w3.org/">World Wide Web Consortium</a>.
+    <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup>
+    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and
+    <a rel="license" href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" title="W3C Software and Document Notice and License">permissive document license</a> rules apply.
+  </p>
+    <hr title="Separator for header">
+  </div>
+    <section id="abstract" class="introductory"><h2>Abstract</h2>
+      <p>
+This specification describes the BBS+ Signature Suite created in 2023
+for the Data Integrity specification. The Signature Suite utilizes
+BBS+ signatures to provide the capability of zero knowledge
+proof disclosures.
+      </p>
+    </section>
+
+    <section id="sotd" class="introductory"><h2>Status of This Document</h2><p><em>This section describes the status of this
+      document at the time of its publication. A list of current <abbr title="World Wide Web Consortium">W3C</abbr>
+      publications and the latest revision of this technical report can be found
+      in the <a href="https://www.w3.org/TR/"><abbr title="World Wide Web Consortium">W3C</abbr> technical reports index</a> at
+      https://www.w3.org/TR/.</em></p>
+      <p>
+This is an experimental specification and is undergoing regular revisions. It
+is not fit for production deployment.
+      </p>
+    <p>
+    This document was published by the <a href="https://www.w3.org/groups/wg/vc">Verifiable Credentials Working Group</a> as
+    a First Public Working Draft using the
+        <a href="https://www.w3.org/2021/Process-20211102/#recs-and-notes">Recommendation track</a>. 
+  </p><p>Publication as a First Public Working Draft does not
+  imply endorsement by <abbr title="World Wide Web Consortium">W3C</abbr> and its Members. </p><p>
+    This is a draft document and may be updated, replaced or obsoleted by other
+    documents at any time. It is inappropriate to cite this document as other
+    than work in progress.
+    
+  </p><p>
+    
+        This document was produced by a group
+        operating under the
+        <a href="https://www.w3.org/Consortium/Patent-Policy/"><abbr title="World Wide Web Consortium">W3C</abbr> Patent
+          Policy</a>.
+      
+    
+                <abbr title="World Wide Web Consortium">W3C</abbr> maintains a
+                <a rel="disclosure" href="https://www.w3.org/groups/wg/vc/ipr">public list of any patent disclosures</a>
+          made in connection with the deliverables of
+          the group; that page also includes
+          instructions for disclosing a patent. An individual who has actual
+          knowledge of a patent which the individual believes contains
+          <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a>
+          must disclose the information in accordance with
+          <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+        
+  </p><p>
+                  This document is governed by the
+                  <a id="w3c_process_revision" href="https://www.w3.org/2021/Process-20211102/">2 November 2021 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
+                </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#sotd">Status of This Document</a></li><li class="tocline"><a class="tocxref" href="#introduction"><bdi class="secno">1. </bdi>Introduction</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#terminology"><bdi class="secno">1.1 </bdi>Terminology</a></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">1.2 </bdi>Conformance</a></li></ol></li><li class="tocline"><a class="tocxref" href="#data-model"><bdi class="secno">2. </bdi>Data Model</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#verification-methods"><bdi class="secno">2.1 </bdi>Verification Methods</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#jsonwebkey"><bdi class="secno">2.1.1 </bdi>JsonWebKey</a></li><li class="tocline"><a class="tocxref" href="#multikey"><bdi class="secno">2.1.2 </bdi>Multikey</a></li></ol></li><li class="tocline"><a class="tocxref" href="#data-integrity-proof"><bdi class="secno">2.2 </bdi>Data Integrity Proof</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#bbs-signature-2023"><bdi class="secno">2.2.1 </bdi>bbs-signature-2023</a></li><li class="tocline"><a class="tocxref" href="#bbs-proof-2023"><bdi class="secno">2.2.2 </bdi>bbs-proof-2023</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#algorithms"><bdi class="secno">3. </bdi>Algorithms</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#bbs-signature-2023-0"><bdi class="secno">3.1 </bdi>bbs-signature-2023</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#add-proof"><bdi class="secno">3.1.1 </bdi>Add Proof </a></li><li class="tocline"><a class="tocxref" href="#verify-proof"><bdi class="secno">3.1.2 </bdi>Verify Proof </a></li><li class="tocline"><a class="tocxref" href="#transformation-bbs-signature-2023"><bdi class="secno">3.1.3 </bdi>Transformation </a></li><li class="tocline"><a class="tocxref" href="#hashing-bbs-signature-2023"><bdi class="secno">3.1.4 </bdi>Hashing </a></li><li class="tocline"><a class="tocxref" href="#proof-configuration"><bdi class="secno">3.1.5 </bdi>Proof Configuration </a></li><li class="tocline"><a class="tocxref" href="#proof-serialization-bbs-signature-2023"><bdi class="secno">3.1.6 </bdi>Proof Serialization </a></li><li class="tocline"><a class="tocxref" href="#proof-verification-bbs-signature-2023"><bdi class="secno">3.1.7 </bdi>Proof Verification </a></li></ol></li><li class="tocline"><a class="tocxref" href="#bbs-proof-2023-0"><bdi class="secno">3.2 </bdi>bbs-proof-2023</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#add-proof-0"><bdi class="secno">3.2.1 </bdi>Add Proof </a></li><li class="tocline"><a class="tocxref" href="#verify-proof-0"><bdi class="secno">3.2.2 </bdi>Verify Proof </a></li><li class="tocline"><a class="tocxref" href="#transformation"><bdi class="secno">3.2.3 </bdi>Transformation </a></li><li class="tocline"><a class="tocxref" href="#hashing"><bdi class="secno">3.2.4 </bdi>Hashing </a></li><li class="tocline"><a class="tocxref" href="#proof-configuration-0"><bdi class="secno">3.2.5 </bdi>Proof Configuration </a></li><li class="tocline"><a class="tocxref" href="#proof-serialization"><bdi class="secno">3.2.6 </bdi>Proof Serialization </a></li><li class="tocline"><a class="tocxref" href="#proof-verification"><bdi class="secno">3.2.7 </bdi>Proof Verification </a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#privacy-considerations"><bdi class="secno">4. </bdi>Privacy Considerations</a></li><li class="tocline"><a class="tocxref" href="#security-considerations"><bdi class="secno">5. </bdi>Security Considerations</a></li><li class="tocline"><a class="tocxref" href="#acknowledgements"><bdi class="secno">A. </bdi>Acknowledgements</a></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">B. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">B.1 </bdi>Normative references</a></li><li class="tocline"><a class="tocxref" href="#informative-references"><bdi class="secno">B.2 </bdi>Informative references</a></li></ol></li></ol></nav>
+
+    <section id="introduction"><div class="header-wrapper"><h2 id="x1-introduction"><bdi class="secno">1. </bdi>Introduction</h2><a class="self-link" href="#introduction" aria-label="Permalink for Section 1."></a></div>
+      
+      <p>
+This specification defines a set of cryptographic suites for the purpose of creating, verifying and deriving proofs
+for BBS+ Signatures in conformance with the Data Integrity [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification.
+      </p>
+      <p>
+In general the suites uses the RDF Dataset Normalization Algorithm [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-dataset-normalization" title="RDF Dataset Normalization 1.0">RDF-DATASET-NORMALIZATION</a></cite>] to transform an
+input document into its canonical form. It then uses the <a href="#dfn-statement-digest-algorithm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-statement-digest-algorithm-1">statement digest algorithm</a>
+to digest each statement to be signed individually, finally the digested statements are signed
+using the defined <a href="#dfn-signature-algorithm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-signature-algorithm-1">signature algorithm</a>.
+      </p>
+      <p>
+BBS+ signatures [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-SIGNATURE</a></cite>] are compatible with any pairing friendly elliptic curve, however the cryptographic
+suites defined in this document elect to only allow the usage of the BLS12-381 for interoperability purposes.
+      </p>
+
+    <section id="terminology"><div class="header-wrapper"><h3 id="x1-1-terminology"><bdi class="secno">1.1 </bdi>Terminology</h3><a class="self-link" href="#terminology" aria-label="Permalink for Section 1.1"></a></div>
+      
+      <p>
+The following terms are used to describe concepts involved in the
+generation and verification of the Data Integrity
+<a href="#dfn-signature-suite" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-signature-suite-1">signature suite</a>.
+      </p>
+
+      <div><p>
+This section defines the terms used in this specification. A link to these terms
+is included whenever they appear in this specification.
+</p>
+
+<dl class="termlist">
+  <dt><dfn data-plurals="data integrity proofs" id="dfn-data-integrity-proof" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">data integrity proof</dfn></dt>
+  <dd>
+A set of attributes that represent a digital proof and the parameters required
+to verify it.
+  </dd>
+  
+  
+  <dt><dfn id="dfn-private-key" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">private key</dfn></dt>
+  <dd>
+Cryptographic material that can be used to generate digital proofs.
+  </dd>
+  
+  
+  
+  
+  
+  
+  <dt><dfn id="dfn-challenge" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">challenge</dfn></dt>
+  <dd>
+A random or pseudo-random value used by some authentication protocols to
+mitigate replay attacks.
+  </dd>
+  <dt><dfn id="dfn-domain" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">domain</dfn></dt>
+  <dd>
+A string value that specifies the operational domain of a digital proof.
+This could be an Internet domain name like <code>example.com</code>, an
+ad-hoc value such as <code>mycorp-level3-access</code>, or a very
+specific transaction value like <code>8zF6T8J34qP3mqP</code>. A signer could
+include a <a href="#dfn-domain" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-domain-2">domain</a> in its digital proof to restrict its use
+to particular target, identified by the specified <a href="#dfn-domain" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-domain-3">domain</a>.
+  </dd>
+
+  
+  
+
+  <dt><dfn data-lt="cryptosuite|cryptographic suite" id="dfn-cryptosuite" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">cryptographic suite</dfn></dt>
+  <dd>
+A specification defining the usage of specific cryptographic primitives in
+order to achieve a particular security goal. These documents are often used
+to specify <a href="#dfn-verification-method" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verification-method-1">verification methods</a>, digital signature types,
+their identifiers, and other related properties.
+  </dd>
+
+  <dt><dfn data-lt="decentralized identifiers|DID|DIDs|decentralized identifier" data-plurals="did" id="dfn-decentralized-identifiers" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">decentralized identifier</dfn> (DID)</dt>
+
+  <dd>
+A globally unique persistent identifier that does not require a centralized
+registration authority and is often generated and/or registered
+cryptographically. The generic format of a is defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-did-core" title="Decentralized Identifiers (DIDs) v1.0">DID-CORE</a></cite>]. Many—but
+not all—methods make use of <a href="#dfn-distributed-ledger-technology" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-distributed-ledger-technology-1">distributed ledger technology</a> (DLT) or some
+other form of decentralized network.
+  </dd>
+
+  <dt><dfn data-lt="controller(s)|controller" id="dfn-controller-s" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">controller</dfn></dt>
+
+  <dd>
+An entity that has the capability to make changes to a
+<a href="#dfn-controller-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-controller-documents-1">controller document</a>.
+  </dd>
+
+  <dt><dfn data-lt="controller documents|controller document" id="dfn-controller-documents" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">controller document</dfn></dt>
+
+  <dd>
+A set of data that specifies one or more relationships between a
+<a href="#dfn-controller-s" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-controller-s-2">controller</a> and a set of data, such as a set of public cryptographic keys.
+  </dd>
+
+  <dt><dfn data-lt="subjects|subject" id="dfn-subjects" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">subject</dfn></dt>
+
+  <dd>
+The entity identified by the <code>id</code> property in a <a href="#dfn-controller-documents" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-controller-documents-2">controller document</a>.
+Anything can be a subject: person, group, organization, physical thing, digital
+thing, logical thing, etc.
+  </dd>
+
+  <dt><dfn data-lt="distributed ledger technology|DLT|distributed ledger" id="dfn-distributed-ledger-technology" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">distributed ledger</dfn> (DLT)</dt>
+
+  <dd>
+A non-centralized system for recording events. These systems establish
+sufficient confidence for participants to rely upon the data recorded by others
+to make operational decisions. They typically use distributed databases where
+different nodes use a consensus protocol to confirm the ordering of
+cryptographically signed transactions. The linking of digitally signed
+transactions over time often makes the history of the ledger effectively
+immutable.
+  </dd>
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  <dt><dfn data-lt="" data-plurals="verification methods" id="dfn-verification-method" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">verification method</dfn></dt>
+
+  <dd>
+    <p>
+A set of parameters that can be used together with a process to independently
+verify a proof. For example, a cryptographic public key can be used as a
+verification method with respect to a digital signature; in such usage, it
+verifies that the signer possessed the associated cryptographic private key.
+    </p>
+    <p>
+"Verification" and "proof" in this definition are intended to apply broadly. For
+example, a cryptographic public key might be used during Diffie-Hellman key
+exchange to negotiate a shared symmetric key for encryption. This guarantees the
+integrity of the key agreement process. It is thus another type of verification
+method, even though descriptions of the process might not use the words
+"verification" or "proof."
+    </p>
+  </dd>
+
+  
+
+  
+
+</dl>
+</div>
+
+      <dl>
+        <dt><dfn id="dfn-signature-suite" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">signature suite</dfn></dt>
+        <dd>
+A specified set of cryptographic primitives typically consisting of
+a canonicalization algorithm, a message digest algorithm, and a signature
+algorithm that are bundled together by cryptographers for developers
+for the purposes of safety and convenience.
+        </dd>
+        <dt><dfn id="dfn-canonicalization-algorithm" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">canonicalization algorithm</dfn></dt>
+        <dd>
+An algorithm that takes an input document that has more than one possible
+representation and always transforms it into a <a href="#dfn-canonical-form" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-canonical-form-1">canonical form</a>. This process is
+sometimes also called normalization.
+        </dd>
+        <dt><dfn id="dfn-canonical-form" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">canonical form</dfn></dt>
+        <dd>
+The output of applying a <a href="#dfn-canonicalization-algorithm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-canonicalization-algorithm-1">canonicalization algorithm</a> to an input document.
+        </dd>
+        <dt><dfn data-plurals="statements" id="dfn-statement" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">statement</dfn></dt>
+        <dd>
+<a href="#dfn-n-quad" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-n-quad-1">n-quads</a> statements are a sequence of RDF terms representing the subject, predicate, object and graph label.
+See the grammar definition <a href="https://www.w3.org/TR/n-quads/#grammar-production-statement">here</a>.
+        </dd>
+        <dt><dfn data-lt="statement digest algorithm|statement digest algorithms" id="dfn-statement-digest-algorithm" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">statement digest algorithm</dfn></dt>
+        <dd>
+An algorithm that takes a <a href="#dfn-statement" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-statement-1">statement</a> and produces a cryptographic
+output message that is often many orders of magnitude smaller than the
+input message. These algorithms are often 1) very fast, 2)
+non-reversible, 3) cause the output to change significantly when even one
+bit of the input message changes, and 4) make it infeasible to find two
+different inputs for the same output.
+        </dd>
+        <dt><dfn data-lt="statement digest|statement digests" id="dfn-statement-digest" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">statement digest</dfn></dt>
+          <dd>
+The result of the application of the <a href="#dfn-statement-digest-algorithm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-statement-digest-algorithm-2">statement digest algorithm</a> to a <a href="#dfn-statement" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-statement-2">statement</a>
+          </dd>
+        <dt><dfn id="dfn-signature-algorithm" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">signature algorithm</dfn></dt>
+        <dd>
+An algorithm that takes an input message and produces an output value where the
+receiver of the message can mathematically verify that the message has not
+been modified in transit and came from someone possessing a particular secret.
+        </dd>
+        <dt><dfn id="dfn-selective-disclosure" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">selective disclosure</dfn></dt>
+        <dd>
+An information disclosure technique which is the process of deciding and disclosing
+a sub-set of information from an original information set.
+        </dd>
+      <dt><dfn id="dfn-data-integrity-proof-document" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">data integrity proof document</dfn></dt>
+      <dd>
+A <a href="#dfn-linked-data-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-linked-data-document-1">linked data document</a> featuring one or more <a href="#dfn-data-integrity-proof" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-data-integrity-proof-2">data integrity proofs</a>.
+      </dd>
+      <dt><dfn data-lt="revealed statements" id="dfn-revealed-statements" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">revealed statements</dfn></dt>
+      <dd>
+The set of <a href="#dfn-statement" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-statement-3">statements</a> produced by applying the <a href="#dfn-canonicalization-algorithm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-canonicalization-algorithm-2">canonicalization algorithm</a> to the <a href="#dfn-reveal-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-reveal-document-1">reveal document</a>.
+      </dd>
+      <dt><dfn id="dfn-derive-proof-algorithm" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">derive proof algorithm</dfn></dt>
+      <dd>
+An algorithm that takes in a <a href="#dfn-data-integrity-proof-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-data-integrity-proof-document-1">data integrity proof document</a> featuring a <a href="#dfn-data-integrity-proof" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-data-integrity-proof-3">data integrity proof</a> that supports a
+<a href="#dfn-derive-proof-algorithm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-derive-proof-algorithm-1">derive proof algorithm</a> along side a <a href="#dfn-reveal-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-reveal-document-2">reveal document</a>
+and derives a proof only revealing the <a href="#dfn-statement" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-statement-4">statement</a>s defined in the <a href="#dfn-reveal-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-reveal-document-3">reveal document</a>.
+      </dd>
+      <dt><dfn id="dfn-derived-proof" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">derived proof</dfn></dt>
+      <dd>
+The product of apply the <a href="#dfn-derive-proof-algorithm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-derive-proof-algorithm-2">derive proof algorithm</a> to an <a href="#dfn-data-integrity-proof-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-data-integrity-proof-document-2">data integrity proof document</a> and <a href="#dfn-reveal-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-reveal-document-4">reveal document</a>.
+      </dd>
+      <dt><dfn data-lt="quad|quads" id="dfn-quad" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">quad</dfn></dt>
+      <dd>
+A <a href="https://json-ld.github.io/normalization/spec/index.html#dfn-quad" class="externalDFN">quad</a> as specified by [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-dataset-normalization" title="RDF Dataset Normalization 1.0">RDF-DATASET-NORMALIZATION</a></cite>]
+      </dd>
+      <dt><dfn data-lt="n-quad|n-quads" id="dfn-n-quad" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">n-quad</dfn></dt>
+      <dd>
+An <a href="https://www.w3.org/TR/n-quads/" class="externalDFN">n-quad</a> which is a line based, plain text format encoding of a <a href="#dfn-quad" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-quad-1">quad</a> as defined by [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-n-quads" title="RDF 1.1 N-Quads">RDF-N-Quads</a></cite>].
+      </dd>
+      <dt><dfn data-lt="linked data document|linked data documents" id="dfn-linked-data-document" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">linked data document</dfn></dt>
+      <dd>
+A document comprised of linked data.
+      </dd>
+      <dt><dfn data-lt="curve name" id="dfn-curve-name" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">curve name</dfn></dt>
+      <dd>
+The name defining a particular cryptographic curve.
+      </dd>
+      <dt><dfn data-lt="frame" id="dfn-frame" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">frame</dfn></dt>
+      <dd>
+A <a href="https://www.w3.org/TR/json-ld11/#dfn-frame" class="externalDFN">frame</a> as specified by [<cite><a class="bibref" data-link-type="biblio" href="#bib-json-ld-framing" title="JSON-LD 1.1 Framing">JSON-LD-FRAMING</a></cite>]
+is a <a href="#dfn-json-ld-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-json-ld-document-1">JSON-LD document</a>, which describes the form for transforming another JSON-LD
+document using matching and embedding rules. A frame document allows additional
+keywords and certain map entries to describe the matching and transforming process.
+      </dd>
+      <dt><dfn id="dfn-json-ld-document" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">JSON-LD document</dfn></dt>
+      <dd>
+A <a href="https://www.w3.org/TR/json-ld11/#dfn-json-ld-document" class="externalDFN">JSON-LD document</a> as specified by [<cite><a class="bibref" data-link-type="biblio" href="#bib-json-ld-framing" title="JSON-LD 1.1 Framing">JSON-LD-FRAMING</a></cite>]
+is a is a serialization of an <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-rdf-dataset">RDF dataset</a>
+      </dd>
+      <dt><dfn id="dfn-framing-algorithm" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">framing algorithm</dfn></dt>
+      <dd>
+A <a href="https://www.w3.org/TR/json-ld11-framing/#framing-algorithm" class="externalDFN">Framing Algorithm</a> as specified by [<cite><a class="bibref" data-link-type="biblio" href="#bib-json-ld-framing" title="JSON-LD 1.1 Framing">JSON-LD-FRAMING</a></cite>]
+is an algorithm that accomplishes the process of framing an input document to a given <a href="#dfn-frame" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-frame-1">frame</a>.
+      </dd>
+      <dt><dfn data-lt="Blank nodes|Blank node|blank node" id="dfn-blank-nodes" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">blank node</dfn></dt>
+      <dd>
+A <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-blank-node" class="externalDFN">blank node</a> as specified by [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-concepts" title="RDF 1.1 Concepts and Abstract Syntax">RDF-CONCEPTS</a></cite>].
+In short, it is a node in a graph that is neither an IRI, nor a literal.
+      </dd>
+      <dt><dfn id="dfn-reveal-document" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">reveal document</dfn></dt>
+          <dd>
+    A <a href="#dfn-json-ld-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-json-ld-document-2">JSON-LD document</a> in the form of a <a href="#dfn-frame" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-frame-2">frame</a> which describes the desired transform to apply to the <a href="#dfn-input-proof-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-input-proof-document-1">input proof document</a> using
+    the <a href="#dfn-framing-algorithm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-framing-algorithm-1">framing algorithm</a> defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-json-ld-framing" title="JSON-LD 1.1 Framing">JSON-LD-FRAMING</a></cite>].
+          </dd>
+
+      <dt><dfn id="dfn-revealed-document" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">revealed document</dfn></dt>
+          <dd>
+    A <a href="#dfn-data-integrity-proof-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-data-integrity-proof-document-3">data integrity proof document</a> which is the product of the <a href="#dfn-derive-proof-algorithm" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-derive-proof-algorithm-3">derive proof algorithm</a>.
+          </dd>
+      <dt><dfn id="dfn-input-proof-document" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">input proof document</dfn></dt>
+          <dd>
+    A <a href="#dfn-data-integrity-proof-document" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-data-integrity-proof-document-4">data integrity proof document</a> featuring a <a href="#dfn-data-integrity-proof" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-data-integrity-proof-4">data integrity proof</a> that supports proof derivation.
+          </dd>
+      </dl>
+    </section>
+
+      <section id="conformance"><div class="header-wrapper"><h3 id="x1-2-conformance"><bdi class="secno">1.2 </bdi>Conformance</h3><a class="self-link" href="#conformance" aria-label="Permalink for Section 1.2"></a></div><p>As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.</p><p>
+        The key words <em class="rfc2119">MAY</em>, <em class="rfc2119">MUST</em>, and <em class="rfc2119">MUST NOT</em> in this document
+        are to be interpreted as described in
+        <a href="https://datatracker.ietf.org/doc/html/bcp14">BCP 14</a>
+        [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc2119" title="Key words for use in RFCs to Indicate Requirement Levels">RFC2119</a></cite>] [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc8174" title="Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words">RFC8174</a></cite>]
+        when, and only when, they appear in all capitals, as shown here.
+      </p>
+
+      <div class="issue" id="issue-container-generatedID"><div role="heading" class="issue-title marker" id="h-issue" aria-level="4"><span>Issue</span></div><div class="">TODO: Add paragraph</div></div>
+
+      </section>
+    </section>
+
+    <section id="data-model"><div class="header-wrapper"><h2 id="x2-data-model"><bdi class="secno">2. </bdi>Data Model</h2><a class="self-link" href="#data-model" aria-label="Permalink for Section 2."></a></div>
+      
+
+      <p>
+The following sections outline the data model that is used by this specification
+for <a href="#dfn-verification-method" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verification-method-3">verification methods</a> and <a href="#dfn-data-integrity-proof" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-data-integrity-proof-5">data integrity proof</a> formats.
+      </p>
+
+      <section id="verification-methods"><div class="header-wrapper"><h3 id="x2-1-verification-methods"><bdi class="secno">2.1 </bdi>Verification Methods</h3><a class="self-link" href="#verification-methods" aria-label="Permalink for Section 2.1"></a></div>
+        
+        <p>
+The cryptographic material used to verify a <a href="#dfn-data-integrity-proof" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-data-integrity-proof-6">data integrity proof</a> is
+called the <a href="#dfn-verification-method" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verification-method-4">verification method</a>. This suite relies on public key material
+represented using [<cite><a class="bibref" data-link-type="biblio" href="#bib-multibase" title="Multibase">MULTIBASE</a></cite>], [<cite><a class="bibref" data-link-type="biblio" href="#bib-multicodec" title="Multicodec">MULTICODEC</a></cite>], JSON Web Key [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc7517" title="JSON Web Key (JWK)">RFC7517</a></cite>], and [<cite><a class="bibref" data-link-type="biblio" href="#bib-bls-jose-cose" title="Barreto-Lynn-Scott Elliptic Curve Key Representations for JOSE and COSE">BLS-JOSE-COSE</a></cite>].
+        </p>
+
+        <p>
+This suite <em class="rfc2119">MAY</em> be used to verify Data Integrity Proofs [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>]
+produced by BLS12-381 public key material encoded as a
+<a href="#jsonwebkey">JsonWebKey</a>. Loss-less key transformation processes that
+result in equivalent cryptographic material <em class="rfc2119">MAY</em> be utilized.
+        </p>
+
+        <section id="jsonwebkey"><div class="header-wrapper"><h4 id="x2-1-1-jsonwebkey"><bdi class="secno">2.1.1 </bdi>JsonWebKey</h4><a class="self-link" href="#jsonwebkey" aria-label="Permalink for Section 2.1.1"></a></div>
+          
+
+          <div class="issue" id="issue-container-generatedID-0"><div role="heading" class="issue-title marker" id="h-issue-0" aria-level="5"><span>Issue</span></div><p class="">
+This definition should go in the Data Integrity specification and referenced
+from there.
+          </p></div>
+
+          <p>
+The <code>type</code> of the verification method <em class="rfc2119">MUST</em> be <code>JsonWebKey</code>.
+          </p>
+
+          <p>
+The <code>controller</code> of the verification method <em class="rfc2119">MUST</em> be a URL.
+          </p>
+
+          <p>
+The <code>publicKeyJwk</code> property of the verification method <em class="rfc2119">MUST</em> be a public
+key encoded according to [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc7517" title="JSON Web Key (JWK)">RFC7517</a></cite>].
+          </p>
+
+          <div class="issue" id="issue-container-generatedID-1"><div role="heading" class="issue-title marker" id="h-issue-1" aria-level="5"><span>Issue</span></div><p class="">
+The specific encoding of public keys is still being refined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-bls-jose-cose" title="Barreto-Lynn-Scott Elliptic Curve Key Representations for JOSE and COSE">BLS-JOSE-COSE</a></cite>].
+          </p></div>
+
+          <p class="advisement">
+Developers are advised to not accidentally publish a representation of a private
+key. Implementations of this specification <em class="rfc2119">MUST</em> raise errors if expression
+of public key information includes a key parameter that is marked as 
+<code>Private</code> in the IANA JSON Web Key Parameters registry.
+          </p>
+
+          <div class="example" id="example-a-bls12-381-public-key-containing-the-g1-and-g2-values-encoded-as-a-jsonwebkey-in-a-controller-document">
+        <div class="marker">
+    <a class="self-link" href="#example-a-bls12-381-public-key-containing-the-g1-and-g2-values-encoded-as-a-jsonwebkey-in-a-controller-document">Example<bdi> 1</bdi></a><span class="example-title">: A BLS12-381 public key containing the
+            G1 and G2 values, encoded as a JsonWebKey in a controller document</span>
+  </div> <pre aria-busy="false"><code class="hljs">{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/data-integrity/v1"
+  ],
+  "id": "https://example.com/issuer/123",
+  "verificationMethod": [{
+    "id": "https://example.com/issuer/123#key-0",
+    "type": "JsonWebKey",
+    "controller": "https://example.com/issuer/123",
+    "publicKeyJwk": {
+      "kty": "OKP",
+      "crv": "Bls12381G1",
+      "x": "Ed4GBGLVasEp4ejPz44CvllbTldfLLcm2QcIJluBL6p_SQmRrZvJNa3YaJ-Wx8Im",
+      "y": "AbdYAsAb20CHzlVW6VBO9i16BcGOmcYiMLlBEh9DfAiDu_1ZIAd1zewSi9f6517g"
+    }
+  }, {
+    "id": "https://example.com/issuer/123#key-1",
+    "type": "JsonWebKey",
+    "controller": "https://example.com/issuer/123",
+    "publicKeyJwk": {
+      "kty": "OKP",
+      "crv": "Bls12381G2",
+      "x": "Ajs8lstTgoTgXMF6QXdyh3m8k2ixxURGYLMaYylVK_x0F8HhE8zk0YWiGV3CHwpQ
+    Ea2sH4PBZLaYCn8se-1clmCORDsKxbbw3Js_Alu4OmkV9gmbJsy1YF2rt7Vxzs6S",
+      "y": "BVkkrVEib-P_FMPHNtqxJymP3pV-H8fCdvPkoWInpFfM9tViyqD8JAmwDf64zU2h
+    BV_vvCQ632ScAooEExXuz1IeQH9D2o-uY_dAjZ37YHuRMEyzh8Tq-90JHQvicOqx"
+    }
+  }]
+}</code></pre>
+      </div>
+        </section>
+
+        <section id="multikey"><div class="header-wrapper"><h4 id="x2-1-2-multikey"><bdi class="secno">2.1.2 </bdi>Multikey</h4><a class="self-link" href="#multikey" aria-label="Permalink for Section 2.1.2"></a></div>
+          
+
+          <div class="issue" id="issue-container-generatedID-2"><div role="heading" class="issue-title marker" id="h-issue-2" aria-level="5"><span>Issue</span></div><p class="">
+This definition should go in the Data Integrity specification and referenced
+from there.
+          </p></div>
+
+          <p>
+The <code>type</code> of the verification method <em class="rfc2119">MUST</em> be <code>Multikey</code>.
+          </p>
+
+          <p>
+The <code>controller</code> of the verification method <em class="rfc2119">MUST</em> be a URL.
+          </p>
+
+          <p>
+The <code>publicKeyMultibase</code> property of the verification method <em class="rfc2119">MUST</em> be a public
+key encoded according to [<cite><a class="bibref" data-link-type="biblio" href="#bib-multicodec" title="Multicodec">MULTICODEC</a></cite>] and formatted according to
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-multibase" title="Multibase">MULTIBASE</a></cite>]. The multicodec encoding of a BLS12-381 public key that combines
+both the G1 and G2 fields is the byte prefix <code>0xee</code> followed by the 48-byte G1
+public key data, which is then followed by the 96-byte G2 public key data. The
+145 byte value is then encoded using base64url with no padding (<code>u</code>) as the
+prefix. Any other encodings <em class="rfc2119">MUST NOT</em> be used.
+          </p>
+
+          <p class="advisement">
+Developers are advised to not accidentally publish a representation of a private
+key. Implementations of this specification will raise errors in the event of a
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-multicodec" title="Multicodec">MULTICODEC</a></cite>] value other than <code>0xee</code> being used in a <code>publicKeyMultibase</code>
+value.
+          </p>
+
+          <div class="example" id="example-an-bls12-381-public-key-containing-the-g1-and-g2-values-encoded-as-a-multikey">
+        <div class="marker">
+    <a class="self-link" href="#example-an-bls12-381-public-key-containing-the-g1-and-g2-values-encoded-as-a-multikey">Example<bdi> 2</bdi></a><span class="example-title">: An BLS12-381 public key containing the G1 and G2 values, encoded as a Multikey</span>
+  </div> <pre aria-busy="false"><code class="hljs">{
+  "id": "https://example.com/issuer/123#key-0",
+  "type": "Multikey",
+  "controller": "https://example.com/issuer/123",
+  "publicKeyMultibase": "u7ljnAxKdp7YVqJvcMU9GtnmrMc1XZztXHsTsZ2LsmGJ67SsdbmNc
+    S2SDs0daEPfhVXgODk0IVrgguJ-TJACHyXYa9Ae8DaxcvRy89KLgmWsyOOJn2oY7vCE2gt
+    JoebMJiQsdbmNcS2SDs0daEPfhVXgODk0IVrgguJ-TJACHyXYa9Ae8DaxcvRy89KLgm"
+}</code></pre>
+      </div>
+
+          <div class="example" id="example-a-bls12-381-public-key-containing-the-g1-and-g2-values-encoded-as-a-multikey-in-a-controller-document">
+        <div class="marker">
+    <a class="self-link" href="#example-a-bls12-381-public-key-containing-the-g1-and-g2-values-encoded-as-a-multikey-in-a-controller-document">Example<bdi> 3</bdi></a><span class="example-title">: A BLS12-381 public key containing the
+            G1 and G2 values, encoded as a Multikey in a controller document</span>
+  </div> <pre aria-busy="false"><code class="hljs">{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/data-integrity/v1"
+  ],
+  "id": "https://example.com/issuer/123",
+  "verificationMethod": [{
+    "id": "https://example.com/issuer/123#key-1",
+    "type": "Multikey",
+    "controller": "https://example.com/issuer/123",
+    "publicKeyMultibase": "u7ljnAxKdp7YVqJvcMU9GtnmrMc1XZztXHsTsZ2LsmGJ67SsdbmNc
+      S2SDs0daEPfhVXgODk0IVrgguJ-TJACHyXYa9Ae8DaxcvRy89KLgmWsyOOJn2oY7vCE2gt
+      JoebMJiQsdbmNcS2SDs0daEPfhVXgODk0IVrgguJ-TJACHyXYa9Ae8DaxcvRy89KLgm"
+  }]
+}</code></pre>
+      </div>
+        </section>
+      </section>
+    <section id="data-integrity-proof"><div class="header-wrapper"><h3 id="x2-2-data-integrity-proof"><bdi class="secno">2.2 </bdi>Data Integrity Proof</h3><a class="self-link" href="#data-integrity-proof" aria-label="Permalink for Section 2.2"></a></div>
+      
+
+      <section id="bbs-signature-2023"><div class="header-wrapper"><h4 id="x2-2-1-bbs-signature-2023"><bdi class="secno">2.2.1 </bdi>bbs-signature-2023</h4><a class="self-link" href="#bbs-signature-2023" aria-label="Permalink for Section 2.2.1"></a></div>
+        
+<p>
+  This suite relies on detached digital signatures represented using [<cite><a class="bibref" data-link-type="biblio" href="#bib-multibase" title="Multibase">MULTIBASE</a></cite>].
+</p>
+          
+        <p>
+The <code>verificationMethod</code> property of the proof <em class="rfc2119">MUST</em> be a URL.
+Dereferencing the <code>verificationMethod</code> <em class="rfc2119">MUST</em> result in an object
+containing a <code>type</code> property with the value set to
+<code>Multikey</code> or <code>JsonWebKey</code>.
+        </p>
+
+        <p>
+The <code>type</code> property of the proof <em class="rfc2119">MUST</em> be <code>DataIntegrityProof</code>.
+        </p>
+        <p>
+The <code>cryptosuite</code> property of the proof <em class="rfc2119">MUST</em> be <code>bbs-signature-2023</code>.
+        </p>
+        <p>
+The <code>created</code> property of the proof <em class="rfc2119">MUST</em> be an [<cite><a class="bibref" data-link-type="biblio" href="#bib-xmlschema11-2" title="W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes">XMLSCHEMA11-2</a></cite>]
+formated date string.
+        </p>
+        <p>
+The <code>proofPurpose</code> property of the proof <em class="rfc2119">MUST</em> be a string, and <em class="rfc2119">MUST</em>
+match the verification relationship expressed by the verification method
+<code>controller</code>.
+        </p>
+        <p>
+The <code>proofValue</code> property of the proof <em class="rfc2119">MUST</em> be a detached BBS Signature
+produced according to <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html##name-sign">Sign</a>, encoded according to
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-multibase" title="Multibase">MULTIBASE</a></cite>] using the base64 base encoding with no padding.
+        </p>
+
+        <div class="example" id="example-an-bbs-digital-signature-expressed-as-a-dataintegrityproof">
+        <div class="marker">
+    <a class="self-link" href="#example-an-bbs-digital-signature-expressed-as-a-dataintegrityproof">Example<bdi> 4</bdi></a><span class="example-title">: An BBS digital signature expressed as a DataIntegrityProof</span>
+  </div> <pre class="highlight" style="overflow-x:
+          auto; white-space: pre-wrap; word-wrap: break-word;" aria-busy="false"><code class="hljs">{
+  "@context": [
+    {"title": "https://schema.org/title"},
+    "https://w3id.org/security/data-integrity/v1"
+  ],
+  "title": "Hello world!",
+  "proof": {
+    "type": "DataIntegrityProof",
+    "cryptosuite": "bbs-signature-2023",
+    "created": "2020-11-05T19:23:24Z",
+    "verificationMethod": "https://example.com/issuer/123#key-2",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "uU6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdB
+      Dd/l6tIYkTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDB
+      5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1o
+      AhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIM
+      0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6oba
+      Enaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYG
+      nu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBk
+      Oh6ojlvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/aGQcoD3Tgmy+z0hN+4elMky1RnJEhCuN
+      QNsEg"
+  }
+}</code></pre>
+      </div>
+
+      </section>
+      <section id="bbs-proof-2023"><div class="header-wrapper"><h4 id="x2-2-2-bbs-proof-2023"><bdi class="secno">2.2.2 </bdi>bbs-proof-2023</h4><a class="self-link" href="#bbs-proof-2023" aria-label="Permalink for Section 2.2.2"></a></div>
+        
+<p>
+  This suite relies on detached digital signatures represented using [<cite><a class="bibref" data-link-type="biblio" href="#bib-multibase" title="Multibase">MULTIBASE</a></cite>].
+</p>
+          
+        <p>
+The <code>verificationMethod</code> property of the proof <em class="rfc2119">MUST</em> be a URL.
+Dereferencing the <code>verificationMethod</code> <em class="rfc2119">MUST</em> result in an object
+containing a <code>type</code> property with the value set to
+<code>Multikey</code> or <code>JsonWebKey</code>.
+        </p>
+
+        <p>
+The <code>type</code> property of the proof <em class="rfc2119">MUST</em> be <code>DataIntegrityProof</code>.
+        </p>
+        <p>
+The <code>cryptosuite</code> property of the proof <em class="rfc2119">MUST</em> be <code>bbs-proof-2023</code>.
+        </p>
+        <p>
+The <code>created</code> property of the proof <em class="rfc2119">MUST</em> be an [<cite><a class="bibref" data-link-type="biblio" href="#bib-xmlschema11-2" title="W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes">XMLSCHEMA11-2</a></cite>]
+formated date string.
+        </p>
+        <p>
+The <code>proofPurpose</code> property of the proof <em class="rfc2119">MUST</em> be a string, and <em class="rfc2119">MUST</em>
+match the verification relationship expressed by the verification method
+<code>controller</code>.
+        </p>
+        <p>
+The <code>proofValue</code> property of the proof <em class="rfc2119">MUST</em> be a detached BBS Signature
+produced according to <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html#name-proofgen">ProofGen</a>,
+encoded according to [<cite><a class="bibref" data-link-type="biblio" href="#bib-multibase" title="Multibase">MULTIBASE</a></cite>] using the base64 base encoding with no padding.
+        </p>
+
+        <div class="example" id="example-an-bbs-zero-knowledge-proof-of-knowledge-of-a-signature-expressed-as-a-dataintegrityproof">
+        <div class="marker">
+    <a class="self-link" href="#example-an-bbs-zero-knowledge-proof-of-knowledge-of-a-signature-expressed-as-a-dataintegrityproof">Example<bdi> 5</bdi></a><span class="example-title">: An BBS zero-knowledge proof-of-knowledge of a signature expressed as a DataIntegrityProof</span>
+  </div> <pre class="highlight" style="overflow-x:
+          auto; white-space: pre-wrap; word-wrap: break-word;" aria-busy="false"><code class="hljs">{
+  "@context": [
+    {"title": "https://schema.org/title"},
+    "https://w3id.org/security/data-integrity/v1"
+  ],
+  "title": "Hello world!",
+  "proof": {
+    "type": "DataIntegrityProof",
+    "cryptosuite": "bbs-proof-2023",
+    "created": "2020-11-05T19:23:24Z",
+    "verificationMethod": "https://example.com/issuer/123#key-2",
+    "proofPurpose": "assertionMethod",
+    "generators": 3,
+    "disclosed": [ 2 ],
+    "proofValue": "uU6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdB
+      Dd/l6tIYkTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDB
+      5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1o
+      AhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIM
+      0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6oba
+      Enaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYG
+      nu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBk
+      Oh6ojlvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/aGQcoD3Tgmy+z0hN+4elMky1RnJEhCuN
+      QNsEg"
+  }
+}</code></pre>
+      </div>
+
+      </section>
+    </section>
+  </section>
+
+
+  <section id="algorithms"><div class="header-wrapper"><h2 id="x3-algorithms"><bdi class="secno">3. </bdi>Algorithms</h2><a class="self-link" href="#algorithms" aria-label="Permalink for Section 3."></a></div>
+    
+
+    <p>
+The following section describes multiple Data Integrity cryptographic suites
+that utilize the BBS Signature Algorithm [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-SIGNATURE</a></cite>].
+    </p>
+
+    <section id="bbs-signature-2023-0"><div class="header-wrapper"><h3 id="x3-1-bbs-signature-2023"><bdi class="secno">3.1 </bdi>bbs-signature-2023</h3><a class="self-link" href="#bbs-signature-2023-0" aria-label="Permalink for Section 3.1"></a></div>
+    
+
+    <p>
+The <code>bbs-signature-2023</code> cryptographic suite takes an input document, canonicalizes
+the document using the Universal RDF Dataset Canonicalization Algorithm
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-canon" title="RDF Dataset Canonicalization">RDF-CANON</a></cite>], and then cryptographically hashes and signs the output
+resulting in the production of a data integrity proof. The algorithms in this
+section also include the verification of such a data integrity proof.
+    </p>
+
+    <section id="add-proof"><div class="header-wrapper"><h4 id="x3-1-1-add-proof"><bdi class="secno">3.1.1 </bdi>Add Proof </h4><a class="self-link" href="#add-proof" aria-label="Permalink for Section 3.1.1"></a></div>
+      
+
+      <p>
+To generate a proof, the algorithm in
+<a href="https://www.w3.org/TR/vc-data-integrity/#add-proof">
+Section 4.1: Add Proof</a> in the Data Integrity
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification <em class="rfc2119">MUST</em> be executed.
+For that algorithm, the cryptographic suite specific
+<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-transformation-algorithm">
+transformation algorithm</a> is defined in Section
+<a href="#transformation-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.3 </bdi>Transformation</a>, the
+<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-hashing-algorithm">
+hashing algorithm</a> is defined in Section <a href="#hashing-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.4 </bdi>Hashing</a>,
+and the
+<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-proof-serialization-algorithm">
+proof serialization algorithm</a> is defined in Section
+<a href="#proof-serialization-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.6 </bdi>Proof Serialization</a>.
+      </p>
+    </section>
+
+    <section id="verify-proof"><div class="header-wrapper"><h4 id="x3-1-2-verify-proof"><bdi class="secno">3.1.2 </bdi>Verify Proof </h4><a class="self-link" href="#verify-proof" aria-label="Permalink for Section 3.1.2"></a></div>
+      
+
+      <p>
+To verify a proof, the algorithm in
+<a href="https://www.w3.org/TR/vc-data-integrity/#verify-proof">
+Section 4.2: Verify Proof</a> in the Data Integrity
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification <em class="rfc2119">MUST</em> be executed.
+For that algorithm, the cryptographic suite specific
+<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-transformation-algorithm">
+transformation algorithm</a> is defined in Section
+<a href="#transformation-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.3 </bdi>Transformation</a>, the
+<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-hashing-algorithm">
+hashing algorithm</a> is defined in Section <a href="#hashing-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.4 </bdi>Hashing</a>,
+and the
+<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-proof-serialization-algorithm">
+proof verification algorithm</a> is defined in Section
+<a href="#proof-verification-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.7 </bdi>Proof Verification</a>.
+      </p>
+    </section>
+
+    <section id="transformation-bbs-signature-2023"><div class="header-wrapper"><h4 id="x3-1-3-transformation"><bdi class="secno">3.1.3 </bdi>Transformation </h4><a class="self-link" href="#transformation-bbs-signature-2023" aria-label="Permalink for Section 3.1.3"></a></div>
+      
+
+      <p>
+The following algorithm specifies how to transform an unsecured input document
+into a transformed document that is ready to be provided as input to the
+hashing algorithm in Section <a href="#hashing-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.4 </bdi>Hashing</a>.
+      </p>
+
+
+Required inputs to this algorithm are an
+<a href="https://w3c.github.io/vc-data-integrity/#dfn-unsecured-data-document">
+unsecured data document</a> (<var>unsecuredDocument</var>) and
+<a href="https://w3c.github.io/vc-data-integrity/#dfn-transformation-options">
+transformation options</a> (<var>options</var>). The
+<a href="https://w3c.github.io/vc-data-integrity/#dfn-unsecured-data-document">
+transformation options</a> <em class="rfc2119">MUST</em> contain a type identifier for the
+<a href="https://w3c.github.io/vc-data-integrity/#dfn-cryptographic-suite">
+cryptographic suite</a> (<var>type</var>) and a cryptosuite
+identifier (<var>cryptosuite</var>). A <em>transformed data document</em> is
+produced as output. Whenever this algorithm encodes strings, it <em class="rfc2119">MUST</em> use UTF-8
+encoding.
+      <p></p>
+
+      <ol class="algorithm">
+        <li>
+If <var>options</var>.<var>type</var> is not set to the string
+<code>DataIntegrityProof</code> and <var>options</var>.<var>cryptosuite</var> is not
+set to the string <code>bbs-signature-2023</code> then a <code>PROOF_TRANSFORMATION_ERROR</code> <em class="rfc2119">MUST</em> be
+raised.
+        </li>
+        <li>
+Let <var>canonicalDocument</var> be the result of applying the
+Universal RDF Dataset Canonicalization Algorithm
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-canon" title="RDF Dataset Canonicalization">RDF-CANON</a></cite>] to the <var>unsecuredDocument</var>.
+        </li>
+        <li>
+Set <var>output</var> to the value of <var>canonicalDocument</var>.
+        </li>
+        <li>
+Return <var>canonicalDocument</var> as the <em>transformed data document</em>.
+        </li>
+      </ol>
+    </section>
+
+    <section id="hashing-bbs-signature-2023"><div class="header-wrapper"><h4 id="x3-1-4-hashing"><bdi class="secno">3.1.4 </bdi>Hashing </h4><a class="self-link" href="#hashing-bbs-signature-2023" aria-label="Permalink for Section 3.1.4"></a></div>
+      
+
+      <p>
+The following algorithm specifies how to cryptographically hash a
+<em>transformed data document</em> and <em>proof configuration</em>
+into cryptographic hash data that is ready to be provided as input to the
+algorithms in Section <a href="#proof-serialization-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.6 </bdi>Proof Serialization</a> or
+Section <a href="#proof-verification-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.7 </bdi>Proof Verification</a>.
+      </p>
+
+      <p>
+The required inputs to this algorithm are a <em>transformed data document</em>
+(<var>transformedDocument</var>) and <em>proof configuration</em>
+(<var>proofConfig</var>). A single <em>hash data</em> value represented as
+series of bytes is produced as output.
+      </p>
+
+      <ol class="algorithm">
+        <div class="issue" id="issue-container-generatedID-3"><div role="heading" class="issue-title marker" id="h-issue-3" aria-level="5"><span>Issue</span></div><li class="">
+Specify how each item in the canonicalized input is hashed and included a set
+that is then signed over in <a href="#proof-serialization-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.6 </bdi>Proof Serialization</a>.
+        </li></div>
+        <div class="issue" id="issue-container-generatedID-4"><div role="heading" class="issue-title marker" id="h-issue-4" aria-level="5"><span>Issue</span></div><li class="">
+Specify how <var>proofConfigHash</var> is generated.
+        </li></div>
+        <div class="issue" id="issue-container-generatedID-5"><div role="heading" class="issue-title marker" id="h-issue-5" aria-level="5"><span>Issue</span></div><li class="">
+Specify how <var>hashData</var> is composed in a way that can be signed over in
+<a href="#proof-serialization-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.6 </bdi>Proof Serialization</a>.
+        </li></div>
+        <li>
+Return <var>hashData</var> as the <em>hash data</em>.
+        </li>
+      </ol>
+
+    </section>
+
+    <section id="proof-configuration"><div class="header-wrapper"><h4 id="x3-1-5-proof-configuration"><bdi class="secno">3.1.5 </bdi>Proof Configuration </h4><a class="self-link" href="#proof-configuration" aria-label="Permalink for Section 3.1.5"></a></div>
+      
+
+      <p>
+The following algorithm specifies how to generate a
+<em>proof configuration</em> from a set of <em>proof options</em>
+that is used as input to the <a href="#hashing-bbs-signature-2023">proof hashing algorithm</a>.
+      </p>
+
+      <p>
+The required inputs to this algorithm are <em>proof options</em>
+(<var>options</var>). The <em>proof options</em> <em class="rfc2119">MUST</em> contain a type identifier
+for the
+<a href="https://w3c.github.io/vc-data-integrity/#dfn-cryptographic-suite">
+cryptographic suite</a> (<var>type</var>) and <em class="rfc2119">MUST</em> contain a cryptosuite
+identifier (<var>cryptosuite</var>). A <em>proof configuration</em>
+object is produced as output.
+      </p>
+
+      <ol class="algorithm">
+        <li>
+Let <var>proofConfig</var> be an empty object.
+        </li>
+        <li>
+Set <var>proofConfig</var>.<var>type</var> to
+<var>options</var>.<var>type</var>.
+        </li>
+        <li>
+If <var>options</var>.<var>cryptosuite</var> is set, set
+<var>proofConfig</var>.<var>cryptosuite</var> to its value.
+        </li>
+        <li>
+If <var>options</var>.<var>type</var> is not set to <code>DataIntegrityProof</code> and
+<var>proofConfig</var>.<var>cryptosuite</var> is not set to <code>bbs-signature-2023</code>, an
+<code>INVALID_PROOF_CONFIGURATION</code> error <em class="rfc2119">MUST</em> be raised.
+        </li>
+        <li>
+Set <var>proofConfig</var>.<var>created</var> to
+<var>options</var>.<var>created</var>. If the value is not a valid
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-xmlschema11-2" title="W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes">XMLSCHEMA11-2</a></cite>] datetime, an <code>INVALID_PROOF_DATETIME</code> error <em class="rfc2119">MUST</em> be raised.
+        </li>
+        <li>
+Set <var>proofConfig</var>.<var>verificationMethod</var> to
+<var>options</var>.<var>verificationMethod</var>.
+        </li>
+        <li>
+Set <var>proofConfig</var>.<var>proofPurpose</var> to
+<var>options</var>.<var>proofPurpose</var>.
+        </li>
+        <li>
+Return <var>proofConfig</var>.
+        </li>
+      </ol>
+
+    </section>
+
+    <section id="proof-serialization-bbs-signature-2023"><div class="header-wrapper"><h4 id="x3-1-6-proof-serialization"><bdi class="secno">3.1.6 </bdi>Proof Serialization </h4><a class="self-link" href="#proof-serialization-bbs-signature-2023" aria-label="Permalink for Section 3.1.6"></a></div>
+      
+
+      <p>
+The following algorithm specifies how to serialize a digital signature from
+a set of cryptographic hash data. This
+algorithm is designed to be used in conjunction with the algorithms defined
+in the Data Integrity [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification,
+<a href="https://w3c.github.io/vc-data-integrity/#algorithms">
+Section 4: Algorithms</a>. Required inputs are
+cryptographic hash data (<var>hashData</var>) and
+<em>proof options</em> (<var>options</var>). The
+<em>proof options</em> <em class="rfc2119">MUST</em> contain a type identifier for the
+<a href="https://w3c.github.io/vc-data-integrity/#dfn-cryptographic-suite">
+cryptographic suite</a> (<var>type</var>) and <em class="rfc2119">MAY</em> contain a cryptosuite
+identifier (<var>cryptosuite</var>). A single <em>digital proof</em> value
+represented as series of bytes is produced as output.
+      </p>
+
+      <ol class="algorithm">
+        <li>
+Let <var>privateKeyBytes</var> be the result of retrieving the
+private key bytes associated with the
+<var>options</var>.<var>verificationMethod</var> value as described in the
+Data Integrity [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification,
+<a href="https://w3c.github.io/vc-data-integrity/#algorithms">
+Section 4: Retrieving Cryptographic Material</a>.
+        </li>
+        <div class="issue" id="issue-container-generatedID-6"><div role="heading" class="issue-title marker" id="h-issue-6" aria-level="5"><span>Issue</span></div><li class="">
+Specify how <var>proofBytes</var> is generated and consumed by Section
+<a href="#proof-verification-bbs-signature-2023" class="sec-ref"><bdi class="secno">3.1.7 </bdi>Proof Verification</a>.
+        </li></div>
+        <li>
+Return <var>proofBytes</var> as the <em>digital proof</em>.
+        </li>
+      </ol>
+
+    </section>
+
+    <section id="proof-verification-bbs-signature-2023"><div class="header-wrapper"><h4 id="x3-1-7-proof-verification"><bdi class="secno">3.1.7 </bdi>Proof Verification </h4><a class="self-link" href="#proof-verification-bbs-signature-2023" aria-label="Permalink for Section 3.1.7"></a></div>
+      
+
+      <p>
+The following algorithm specifies how to verify a digital signature from
+a set of cryptographic hash data. This
+algorithm is designed to be used in conjunction with the algorithms defined
+in the Data Integrity [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification,
+<a href="https://w3c.github.io/vc-data-integrity/#algorithms">
+Section 4: Algorithms</a>. Required inputs are
+cryptographic hash data (<var>hashData</var>),
+a digital signature (<var>proofBytes</var>) and
+proof options (<var>options</var>). A <em>verification result</em>
+represented as a boolean value is produced as output.
+      </p>
+
+      <ol class="algorithm">
+        <li>
+Let <var>publicKeyBytes</var> be the result of retrieving the
+public key bytes associated with the
+<var>options</var>.<var>verificationMethod</var> value as described in the
+Data Integrity [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification,
+<a href="https://w3c.github.io/vc-data-integrity/#algorithms">
+Section 4: Retrieving Cryptographic Material</a>.
+        </li>
+        <li>
+Let <var>verificationResult</var> be the result of applying the verification
+algorithm defined in the BBS Signature specification [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-SIGNATURE</a></cite>],
+with <var>hashData</var> as the data to be verified against the
+<var>proofBytes</var> using the public key specified by
+<var>publicKeyBytes</var>.
+        </li>
+        <li>
+Return <var>verificationResult</var> as the <em>verification result</em>.
+        </li>
+      </ol>
+
+    </section>
+  </section>
+  <section id="bbs-proof-2023-0"><div class="header-wrapper"><h3 id="x3-2-bbs-proof-2023"><bdi class="secno">3.2 </bdi>bbs-proof-2023</h3><a class="self-link" href="#bbs-proof-2023-0" aria-label="Permalink for Section 3.2"></a></div>
+    
+    <p>
+      The <code>bbs-proof-2023</code> cryptographic suite takes an input document, 
+      that has previously been secured using <code>bbs-signature-2023</code>,
+      derives from this original document a set of messages to be disclosed 
+      representing a redacted form of the original document, and 
+      applies the <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html#name-proofgen">Proof Gen</a>
+      algorithm to produce a proof of knowledge for the disclosed messages.
+      The result is a new <code>proof</code>, containing the following attributes:
+    </p>
+
+    
+    <ul>
+      <li>
+        <code>generators</code>
+      </li>
+      <li>
+        <code>disclosed</code>
+      </li>
+      <li>
+        <code>proofValue</code>
+      </li>
+    </ul>
+    <p>This operation can be applied by any 
+      <a href="https://www.w3.org/TR/vc-data-model-2.0/#holder">holder</a> of a <code>bbs-signature-2023</code>
+      secured document, and as such, <code>bbs-proof-2023</code> <em class="rfc2119">MUST</em> be implemented with
+      awareness of the mandatory to disclose fields the original 
+      <a href="https://www.w3.org/TR/vc-data-model-2.0/#issuers">issuer</a> required.
+    </p>
+    <div class="issue" id="issue-container-number-3"><div role="heading" class="issue-title marker" id="h-issue-7" aria-level="4"><a href="https://github.com/w3c/vc-di-bbs/issues/3"><span class="issue-number">Issue 3</span></a><span class="issue-label">: Included rationale for `requiredRevealStatements` <a class="respec-gh-label" href="https://github.com/w3c/vc-di-bbs/issues/?q=is%3Aissue+is%3Aopen+label%3A%22ready-for-pr%22" style="background-color: rgb(22, 224, 95); color: rgb(0, 0, 0);" aria-label="GitHub label: ready-for-pr">ready-for-pr</a></span></div><p dir="auto">In a BBS Signature we must define the term <code class="notranslate">requiredRevealStatements</code> which communicates which statments must be revealed when generating a proof as according to the issuer.</p></div>
+    <section id="add-proof-0"><div class="header-wrapper"><h4 id="x3-2-1-add-proof"><bdi class="secno">3.2.1 </bdi>Add Proof </h4><a class="self-link" href="#add-proof-0" aria-label="Permalink for Section 3.2.1"></a></div>
+      
+      <div class="issue" id="issue-container-number-81"><div role="heading" class="issue-title marker" id="h-issue-8" aria-level="5"><a href="https://github.com/w3c/vc-di-bbs/issues/81"><span class="issue-number">Issue 81</span></a><span class="issue-label">: Define: Add Proof (bbs-proof-2023)</span></div><p dir="auto">Document how this function works, with special care to explaining blank node transformations.</p></div>
+    </section>
+    <section id="verify-proof-0"><div class="header-wrapper"><h4 id="x3-2-2-verify-proof"><bdi class="secno">3.2.2 </bdi>Verify Proof </h4><a class="self-link" href="#verify-proof-0" aria-label="Permalink for Section 3.2.2"></a></div>
+      
+      <div class="issue" id="issue-container-number-82"><div role="heading" class="issue-title marker" id="h-issue-9" aria-level="5"><a href="https://github.com/w3c/vc-di-bbs/issues/82"><span class="issue-number">Issue 82</span></a><span class="issue-label">: Define: Verify Proof (bbs-proof-2023)</span></div><p dir="auto">Document how to verify a derived proof, with special consideration for blank node transformations and mandatory to disclose fields.</p></div>
+    </section>
+    <section id="transformation"><div class="header-wrapper"><h4 id="x3-2-3-transformation"><bdi class="secno">3.2.3 </bdi>Transformation </h4><a class="self-link" href="#transformation" aria-label="Permalink for Section 3.2.3"></a></div>
+      
+      <div class="issue" id="issue-container-number-83"><div role="heading" class="issue-title marker" id="h-issue-10" aria-level="5"><a href="https://github.com/w3c/vc-di-bbs/issues/83"><span class="issue-number">Issue 83</span></a><span class="issue-label">: Define: Transformation (bbs-proof-2023)</span></div><p dir="auto">Document how the derived proof secured document is transformed in to messages that can be verified with the provided <code class="notranslate">proofValue</code>.</p></div>
+    </section>
+    <section id="hashing"><div class="header-wrapper"><h4 id="x3-2-4-hashing"><bdi class="secno">3.2.4 </bdi>Hashing </h4><a class="self-link" href="#hashing" aria-label="Permalink for Section 3.2.4"></a></div>
+      
+      <div class="issue" id="issue-container-number-84"><div role="heading" class="issue-title marker" id="h-issue-11" aria-level="5"><a href="https://github.com/w3c/vc-di-bbs/issues/84"><span class="issue-number">Issue 84</span></a><span class="issue-label">: Hashing (bbs-proof-2023)</span></div><p dir="auto">Describe if / how hashing is relevant to this ciphersuite.</p></div>
+    </section>
+    <section id="proof-configuration-0"><div class="header-wrapper"><h4 id="x3-2-5-proof-configuration"><bdi class="secno">3.2.5 </bdi>Proof Configuration </h4><a class="self-link" href="#proof-configuration-0" aria-label="Permalink for Section 3.2.5"></a></div>
+      
+      <div class="issue" id="issue-container-number-85"><div role="heading" class="issue-title marker" id="h-issue-12" aria-level="5"><a href="https://github.com/w3c/vc-di-bbs/issues/85"><span class="issue-number">Issue 85</span></a><span class="issue-label">: Define: Proof Configuration, Serialization, Verification (bbs-proof-2023)</span></div><p dir="auto">Define how the Data Integrity Proof side of (bbs-proof-2023) are expressed.</p></div>
+    </section>
+    <section id="proof-serialization"><div class="header-wrapper"><h4 id="x3-2-6-proof-serialization"><bdi class="secno">3.2.6 </bdi>Proof Serialization </h4><a class="self-link" href="#proof-serialization" aria-label="Permalink for Section 3.2.6"></a></div>
+      
+      <div class="issue" id="issue-container-number-85-0"><div role="heading" class="issue-title marker" id="h-issue-13" aria-level="5"><a href="https://github.com/w3c/vc-di-bbs/issues/85"><span class="issue-number">Issue 85</span></a><span class="issue-label">: Define: Proof Configuration, Serialization, Verification (bbs-proof-2023)</span></div><p dir="auto">Define how the Data Integrity Proof side of (bbs-proof-2023) are expressed.</p></div>
+    </section>
+    <section id="proof-verification"><div class="header-wrapper"><h4 id="x3-2-7-proof-verification"><bdi class="secno">3.2.7 </bdi>Proof Verification </h4><a class="self-link" href="#proof-verification" aria-label="Permalink for Section 3.2.7"></a></div>
+      
+      <div class="issue" id="issue-container-number-85-1"><div role="heading" class="issue-title marker" id="h-issue-14" aria-level="5"><a href="https://github.com/w3c/vc-di-bbs/issues/85"><span class="issue-number">Issue 85</span></a><span class="issue-label">: Define: Proof Configuration, Serialization, Verification (bbs-proof-2023)</span></div><p dir="auto">Define how the Data Integrity Proof side of (bbs-proof-2023) are expressed.</p></div>
+    </section>
+      
+  </section>
+</section>
+
+
+
+<section id="privacy-considerations"><div class="header-wrapper"><h2 id="x4-privacy-considerations"><bdi class="secno">4. </bdi>Privacy Considerations</h2><a class="self-link" href="#privacy-considerations" aria-label="Permalink for Section 4."></a></div>
+  
+  <div class="issue" id="issue-container-generatedID-7"><div role="heading" class="issue-title marker" id="h-issue-15" aria-level="3"><span>Issue</span></div><div class="">TODO: We need to add a complete list of privacy
+  considerations.</div></div>
+</section>
+
+<section id="security-considerations"><div class="header-wrapper"><h2 id="x5-security-considerations"><bdi class="secno">5. </bdi>Security Considerations</h2><a class="self-link" href="#security-considerations" aria-label="Permalink for Section 5."></a></div>
+  
+  <div class="issue" id="issue-container-generatedID-8"><div role="heading" class="issue-title marker" id="h-issue-16" aria-level="3"><span>Issue</span></div><div class="">TODO: We need to add a complete list of security
+  considerations.</div></div>
+</section>
+      
+
+ 
+    <section class="appendix" id="acknowledgements"><div class="header-wrapper"><h2 id="a-acknowledgements"><bdi class="secno">A. </bdi>Acknowledgements</h2><a class="self-link" href="#acknowledgements" aria-label="Permalink for Appendix A."></a></div>
+      
+      <p>
+        Portions of the work on this specification have been funded by the
+        United States Department of Homeland Security's (US DHS) Silicon Valley
+        Innovation Program under contracts
+        70RSAT20T00000003,
+        and
+        70RSAT20T00000033.
+        The content of this specification does not
+        necessarily reflect the position or the policy of the U.S. Government
+        and no official endorsement should be inferred.
+      </p>
+    </section>
+  
+
+<section id="references" class="appendix"><div class="header-wrapper"><h2 id="b-references"><bdi class="secno">B. </bdi>References</h2><a class="self-link" href="#references" aria-label="Permalink for Appendix B."></a></div><section id="normative-references"><div class="header-wrapper"><h3 id="b-1-normative-references"><bdi class="secno">B.1 </bdi>Normative references</h3><a class="self-link" href="#normative-references" aria-label="Permalink for Appendix B.1"></a></div>
+    
+    <dl class="bibliography"><dt id="bib-bls-jose-cose">[BLS-JOSE-COSE]</dt><dd>
+      <a href="https://datatracker.ietf.org/doc/draft-ietf-cose-bls-key-representations/"><cite>Barreto-Lynn-Scott Elliptic Curve Key Representations for JOSE and COSE</cite></a>. Michael B. Jones; Tobias Looker. Draft. URL: <a href="https://datatracker.ietf.org/doc/draft-ietf-cose-bls-key-representations/">https://datatracker.ietf.org/doc/draft-ietf-cose-bls-key-representations/</a>
+    </dd><dt id="bib-cfrg-bbs-signature">[CFRG-BBS-SIGNATURE]</dt><dd>
+      <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html"><cite>The BBS Signature Scheme</cite></a>. Tobias Looker; Vasilis Kalos; Andrew Whitehead; Mike Lodder. Draft. URL: <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html">https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html</a>
+    </dd><dt id="bib-did-core">[DID-CORE]</dt><dd>
+      <a href="https://www.w3.org/TR/did-core/"><cite>Decentralized Identifiers (DIDs) v1.0</cite></a>. Manu Sporny; Amy Guy; Markus Sabadello; Drummond Reed.  W3C. 19 July 2022. W3C Recommendation. URL: <a href="https://www.w3.org/TR/did-core/">https://www.w3.org/TR/did-core/</a>
+    </dd><dt id="bib-json-ld-framing">[JSON-LD-FRAMING]</dt><dd>
+      <a href="https://www.w3.org/TR/json-ld11-framing"><cite>JSON-LD 1.1 Framing</cite></a>. Dave Longley; Gregg Kellogg; Pierre-Antoine Champin.  W3C. Candidate Recommendation. URL: <a href="https://www.w3.org/TR/json-ld11-framing">https://www.w3.org/TR/json-ld11-framing</a>
+    </dd><dt id="bib-multibase">[MULTIBASE]</dt><dd>
+      <a href="https://tools.ietf.org/html/draft-multiformats-multibase-01"><cite>Multibase</cite></a>. URL: <a href="https://tools.ietf.org/html/draft-multiformats-multibase-01">https://tools.ietf.org/html/draft-multiformats-multibase-01</a>
+    </dd><dt id="bib-multicodec">[MULTICODEC]</dt><dd>
+      <a href="https://github.com/multiformats/multicodec/"><cite>Multicodec</cite></a>. URL: <a href="https://github.com/multiformats/multicodec/">https://github.com/multiformats/multicodec/</a>
+    </dd><dt id="bib-rdf-canon">[RDF-CANON]</dt><dd>
+      <a href="https://www.w3.org/TR/rdf-canon/"><cite>RDF Dataset Canonicalization</cite></a>. Dave Longley; Gregg Kellogg; Dan Yamamoto.  W3C. 15 April 2023. W3C Working Draft. URL: <a href="https://www.w3.org/TR/rdf-canon/">https://www.w3.org/TR/rdf-canon/</a>
+    </dd><dt id="bib-rdf-concepts">[RDF-CONCEPTS]</dt><dd>
+      <a href="https://www.w3.org/TR/rdf11-concepts/"><cite>RDF 1.1 Concepts and Abstract Syntax</cite></a>. Richard Cyganiak; David Wood; Markus Lanthaler.  W3C. Recommendation. URL: <a href="https://www.w3.org/TR/rdf11-concepts/">https://www.w3.org/TR/rdf11-concepts/</a>
+    </dd><dt id="bib-rdf-dataset-normalization">[RDF-DATASET-NORMALIZATION]</dt><dd>
+      <a href="http://json-ld.github.io/normalization/spec/"><cite>RDF Dataset Normalization 1.0</cite></a>. David Longley; Manu Sporny.  JSON-LD Community Group. CGDRAFT. URL: <a href="http://json-ld.github.io/normalization/spec/">http://json-ld.github.io/normalization/spec/</a>
+    </dd><dt id="bib-rdf-n-quads">[RDF-N-Quads]</dt><dd>
+      <a href="http://json-ld.github.io/normalization/spec/"><cite>RDF 1.1 N-Quads</cite></a>. Gaven Carothers. Recommendation. URL: <a href="http://json-ld.github.io/normalization/spec/">http://json-ld.github.io/normalization/spec/</a>
+    </dd><dt id="bib-rfc2119">[RFC2119]</dt><dd>
+      <a href="https://www.rfc-editor.org/rfc/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. S. Bradner.  IETF. March 1997. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>
+    </dd><dt id="bib-rfc3986">[RFC3986]</dt><dd>
+      <a href="https://www.rfc-editor.org/rfc/rfc3986"><cite>Uniform Resource Identifier (URI): Generic Syntax</cite></a>. T. Berners-Lee; R. Fielding; L. Masinter.  IETF. January 2005. Internet Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc3986">https://www.rfc-editor.org/rfc/rfc3986</a>
+    </dd><dt id="bib-rfc7517">[RFC7517]</dt><dd>
+      <a href="https://www.rfc-editor.org/rfc/rfc7517"><cite>JSON Web Key (JWK)</cite></a>. M. Jones.  IETF. May 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7517">https://www.rfc-editor.org/rfc/rfc7517</a>
+    </dd><dt id="bib-rfc8174">[RFC8174]</dt><dd>
+      <a href="https://www.rfc-editor.org/rfc/rfc8174"><cite>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</cite></a>. B. Leiba.  IETF. May 2017. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>
+    </dd><dt id="bib-vc-data-integrity">[VC-DATA-INTEGRITY]</dt><dd>
+      <a href="https://www.w3.org/TR/vc-data-integrity/"><cite>Verifiable Credential Data Integrity 1.0</cite></a>. David Longley; Manu Sporny.  W3C Verifiable Credentials Working Group. Working Draft. URL: <a href="https://www.w3.org/TR/vc-data-integrity/">https://www.w3.org/TR/vc-data-integrity/</a>
+    </dd><dt id="bib-vc-data-model-2">[VC-DATA-MODEL-2]</dt><dd>
+      <a href="https://www.w3.org/TR/vc-data-model-2.0/"><cite>Verifiable Credentials Data Model v2.0</cite></a>. Manu Sporny; Dave Longley; Grant Noble; Dan Burnett; Ted Thibodeau; Brent Zundel; David Chadwick; Kyle Den Hartog.  W3C Verifiable Credentials Working Group. Working Draft. URL: <a href="https://www.w3.org/TR/vc-data-model-2.0/">https://www.w3.org/TR/vc-data-model-2.0/</a>
+    </dd><dt id="bib-xmlschema11-2">[XMLSCHEMA11-2]</dt><dd>
+      <a href="https://www.w3.org/TR/xmlschema11-2/"><cite>W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes</cite></a>. David Peterson; Sandy Gao; Ashok Malhotra; Michael Sperberg-McQueen; Henry Thompson; Paul V. Biron et al.  W3C. 5 April 2012. W3C Recommendation. URL: <a href="https://www.w3.org/TR/xmlschema11-2/">https://www.w3.org/TR/xmlschema11-2/</a>
+    </dd></dl>
+  </section><section id="informative-references"><div class="header-wrapper"><h3 id="b-2-informative-references"><bdi class="secno">B.2 </bdi>Informative references</h3><a class="self-link" href="#informative-references" aria-label="Permalink for Appendix B.2"></a></div>
+    
+    <dl class="bibliography"><dt id="bib-vc-data-model-2.0">[VC-DATA-MODEL-2.0]</dt><dd>
+      <a href="https://www.w3.org/TR/vc-data-model-2.0/"><cite>Verifiable Credentials Data Model v2.0</cite></a>. Manu Sporny; Orie Steele; Michael Jones; Gabe Cohen; Oliver Terbu.  W3C. 27 April 2023. W3C Working Draft. URL: <a href="https://www.w3.org/TR/vc-data-model-2.0/">https://www.w3.org/TR/vc-data-model-2.0/</a>
+    </dd></dl>
+  </section></section><p role="navigation" id="back-to-top">
+    <a href="#title"><abbr title="Back to Top">↑</abbr></a>
+  </p><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-data-integrity-proof" aria-label="Links in this document to definition: data integrity proof">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-data-integrity-proof" aria-label="Permalink for definition: data integrity proof. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+     <a href="#ref-for-dfn-data-integrity-proof-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-data-integrity-proof-3" title="Reference 3">(3)</a> <a href="#ref-for-dfn-data-integrity-proof-4" title="Reference 4">(4)</a> 
+  </li><li>
+    <a href="#ref-for-dfn-data-integrity-proof-5" title="§ 2. Data Model">§ 2. Data Model</a> 
+  </li><li>
+    <a href="#ref-for-dfn-data-integrity-proof-6" title="§ 2.1 Verification Methods">§ 2.1 Verification Methods</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-private-key" aria-label="Links in this document to definition: private key">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-private-key" aria-label="Permalink for definition: private key. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+     
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-challenge" aria-label="Links in this document to definition: challenge">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-challenge" aria-label="Permalink for definition: challenge. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+     
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-domain" aria-label="Links in this document to definition: domain">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-domain" aria-label="Permalink for definition: domain. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+     <a href="#ref-for-dfn-domain-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-domain-3" title="Reference 3">(3)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-cryptosuite" aria-label="Links in this document to definition: cryptographic suite">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-cryptosuite" aria-label="Permalink for definition: cryptographic suite. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+     
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-decentralized-identifiers" aria-label="Links in this document to definition: decentralized identifier">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-decentralized-identifiers" aria-label="Permalink for definition: decentralized identifier. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+     
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-controller-s" aria-label="Links in this document to definition: controller">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-controller-s" aria-label="Permalink for definition: controller. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+     <a href="#ref-for-dfn-controller-s-2" title="Reference 2">(2)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-controller-documents" aria-label="Links in this document to definition: controller document">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-controller-documents" aria-label="Permalink for definition: controller document. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-controller-documents-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> <a href="#ref-for-dfn-controller-documents-2" title="Reference 2">(2)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-subjects" aria-label="Links in this document to definition: subject">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-subjects" aria-label="Permalink for definition: subject. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+      
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-distributed-ledger-technology" aria-label="Links in this document to definition: distributed ledger">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-distributed-ledger-technology" aria-label="Permalink for definition: distributed ledger. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-distributed-ledger-technology-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-verification-method" aria-label="Links in this document to definition: verification method">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-verification-method" aria-label="Permalink for definition: verification method. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-verification-method-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a>  
+  </li><li>
+    <a href="#ref-for-dfn-verification-method-3" title="§ 2. Data Model">§ 2. Data Model</a> 
+  </li><li>
+    <a href="#ref-for-dfn-verification-method-4" title="§ 2.1 Verification Methods">§ 2.1 Verification Methods</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-signature-suite" aria-label="Links in this document to definition: signature suite">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-signature-suite" aria-label="Permalink for definition: signature suite. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-signature-suite-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-canonicalization-algorithm" aria-label="Links in this document to definition: canonicalization algorithm">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-canonicalization-algorithm" aria-label="Permalink for definition: canonicalization algorithm. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-canonicalization-algorithm-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> <a href="#ref-for-dfn-canonicalization-algorithm-2" title="Reference 2">(2)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-canonical-form" aria-label="Links in this document to definition: canonical form">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-canonical-form" aria-label="Permalink for definition: canonical form. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-canonical-form-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-statement" aria-label="Links in this document to definition: statement">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-statement" aria-label="Permalink for definition: statement. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-statement-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> <a href="#ref-for-dfn-statement-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-statement-3" title="Reference 3">(3)</a> <a href="#ref-for-dfn-statement-4" title="Reference 4">(4)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-statement-digest-algorithm" aria-label="Links in this document to definition: statement digest algorithm">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-statement-digest-algorithm" aria-label="Permalink for definition: statement digest algorithm. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-statement-digest-algorithm-1" title="§ 1. Introduction">§ 1. Introduction</a> 
+  </li><li>
+    <a href="#ref-for-dfn-statement-digest-algorithm-2" title="§ 1.1 Terminology">§ 1.1 Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-signature-algorithm" aria-label="Links in this document to definition: signature algorithm">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-signature-algorithm" aria-label="Permalink for definition: signature algorithm. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-signature-algorithm-1" title="§ 1. Introduction">§ 1. Introduction</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-data-integrity-proof-document" aria-label="Links in this document to definition: data integrity proof document">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-data-integrity-proof-document" aria-label="Permalink for definition: data integrity proof document. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-data-integrity-proof-document-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> <a href="#ref-for-dfn-data-integrity-proof-document-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-data-integrity-proof-document-3" title="Reference 3">(3)</a> <a href="#ref-for-dfn-data-integrity-proof-document-4" title="Reference 4">(4)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-derive-proof-algorithm" aria-label="Links in this document to definition: derive proof algorithm">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-derive-proof-algorithm" aria-label="Permalink for definition: derive proof algorithm. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-derive-proof-algorithm-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> <a href="#ref-for-dfn-derive-proof-algorithm-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-derive-proof-algorithm-3" title="Reference 3">(3)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-quad" aria-label="Links in this document to definition: quad">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-quad" aria-label="Permalink for definition: quad. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-quad-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-n-quad" aria-label="Links in this document to definition: n-quad">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-n-quad" aria-label="Permalink for definition: n-quad. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-n-quad-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-linked-data-document" aria-label="Links in this document to definition: linked data document">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-linked-data-document" aria-label="Permalink for definition: linked data document. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-linked-data-document-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-frame" aria-label="Links in this document to definition: frame">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-frame" aria-label="Permalink for definition: frame. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-frame-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> <a href="#ref-for-dfn-frame-2" title="Reference 2">(2)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-json-ld-document" aria-label="Links in this document to definition: JSON-LD document">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-json-ld-document" aria-label="Permalink for definition: JSON-LD document. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-json-ld-document-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> <a href="#ref-for-dfn-json-ld-document-2" title="Reference 2">(2)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-framing-algorithm" aria-label="Links in this document to definition: framing algorithm">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-framing-algorithm" aria-label="Permalink for definition: framing algorithm. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-framing-algorithm-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-reveal-document" aria-label="Links in this document to definition: reveal document">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-reveal-document" aria-label="Permalink for definition: reveal document. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-reveal-document-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> <a href="#ref-for-dfn-reveal-document-2" title="Reference 2">(2)</a> <a href="#ref-for-dfn-reveal-document-3" title="Reference 3">(3)</a> <a href="#ref-for-dfn-reveal-document-4" title="Reference 4">(4)</a> 
+  </li>
+  </ul>
+    </div><div class="dfn-panel" hidden="" role="dialog" aria-modal="true" id="dfn-panel-for-dfn-input-proof-document" aria-label="Links in this document to definition: input proof document">
+      <span class="caret"></span>
+      <div>
+        <a class="self-link" href="#dfn-input-proof-document" aria-label="Permalink for definition: input proof document. Activate to close this dialog.">Permalink</a>
+         
+      </div>
+      <p><b>Referenced in:</b></p>
+      <ul>
+    <li>
+    <a href="#ref-for-dfn-input-proof-document-1" title="§ 1.1 Terminology">§ 1.1 Terminology</a> 
+  </li>
+  </ul>
+    </div><script id="respec-dfn-panel">(() => {
+// @ts-check
+if (document.respec) {
+  document.respec.ready.then(setupPanel);
+} else {
+  setupPanel();
+}
+
+function setupPanel() {
+  const listener = panelListener();
+  document.body.addEventListener("keydown", listener);
+  document.body.addEventListener("click", listener);
+}
+
+function panelListener() {
+  /** @type {HTMLElement} */
+  let panel = null;
+  return event => {
+    const { target, type } = event;
+
+    if (!(target instanceof HTMLElement)) return;
+
+    // For keys, we only care about Enter key to activate the panel
+    // otherwise it's activated via a click.
+    if (type === "keydown" && event.key !== "Enter") return;
+
+    const action = deriveAction(event);
+
+    switch (action) {
+      case "show": {
+        hidePanel(panel);
+        /** @type {HTMLElement} */
+        const dfn = target.closest("dfn, .index-term");
+        panel = document.getElementById(`dfn-panel-for-${dfn.id}`);
+        const coords = deriveCoordinates(event);
+        displayPanel(dfn, panel, coords);
+        break;
+      }
+      case "dock": {
+        panel.style.left = null;
+        panel.style.top = null;
+        panel.classList.add("docked");
+        break;
+      }
+      case "hide": {
+        hidePanel(panel);
+        panel = null;
+        break;
+      }
+    }
+  };
+}
+
+/**
+ * @param {MouseEvent|KeyboardEvent} event
+ */
+function deriveCoordinates(event) {
+  const target = /** @type HTMLElement */ (event.target);
+
+  // We prevent synthetic AT clicks from putting
+  // the dialog in a weird place. The AT events sometimes
+  // lack coordinates, so they have clientX/Y = 0
+  const rect = target.getBoundingClientRect();
+  if (
+    event instanceof MouseEvent &&
+    event.clientX >= rect.left &&
+    event.clientY >= rect.top
+  ) {
+    // The event probably happened inside the bounding rect...
+    return { x: event.clientX, y: event.clientY };
+  }
+
+  // Offset to the middle of the element
+  const x = rect.x + rect.width / 2;
+  // Placed at the bottom of the element
+  const y = rect.y + rect.height;
+  return { x, y };
+}
+
+/**
+ * @param {Event} event
+ */
+function deriveAction(event) {
+  const target = /** @type {HTMLElement} */ (event.target);
+  const hitALink = !!target.closest("a");
+  if (target.closest("dfn:not([data-cite]), .index-term")) {
+    return hitALink ? "none" : "show";
+  }
+  if (target.closest(".dfn-panel")) {
+    if (hitALink) {
+      return target.classList.contains("self-link") ? "hide" : "dock";
+    }
+    const panel = target.closest(".dfn-panel");
+    return panel.classList.contains("docked") ? "hide" : "none";
+  }
+  if (document.querySelector(".dfn-panel:not([hidden])")) {
+    return "hide";
+  }
+  return "none";
+}
+
+/**
+ * @param {HTMLElement} dfn
+ * @param {HTMLElement} panel
+ * @param {{ x: number, y: number }} clickPosition
+ */
+function displayPanel(dfn, panel, { x, y }) {
+  panel.hidden = false;
+  // distance (px) between edge of panel and the pointing triangle (caret)
+  const MARGIN = 20;
+
+  const dfnRects = dfn.getClientRects();
+  // Find the `top` offset when the `dfn` can be spread across multiple lines
+  let closestTop = 0;
+  let minDiff = Infinity;
+  for (const rect of dfnRects) {
+    const { top, bottom } = rect;
+    const diffFromClickY = Math.abs((top + bottom) / 2 - y);
+    if (diffFromClickY < minDiff) {
+      minDiff = diffFromClickY;
+      closestTop = top;
+    }
+  }
+
+  const top = window.scrollY + closestTop + dfnRects[0].height;
+  const left = x - MARGIN;
+  panel.style.left = `${left}px`;
+  panel.style.top = `${top}px`;
+
+  // Find if the panel is flowing out of the window
+  const panelRect = panel.getBoundingClientRect();
+  const SCREEN_WIDTH = Math.min(window.innerWidth, window.screen.width);
+  if (panelRect.right > SCREEN_WIDTH) {
+    const newLeft = Math.max(MARGIN, x + MARGIN - panelRect.width);
+    const newCaretOffset = left - newLeft;
+    panel.style.left = `${newLeft}px`;
+    /** @type {HTMLElement} */
+    const caret = panel.querySelector(".caret");
+    caret.style.left = `${newCaretOffset}px`;
+  }
+
+  // As it's a dialog, we trap focus.
+  // TODO: when <dialog> becomes a implemented, we should really
+  // use that.
+  trapFocus(panel, dfn);
+}
+
+/**
+ * @param {HTMLElement} panel
+ * @param {HTMLElement} dfn
+ * @returns
+ */
+function trapFocus(panel, dfn) {
+  /** @type NodeListOf<HTMLAnchorElement> elements */
+  const anchors = panel.querySelectorAll("a[href]");
+  // No need to trap focus
+  if (!anchors.length) return;
+
+  // Move focus to first anchor element
+  const first = anchors.item(0);
+  first.focus();
+
+  const trapListener = createTrapListener(anchors, panel, dfn);
+  panel.addEventListener("keydown", trapListener);
+
+  // Hiding the panel releases the trap
+  const mo = new MutationObserver(records => {
+    const [record] = records;
+    const target = /** @type HTMLElement */ (record.target);
+    if (target.hidden) {
+      panel.removeEventListener("keydown", trapListener);
+      mo.disconnect();
+    }
+  });
+  mo.observe(panel, { attributes: true, attributeFilter: ["hidden"] });
+}
+
+/**
+ *
+ * @param {NodeListOf<HTMLAnchorElement>} anchors
+ * @param {HTMLElement} panel
+ * @param {HTMLElement} dfn
+ * @returns
+ */
+function createTrapListener(anchors, panel, dfn) {
+  const lastIndex = anchors.length - 1;
+  let currentIndex = 0;
+  return event => {
+    switch (event.key) {
+      // Hitting "Tab" traps us in a nice loop around elements.
+      case "Tab": {
+        event.preventDefault();
+        currentIndex += event.shiftKey ? -1 : +1;
+        if (currentIndex < 0) {
+          currentIndex = lastIndex;
+        } else if (currentIndex > lastIndex) {
+          currentIndex = 0;
+        }
+        anchors.item(currentIndex).focus();
+        break;
+      }
+
+      // Hitting "Enter" on an anchor releases the trap.
+      case "Enter":
+        hidePanel(panel);
+        break;
+
+      // Hitting "Escape" returns focus to dfn.
+      case "Escape":
+        hidePanel(panel);
+        dfn.focus();
+        return;
+    }
+  };
+}
+
+/** @param {HTMLElement} panel */
+function hidePanel(panel) {
+  if (!panel) return;
+  panel.hidden = true;
+  panel.classList.remove("docked");
+}
+})()</script><script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script></body></html>
