@@ -1083,13 +1083,11 @@ hashing algorithm in Section <a href="#hashing-bbs-signature-2023" class="sec-re
 
 
 Required inputs to this algorithm are an
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-unsecured-data-document">
-unsecured data document</a> (<code>unsecuredDocument</code>) and
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-transformation-options">
+unsecured data document (<code>unsecuredDocument</code>) and
+<a href="https://www.w3.org/TR/vc-data-integrity/#transformations">
 transformation options</a> (<code>options</code>). The
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-unsecured-data-document">
-transformation options</a> <em class="rfc2119">MUST</em> contain a type identifier for the
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-cryptographic-suite">
+transformation options <em class="rfc2119">MUST</em> contain a type identifier for the
+<a href="https://www.w3.org/TR/vc-data-integrity/#cryptographic-suites">
 cryptographic suite</a> (<code>type</code>) and a cryptosuite
 identifier (<code>cryptosuite</code>). A <em>transformed data document</em> is
 produced as output. Whenever this algorithm encodes strings, it <em class="rfc2119">MUST</em> use UTF-8
@@ -1175,7 +1173,7 @@ that is used as input to the <a href="#hashing-bbs-signature-2023">proof hashing
 The required inputs to this algorithm are <em>proof options</em>
 (<code>options</code>). The <em>proof options</em> <em class="rfc2119">MUST</em> contain a type identifier
 for the
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-cryptographic-suite">
+<a href="https://www.w3.org/TR/vc-data-integrity/#cryptographic-suites">
 cryptographic suite</a> (<code>type</code>) and <em class="rfc2119">MUST</em> contain a cryptosuite
 identifier (<code>cryptosuite</code>). A <em>proof configuration</em>
 object is produced as output.
@@ -1231,7 +1229,7 @@ Section 4: Algorithms</a>. Required inputs are
 cryptographic hash data (<code>hashData</code>) and
 <em>proof options</em> (<code>options</code>). The
 <em>proof options</em> <em class="rfc2119">MUST</em> contain a type identifier for the
-<a data-cte="VC-DATA-INTEGRITY#dfn-cryptographic-suite" href="#dfn-cryptosuite" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-cryptosuite-2">
+<a data-cte="VC-DATA-INTEGRITY#cryptographic-suites" href="#dfn-cryptosuite" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-cryptosuite-2">
 cryptographic suite</a> (<code>type</code>) and <em class="rfc2119">MAY</em> contain a cryptosuite
 identifier (<code>cryptosuite</code>). A single <em>digital proof</em> value
 represented as series of bytes is produced as output.
@@ -1242,9 +1240,7 @@ represented as series of bytes is produced as output.
 Let <code>privateKeyBytes</code> be the result of retrieving the
 private key bytes associated with the
 <code>options</code>.<code>verificationMethod</code> value as described in the
-Data Integrity [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification,
-<a href="VC-DATA-INTEGRITY#retrieve-verification-method">
-Section 4.3: Retrieve Verification Method</a>.
+Data Integrity [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">VC-DATA-INTEGRITY</a></cite>] specification.
         </li>
         <li>
 <div class="issue" id="issue-container-generatedID-6"><div role="heading" class="issue-title marker" id="h-issue-6" aria-level="5"><span>Issue</span></div><p class="">
@@ -1433,7 +1429,7 @@ Return <code>verificationResult</code> as the <em>verification result</em>.
   </section><section id="informative-references"><div class="header-wrapper"><h3 id="b-2-informative-references"><bdi class="secno">B.2 </bdi>Informative references</h3><a class="self-link" href="#informative-references" aria-label="Permalink for Appendix B.2"></a></div>
     
     <dl class="bibliography"><dt id="bib-vc-data-model-2.0">[VC-DATA-MODEL-2.0]</dt><dd>
-      <a href="https://www.w3.org/TR/vc-data-model-2.0/"><cite>Verifiable Credentials Data Model v2.0</cite></a>. Manu Sporny; Orie Steele; Michael Jones; Gabe Cohen; Oliver Terbu.  W3C. 27 April 2023. W3C Working Draft. URL: <a href="https://www.w3.org/TR/vc-data-model-2.0/">https://www.w3.org/TR/vc-data-model-2.0/</a>
+      <a href="https://www.w3.org/TR/vc-data-model-2.0/"><cite>Verifiable Credentials Data Model v2.0</cite></a>. Manu Sporny; Orie Steele; Michael Jones; Gabe Cohen; Oliver Terbu.  W3C. 4 May 2023. W3C Working Draft. URL: <a href="https://www.w3.org/TR/vc-data-model-2.0/">https://www.w3.org/TR/vc-data-model-2.0/</a>
     </dd></dl>
   </section></section><p role="navigation" id="back-to-top">
     <a href="#title"><abbr title="Back to Top">↑</abbr></a>

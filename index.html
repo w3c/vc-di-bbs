@@ -14,7 +14,7 @@
     <script type="text/javascript" class="remove">
       const respecConfig = {
         // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
-        specStatus:           "FPWD",
+        specStatus:           "ED",
 
         // the specification's short name, as in http://www.w3.org/TR/short-name/
         shortName: "vc-di-bbs",
@@ -23,7 +23,7 @@
         // latestVersion: "https://www.w3.org/community/reports/credentials/CG-FINAL-vc-di-bbs-20230405/",
 
         // if you wish the publication date to be other than today, set this
-        publishDate:  "2023-05-18",
+        // publishDate:  "2023-05-18",
 
         // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
         // and its maturity status
@@ -714,13 +714,11 @@ hashing algorithm in Section <a href="#hashing-bbs-signature-2023"></a>.
 
 
 Required inputs to this algorithm are an
-<a data-cite="VC-DATA-INTEGRITY#dfn-unsecured-data-document">
-unsecured data document</a> (<code>unsecuredDocument</code>) and
-<a data-cite="VC-DATA-INTEGRITY#dfn-transformation-options">
+unsecured data document (<code>unsecuredDocument</code>) and
+<a data-cite="VC-DATA-INTEGRITY#transformations">
 transformation options</a> (<code>options</code>). The
-<a data-cite="VC-DATA-INTEGRITY#dfn-unsecured-data-document">
-transformation options</a> MUST contain a type identifier for the
-<a data-cite="VC-DATA-INTEGRITY#dfn-cryptographic-suite">
+transformation options MUST contain a type identifier for the
+<a data-cite="VC-DATA-INTEGRITY#cryptographic-suites">
 cryptographic suite</a> (<code>type</code>) and a cryptosuite
 identifier (<code>cryptosuite</code>). A <em>transformed data document</em> is
 produced as output. Whenever this algorithm encodes strings, it MUST use UTF-8
@@ -806,7 +804,7 @@ that is used as input to the <a href="#hashing-bbs-signature-2023">proof hashing
 The required inputs to this algorithm are <em>proof options</em>
 (<code>options</code>). The <em>proof options</em> MUST contain a type identifier
 for the
-<a data-cite="VC-DATA-INTEGRITY#dfn-cryptographic-suite">
+<a data-cite="VC-DATA-INTEGRITY#cryptographic-suites">
 cryptographic suite</a> (<code>type</code>) and MUST contain a cryptosuite
 identifier (<code>cryptosuite</code>). A <em>proof configuration</em>
 object is produced as output.
@@ -862,7 +860,7 @@ Section 4: Algorithms</a>. Required inputs are
 cryptographic hash data (<code>hashData</code>) and
 <em>proof options</em> (<code>options</code>). The
 <em>proof options</em> MUST contain a type identifier for the
-<a data-cte="VC-DATA-INTEGRITY#dfn-cryptographic-suite">
+<a data-cte="VC-DATA-INTEGRITY#cryptographic-suites">
 cryptographic suite</a> (<code>type</code>) and MAY contain a cryptosuite
 identifier (<code>cryptosuite</code>). A single <em>digital proof</em> value
 represented as series of bytes is produced as output.
@@ -873,9 +871,7 @@ represented as series of bytes is produced as output.
 Let <code>privateKeyBytes</code> be the result of retrieving the
 private key bytes associated with the
 <code>options</code>.<code>verificationMethod</code> value as described in the
-Data Integrity [[VC-DATA-INTEGRITY]] specification,
-<a href="VC-DATA-INTEGRITY#retrieve-verification-method">
-Section 4.3: Retrieve Verification Method</a>.
+Data Integrity [[VC-DATA-INTEGRITY]] specification.
         </li>
         <li >
 <p class="issue">
