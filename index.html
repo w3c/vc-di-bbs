@@ -447,6 +447,12 @@ TODO: Fill in after section <a href="#bbs-2023-functions"></a> is completed.
         <section>
           <h4>serializeBaseProofValue</h4>
         </section>
+        <section>
+          <h4>createDisclosureData</h4>
+        </section>
+        <section>
+          <h4>serializeDerivedProofValue</h4>
+        </section>
         <p class="issue">
 TODO: Fill in after section <a href="#bbs-2023"></a> is completed.
         </p>
@@ -709,6 +715,47 @@ to the algorithm.
             </li>
             <li>
 Return `proofValue` as <em>digital proof</em>.
+            </li>
+          </ol>
+        </section>
+
+
+        <section>
+          <h4>Add Derived Proof (bbs-2023)</h4>
+
+          <p>
+The following algorithm creates a selective disclosure derived proof; called by
+a holder of an `bbs-2023`-protected <a>verifiable credential</a>.
+The derived proof is to be given to the <a>verifier</a>. The inputs include a
+JSON-LD document (<var>document</var>), a BBS base proof
+(<var>proof</var>), an array of JSON pointers to use to selectively disclose
+statements (<var>selectivePointers</var>), and any custom JSON-LD API options,
+such as a document loader. A single <em>selectively revealed document</em>
+value, represented as an object, is produced as output.
+          </p>
+
+          <ol>
+            <li>
+Initialize `bbsProof`,  `labelMap`, `mandatoryIndexes`, `selectiveIndexes`, and
+`revealDocument` to the values associated with their
+property names in the object returned when calling the algorithm in
+Section <a href="#createdisclosuredata"></a>, passing the `document`, `proof`,
+`selectivePointers`, and any custom JSON-LD API options, such as a document
+loader.
+            </li>
+            <li>
+Initialize `newProof` to a shallow copy of `proof`.
+            </li>
+            <li>
+Replace `proofValue` in `newProof` with the result of calling the algorithm
+in Section <a href="#serializederivedproofvalue"></a>, passing `bbsProof`,
+`labelMap`, `mandatoryIndexes`, and `selectiveIndexes`.
+            </li>
+            <li>
+Set the value of the "proof" property in `revealDocument` to `newProof`.
+            </li>
+            <li>
+Return `revealDocument` as the <em>selectively revealed document</em>.
             </li>
           </ol>
 
