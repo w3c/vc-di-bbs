@@ -291,65 +291,51 @@ for <a>verification methods</a> and <a>data integrity proof</a> formats.
       <section>
         <h2>Verification Methods</h2>
         <p>
-The cryptographic material used to verify a <a>data integrity proof</a> is
-called the <a>verification method</a>. This suite relies on public key material
-represented using [[MULTIBASE]], [[MULTICODEC]], JSON Web Key [[RFC7517]], and [[BLS-JOSE-COSE]].
+These verification methods are used to verify Data Integrity Proofs
+[[VC-DATA-INTEGRITY]] produced using BLS12-381 cryptographic key material
+that is compliant with [[CFRG-BBS-SIGNATURE]]. The encoding formats for these key types
+are provided in this section. Lossless cryptographic key transformation
+processes that result in equivalent cryptographic key material MAY be used
+during the processing of digital signatures.
         </p>
-
-        <p>
-This suite MAY be used to verify Data Integrity Proofs [[VC-DATA-INTEGRITY]]
-produced by BLS12-381 public key material encoded as a
-<a href="#jsonwebkey">JsonWebKey</a>. Loss-less key transformation processes that
-result in equivalent cryptographic material MAY be utilized.
-        </p>
-
         <section>
           <h3>Multikey</h3>
-
-          <p class="issue">
-This definition should go in the Data Integrity specification and referenced
-from there.
+          <p>
+The <a data-cite="VC-DATA-INTEGRITY#multikey">Multikey format</a>, as defined in
+[[VC-DATA-INTEGRITY]], is used to express public keys for the cryptographic
+suites defined in this specification.
           </p>
 
           <p>
-The `type` of the verification method MUST be `Multikey`.
-          </p>
-
-          <p>
-The `controller` of the verification method MUST be a URL.
-          </p>
-
-          <p>
-The `publicKeyMultibase` property of the verification method MUST be a public
-key encoded according to [[MULTICODEC]] and formatted according to
-[[MULTIBASE]]. The multicodec encoding of a BLS12-381 public key that combines
-both the G1 and G2 fields is the byte prefix `0xee` followed by the 48-byte G1
-public key data, which is then followed by the 96-byte G2 public key data. The
-145 byte value is then encoded using base64url with no padding (`u`) as the
-prefix. Any other encodings MUST NOT be used.
+The `publicKeyMultibase` property represents a Multibase-encoded Multikey
+expression of a BLS12-381 public key in the G2 group. The encoding this field is
+the two-byte prefix `0xeb01` followed
+by the 96-byte compressed public key data.
+The 98-byte value is then encoded using base58-btc (`z`) as the prefix. Any
+other encodings MUST NOT be allowed.
           </p>
 
           <p class="advisement">
 Developers are advised to not accidentally publish a representation of a private
 key. Implementations of this specification will raise errors in the event of a
-[[MULTICODEC]] value other than `0xee` being used in a `publicKeyMultibase`
-value.
+[[?MULTICODEC]] value other than `0xeb01` being used in a
+`publicKeyMultibase` value.
           </p>
 
           <pre class="example"
-            title="An BLS12-381 public key containing the G1 and G2 values, encoded as a Multikey">
+            title="An BLS12-381 G2 group public key, encoded as a Multikey">
 {
   "id": "https://example.com/issuer/123#key-0",
   "type": "Multikey",
   "controller": "https://example.com/issuer/123",
-  "publicKeyMultibase": "u7ljnAxKdp7YVqJvcMU9GtnmrMc1XZztXHsTsZ2LsmGJ67SsdbmNc
-    S2SDs0daEPfhVXgODk0IVrgguJ-TJACHyXYa9Ae8DaxcvRy89KLgmWsyOOJn2oY7vCE2gt
-    JoebMJiQsdbmNcS2SDs0daEPfhVXgODk0IVrgguJ-TJACHyXYa9Ae8DaxcvRy89KLgm"
+  "publicKeyMultibase": "zUC7EK3ZakmukHhuncwkbySmomv3FmrkmS36E4Ks5rsb6VQSRpoCrx6
+  Hb8e2Nk6UvJFSdyw9NK1scFXJp21gNNYFjVWNgaqyGnkyhtagagCpQb5B7tagJu3HDbjQ8h
+  5ypoHjwBb"
 }
           </pre>
 
-          <pre class="example" title="A BLS12-381 public key containing the
-            G1 and G2 values, encoded as a Multikey in a controller document">
+          <pre class="example" title="A BLS12-381 G2 group public key,
+          encoded as a Multikey in a controller document">
 {
   "@context": [
     "https://www.w3.org/ns/did/v1",
@@ -360,9 +346,9 @@ value.
     "id": "https://example.com/issuer/123#key-1",
     "type": "Multikey",
     "controller": "https://example.com/issuer/123",
-    "publicKeyMultibase": "u7ljnAxKdp7YVqJvcMU9GtnmrMc1XZztXHsTsZ2LsmGJ67SsdbmNc
-      S2SDs0daEPfhVXgODk0IVrgguJ-TJACHyXYa9Ae8DaxcvRy89KLgmWsyOOJn2oY7vCE2gt
-      JoebMJiQsdbmNcS2SDs0daEPfhVXgODk0IVrgguJ-TJACHyXYa9Ae8DaxcvRy89KLgm"
+    "publicKeyMultibase": "zUC7EK3ZakmukHhuncwkbySmomv3FmrkmS36E4Ks5rsb6VQSRpoCr
+    x6Hb8e2Nk6UvJFSdyw9NK1scFXJp21gNNYFjVWNgaqyGnkyhtagagCpQb5B7tagJu3HDbjQ8h
+    5ypoHjwBb"
   }]
 }
           </pre>
