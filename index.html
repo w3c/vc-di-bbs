@@ -102,6 +102,13 @@
             status:   "Working Draft",
             publisher:  "W3C Verifiable Credentials Working Group"
           },
+          "DI-ECDSA": {
+              title:    "The Elliptic Curve Digital Signature Algorithm Cryptosuites v1.0",
+              href:     "https://www.w3.org/TR/vc-di-ecdsa/",
+              authors:  ["David Longley", "Manu Sporny", "Marty Reed"],
+              status:   "WD",
+              publisher:  "W3C Verifiable Credentials Working Group"
+          },
           "JSON-LD-FRAMING": {
             title:    "JSON-LD 1.1 Framing",
             href:     "https://www.w3.org/TR/json-ld11-framing",
@@ -424,6 +431,12 @@ by default, and abort processing upon detection.
 
       <section>
         <h3>Selective Disclosure Functions</h3>
+
+        <section>
+          <h4>createShuffledIdLabelMapFunction</h4>
+          <p class="issue">TODO: write details</p>
+        </section>
+
         <p class="issue">
 TODO: Fill in after section <a href="#bbs-2023-functions"></a> is completed.
         </p>
@@ -468,6 +481,73 @@ proof serialization algorithm</a> is defined in Section
           </p>
         </section>
 
+        <section>
+          <h4>Base Proof Transformation (bbs-2023)</h4>
+
+          <p>
+The following algorithm specifies how to transform an unsecured input document
+into a transformed document that is ready to be provided as input to the
+hashing algorithm in Section <a href="#base-proof-hashing-bbs-2023"></a>.
+          </p>
+
+          <p>
+Required inputs to this algorithm are an
+<a data-cite="vc-data-integrity#dfn-unsecured-data-document">
+unsecured data document</a> (<var>unsecuredDocument</var>) and
+transformation options (<var>options</var>). The
+transformation options MUST contain a type identifier for the
+<a data-cite="vc-data-integrity#dfn-cryptosuite">
+cryptographic suite</a> (<var>type</var>), a cryptosuite
+identifier (<var>cryptosuite</var>), and a verification method
+(<var>verificationMethod</var>). The transformation options MUST contain an
+array of mandatory JSON pointers (<var>mandatoryPointers</var>) and MAY contain
+additional options, such as a JSON-LD document loader. A <em>transformed data
+document</em> is produced as output. Whenever this algorithm encodes strings, it
+MUST use UTF-8 encoding.
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Initialize `hmac` to an HMAC API using a locally generated and exportable HMAC
+key. The HMAC uses the same hash algorithm used in the signature algorithm,
+i.e., SHAKE-256.
+            </li>
+            <li>
+Initialize `labelMapFactoryFunction` to the result of calling the
+`createShuffledIdLabelMapFunction` algorithm passing `hmac` as `HMAC`.
+            </li>
+            <li>
+Initialize `groupDefinitions` to a map with an entry with a key of the string
+"mandatory" and a value of <var>mandatoryPointers</var>.
+            </li>
+            <li>
+Initialize `groups` to the result of calling the algorithm in
+<a href="https://www.w3.org/TR/vc-di-ecdsa/#canonicalizeandgroup">Section 3.3.16
+canonicalizeAndGroup</a> of the [[DI-ECDSA]] specification, passing
+`labelMapFactoryFunction`,
+`groupDefinitions`, `unsecuredDocument` as `document`, and any custom JSON-LD
+API options. Note: This step transforms the document into an array of canonical
+N-Quads whose order has been shuffled based on 'hmac' applied blank node
+identifiers, and groups
+the N-Quad strings according to selections based on JSON pointers.
+            </li>
+            <li>
+Initialize `mandatory` to the values in the `groups.mandatory.matching` map.
+            </li>
+            <li>
+Initialize `nonMandatory` to the values in the `groups.mandatory.nonMatching`
+map.
+            </li>
+            <li>
+Initialize `hmacKey` to the result of exporting the HMAC key from `hmac`.
+            </li>
+            <li>
+Return an object with "mandatoryPointers" set to `mandatoryPointers`,
+"mandatory" set to `mandatory`, "nonMandatory" set to `nonMandatory`,
+and "hmacKey" set to `hmacKey`.
+            </li>
+          </ol>
+        </section>
 
       </section>
 
