@@ -354,410 +354,71 @@ key. Implementations of this specification will raise errors in the event of a
           </pre>
         </section>
       </section>
-    <section>
-      <h2>Proof Representations</h2>
-
-      <p>
-This suite relies on detached digital signatures represented using [[MULTIBASE]]
-and [[?MULTICODEC]].
-      </p>
 
       <section>
-        <h4>DataIntegrityProof</h4>
+        <h2>Proof Representations</h2>
 
         <p>
+This suite relies on detached digital signatures represented using [[MULTIBASE]]
+and [[?MULTICODEC]].
+        </p>
+
+        <section>
+          <h4>DataIntegrityProof</h4>
+
+          <p>
 The `verificationMethod` property of the proof MUST be a URL.
 Dereferencing the `verificationMethod` MUST result in an object
 containing a `type` property with the value set to
 `Multikey`.
-        </p>
+          </p>
 
-        <p>
+          <p>
 The `type` property of the proof MUST be `DataIntegrityProof`.
-        </p>
-        <p>
+          </p>
+          <p>
 The `cryptosuite` property of the proof MUST be `bbs-2023`.
-        </p>
-        <p>
+          </p>
+          <p>
 The `created` property of the proof MUST be an [[XMLSCHEMA11-2]]
 formatted date string.
-        </p>
-        <p>
+          </p>
+          <p>
 The `proofPurpose` property of the proof MUST be a string, and MUST
 match the verification relationship expressed by the verification method
 `controller`.
-        </p>
-        <p>
+          </p>
+          <p>
 The value of the `proofValue` property of the proof MUST be an BBS signature or
 BBS proof produced according to [[CFRG-BBS-SIGNATURE]] then serialized and encoded
 according to procedures in section <a href="#algorithms"></a>.
-        </p>
+          </p>
+        </section>
       </section>
+
     </section>
-  </section>
-</section>
-
-  <section>
-    <h2>Algorithms</h2>
-
-    <p>
-The following section describes multiple Data Integrity cryptographic suites
-that utilize the BBS Signature Algorithm [[CFRG-BBS-SIGNATURE]].
-    </p>
 
     <section>
-    <h3>bbs-signature-2023</h3>
-
-    <p>
-The `bbs-signature-2023` cryptographic suite takes an input document, canonicalizes
-the document using the Universal RDF Dataset Canonicalization Algorithm
-[[RDF-CANON]], and then cryptographically hashes and signs the output
-resulting in the production of a data integrity proof. The algorithms in this
-section also include the verification of such a data integrity proof.
-    </p>
-
-    <section>
-      <h2>Add Proof </h2>
+      <h2>Algorithms</h2>
 
       <p>
-To generate a proof, the algorithm in
-<a href="https://www.w3.org/TR/vc-data-integrity/#add-proof">
-Section 4.1: Add Proof</a> in the Data Integrity
-[[VC-DATA-INTEGRITY]] specification MUST be executed.
-For that algorithm, the cryptographic suite specific
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-transformation-algorithm">
-transformation algorithm</a> is defined in Section
-<a href="#transformation-bbs-signature-2023"></a>, the
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-hashing-algorithm">
-hashing algorithm</a> is defined in Section <a href="#hashing-bbs-signature-2023"></a>,
-and the
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-proof-serialization-algorithm">
-proof serialization algorithm</a> is defined in Section
-<a href="#proof-serialization-bbs-signature-2023"></a>.
+The following algorithms describe how to use verifiable credentials with
+the BBS Signature Scheme [[CFRG-BBS-SIGNATURE]].
       </p>
+    </section>
+
+
+    <section>
+      <h2>Privacy Considerations</h2>
+      <p class="issue">TODO: We need to add a complete list of privacy
+      considerations.</p>
     </section>
 
     <section>
-      <h2>Verify Proof </h2>
-
-      <p>
-To verify a proof, the algorithm in
-<a href="https://www.w3.org/TR/vc-data-integrity/#verify-proof">
-Section 4.2: Verify Proof</a> in the Data Integrity
-[[VC-DATA-INTEGRITY]] specification MUST be executed.
-For that algorithm, the cryptographic suite specific
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-transformation-algorithm">
-transformation algorithm</a> is defined in Section
-<a href="#transformation-bbs-signature-2023"></a>, the
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-hashing-algorithm">
-hashing algorithm</a> is defined in Section <a href="#hashing-bbs-signature-2023"></a>,
-and the
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-proof-serialization-algorithm">
-proof verification algorithm</a> is defined in Section
-<a href="#proof-verification-bbs-signature-2023"></a>.
-      </p>
+      <h2>Security Considerations</h2>
+      <p class="issue">TODO: We need to add a complete list of security
+      considerations.</p>
     </section>
-
-    <section id="transformation-bbs-signature-2023">
-      <h3>Transformation </h3>
-
-      <p>
-The following algorithm specifies how to transform an unsecured input document
-into a transformed document that is ready to be provided as input to the
-hashing algorithm in Section <a href="#hashing-bbs-signature-2023"></a>.
-      </p>
-
-
-Required inputs to this algorithm are an
-unsecured data document (<code>unsecuredDocument</code>) and
-<a data-cite="VC-DATA-INTEGRITY#transformations">
-transformation options</a> (<code>options</code>). The
-transformation options MUST contain a type identifier for the
-<a data-cite="VC-DATA-INTEGRITY#cryptographic-suites">
-cryptographic suite</a> (<code>type</code>) and a cryptosuite
-identifier (<code>cryptosuite</code>). A <em>transformed data document</em> is
-produced as output. Whenever this algorithm encodes strings, it MUST use UTF-8
-encoding.
-      </p>
-
-      <ol class="algorithm">
-        <li>
-If <code>options</code>.<code>type</code> is not set to the string
-`DataIntegrityProof` and <code>options</code>.<code>cryptosuite</code> is not
-set to the string `bbs-signature-2023` then a `PROOF_TRANSFORMATION_ERROR` MUST be
-raised.
-        </li>
-        <li>
-Let <code>canonicalDocument</code> be the result of applying the
-Universal RDF Dataset Canonicalization Algorithm
-[[RDF-CANON]] to the <code>unsecuredDocument</code>.
-        </li>
-        <li>
-Set <code>output</code> to the value of <code>canonicalDocument</code>.
-        </li>
-        <li>
-Return <code>canonicalDocument</code> as the <em>transformed data document</em>.
-        </li>
-      </ol>
-    </section>
-
-    <section id="hashing-bbs-signature-2023">
-      <h3>Hashing </h3>
-
-      <p>
-The following algorithm specifies how to cryptographically hash a
-<em>transformed data document</em> and <em>proof configuration</em>
-into cryptographic hash data that is ready to be provided as input to the
-algorithms in Section <a href="#proof-serialization-bbs-signature-2023"></a> or
-Section <a href="#proof-verification-bbs-signature-2023"></a>.
-      </p>
-
-      <p>
-The required inputs to this algorithm are a <em>transformed data document</em>
-(<code>transformedDocument</code>) and <em>proof configuration</em>
-(<code>proofConfig</code>). A single <em>hash data</em> value represented as
-series of bytes is produced as output.
-      </p>
-
-      <ol class="algorithm">
-        <li >
-<p class="issue">
-  Specify how each item in the canonicalized input is hashed and included a set
-that is then signed over in <a href="#proof-serialization-bbs-signature-2023"></a>.
-</p>
-        </li>
-        <li>
-<p class="issue">
-  Specify how <code>proofConfigHash</code> is generated.
-</p>
-
-        </li>
-        <li >
-<p class="issue">
-  Specify how <code>hashData</code> is composed in a way that can be signed over in
-  <a href="#proof-serialization-bbs-signature-2023"></a>.
-</p>
-
-        </li>
-        <li>
-Return <code>hashData</code> as the <em>hash data</em>.
-        </li>
-      </ol>
-
-    </section>
-
-    <section>
-      <h3>Proof Configuration </h3>
-
-      <p>
-The following algorithm specifies how to generate a
-<em>proof configuration</em> from a set of <em>proof options</em>
-that is used as input to the <a href="#hashing-bbs-signature-2023">proof hashing algorithm</a>.
-      </p>
-
-      <p>
-The required inputs to this algorithm are <em>proof options</em>
-(<code>options</code>). The <em>proof options</em> MUST contain a type identifier
-for the
-<a data-cite="VC-DATA-INTEGRITY#cryptographic-suites">
-cryptographic suite</a> (<code>type</code>) and MUST contain a cryptosuite
-identifier (<code>cryptosuite</code>). A <em>proof configuration</em>
-object is produced as output.
-      </p>
-
-      <ol class="algorithm">
-        <li>
-Let <code>proofConfig</code> be an empty object.
-        </li>
-        <li>
-Set <code>proofConfig</code>.<code>type</code> to
-<code>options</code>.<code>type</code>.
-        </li>
-        <li>
-If <code>options</code>.<code>cryptosuite</code> is set, set
-<code>proofConfig</code>.<code>cryptosuite</code> to its value.
-        </li>
-        <li>
-If <code>options</code>.<code>type</code> is not set to `DataIntegrityProof` and
-<code>proofConfig</code>.<code>cryptosuite</code> is not set to `bbs-signature-2023`, an
-`INVALID_PROOF_CONFIGURATION` error MUST be raised.
-        </li>
-        <li>
-Set <code>proofConfig</code>.<code>created</code> to
-<code>options</code>.<code>created</code>. If the value is not a valid
-[[XMLSCHEMA11-2]] datetime, an `INVALID_PROOF_DATETIME` error MUST be raised.
-        </li>
-        <li>
-Set <code>proofConfig</code>.<code>verificationMethod</code> to
-<code>options</code>.<code>verificationMethod</code>.
-        </li>
-        <li>
-Set <code>proofConfig</code>.<code>proofPurpose</code> to
-<code>options</code>.<code>proofPurpose</code>.
-        </li>
-        <li>
-Return <code>proofConfig</code>.
-        </li>
-      </ol>
-
-    </section>
-
-    <section id="proof-serialization-bbs-signature-2023">
-      <h3>Proof Serialization </h3>
-
-      <p>
-The following algorithm specifies how to serialize a digital signature from
-a set of cryptographic hash data. This
-algorithm is designed to be used in conjunction with the algorithms defined
-in the Data Integrity [[VC-DATA-INTEGRITY]] specification,
-<a data-cite="VC-DATA-INTEGRITY#algorithms">
-Section 4: Algorithms</a>. Required inputs are
-cryptographic hash data (<code>hashData</code>) and
-<em>proof options</em> (<code>options</code>). The
-<em>proof options</em> MUST contain a type identifier for the
-<a data-cte="VC-DATA-INTEGRITY#cryptographic-suites">
-cryptographic suite</a> (<code>type</code>) and MAY contain a cryptosuite
-identifier (<code>cryptosuite</code>). A single <em>digital proof</em> value
-represented as series of bytes is produced as output.
-      </p>
-
-      <ol class="algorithm">
-        <li>
-Let <code>privateKeyBytes</code> be the result of retrieving the
-private key bytes associated with the
-<code>options</code>.<code>verificationMethod</code> value as described in the
-Data Integrity [[VC-DATA-INTEGRITY]] specification.
-        </li>
-        <li >
-<p class="issue">
-  Specify how <code>proofBytes</code> is generated and consumed by Section
-<a href="#proof-verification-bbs-signature-2023"></a>.
-</p>
-        </li>
-        <li>
-Return <code>proofBytes</code> as the <em>digital proof</em>.
-        </li>
-      </ol>
-
-    </section>
-
-    <section id="proof-verification-bbs-signature-2023">
-      <h3>Proof Verification </h3>
-
-      <p>
-The following algorithm specifies how to verify a digital signature from
-a set of cryptographic hash data. This
-algorithm is designed to be used in conjunction with the algorithms defined
-in the Data Integrity [[VC-DATA-INTEGRITY]] specification,
-<a data-cite="VC-DATA-INTEGRITY#algorithms">
-Section 4: Algorithms</a>. Required inputs are
-cryptographic hash data (<code>hashData</code>),
-a digital signature (<code>proofBytes</code>) and
-proof options (<code>options</code>). A <em>verification result</em>
-represented as a boolean value is produced as output.
-      </p>
-
-      <ol class="algorithm">
-        <li>
-Let <code>publicKeyBytes</code> be the result of retrieving the
-public key bytes associated with the
-<code>options</code>.<code>verificationMethod</code> value as described in the
-Data Integrity [[VC-DATA-INTEGRITY]] specification,
-<a data-cite="VC-DATA-INTEGRITY#algorithms">
-Section 4: Retrieving Cryptographic Material</a>.
-        </li>
-        <li>
-Let <code>verificationResult</code> be the result of applying the verification
-algorithm defined in the BBS Signature specification [[CFRG-BBS-SIGNATURE]],
-with <code>hashData</code> as the data to be verified against the
-<code>proofBytes</code> using the public key specified by
-<code>publicKeyBytes</code>.
-        </li>
-        <li>
-Return <code>verificationResult</code> as the <em>verification result</em>.
-        </li>
-      </ol>
-
-    </section>
-  </section>
-  <section>
-    <h3>bbs-proof-2023</h3>
-    <p>
-      The `bbs-proof-2023` cryptographic suite takes an input document,
-      that has previously been secured using `bbs-signature-2023`,
-      derives from this original document a set of messages to be disclosed
-      representing a redacted form of the original document, and
-      applies the <a data-cite="CFRG-BBS-SIGNATURE#name-proofgen">Proof Gen</a>
-      algorithm to produce a proof of knowledge for the disclosed messages.
-      The result is a new `proof`, containing the following attributes:
-    </p>
-
-
-    <ul>
-      <li>
-        `generators`
-      </li>
-      <li>
-        `disclosed`
-      </li>
-      <li>
-        `proofValue`
-      </li>
-    </ul>
-    <p>This operation can be applied by any
-      <a data-cite="VC-DATA-MODEL-2#dfn-holders">holder</a> of a `bbs-signature-2023`
-      secured document, and as such, `bbs-proof-2023` MUST be implemented with
-      awareness of the mandatory to disclose fields the original
-      <a data-cite="VC-DATA-MODEL-2#dfn-issuers">issuer</a> required.
-    </p>
-    <p class="issue" data-number="3"></p>
-    <section>
-      <h3>Add Proof </h3>
-      <p class="issue" data-number="81"></p>
-    </section>
-    <section>
-      <h3>Verify Proof </h3>
-      <p class="issue" data-number="82"></p>
-    </section>
-    <section>
-      <h3>Transformation </h3>
-      <p class="issue" data-number="83"></p>
-    </section>
-    <section>
-      <h3>Hashing </h3>
-      <p class="issue" data-number="84"></p>
-    </section>
-    <section>
-      <h3>Proof Configuration </h3>
-      <p class="issue" data-number="85"></p>
-    </section>
-    <section>
-      <h3>Proof Serialization </h3>
-      <p class="issue" data-number="85"></p>
-    </section>
-    <section>
-      <h3>Proof Verification </h3>
-      <p class="issue" data-number="85"></p>
-    </section>
-
-  </section>
-</section>
-
-
-
-<section>
-  <h2>Privacy Considerations</h2>
-  <p class="issue">TODO: We need to add a complete list of privacy
-  considerations.</p>
-</section>
-
-<section>
-  <h2>Security Considerations</h2>
-  <p class="issue">TODO: We need to add a complete list of security
-  considerations.</p>
-</section>
-
-
 
     <section class="appendix">
       <h2>Acknowledgements</h2>
