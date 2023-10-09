@@ -403,7 +403,23 @@ according to procedures in section <a href="#algorithms"></a>.
 
       <p>
 The following algorithms describe how to use verifiable credentials with
-the BBS Signature Scheme [[CFRG-BBS-SIGNATURE]].
+the BBS Signature Scheme [[CFRG-BBS-SIGNATURE]]. When using the BBS signature
+scheme the SHAKE-256 variant SHOULD be used.
+      </p>
+
+      <p>
+Implementations SHOULD fetch and cache <a>verification method</a> information as
+early as possible when adding or verifying proofs. Parameters passed to
+functions in this section use information from the <a>verification
+method</a> — such as the public key size — to determine function parameters — such
+as the cryptographic hashing algorithm.
+      </p>
+
+      <p class="advisement">
+When the RDF Dataset Canonicalization Algorithm [[RDF-CANON]] is used,
+implementations of that algorithm will detect
+<a data-cite="RDF-CANON#dataset-poisoning">dataset poisoning</a>
+by default, and abort processing upon detection.
       </p>
 
       <section>
