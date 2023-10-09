@@ -444,6 +444,9 @@ TODO: Fill in after section <a href="#bbs-2023-functions"></a> is completed.
 
       <section>
         <h3>bbs-2023 Functions</h3>
+        <section>
+          <h4>serializeBaseProofValue</h4>
+        </section>
         <p class="issue">
 TODO: Fill in after section <a href="#bbs-2023"></a> is completed.
         </p>
@@ -546,7 +549,6 @@ and "hmacKey" set to `hmacKey`.
           </ol>
         </section>
 
-
         <section>
           <h4>Base Proof Hashing (bbs-2023)</h4>
 
@@ -591,7 +593,6 @@ Return `hashData` as <em>hash data</em>.
           </ol>
 
         </section>
-
 
         <section>
           <h4>Base Proof Configuration (bbs-2023)</h4>
@@ -654,6 +655,60 @@ Universal RDF Dataset Canonicalization Algorithm
             </li>
             <li>
 Return <var>canonicalProofConfig</var>.
+            </li>
+          </ol>
+
+        </section>
+
+
+        <section>
+          <h4>Base Proof Serialization (bbs-2023)</h4>
+
+          <p>
+The following algorithm specifies how to create a base proof; called by an
+issuer of an BBS-protected Verifiable Credential. The base proof is to be
+given only to the holder, who is responsible for generating a derived proof from
+it, exposing only selectively disclosed details in the proof to a verifier. This
+algorithm is designed to be used in conjunction with the algorithms defined
+in the Data Integrity [[VC-DATA-INTEGRITY]] specification,
+<a data-cite="vc-data-integrity#algorithms">
+Section 4: Algorithms</a>. Required inputs are
+cryptographic hash data (<var>hashData</var>) and
+<em>proof options</em> (<var>options</var>). The
+<em>proof options</em> MUST contain a type identifier for the
+<a data-cite="vc-data-integrity#dfn-cryptosuite">
+cryptographic suite</a> (<var>type</var>) and MAY contain a cryptosuite
+identifier (<var>cryptosuite</var>). A single <em>digital proof</em> value
+represented as series of bytes is produced as output.
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Initialize `proofHash`, `mandatoryPointers`, `mandatoryHash`, `nonMandatory`,
+and `hmacKey` to the values associated with their property names in
+<var>hashData</var>.
+            </li>
+            <li>
+Initialize `bbsHeader` to the concatenation of `proofHash` and `mandatoryHash` in
+that order.
+            </li>
+            <li>
+Initialize `bbsMessages` to an array of byte arrays obtained from the
+UTF-8 encoding of the the values in the `nonMandatory` array.
+            </li>
+            <li>
+Compute the `bbsSignature` using the `Sign` procedure of [[CFRG-BBS-Signature]]
+with appropriate key material and `bbsHeader` for the `header` and `bbsMessages`
+for the `messages`
+            </li>
+            <li>
+Initialize `proofValue to the result of calling the algorithm in Section
+<a href="#serializebaseproofvalue"></a>, passing `bbsSignature`,
+`hmacKey`, and `mandatoryPointers` as parameters
+to the algorithm.
+            </li>
+            <li>
+Return `proofValue` as <em>digital proof</em>.
             </li>
           </ol>
 
