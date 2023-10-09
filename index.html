@@ -483,13 +483,11 @@ proof serialization algorithm</a> is defined in Section
 
         <section>
           <h4>Base Proof Transformation (bbs-2023)</h4>
-
           <p>
 The following algorithm specifies how to transform an unsecured input document
 into a transformed document that is ready to be provided as input to the
 hashing algorithm in Section <a href="#base-proof-hashing-bbs-2023"></a>.
           </p>
-
           <p>
 Required inputs to this algorithm are an
 <a data-cite="vc-data-integrity#dfn-unsecured-data-document">
@@ -505,7 +503,6 @@ additional options, such as a JSON-LD document loader. A <em>transformed data
 document</em> is produced as output. Whenever this algorithm encodes strings, it
 MUST use UTF-8 encoding.
           </p>
-
           <ol class="algorithm">
             <li>
 Initialize `hmac` to an HMAC API using a locally generated and exportable HMAC
@@ -548,6 +545,53 @@ and "hmacKey" set to `hmacKey`.
             </li>
           </ol>
         </section>
+
+
+        <section>
+          <h4>Base Proof Hashing (bbs-2023)</h4>
+
+          <p>
+The following algorithm specifies how to cryptographically hash a
+<em>transformed data document</em> and <em>proof configuration</em>
+into cryptographic hash data that is ready to be provided as input to the
+algorithms in Section <a href="#base-proof-serialization-bbs-2023"></a>.
+          </p>
+
+          <p>
+The required inputs to this algorithm are a <em>transformed data document</em>
+(<var>transformedDocument</var>) and <em>canonical proof configuration</em>
+(<var>canonicalProofConfig</var>). A <em>hash data</em> value represented
+as an object is produced as output.
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Initialize `proofHash` to the result of calling the RDF Dataset Canonicalization
+algorithm [[RDF-CANON]] on `canonicalProofConfig` and then cryptographically
+hashing the result using the same hash that is used by the signature algorithm,
+i.e., SHAKE-256. Note: This step can be performed in parallel;
+it only needs to be completed before this algorithm terminates as the result is
+part of the return value.
+            </li>
+            <li>
+Initialize `mandatoryHash` to the result of calling the the algorithm in
+<a href="https://www.w3.org/TR/vc-di-ecdsa/#hashmandatorynquads">Section 3.3.17
+hashMandatoryNQuads</a> of the [[DI-ECDSA]] specification, passing
+<var>transformedDocument</var>.`mandatory` and utilizing the SHAKE-256
+algorithm.
+            </li>
+            <li>
+Initialize `hashData` as a deep copy of <var>transformedDocument</var> and
+add `proofHash` as "proofHash" and `mandatoryHash` as "mandatoryHash" to that
+object.
+            </li>
+            <li>
+Return `hashData` as <em>hash data</em>.
+            </li>
+          </ol>
+
+        </section>
+
 
       </section>
 
