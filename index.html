@@ -355,30 +355,32 @@ key. Implementations of this specification will raise errors in the event of a
         </section>
       </section>
     <section>
-      <h2>Data Integrity Proof</h2>
+      <h2>Proof Representations</h2>
+
+      <p>
+This suite relies on detached digital signatures represented using [[MULTIBASE]]
+and [[?MULTICODEC]].
+      </p>
 
       <section>
-        <h3>bbs-signature-2023</h3>
-<p>
-  This suite relies on detached digital signatures represented using [[MULTIBASE]].
-</p>
+        <h4>DataIntegrityProof</h4>
 
         <p>
 The `verificationMethod` property of the proof MUST be a URL.
 Dereferencing the `verificationMethod` MUST result in an object
 containing a `type` property with the value set to
-`Multikey` or `JsonWebKey`.
+`Multikey`.
         </p>
 
         <p>
 The `type` property of the proof MUST be `DataIntegrityProof`.
         </p>
         <p>
-The `cryptosuite` property of the proof MUST be `bbs-signature-2023`.
+The `cryptosuite` property of the proof MUST be `bbs-2023`.
         </p>
         <p>
 The `created` property of the proof MUST be an [[XMLSCHEMA11-2]]
-formated date string.
+formatted date string.
         </p>
         <p>
 The `proofPurpose` property of the proof MUST be a string, and MUST
@@ -386,104 +388,10 @@ match the verification relationship expressed by the verification method
 `controller`.
         </p>
         <p>
-The `proofValue` property of the proof MUST be a detached BBS Signature
-produced according to <a data-cite="CFRG-BBS-SIGNATURE#name-sign">Sign</a>, encoded according to
-[[MULTIBASE]] using the base64 base encoding with no padding.
+The value of the `proofValue` property of the proof MUST be an BBS signature or
+BBS proof produced according to [[CFRG-BBS-SIGNATURE]] then serialized and encoded
+according to procedures in section <a href="#algorithms"></a>.
         </p>
-
-        <pre class="example highlight" style="overflow-x:
-          auto; white-space: pre-wrap; word-wrap: break-word;"
-          title="An BBS digital signature expressed as a DataIntegrityProof">
-{
-  "@context": [
-    {"title": "https://schema.org/title"},
-    "https://w3id.org/security/data-integrity/v1"
-  ],
-  "title": "Hello world!",
-  "proof": {
-    "type": "DataIntegrityProof",
-    "cryptosuite": "bbs-signature-2023",
-    "created": "2020-11-05T19:23:24Z",
-    "verificationMethod": "https://example.com/issuer/123#key-2",
-    "proofPurpose": "assertionMethod",
-    "proofValue": "uU6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdB
-      Dd/l6tIYkTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDB
-      5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1o
-      AhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIM
-      0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6oba
-      Enaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYG
-      nu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBk
-      Oh6ojlvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/aGQcoD3Tgmy+z0hN+4elMky1RnJEhCuN
-      QNsEg"
-  }
-}
-        </pre>
-
-      </section>
-      <section>
-        <h3>bbs-proof-2023</h3>
-<p>
-  This suite relies on detached digital signatures represented using [[MULTIBASE]].
-</p>
-
-        <p>
-The `verificationMethod` property of the proof MUST be a URL.
-Dereferencing the `verificationMethod` MUST result in an object
-containing a `type` property with the value set to
-`Multikey` or `JsonWebKey`.
-        </p>
-
-        <p>
-The `type` property of the proof MUST be `DataIntegrityProof`.
-        </p>
-        <p>
-The `cryptosuite` property of the proof MUST be `bbs-proof-2023`.
-        </p>
-        <p>
-The `created` property of the proof MUST be an [[XMLSCHEMA11-2]]
-formated date string.
-        </p>
-        <p>
-The `proofPurpose` property of the proof MUST be a string, and MUST
-match the verification relationship expressed by the verification method
-`controller`.
-        </p>
-        <p>
-The `proofValue` property of the proof MUST be a detached BBS Signature
-produced according to <a data-cite="CFRG-BBS-SIGNATURE#name-proofgen">ProofGen</a>,
-encoded according to [[MULTIBASE]] using the base64 base encoding with no padding.
-        </p>
-
-        <pre class="example highlight" style="overflow-x:
-          auto; white-space: pre-wrap; word-wrap: break-word;"
-          title="An BBS zero-knowledge proof-of-knowledge of a signature expressed as a DataIntegrityProof">
-{
-  "@context": [
-    {"title": "https://schema.org/title"},
-    "https://w3id.org/security/data-integrity/v1"
-  ],
-  "title": "Hello world!",
-  "proof": {
-    "type": "DataIntegrityProof",
-    "cryptosuite": "bbs-proof-2023",
-    "created": "2020-11-05T19:23:24Z",
-    "verificationMethod": "https://example.com/issuer/123#key-2",
-    "proofPurpose": "assertionMethod",
-    "generators": 3,
-    "disclosed": [ 2 ],
-    "proofValue": "uU6i3dTz5yFfWJ8zgsamuyZa4yAHPm75tUOOXddR6krCvCYk77sbCOuEVcdB
-      Dd/l6tIYkTTbA3pmDa6Qia/JkOnIXDLmoBz3vsi7L5t3DWySI/VLmBqleJ/Tbus5RoyiDERDB
-      5rnACXlnOqJ/U8yFQFtcp/mBCc2FtKNPHae9jKIv1dm9K9QK1F3GI1AwyGoUfjLWrkGDObO1o
-      AhpEd0+et+qiOf2j8p3MTTtRRx4Hgjcl0jXCq7C7R5/nLpgimHAAAAdAx4ouhMk7v9dXijCIM
-      0deicn6fLoq3GcNHuH5X1j22LU/hDu7vvPnk/6JLkZ1xQAAAAIPd1tu598L/K3NSy0zOy6oba
-      Enaqc1R5Ih/6ZZgfEln2a6tuUp4wePExI1DGHqwj3j2lKg31a/6bSs7SMecHBQdgIYHnBmCYG
-      nu/LZ9TFV56tBXY6YOWZgFzgLDrApnrFpixEACM9rwrJ5ORtxAAAAAgE4gUIIC9aHyJNa5TBk
-      Oh6ojlvQkMVLXa/vEl+3NCLXblxjgpM7UEMqBkE9/aGQcoD3Tgmy+z0hN+4elMky1RnJEhCuN
-      QNsEg"
-  }
-}
-        </pre>
-
       </section>
     </section>
   </section>
