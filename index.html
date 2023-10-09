@@ -254,10 +254,29 @@ the BBS `verifyProof` function to validate the credential.
       </section>
 
 
+
       <section id="conformance">
+        <p>
+A <dfn>conforming proof</dfn> is any concrete expression of the data model
+that complies with the normative statements in this specification. Specifically,
+all relevant normative statements in Sections
+<a href="#data-model"></a> and <a href="#algorithms"></a>
+of this document MUST be enforced.
+        </p>
 
-      <p class="issue">TODO: Add paragraph</p>
-
+        <p>
+A <dfn class="lint-ignore">conforming processor</dfn> is any algorithm realized
+as software and/or hardware that generates or consumes a
+<a>conforming proof</a>. Conforming processors MUST produce errors when
+non-conforming documents are consumed.
+        </p>
+	<p>
+This document contains examples of JSON and JSON-LD data. Some of these examples
+are invalid JSON, as they include features such as inline comments (`//`)
+explaining certain portions and ellipses (`...`) indicating the omission of
+information that is irrelevant to the example. Such parts need to be
+removed if implementers want to treat the examples as valid JSON or JSON-LD.
+        </p>
       </section>
     </section>
 
