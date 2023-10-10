@@ -453,6 +453,9 @@ TODO: Fill in after section <a href="#bbs-2023-functions"></a> is completed.
         <section>
           <h4>serializeDerivedProofValue</h4>
         </section>
+        <section>
+          <h4>createVerifyData</h4>
+        </section>
         <p class="issue">
 TODO: Fill in after section <a href="#bbs-2023"></a> is completed.
         </p>
@@ -761,6 +764,45 @@ Return `revealDocument` as the <em>selectively revealed document</em>.
 
         </section>
 
+
+        <section>
+          <h4>Verify Derived Proof (bbs-2023)</h4>
+
+          <p>
+The following algorithm attempts verification of a `bbs-2023` derived
+proof. This algorithm is called by a verifier of an BBS-protected
+<a>verifiable credential</a>. The inputs include a JSON-LD document
+(<var>document</var>), an BBS disclosure proof (<var>proof</var>), and any
+custom JSON-LD API options, such as a document loader. A single boolean
+<em>verification result</em> value is produced as output.
+          </p>
+
+          <ol class="algorithm">
+            <!-- [bbsProof, labelMapCompressed, mandatoryIndexes, adjSelectedIndexes] -->
+            <li>
+Initialize `bbsProof`, `proofHash`, `mandatoryHash`, `selectedIndexes`, and
+`nonMandatory` to the values associated with their property
+names in the object returned when calling the algorithm in Section
+<a href="#createverifydata"></a>, passing the `document`, `proof`, and any
+custom JSON-LD API options, such as a document loader.
+            </li>
+            <li>
+Initialize `bbsHeader` to the concatenation of `proofHash` and `mandatoryHash`
+in that order. Initialized `disclosedMessages` to an array of byte arrays
+obtained from the UTF-8 encoding of the elements of the `nonMandatory` array.
+            </li>
+<!-- result = ProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes) -->
+            <li>
+Initialize `verificationResult` be the result of applying the verification
+algorithm `ProofVerify` of [[CFRG-BBS-SIGNATURE]]
+with `PK` the public key of the original issuer, `proof` set as `bbsProof`,
+`header` set as `bbsHeader`, `disclosed_messages` set as `disclosedMessages`,
+`ph` set as an empty byte array, and `disclosed_indexes` set as
+`selectiveIndexes`. Return `verificationResult` as <em>verification result</em>.
+            </li>
+          </ol>
+
+        </section>
 
       </section>
 
