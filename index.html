@@ -678,6 +678,30 @@ Return an object with properties matching `bbsProof`,  "verifierLabelMap" for `l
 
         <section>
           <h4>compressLabelMap</h4>
+          <p>
+The following algorithm compresses a label map. The required inputs are
+label map (<var>labelMap</var>). The output is a <em>compressed label map</em>.
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Initialize `map` to an empty map.
+            </li>
+            <li>
+For each entry (`k`, `v`) in `labelMap`:
+              <ol class="algorithm">
+                <li>
+Add an entry to `map` with a key that is a base-10 integer parsed from the
+characters following the "c14n" prefix in `k` and a value that is a base-10
+integer parsed from the characters following the "b" prefix in `v`.
+                </li>
+              </ol>
+            </li>
+            <li>
+Return `map` as <em>compressed label map</em>.
+            </li>
+          </ol>
+
         </section>
 
         <section>
