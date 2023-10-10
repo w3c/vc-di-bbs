@@ -740,8 +740,78 @@ starting with "u" and ending with the base64url-no-pad-encoded value of
           </ol>
 
         </section>
+
+        <section>
+          <h4>parseDerivedProofValue</h4>
+        </section>
+
         <section>
           <h4>createVerifyData</h4>
+
+          <p>
+The following algorithm creates the data needed to perform verification of an
+BBS-protected <a>verifiable credential</a>. The inputs include a JSON-LD
+document (<var>document</var>), a BBS disclosure proof (<var>proof</var>),
+and any custom JSON-LD API options, such as a document loader. A single
+<em>verify data</em> object value is produced as output containing the following
+fields: "bbsProof", "proofHash", "mandatoryHash", "selectedIndexes", and
+"nonMandatory".
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Initialize `proofHash` to the result of perform RDF Dataset Canonicalization
+[[RDF-CANON]] on the proof options, i.e., the proof  portion of the document
+with the `proofValue` removed. The hash used is the same as the one used in
+the signature algorithm, i.e., SHA-256 for a P-256 curve. Note: This step can be
+performed in parallel; it only needs to be completed before this algorithm needs
+to use the `proofHash` value.
+            </li>
+            <li>
+Initialize `bbsProof`, `labelMap`, `mandatoryIndexes`, and `selectiveIndexes` to
+ the values associated with their property names in the object returned when
+ calling the algorithm in Section
+<a href="#parsederivedproofvalue"></a>, passing `proofValue` from `proof`.
+            </li>
+            <li>
+Initialize `labelMapFactoryFunction` to the result of calling the
+"createLabelMapFunction" algorithm.
+            </li>
+            <li>
+Initialize `nquads` to the result of calling the "labelReplacementCanonicalize"
+algorithm of [[DI-ECDSA]], passing `document`, `labelMapFactoryFunction`, and
+any custom
+JSON-LD API options. Note: This step transforms the document into an array of
+canonical N-Quads with pseudorandom blank node identifiers based on `labelMap`.
+            </li>
+            <li>
+Initialize `mandatory` to an empty array.
+            </li>
+            <li>
+Initialize `nonMandatory` to an empty array.
+            </li>
+            <li>
+For each entry (`index`, `nq`) in `nquads`, separate the N-Quads into mandatory
+and non-mandatory categories:
+              <ol class="algorithm">
+                <li>
+If `mandatoryIndexes` includes `index`, add `nq` to `mandatory`.
+                </li>
+                <li>
+Otherwise, add `nq` to `nonMandatory`.
+                </li>
+              </ol>
+            </li>
+            <li>
+Initialize `mandatoryHash` to the result of calling the "hashMandatory"
+primitive, passing `mandatory`.
+            </li>
+            <li>
+Return an object with properties matching `baseSignature`, `proofHash`,
+`nonMandatory`, `mandatoryHash`, and `selectiveIndexes`.
+            </li>
+          </ol>
+
         </section>
         <p class="issue">
 TODO: Fill in after section <a href="#bbs-2023"></a> is completed.
