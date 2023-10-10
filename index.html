@@ -446,7 +446,6 @@ TODO: Fill in after section <a href="#bbs-2023-functions"></a> is completed.
         <h3>bbs-2023 Functions</h3>
         <section>
           <h4>serializeBaseProofValue</h4>
-
           <p>
 The following algorithm serializes the base proof value, including the
 BBS signature, HMAC key, and mandatory pointers.
@@ -678,7 +677,44 @@ Return an object with properties matching `bbsProof`,  "verifierLabelMap" for `l
         </section>
 
         <section>
+          <h4>compressLabelMap</h4>
+        </section>
+
+        <section>
           <h4>serializeDerivedProofValue</h4>
+
+          <p>
+The following algorithm serializes a derived proof value. The required inputs
+are a BBS proof (<var>bbsProof</var>),  a label map (<var>labelMap</var>),  an
+array of mandatory indexes (<var>mandatoryIndexes</var>) and an array of
+selective indexes (<var>selectiveIndexes</var>). A single <em>derived proof</em>
+value, serialized as a byte string, is produced as output.
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Initialize `compressedLabelMap` to the result of calling the algorithm in
+Section <a href="#compresslabelmap"></a>, passing `labelMap` as the parameter.
+            </li>
+            <li>
+Initialize a byte array, `proofValue`, that starts with the BBS disclosure
+proof header bytes `0xd9`, `0x5d`, and `0x03`.
+            </li>
+            <li>
+Initialize `components` to an array with four elements containing the values of:
+`bbsProof`, `compressedLabelMap`, `mandatoryIndexes` and `selectiveIndexes`.
+            </li>
+            <li>
+CBOR-encode `components` and append it to `proofValue`.
+            </li>
+            <li>
+Return the <em>derived proof</em> as a string with the
+multibase-base64url-no-pad-encoding of `proofValue`. That is, return a string
+starting with "u" and ending with the base64url-no-pad-encoded value of
+`proofValue`.
+            </li>
+          </ol>
+
         </section>
         <section>
           <h4>createVerifyData</h4>
