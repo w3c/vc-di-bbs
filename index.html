@@ -446,6 +446,38 @@ TODO: Fill in after section <a href="#bbs-2023-functions"></a> is completed.
         <h3>bbs-2023 Functions</h3>
         <section>
           <h4>serializeBaseProofValue</h4>
+
+          <p>
+The following algorithm serializes the base proof value, including the
+BBS signature, HMAC key, and mandatory pointers.
+The required inputs are a base signature <var>bbsSignature</var>,
+an HMAC key <var>hmacKey</var>, and an array of
+<var>mandatoryPointers</var>.
+A single <em>base proof</em> string value is produced as output.
+                      </p>
+
+                      <ol class="algorithm">
+                        <li>
+Initialize a byte array, `proofValue`, that starts with the BBS base proof
+header bytes 0xd9, 0x5d, and 0x02.
+                        </li>
+                        <li>
+Initialize `components` to an array with five elements containing the values of:
+`bbsSignature`, `hmacKey`, and `mandatoryPointers`.
+                        </li>
+                        <li>
+CBOR-encode `components` and append it to `proofValue`.
+                        </li>
+                        <li>
+Initialize `baseProof` to a string with the multibase-base64url-no-pad-encoding
+of `proofValue`. That is, return a string starting with "u" and ending with the
+base64url-no-pad-encoded value of `proofValue`.
+                        </li>
+                        <li>
+Return `baseProof` as <em>base proof</em>.
+                        </li>
+                      </ol>
+
         </section>
         <section>
           <h4>createDisclosureData</h4>
