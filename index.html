@@ -434,12 +434,68 @@ by default, and abort processing upon detection.
 
         <section>
           <h4>createShuffledIdLabelMapFunction</h4>
-          <p class="issue">TODO: write details</p>
+          <p>
+The following algorithm creates a label map factory function that uses an
+HMAC to shuffle canonical blank node identifiers. The required input is an HMAC
+(previously initialized with a secret key), <var>HMAC</var>. A function,
+<em>labelMapFactoryFunction</em>, is produced as output.
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Create a function, <var>labelMapFactoryFunction</var>, with one required input
+(a canonical node identifier map, <var>canonicalIdMap</var>), that will
+return a blank node identifier map, <em>bnodeIdMap</em>, as output. Set the
+function's implementation to:
+              <ol class="algorithm">
+                <li>
+Generate a new empty bnode identifier map, <em>bnodeIdMap</em>.
+                </li>
+                <li>
+For each map entry, <em>entry</em>, in <var>canonicalIdMap</var>:
+                  <ol class="algorithm">
+                    <li>
+HMAC the canonical identifier from the value in <em>entry</em> to get an HMAC
+digest, <em>digest</em>.
+                    </li>
+                    <li>
+Generate a new string value, <em>b64urlDigest</em>, and initialize it to "u"
+followed by appending a base64url-no-pad encoded version of the <em>digest</em>
+value.
+                    </li>
+                    <li>
+Add a new entry, <var>newEntry</var>, to <em>bnodeIdMap</em> using the key
+from <em>entry</em> and <em>b64urlDigest</em> as the value.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+Derived the shuffled mapping from the `bnodeIdMap` as follows:
+                  <ol class="algorithm">
+                    <li>
+Set `hmacIds` to be the sorted array of values from the `bnodeIdMap`, and set
+`bnodeKeys` to be the ordered array of keys from the `bnodeIdMap`.
+                    </li>
+                    <li>
+For each key in `bnodeKeys` replace the `bnodeIdMap` value for that key with the
+index position of the value in the `hmacIds` array prefixed by "b", i.e.,
+`bnodeIdMap.set(bkey, 'b' + hmacIds.indexOf(bnodeIdMap.get(bkey)))`
+                    </li>
+                  </ol>
+                </li>
+                <li>
+Return <em>bnodeIdMap</em>.
+                </li>
+              </ol>
+            </li>
+            <li>
+Return <var>labelMapFactoryFunction</var>.
+            </li>
+          </ol>
+
         </section>
 
-        <p class="issue">
-TODO: Fill in after section <a href="#bbs-2023-functions"></a> is completed.
-        </p>
+
       </section>
 
       <section>
@@ -885,9 +941,7 @@ Return an object with properties matching `baseSignature`, `proofHash`,
           </ol>
 
         </section>
-        <p class="issue">
-TODO: Fill in after section <a href="#bbs-2023"></a> is completed.
-        </p>
+
       </section>
 
       <section>
