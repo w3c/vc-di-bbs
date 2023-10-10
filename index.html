@@ -479,9 +479,171 @@ Return `baseProof` as <em>base proof</em>.
                       </ol>
 
         </section>
+
+        <section>
+          <h4>parseBaseProofValue</h4>
+        </section>
+
         <section>
           <h4>createDisclosureData</h4>
+
+          <p>
+The following algorithm creates data to be used to generate a derived proof. The
+inputs include a JSON-LD document (<var>document</var>), an BBS base proof
+(<var>proof</var>), an array of JSON pointers to use to selectively disclose
+statements (<var>selectivePointers</var>), and any custom JSON-LD API options,
+such as a document loader). A single object, <em>disclosure data</em>, is
+produced as output, which contains the "bbsProof", "labelMap",
+"mandatoryIndexes", "selectiveIndexes", and "revealDocument" fields.
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Initialize `bbsSignature`, `hmacKey`,  and
+`mandatoryPointers` to the values of the associated properties in the object
+returned when calling the algorithm in Section
+<a href="#parsebaseproofvalue"></a>, passing the `proofValue` from `proof`.
+            </li>
+            <li>
+Initialize `hmac` to an HMAC API using `hmacKey`. The HMAC uses the same hash
+algorithm used in the signature algorithm, i.e., SHAKE-256.
+            </li>
+            <li>
+Initialize `labelMapFactoryFunction` to the result of calling the
+`createShuffledIdLabelMapFunction` algorithm passing `hmac` as `HMAC`.
+            </li>
+            <li>
+Initialize `combinedPointers` to the concatenation of `mandatoryPointers`
+and `selectivePointers`.
+            </li>
+            <li>
+Initialize `groupDefinitions` to a map with the following entries: key of
+the string `"mandatory"` and value of `mandatoryPointers`, key of the string
+`"selective"` and value of `selectivePointers`, and key of the string `"combined"`
+and value of `combinedPointers`.
+            </li>
+            <li>
+Initialize `groups` and `labelMap` to the result of calling the algorithm in
+<a href="https://www.w3.org/TR/vc-di-ecdsa/#canonicalizeandgroup">Section 3.3.16
+canonicalizeAndGroup</a> of the [[DI-ECDSA]] specification, passing `document`
+`labelMapFactoryFunction`,
+`groupDefinitions`, and any custom JSON-LD
+API options. Note: This step transforms the document into an array of canonical
+N-Quads whose order has been shuffled based on 'hmac' applied blank node
+identifiers, and groups
+the N-Quad strings according to selections based on JSON pointers.
+            </li>
+
+            <li>
+Compute the mandatory indexes relative to their positions in the combined
+statement list, i.e., find at what position a mandatory statement occurs in the
+list of combined statements. One method for doing this is given below.
+              <ol class="algorithm">
+                <li>
+Initialize `mandatoryIndexes` to an empty array. Set `mandatoryMatch` to
+`groups.mandatory.matching` map, set `combinedMatch` to
+`groups.combined.matching`, and set `combinedIndexes` to the ordered array of
+just the keys of the `combinedMatch` map.
+                </li>
+                <li>
+For each key in the `mandatoryMatch` map find its index in the `combinedIndexes`
+array, e.g., `combinedIndexes.indexOf(key)`, and add this value to the
+`mandatoryIndexes` array.
+                </li>
+              </ol>
+            </li>
+            <li>
+Compute the selective indexes relative to their positions in the non-mandatory
+statement list, i.e., find at what position a selected statement occurs in the
+list of non-mandatory statements. One method for doing this is given below.
+              <ol class="algorithm">
+                <li>
+Initialize `selectiveIndexes` to an empty array. Set `selectiveMatch` to the
+`groups.selective.matching` map, set  `mandatoryNonMatch` to the map
+`groups.mandatory.nonMatching`, and `nonMandatoryIndexes` to to the ordered array of
+just the keys of the `mandatoryNonMatch` map.
+                </li>
+                <li>
+For each key in the `selectiveMatch` map find its index in the `nonMandatoryIndexes`
+array, e.g., `nonMandatoryIndexes.indexOf(key)`, and add this value to the
+`selectiveIndexes` array.
+                </li>
+              </ol>
+            </li>
+
+            <li>
+Initialize `bbsMessages` to an array of byte arrays obtained from the
+UTF-8 encoding of the the values in the `nonMandatory` array.
+            </li>
+            <li>
+Recompute the `bbsHeader` using the following steps:
+
+              <ol class="algorithm">
+                <li>
+Initialize `proofHash` to the result of calling the RDF Dataset Canonicalization
+algorithm [[RDF-CANON]] on `proof` with the `proofValue` removed and then
+cryptographically
+hashing the result using the same hash that is used by the signature algorithm,
+i.e., SHAKE-256. Note: This step can be performed in parallel;
+it only needs to be completed before this algorithm terminates as the result is
+part of the return value.
+                </li>
+                <li>
+Initialize `mandatoryHash` to the result of calling the the algorithm in
+<a href="https://www.w3.org/TR/vc-di-ecdsa/#hashmandatorynquads">Section 3.3.17
+hashMandatoryNQuads</a> of the [[DI-ECDSA]] specification, passing the values
+from the map
+<var>groups.mandatory.matching</var> and utilizing the SHAKE-256 algorithm.
+                </li>
+                <li>
+Set  `bbsHeader` to the concatenation of `proofHash` and `mandatoryHash` in that
+order.
+                </li>
+              </ol>
+            </li>
+
+            <li>
+Set `bbsProof` to the value computed by the `ProofGen` procedure from
+[[CFRG-BBS-SIGNATURE]], i.e. `ProofGen(PK, signature, header, ph, messages, disclosed_indexes)`,
+where `PK` is the original issuers public key, `signature` is the
+`bbsSignature`, `header` is the `bbsHeader`, `ph` is an empty byte array,
+`messages` is `bbsMessages` and `disclosed_indexes` is `selectiveIndexes`.
+            </li>
+
+            <li>
+Initialize <var>revealDocument</var> to the result of the "selectJsonLd"
+algorithm, passing `document`, and `combinedPointers` as `pointers`.
+            </li>
+            <li>
+Run the RDF Dataset Canonicalization Algorithm [[RDF-CANON]] on
+the joined <var>combinedGroup.deskolemizedNQuads</var>, passing any custom
+options, and get the canonical bnode identifier map, <var>canonicalIdMap</var>.
+Note: This map includes the canonical blank node identifiers that a verifier
+will produce when they canonicalize the reveal document.
+            </li>
+            <li>
+Initialize <var>verifierLabelMap</var> to an empty map. This map will map
+the canonical blank node identifiers the verifier will produce when they
+canonicalize the revealed document to the blank node identifiers that were
+originally signed in the base proof.
+            </li>
+            <li>
+For each key (`inputLabel`) and value (`verifierLabel`) in `canonicalIdMap:
+              <ol class="algorithm">
+                <li>
+Add an entry to `verifierLabelMap` using `verifierLabel` as the key and the
+value associated with `inputLabel` as a key in `labelMap` as the value.
+                </li>
+              </ol>
+            </li>
+            <li>
+Return an object with properties matching `bbsProof`,  "verifierLabelMap" for `labelMap`,
+`mandatoryIndexes`, `selectiveIndexes` and `revealDocument`.
+            </li>
+          </ol>
+
         </section>
+
         <section>
           <h4>serializeDerivedProofValue</h4>
         </section>
