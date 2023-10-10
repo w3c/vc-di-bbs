@@ -482,6 +482,41 @@ Return `baseProof` as <em>base proof</em>.
 
         <section>
           <h4>parseBaseProofValue</h4>
+
+
+          <p>
+The following algorithm parses the components of an `bbs-2023` selective
+disclosure base proof value. The required inputs are a proof value
+(<var>proofValue</var>). A single object <em>parsed base proof</em>, containing
+three elements, using the names "bbsSignature", "hmacKey",
+and "mandatoryPointers", is produced  as output.
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Ensure the `proofValue` string starts with `u`, indicating that it is a
+multibase-base64url-no-pad-encoded value, throwing an error if it does not.
+            </li>
+            <li>
+Initialize `decodedProofValue` to the result of base64url-no-pad-decoding the
+substring after the leading `u` in `proofValue`.
+            </li>
+            <li>
+Ensure that the `decodedProofValue` starts with the BBS base proof header
+bytes 0xd9, 0x5d, and 0x02, throwing an error if it does not.
+            </li>
+            <li>
+Initialize `components` to an array that is the result of CBOR-decoding the
+bytes that follow the three-byte ECDSA-SD base proof header. Ensure the result
+is an array of three elements.
+            </li>
+            <li>
+Return an object with properties set to the three elements, using the names
+"bbsSignature", "hmacKey", and "mandatoryPointers",
+respectively.
+            </li>
+          </ol>
+
         </section>
 
         <section>
