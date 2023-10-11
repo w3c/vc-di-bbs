@@ -1,0 +1,26 @@
+[
+  {
+    "pointer": "/sailNumber",
+    "value": "Earth101"
+  },
+  {
+    "pointer": "/sails/1",
+    "value": {
+      "size": 6.1,
+      "sailName": "Lahaina",
+      "year": 2023
+    }
+  },
+  {
+    "pointer": "/boards/0/year",
+    "value": 2022
+  },
+  {
+    "pointer": "/sails/2",
+    "value": {
+      "size": 7,
+      "sailName": "Lahaina",
+      "year": 2020
+    }
+  }
+]
