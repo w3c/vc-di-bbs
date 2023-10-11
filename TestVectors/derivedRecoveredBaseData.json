@@ -1,0 +1,10 @@
+{
+  "bbsSignature": "93c7abe23fdf4856654bc858e607b7659af82b564340731454884724ec01e25360ac49e39cf0df7631535373042caed256abed6e81884e71a21590fef8dbe07e177dcedd8cfe94e4574c4ab51a22bdf9",
+  "hmacKey": "00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+  "mandatoryPointers": [
+    "/credentialSubject/sailNumber",
+    "/credentialSubject/sails/1",
+    "/credentialSubject/boards/0/year",
+    "/credentialSubject/sails/2"
+  ]
+}

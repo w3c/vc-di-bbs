@@ -1,0 +1,127 @@
+{
+  "mandatoryPointers": [
+    "/credentialSubject/sailNumber",
+    "/credentialSubject/sails/1",
+    "/credentialSubject/boards/0/year",
+    "/credentialSubject/sails/2"
+  ],
+  "mandatory": {
+    "dataType": "Map",
+    "value": [
+      [
+        0,
+        "_:b0 <https://windsurf.grotto-networking.com/selective#sailName> \"Lahaina\" .\n"
+      ],
+      [
+        1,
+        "_:b0 <https://windsurf.grotto-networking.com/selective#size> \"6.1E0\"^^<http://www.w3.org/2001/XMLSchema#double> .\n"
+      ],
+      [
+        2,
+        "_:b0 <https://windsurf.grotto-networking.com/selective#year> \"2023\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n"
+      ],
+      [
+        8,
+        "_:b2 <https://windsurf.grotto-networking.com/selective#year> \"2022\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n"
+      ],
+      [
+        12,
+        "_:b4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n"
+      ],
+      [
+        13,
+        "_:b4 <https://www.w3.org/2018/credentials#credentialSubject> _:b6 .\n"
+      ],
+      [
+        14,
+        "_:b5 <https://windsurf.grotto-networking.com/selective#sailName> \"Lahaina\" .\n"
+      ],
+      [
+        15,
+        "_:b5 <https://windsurf.grotto-networking.com/selective#size> \"7\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n"
+      ],
+      [
+        16,
+        "_:b5 <https://windsurf.grotto-networking.com/selective#year> \"2020\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n"
+      ],
+      [
+        17,
+        "_:b6 <https://windsurf.grotto-networking.com/selective#boards> _:b2 .\n"
+      ],
+      [
+        19,
+        "_:b6 <https://windsurf.grotto-networking.com/selective#sailNumber> \"Earth101\" .\n"
+      ],
+      [
+        20,
+        "_:b6 <https://windsurf.grotto-networking.com/selective#sails> _:b0 .\n"
+      ],
+      [
+        23,
+        "_:b6 <https://windsurf.grotto-networking.com/selective#sails> _:b5 .\n"
+      ]
+    ]
+  },
+  "nonMandatory": {
+    "dataType": "Map",
+    "value": [
+      [
+        3,
+        "_:b1 <https://windsurf.grotto-networking.com/selective#sailName> \"Lahaina\" .\n"
+      ],
+      [
+        4,
+        "_:b1 <https://windsurf.grotto-networking.com/selective#size> \"7.8E0\"^^<http://www.w3.org/2001/XMLSchema#double> .\n"
+      ],
+      [
+        5,
+        "_:b1 <https://windsurf.grotto-networking.com/selective#year> \"2023\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n"
+      ],
+      [
+        6,
+        "_:b2 <https://windsurf.grotto-networking.com/selective#boardName> \"CompFoil170\" .\n"
+      ],
+      [
+        7,
+        "_:b2 <https://windsurf.grotto-networking.com/selective#brand> \"Wailea\" .\n"
+      ],
+      [
+        9,
+        "_:b3 <https://windsurf.grotto-networking.com/selective#sailName> \"Kihei\" .\n"
+      ],
+      [
+        10,
+        "_:b3 <https://windsurf.grotto-networking.com/selective#size> \"5.5E0\"^^<http://www.w3.org/2001/XMLSchema#double> .\n"
+      ],
+      [
+        11,
+        "_:b3 <https://windsurf.grotto-networking.com/selective#year> \"2023\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n"
+      ],
+      [
+        18,
+        "_:b6 <https://windsurf.grotto-networking.com/selective#boards> _:b7 .\n"
+      ],
+      [
+        21,
+        "_:b6 <https://windsurf.grotto-networking.com/selective#sails> _:b1 .\n"
+      ],
+      [
+        22,
+        "_:b6 <https://windsurf.grotto-networking.com/selective#sails> _:b3 .\n"
+      ],
+      [
+        24,
+        "_:b7 <https://windsurf.grotto-networking.com/selective#boardName> \"Kanaha Custom\" .\n"
+      ],
+      [
+        25,
+        "_:b7 <https://windsurf.grotto-networking.com/selective#brand> \"Wailea\" .\n"
+      ],
+      [
+        26,
+        "_:b7 <https://windsurf.grotto-networking.com/selective#year> \"2019\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n"
+      ]
+    ]
+  },
+  "hmacKeyString": "00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF"
+}
