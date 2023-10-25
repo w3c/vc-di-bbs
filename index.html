@@ -42,9 +42,17 @@
 
         // editors, add as many as you like
         // only "name" is required
-        editors:  [
-          { name: "Tobias Looker", url: "https://mattr.global/",
-            company: "Mattr", companyURL: "https://mattr.global/", w3cid: 109171, }
+        editors:  [{
+            name: "Tobias Looker", url: "https://mattr.global/",
+            company: "Mattr", companyURL: "https://mattr.global/", w3cid: 109171,
+          }, {
+            name: "Greg Bernstein", url: "https://www.grotto-networking.com/",
+            company: "Invited Expert", w3cid: 140479
+          }, {
+            name: "Manu Sporny", url: "https://digitalbazaar.com/",
+            company: "Digital Bazaar", companyURL: "https://digitalbazaar.com/",
+            w3cid: 41758
+          }
         ],
 
         // extend the bibliography entries
@@ -63,7 +71,7 @@
         // wgPatentURI:  "https://www.w3.org/community/about/agreements/cla/",
 
         github: "https://github.com/w3c/vc-di-bbs",
-        
+
         // URI of the patent status for this WG, for Rec-track documents
         // !!!! IMPORTANT !!!!
         // This is important for Rec-track documents, do not copy a patent URI from a random
@@ -401,7 +409,7 @@ The specific encoding of public keys is still being refined in [[BLS-JOSE-COSE]]
           <p class="advisement">
 Developers are advised to not accidentally publish a representation of a private
 key. Implementations of this specification MUST raise errors if expression
-of public key information includes a key parameter that is marked as 
+of public key information includes a key parameter that is marked as
 `Private` in the IANA JSON Web Key Parameters registry.
           </p>
 
@@ -513,7 +521,7 @@ value.
 <p>
   This suite relies on detached digital signatures represented using [[MULTIBASE]].
 </p>
-          
+
         <p>
 The `verificationMethod` property of the proof MUST be a URL.
 Dereferencing the `verificationMethod` MUST result in an object
@@ -576,7 +584,7 @@ produced according to <a data-cite="CFRG-BBS-SIGNATURE#name-sign">Sign</a>, enco
 <p>
   This suite relies on detached digital signatures represented using [[MULTIBASE]].
 </p>
-          
+
         <p>
 The `verificationMethod` property of the proof MUST be a URL.
 Dereferencing the `verificationMethod` MUST result in an object
@@ -926,16 +934,16 @@ Return <code>verificationResult</code> as the <em>verification result</em>.
   <section>
     <h3>bbs-proof-2023</h3>
     <p>
-      The `bbs-proof-2023` cryptographic suite takes an input document, 
+      The `bbs-proof-2023` cryptographic suite takes an input document,
       that has previously been secured using `bbs-signature-2023`,
-      derives from this original document a set of messages to be disclosed 
-      representing a redacted form of the original document, and 
+      derives from this original document a set of messages to be disclosed
+      representing a redacted form of the original document, and
       applies the <a data-cite="CFRG-BBS-SIGNATURE#name-proofgen">Proof Gen</a>
       algorithm to produce a proof of knowledge for the disclosed messages.
       The result is a new `proof`, containing the following attributes:
     </p>
 
-    
+
     <ul>
       <li>
         `generators`
@@ -947,10 +955,10 @@ Return <code>verificationResult</code> as the <em>verification result</em>.
         `proofValue`
       </li>
     </ul>
-    <p>This operation can be applied by any 
+    <p>This operation can be applied by any
       <a data-cite="VC-DATA-MODEL-2#dfn-holders">holder</a> of a `bbs-signature-2023`
       secured document, and as such, `bbs-proof-2023` MUST be implemented with
-      awareness of the mandatory to disclose fields the original 
+      awareness of the mandatory to disclose fields the original
       <a data-cite="VC-DATA-MODEL-2#dfn-issuers">issuer</a> required.
     </p>
     <p class="issue" data-number="3"></p>
@@ -982,7 +990,7 @@ Return <code>verificationResult</code> as the <em>verification result</em>.
       <h3>Proof Verification </h3>
       <p class="issue" data-number="85"></p>
     </section>
-      
+
   </section>
 </section>
 
@@ -999,9 +1007,9 @@ Return <code>verificationResult</code> as the <em>verification result</em>.
   <p class="issue">TODO: We need to add a complete list of security
   considerations.</p>
 </section>
-      
 
- 
+
+
     <section class="appendix">
       <h2>Acknowledgements</h2>
       <p>
