@@ -455,7 +455,7 @@ Generate a new empty bnode identifier map, <em>bnodeIdMap</em>.
 For each map entry, <em>entry</em>, in <var>canonicalIdMap</var>:
                   <ol class="algorithm">
                     <li>
-HMAC the canonical identifier from the value in <em>entry</em> to get an HMAC
+Perform an HMAC operation on the canonical identifier from the value in <em>entry</em> to get an HMAC
 digest, <em>digest</em>.
                     </li>
                     <li>
