@@ -153,11 +153,39 @@
             authors:  ["Tobias Looker", "Vasilis Kalos", "Andrew Whitehead", "Mike Lodder"],
             status:   "Draft"
           },
+          "CFRG-PAIRING-FRIENDLY": {
+            title: "Pairing-Friendly Curves",
+            href: "https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-11.html",
+            authors: ["Yumi Sakemi", "Tetsutaro Kobayashi", "Tsunekazu Saito", "Riad S. Wahby"],
+            status: "Draft"
+          },
           "BLS-JOSE-COSE": {
             title:    "Barreto-Lynn-Scott Elliptic Curve Key Representations for JOSE and COSE",
             href:     "https://datatracker.ietf.org/doc/draft-ietf-cose-bls-key-representations/",
             authors:  ["Michael B. Jones", "Tobias Looker"],
             status:   "Draft"
+          },
+          Taming_EdDSAs: {
+            title: "Taming the many EdDSAs",
+            href: "https://eprint.iacr.org/2020/1244",
+            authors: ["Konstantinos Chalkias", "François Garillot", "Valeria Nikolaenko"],
+            date: "2020",
+            publisher: "Cryptology ePrint Archive, Paper 2020/1244",
+            doi: "10.1007/978-3-030-64357-7_4"
+          },
+          CDL2016: {
+            title: "Anonymous Attestation Using the Strong Diffie Hellman Assumption Revisited",
+            href: "https://eprint.iacr.org/2016/663",
+            authors: ["Jan Camenisch", "Manu Drijvers", "Anja Lehmann"],
+            date: "2016",
+            publisher: "Cryptology ePrint Archive, Paper 2016/663"
+          },
+          TZ2023: {
+            title: "Revisiting BBS Signatures",
+            href: "https://eprint.iacr.org/2023/275",
+            authors: ["Stefano Tessaro", "Chenzhi Zhu"],
+            date: "2023",
+            publisher: "Cryptology ePrint Archive, Paper 2023/275"
           }
         },
         lint: {"no-unused-dfns": false},
@@ -252,7 +280,7 @@ Normalization Algorithm [[RDF-DATASET-NORMALIZATION]] to transform an input
 document into its canonical form, and then applies selective disclosure
 primitives to separate the canonical form into mandatory and selectively
 disclosed statements, which are appropriately processed and serve as inputs to
-the BBS `ProofGen` function. Suitably processed, the output of this function 
+the BBS `ProofGen` function. Suitably processed, the output of this function
 becomes the signed selectively disclosed credential sent to a verifier. Using
 canonicalization and selective disclosure primitives, the verifier can then use
 the BBS `verifyProof` function to validate the credential.
@@ -1296,7 +1324,318 @@ with `PK` set as the public key of the original issuer, `proof` set as `bbsProof
 
     </section>
 
+    <section>
+      <h2>Security Considerations</h2>
 
+      <p class="advisement">
+        Before reading this section, readers are urged to familiarize themselves
+        with general security advice provided in the
+        <a href="https://www.w3.org/TR/vc-data-integrity/#security-considerations">
+        Security Considerations section of the Data Integrity specification</a>.
+      </p>
+
+      <section class="informative">
+        <h3>Base Proof Security Properties</h3>
+
+        <p>
+The security of the base proof is dependent on the security properties of the
+associated <em>BBS signature</em>. Digital signatures may exhibit a number of
+desirable cryptographic properties [[Taming_EdDSAs]] among these are:
+        </p>
+        <p><strong>EUF-CMA</strong> (<em>existential unforgeability under
+chosen message attacks</em>) is usually the minimal security property required
+of a signature scheme. It guarantees that any efficient adversary who has the
+public key
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+            <mstyle displaystyle="true" scriptlevel="0">
+              <mrow data-mjx-texclass="ORD">
+                <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                  <mtr>
+                    <mtd>
+                      <mi>p</mi>
+                      <mi>k</mi>
+                    </mtd>
+                  </mtr>
+                </mtable>
+              </mrow>
+            </mstyle>
+          </math>
+of the signer and received an arbitrary number of signatures on
+messages of its choice (in an adaptive manner):
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+            <mstyle displaystyle="true" scriptlevel="0">
+              <mrow data-mjx-texclass="ORD">
+                <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                  <mtr>
+                    <mtd>
+                      <mo fence="false" stretchy="false">{</mo>
+                      <msub>
+                        <mi>m</mi>
+                        <mi>i</mi>
+                      </msub>
+                      <mo>,</mo>
+                      <msub>
+                        <mi>&#x3C3;</mi>
+                        <mi>i</mi>
+                      </msub>
+                      <msubsup>
+                        <mo fence="false" stretchy="false">}</mo>
+                        <mrow data-mjx-texclass="ORD">
+                          <mi>i</mi>
+                          <mo>=</mo>
+                          <mn>1</mn>
+                        </mrow>
+                        <mi>N</mi>
+                      </msubsup>
+                    </mtd>
+                  </mtr>
+                </mtable>
+              </mrow>
+            </mstyle>
+          </math>,
+cannot output a valid signature
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+            <mstyle displaystyle="true" scriptlevel="0">
+              <mrow data-mjx-texclass="ORD">
+                <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                  <mtr>
+                    <mtd>
+                      <msup>
+                        <mi>&#x3C3;</mi>
+                        <mo>&#x2217;</mo>
+                      </msup>
+                    </mtd>
+                  </mtr>
+                </mtable>
+              </mrow>
+            </mstyle>
+          </math>
+for a new message
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+            <mstyle displaystyle="true" scriptlevel="0">
+              <mrow data-mjx-texclass="ORD">
+                <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                  <mtr>
+                    <mtd>
+                      <msup>
+                        <mi>m</mi>
+                        <mo>&#x2217;</mo>
+                      </msup>
+                      <mo>&#x2209;</mo>
+                      <mo fence="false" stretchy="false">{</mo>
+                      <msub>
+                        <mi>m</mi>
+                        <mi>i</mi>
+                      </msub>
+                      <msubsup>
+                        <mo fence="false" stretchy="false">}</mo>
+                        <mrow data-mjx-texclass="ORD">
+                          <mi>i</mi>
+                          <mo>=</mo>
+                          <mn>1</mn>
+                        </mrow>
+                        <mi>N</mi>
+                      </msubsup>
+                    </mtd>
+                  </mtr>
+                </mtable>
+              </mrow>
+            </mstyle>
+          </math>
+(except with negligible probability). In case the attacker outputs a valid
+signature on a new message:
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+            <mstyle displaystyle="true" scriptlevel="0">
+              <mrow data-mjx-texclass="ORD">
+                <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                  <mtr>
+                    <mtd>
+                      <mo stretchy="false">(</mo>
+                      <msup>
+                        <mi>m</mi>
+                        <mo>&#x2217;</mo>
+                      </msup>
+                      <mo>,</mo>
+                      <msup>
+                        <mi>&#x3C3;</mi>
+                        <mo>&#x2217;</mo>
+                      </msup>
+                      <mo stretchy="false">)</mo>
+                    </mtd>
+                  </mtr>
+                </mtable>
+              </mrow>
+            </mstyle>
+          </math>,
+it is called an <em>existential forgery</em>.
+        </p>
+        <p><strong>SUF-CMA</strong> (<em>strong unforgeability under chosen
+message attacks</em>) is a stronger notion than <em>EUF-CMA</em>. It guarantees
+that for any efficient adversary who has the public key
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+            <mstyle displaystyle="true" scriptlevel="0">
+              <mrow data-mjx-texclass="ORD">
+                <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                  <mtr>
+                    <mtd>
+                      <mi>p</mi>
+                      <mi>k</mi>
+                    </mtd>
+                  </mtr>
+                </mtable>
+              </mrow>
+            </mstyle>
+          </math>
+of the signer and received an arbitrary number of signatures on messages of its
+choice:
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+            <mstyle displaystyle="true" scriptlevel="0">
+              <mrow data-mjx-texclass="ORD">
+                <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                  <mtr>
+                    <mtd>
+                      <mo fence="false" stretchy="false">{</mo>
+                      <msub>
+                        <mi>m</mi>
+                        <mi>i</mi>
+                      </msub>
+                      <mo>,</mo>
+                      <msub>
+                        <mi>&#x3C3;</mi>
+                        <mi>i</mi>
+                      </msub>
+                      <msubsup>
+                        <mo fence="false" stretchy="false">}</mo>
+                        <mrow data-mjx-texclass="ORD">
+                          <mi>i</mi>
+                          <mo>=</mo>
+                          <mn>1</mn>
+                        </mrow>
+                        <mi>N</mi>
+                      </msubsup>
+                    </mtd>
+                  </mtr>
+                </mtable>
+              </mrow>
+            </mstyle>
+          </math>,
+it cannot output a new valid signature pair
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+            <mstyle displaystyle="true" scriptlevel="0">
+              <mrow data-mjx-texclass="ORD">
+                <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                  <mtr>
+                    <mtd>
+                      <mo stretchy="false">(</mo>
+                      <msup>
+                        <mi>m</mi>
+                        <mo>&#x2217;</mo>
+                      </msup>
+                      <mo>,</mo>
+                      <msup>
+                        <mi>&#x3C3;</mi>
+                        <mo>&#x2217;</mo>
+                      </msup>
+                      <mo stretchy="false">)</mo>
+                    </mtd>
+                  </mtr>
+                </mtable>
+              </mrow>
+            </mstyle>
+          </math>,
+such that
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+            <mstyle displaystyle="true" scriptlevel="0">
+              <mrow data-mjx-texclass="ORD">
+                <mtable rowspacing=".5em" columnspacing="1em" displaystyle="true">
+                  <mtr>
+                    <mtd>
+                      <mo stretchy="false">(</mo>
+                      <msup>
+                        <mi>m</mi>
+                        <mo>&#x2217;</mo>
+                      </msup>
+                      <mo>,</mo>
+                      <msup>
+                        <mi>&#x3C3;</mi>
+                        <mo>&#x2217;</mo>
+                      </msup>
+                      <mo stretchy="false">)</mo>
+                      <mo>&#x2209;</mo>
+                      <mo fence="false" stretchy="false">{</mo>
+                      <msup>
+                        <mi>m</mi>
+                        <mi>i</mi>
+                      </msup>
+                      <mo>,</mo>
+                      <msup>
+                        <mi>&#x3C3;</mi>
+                        <mi>i</mi>
+                      </msup>
+                      <msubsup>
+                        <mo fence="false" stretchy="false">}</mo>
+                        <mrow data-mjx-texclass="ORD">
+                          <mi>i</mi>
+                          <mo>=</mo>
+                          <mn>1</mn>
+                        </mrow>
+                        <mi>N</mi>
+                      </msubsup>
+                    </mtd>
+                  </mtr>
+                </mtable>
+              </mrow>
+            </mstyle>
+          </math>
+(except with negligible probability). Strong unforgeability implies that an
+adversary cannot only sign new messages, but also cannot find a new signature
+on an old message.
+        </p>
+
+        <p>
+In [[CDL2016]] under some reasonable assumptions BBS signatures were proven to
+be EUF-CMA. Furthermore, in [[TZ2023]], under similar assumptions BBS signatures
+were proven to be SUF-CMA. In both cases the assumptions are related to the
+hardness of the discrete logarithm problem which is not considered post large
+scale quantum computing secure.
+        </p>
+        <p>
+Under non-quantum computing conditions [[CFRG-BBS-SIGNATURE]] provides
+additional security guidelines to BBS signature suite implementors. Further
+security considerations related to pairing friendly curves are discussed in
+[[CFRG-PAIRING-FRIENDLY]].
+        </p>
+      </section>
+
+      <section class="informative">
+        <h3>Derived Proof Security Properties</h3>
+        <p>
+The security of the derived proof is dependent on the security properties of
+the associated <em>BBS proof</em>. Both [[CDL2016]] and [[TZ2023]] prove that a
+<em>BBS proof</em> is <quote>a zero knowledge proof of knowledge of a BBS
+  signature</quote>.
+        </p>
+        <p>
+As explained in [[CFRG-BBS-SIGNATURE]] this means:
+          <blockquote>
+a verifying party in receipt of a proof is unable to determine which signature
+was used to generate the proof, removing a common source of correlation. In
+general, each proof generated is indistinguishable from random even for two
+proofs generated from the same signature.
+          </blockquote>
+and
+          <blockquote>
+The proofs generated by the scheme prove to a verifier that the party who
+generated the proof (holder/prover) was in possession of a signature without
+revealing it.
+          </blockquote>
+More precisely, verification of a <em>BBS proof</em> requires the original
+issuers public key as well as the unaltered, revealed <em>BBS message</em> in
+the proper order.
+        </p>
+      </section>
+
+    </section>
 
     <section>
       <h2>Privacy Considerations</h2>
@@ -1304,11 +1643,6 @@ with `PK` set as the public key of the original issuer, `proof` set as `bbsProof
       considerations.</p>
     </section>
 
-    <section>
-      <h2>Security Considerations</h2>
-      <p class="issue">TODO: We need to add a complete list of security
-      considerations.</p>
-    </section>
     <section class="appendix informative">
       <h2>Test Vectors</h2>
       <p>
