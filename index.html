@@ -158,6 +158,26 @@
             href:     "https://datatracker.ietf.org/doc/draft-ietf-cose-bls-key-representations/",
             authors:  ["Michael B. Jones", "Tobias Looker"],
             status:   "Draft"
+          },
+          "NISTIR8053": {
+            title: "NISTIR 8053: De-Identification of Personal Information",
+            href: "https://nvlpubs.nist.gov/nistpubs/ir/2015/NIST.IR.8053.pdf",
+            authors: ["Simson L. Garfinkel"],
+            date: "October 2015"
+          },
+          "Powar2023": {
+            title: "SoK: Managing risks of linkage attacks on data privacy",
+            authors: ["J. Powar", "A. R. Beresford"],
+            publisher: "Proceedings on Privacy Enhancing Technologies",
+            date: "2023",
+            href: "https://petsymposium.org/popets/2023/popets-2023-0043.php"
+          },
+          "Pugliese2020": {
+            title: "Long-Term Observation on Browser Fingerprinting: Users' Trackability and Perspective",
+            authors: ["G. Pugliese", "C. Riess", "F. Gassmann", "Z. Benenson"],
+            publisher: "Proceedings on Privacy Enhancing Technologies",
+            date: "2020",
+            href: "https://petsymposium.org/popets/2020/popets-2020-0041.php"
           }
         },
         lint: {"no-unused-dfns": false},
@@ -1554,6 +1574,105 @@ to show verifier to verifier collusion data flows.">
 Verifier to issuer collusion.
           </figcaption>
         </figure>
+        <p>
+We use the term <em>unlinkability</em> to describe the property of a VC system
+to prevent such "linkage attacks"  on holder privacy. Although the term
+unlinkability is relatively new section 3.3 of [[NISTIR8053]] discusses and
+gives a case study of <q>Re-identification through Linkage Attacks</q>. A
+systemization of knowledge on <q>linkage attack on data privacy</q> can be found
+in [[Powar2023]]. The most widespread use of linkage attack on user privacy
+occurs via the practice of web browser fingerprinting, a survey of which can be
+found in [[Pugliese2020]].
+        </p>
+        <p>
+To quantify the notion of linkage, [[Powar2023]] introduces the idea of an
+<strong>anonymity set</strong>. In the VC case we are concerned with here, the
+anonymity set would contain the <em>holder</em> of a particular VC and other
+holders associated with a particular <em>issuer</em>. The smaller the anonymity
+set the more likely the holder can be tracked across verifiers. Since a signed
+VC contains a reference to a public key of the issuer, the starting size for the
+anonymity set for a holder possessing a VC from a particular issuer is the
+number of VC issued by that issuer with that particular public/private key pair.
+Non-malicious issuers are expected to minimize the number of public/private key
+pairs used to issue VCs. Note that the anonymity set idea is similar to the
+group privacy concept in [[vc-bitstring-status-list]]. When we use the term
+linkage here we generally mean any mechanism that results in a reduction in size
+of the anonymity set.
+        </p>
+        <p>
+Sources of linkage in a VC system supporting selective disclosure:
+        </p>
+        <ol>
+          <li>
+Artifacts from cryptographic primitives.
+          </li>
+          <li>
+Artifacts from mapping a VC into a set of statements suitable for selective disclosure.
+          </li>
+          <li>
+Mandatory reveal Information in the VC.
+          </li>
+          <li>
+Selectively revealed information in the VC.
+          </li>
+        </ol>
+        <p>
+We discuss each of these below.
+        </p>
+        <section>
+          <h4>Linkage via Cryptographic Artifacts</h4>
+          <p>
+Cryptographic Hashes, HMACs, and digital signatures by their nature generate
+highly unique identifiers. The output of a hash function such as SHA-256, by its
+collision resistance properties, are guaranteed to be essentially unique given
+different inputs and result in a strong linkage, i.e., reduces the anonymity set
+size to one. Similarly deterministic signature algorithms such as Ed25519 and
+deterministic ECDSA will produce essentially unique outputs for different inputs
+and lead to strong linkages.
+          </p>
+          <p>
+This implies that <em>holders</em> can be easily tracked across
+<em>verifiers</em> via digital signature, HMAC, or hash artifacts inside VCs and
+hence are vulnerable to <em>verifier-verifier</em> collusion and
+<em>verifier-issuer</em> collusion. Randomized signature algorithms such as some
+forms of ECDSA can permit the issuer to generate many distinct signatures on the
+same inputs and send these to the <em>holder</em> for use with different
+<em>verifiers</em>. Such an approach could be used to prevent
+<em>verifier-verifier</em> collusion based tracking but cannot help with
+<em>verifier-issuer</em> collusion.
+          </p>
+          <p>
+To achieve unlinkability requires specially designed cryptographic signature
+schemes that allow the <em>holder</em> to generate what is called a <q>zero
+knowledge proof of knowledge of a signature</q> (ZKPKS). What this means is that
+the <em>holder</em> can take a signature from the <em>issuer</em> in such a
+scheme, compute a ZKPKS to send to a <em>verifier</em>. This ZKPKS cannot be
+linked back to the original signature, but has all the desirable properties of a
+signature, i.e., the <em>verifier</em> can use it to verify that the messages
+were signed by the <em>issuers</em> public key and that the messages have not
+been altered. In addition, the <em>holder</em> can generate as many ZKPKSs as
+desired for different <em>verifiers</em> and these are essentially independent
+and unlinkable. BBS is one such signature scheme that supports this capability.
+          </p>
+          <p>
+Although the ZKPKS, known as a <em>BBS proof</em> in this document, has
+guaranteed unlinkability properties. BBS when used with selective disclosure has
+two artifacts that can contribute to linkability. These are the total number of
+messages originally signed, and the index values for the revealed statements.
+See the privacy considerations in [[CFRG-BBS-SIGNATURE]] for a discussion and
+mitigation techniques.
+          </p>
+          <p>
+As mentioned in the section on <q>Issuer's Public Keys</q> of
+[[CFRG-BBS-SIGNATURE]] there is the potential threat that an <em>issuer</em> may
+use multiple public keys with some of those used to track a specific subset of
+users via <em>verifier-issuer</em> collusion. Since the <em>issuers</em> public
+key must be visible to the <em>verifier</em>, i.e., it is referenced in the BBS
+proof (derived proof) this can be used as a linkage point if the <em>issuer</em>
+has many different public keys and particularly if it uses a subset of those
+keys with a small subset of users (<em>holders</em>).
+          </p>
+        </section>
       </section>
     </section>
 
