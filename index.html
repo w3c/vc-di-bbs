@@ -1953,10 +1953,13 @@ Artifacts from cryptographic primitives.
 Artifacts from mapping a VC into a set of statements suitable for selective disclosure.
           </li>
           <li>
-Mandatory reveal Information in the VC.
+Artifacts from Proof Options and Mandatory reveal Information in the VC.
           </li>
           <li>
 Selectively revealed information in the VC.
+          </li>
+          <li>
+External VC System Based Linkage
           </li>
         </ol>
         <p>
@@ -2014,6 +2017,75 @@ key must be visible to the <em>verifier</em>, i.e., it is referenced in the BBS
 proof (derived proof) this can be used as a linkage point if the <em>issuer</em>
 has many different public keys and particularly if it uses a subset of those
 keys with a small subset of users (<em>holders</em>).
+          </p>
+        </section>
+        <section>
+          <h4>Linkage via VC Processing</h4>
+          <p>
+We saw in the section on information leakage that RDF canonicalization uses a
+hash function to order statements and that a further <q>shuffle</q> of the order
+of the statements is performed based on an HMAC. This can leave a fingerprint
+that may allow for some linkage. How strong of a linkage is dependent on the
+number of blank nodes, essentially JSON objects within the VC, and the number of
+indexes revealed. Given <em>n</em> blank nodes and <em>k</em> disclosed indexes
+in the worst case this would be a reduction in the anonymity set size by a
+factor of <em>C(n, k)</em>, i.e., the number combinations of size <em>k</em>
+chosen from a set of <em>n</em> elements. One can keep this number quite low by
+reducing the number of blank nodes in the VC, e.g., keep the VC short and
+simple.
+          </p>
+        </section>
+        <section>
+          <h4>Linkage via Proof Options and Mandatory Reveal</h4>
+          <p>
+In the [[vc-data-integrity]] specification, a number of properties of the
+`proof` attribute of a VC are given. Care must be taken that optional fields
+should not provide strong linkage across verifiers. The optional fields include:
+<em>id</em>, <em>created</em>, <em>expires</em>, <em>domain</em>,
+<em>challenge</em>, and <em>nonce</em>. For example the optional
+<em>created</em> field is a `dateTimeStamp` object which can specify the
+creation date for the proof down to an arbitrary sub-second granularity. Such
+information, if present, could greatly reduce the size of the anonymity set. If
+the issuer wants to include such information they should make it as coarse
+grained as possible, relative to the number of VCs being issued over time.
+          </p>
+          <p>
+The <em>issuer</em> can also compel a <em>holder</em> to reveal certain
+statements to a <em>verifier</em> via the `mandatoryPointers` input used in the
+creation of the <em>Base Proof</em>. See section
+<a href="#base-proof-transformation-bbs-2023"></a>,
+<a href="#example-mandatory-pointers"></a>, and
+<a href="#example-json-pointers-and-values"></a>. By <q>compel</q> we mean that
+a generated Derived Proof will not verify unless these statements are revealed
+to the <em>verifier</em>. Care should be taken such that if such information is
+required to be disclosed, that the anonymity set remains sufficiently large.
+          </p>
+        </section>
+        <section>
+          <h4>Linkage via Holder Selective Reveal</h4>
+          <p>
+As discussed in [[Powar2023]] there are many documented cases of
+re-identification of individuals from linkage attacks. Hence the <em>holder</em>
+is urged  to reveal as little information as possible to help keep the anonymity
+set large. In addition, it has been shown a number of times that innocuous
+seeming information can be highly unique and thus leading to re-identification
+or tracking.  See [[NISTIR8053]] for a walk through of a particularly famous
+case of  a former governor of Massachusetts and [[Powar2023]] for further
+analysis and categorization of 94 such public cases.
+          </p>
+        </section>
+        <section>
+          <h4>External VC System Based Linkage</h4>
+          <p>
+It should be pointed out that maintaining unlinkability, i.e., anonymity,
+requires care in the systems holding and communicating the VCs. Networking
+artifacts such as IP address (layer 3) or Ethernet/MAC address (layer 2) are
+well known sources of linkage. For example, mobile phone MAC addresses can be
+used to track users if they revisited a particular access point, this led to
+mobile phone manufacturers providing a MAC address randomization feature.
+Public IP addresses generally provide enough information to geolocate an
+individual to a city or region within a country potentially greatly reducing
+the anonymity set.
           </p>
         </section>
       </section>
