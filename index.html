@@ -252,7 +252,7 @@ Normalization Algorithm [[RDF-DATASET-NORMALIZATION]] to transform an input
 document into its canonical form, and then applies selective disclosure
 primitives to separate the canonical form into mandatory and selectively
 disclosed statements, which are appropriately processed and serve as inputs to
-the BBS `ProofGen` function. Suitably processed, the output of this function 
+the BBS `ProofGen` function. Suitably processed, the output of this function
 becomes the signed selectively disclosed credential sent to a verifier. Using
 canonicalization and selective disclosure primitives, the verifier can then use
 the BBS `verifyProof` function to validate the credential.
@@ -1300,8 +1300,261 @@ with `PK` set as the public key of the original issuer, `proof` set as `bbsProof
 
     <section>
       <h2>Privacy Considerations</h2>
-      <p class="issue">TODO: We need to add a complete list of privacy
-      considerations.</p>
+      <section>
+        <h3>Selective Disclosure and Data Leakage</h3>
+        <p>
+Selective disclosure permits a <em>holder</em> to <em>minimize</em> the information
+revealed to a <em>verifier</em> to achieve a particular purpose. In prescribing
+an overall system that enables selective disclosure, care must be taken that
+additional information that was not meant to be disclosed to the
+<em>verifier</em> is minimized. Such leakage can occur through artifacts of the
+system. Such artifacts can come from higher layers of the system, such as in
+the structure of data or from the lower level cryptographic primitives.
+        </p>
+        <p>
+For example the BBS signature scheme is an extremely space efficient scheme for
+producing a signature on multiple <em>messages</em>, i.e.,  the cryptographic
+signature sent to the <em>holder</em> is a constant size regardless of the
+number of <em>messages</em>. The <em>holder</em> then can selectively disclose
+any of these <em>messages</em> to a <em>verifier</em>, however as part of the
+encryption scheme, the total number of messages signed by the <em>issuer</em>
+must be revealed to the <em>verifier</em>. If such information leakage needs to
+be avoided then it is recommended to pad the number of messages out to a common
+length as suggested in the privacy considerations section of
+[[CFRG-BBS-SIGNATURE]].
+        </p>
+        <p>
+At the higher levels, how data gets mapped into individual <em>statements</em>
+suitable for selective disclosure, i.e., BBS <em>messages</em>, is a potential
+source of data leakage. This cryptographic suite is able to eliminate many
+structural artifacts used to express JSON data that might leak information
+(nesting, map, or array position, etc.) by using JSON-LD processing to transform
+inputs into RDF. RDF can then be expressed as a canonical, flat format of simple
+subject, property, value statements (referred to as claims in the Verifiable
+Credentials Data Model [[VC-DATA-MODEL-2]]). In the following, we examine RDF
+canonicalization, a general scheme for mapping a verifiable credential in
+JSON-LD format into a set of <em>statements</em> (BBS <em>messages</em>), for
+selective disclosure. We show that after this process is performed, there
+remains a possible source of information leakage, and we show how this leakage
+is mitigated via the use of a keyed pseudo random function (PRF).
+        </p>
+        <p>
+RDF canonicalization can be used to <q>flatten</q> a JSON-LD VC into a set of
+<em>statements</em>. The algorithm is dependent on the content of the VC and
+also employs a cryptographic hash function to help in ordering the
+<em>statements</em>. In essence, how this happens is that each JSON object that
+represents the subject of claims within a JSON-LD document will be assigned an
+id, if it doesn't have an `@id` field defined. Such <em>ids</em> are known as
+<em>blank node ids</em>. These ids are needed to express claims as simple
+subject, property, value statements such that the subject in each claim can be
+differentiated. The id values are deterministically set per
+[[RDF-CANON]] and are based on the data in the document and the
+output of a cryptographic hash function such as SHA-256.
+        </p>
+        <p>
+Below we show two slightly different VCs for a set of windsurf sails and their
+canonicalization into a set of <em>statements</em> that can be used for
+selective disclosure. By changing the year of the 6.1 size sail we see a major
+change in statement ordering between these two VCs. If the <em>holder</em>
+discloses information about just his larger sails (the 7.0 and 7.8) the
+<em>verifier</em> could tell something changed about the set of sails, i.e.,
+information leakage.
+        </p>
+        <pre class="example nohighlight"
+        title="A VC for a set of windsurfing sails">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    {
+      "@vocab": "https://windsurf.grotto-networking.com/selective#"
+    }
+  ],
+  "type": [
+    "VerifiableCredential"
+  ],
+  "credentialSubject": {
+    "sails": [
+      {
+        "size": 5.5,
+        "sailName": "Kihei",
+        "year": 2023
+      },
+      {
+        "size": 6.1,
+        "sailName": "Lahaina",
+        "year": 2023 // Will change this to see the effect on canonicalization
+      },
+      {
+        "size": 7.0,
+        "sailName": "Lahaina",
+        "year": 2020
+      },
+      {
+        "size": 7.8,
+        "sailName": "Lahaina",
+        "year": 2023
+      }
+    ]
+  }
+}
+        </pre>
+        <p>
+Canonical form of the above VC. Assignment of blank node ids, i.e., the
+<q>_:c14nX</q> labels are dependent upon the content of the VC and this also
+affects the ordering of the statements.
+        </p>
+        <pre class="example nohighlight"
+        title="Canonical form of the VC for a set of windsurfing sails">
+_:c14n0 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Lahaina&quot; .
+_:c14n0 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;7.8E0&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .
+_:c14n0 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2023&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n1 &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;https://www.w3.org/2018/credentials#VerifiableCredential&gt; .
+_:c14n1 &lt;https://www.w3.org/2018/credentials#credentialSubject&gt; _:c14n4 .
+_:c14n2 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Lahaina&quot; .
+_:c14n2 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;7&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n2 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2020&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n3 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Kihei&quot; .
+_:c14n3 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;5.5E0&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .
+_:c14n3 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2023&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n0 .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n2 .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n3 .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n5 .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Lahaina&quot; .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;6.1E0&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2023&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+        </pre>
+        <p>
+Updated windsurf sail collection, i.e., the 6.1 size sail has been updated to
+the 2024 model. This changes the ordering of statements via the assignment of
+<em>blank node ids</em>.
+        </p>
+        <pre class="example nohighlight"
+        title="A VC for a slightly updated set of windsurfing sails">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    {
+      "@vocab": "https://windsurf.grotto-networking.com/selective#"
+    }
+  ],
+  "type": [
+    "VerifiableCredential"
+  ],
+  "credentialSubject": {
+    "sails": [
+      {
+        "size": 5.5,
+        "sailName": "Kihei",
+        "year": 2023
+      },
+      {
+        "size": 6.1,
+        "sailName": "Lahaina",
+        "year": 2024 // New sail to update older model, changes canonicalization
+      },
+      {
+        "size": 7.0,
+        "sailName": "Lahaina",
+        "year": 2020
+      },
+      {
+        "size": 7.8,
+        "sailName": "Lahaina",
+        "year": 2023
+      }
+    ]
+  }
+}
+        </pre>
+        <p>
+Canonical form of the previous VC. Note the difference in <em>blank node id</em>
+assignment and ordering of statements.
+        </p>
+        <pre class="example nohighlight"
+        title="Canonical form of the updated VC for a set of windsurfing sails">
+_:c14n0 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Lahaina&quot; .
+_:c14n0 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;6.1E0&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .
+_:c14n0 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2024&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n1 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Lahaina&quot; .
+_:c14n1 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;7.8E0&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .
+_:c14n1 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2023&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n2 &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;https://www.w3.org/2018/credentials#VerifiableCredential&gt; .
+_:c14n2 &lt;https://www.w3.org/2018/credentials#credentialSubject&gt; _:c14n5 .
+_:c14n3 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Lahaina&quot; .
+_:c14n3 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;7&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n3 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2020&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Kihei&quot; .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;5.5E0&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2023&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n0 .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n1 .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n3 .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n4 .
+        </pre>
+        <p>
+To prevent such information leakage from the assignment of these blank node ids
+and the ordering they impose on the <em>statements</em>, an HMAC based PRF is
+run on the <em>blank node ids</em>. The HMAC secret key is only shared between
+the <em>issuer</em> and <em>holder</em> and each <em>Base Proof</em> generated
+by the issuer uses a new HMAC key. An example of this can be seen in the
+<a href="https://www.w3.org/TR/vc-di-ecdsa/#example-canonical-hmac-document">
+canonical HMAC test vector</a> of [[DI-ECDSA]].
+<!-- [canonical HMAC test vector](https://w3c.github.io/vc-di-ecdsa/#example-canonical-hmac-document) of [[VC-ECDSA-SD]]. -->
+<!-- <a href="https://www.w3.org/TR/vc-di-ecdsa/#hashmandatorynquads">Section 3.3.17
+hashMandatoryNQuads</a> of the [[DI-ECDSA]] specification, passing -->
+As discussed in the next section, for BBS to preserve unlinkability we do not
+use HMAC based <em>blank node ids</em> but produce a <q>shuffled</q> version of
+the ordering based on the HMAC as shown in test vector <a href="#example-canonical-hmac-document"></a>.
+Note that this furnishes less information hiding concerning <em>blank node
+ids</em> than in the ECDSA-SD approach, since information the number of
+<em>blank node ids</em> can leak, but prevents linkage attacks via the
+essentially unique identifiers produced by applying an HMAC to blank node ids.
+        </p>
+      </section>
+      <section>
+        <h3>Selective Disclosure and Unlinkability</h3>
+        <p>
+In some uses of VCs it can be important to the privacy of a <em>holder</em> to
+prevent the tracking or linking of multiple different <em>verifier</em>
+interactions. In particular we consider two important cases (i) <em>verifier to
+issuer collusion</em>, and (ii) <em>verifier to verifier collusion</em>. In the
+first case, shown in <a href="#verifier-issuer"></a>, a <em>verifier</em>
+reports back to the original
+<em>issuer</em> of the credential on an interaction with a <em>holder</em>. In
+this situation, the <em>issuer</em> could track all the <em>holder</em>
+interactions with various <em>verifiers</em> using the issued VC. In the second
+situation, shown in <a href="#verifier-verifier"></a>, multiple
+<em>verifiers</em> collude to share
+information about <em>holders</em> with whom they have interacted.
+        </p>
+        <figure id="verifier-issuer">
+          <img style="margin: auto; display: block; width: 100%;"
+               src="diagrams/VerifierIssuerCollusion.svg" alt="
+Diagram showing multiple verifiers sending data back to the issuer.
+The diagram is laid out top to bottom with a circle labeled issuer at the top,
+connected to a circle label holder below. From the circle labeled holder there
+are multple arrows to additional circles labeled verifiers. From the circles
+labeled verifiers there are dashed arrows back to the circle labeled issuer
+showing collusion data flow.">
+          <figcaption style="text-align: center;">
+Verifier to verifier collusion.
+          </figcaption>
+        </figure>
+        <figure id="verifier-verifier">
+          <img style="margin: auto; display: block; width: 100%;"
+               src="diagrams/VerifiersCollusion.svg" alt="
+Diagram showing multiple verifiers sharing with each other.
+The diagram is laid out top to bottom with a circle labeled issuer at the top,
+connected to a circle label holder below. From the circle labeled holder there
+are multple arrows to additional circles labeled verifiers. From the circles
+labeled verifiers there are dashed arrows back to other circles labeled issuer
+to show verifier to verifier collusion data flows.">
+          <figcaption style="text-align: center;">
+Verifier to issuer collusion.
+          </figcaption>
+        </figure>
+      </section>
     </section>
 
     <section>
@@ -1309,6 +1562,7 @@ with `PK` set as the public key of the original issuer, `proof` set as `bbsProof
       <p class="issue">TODO: We need to add a complete list of security
       considerations.</p>
     </section>
+
     <section class="appendix informative">
       <h2>Test Vectors</h2>
       <p>
