@@ -33,7 +33,7 @@
 
 ## Introduction
 
-The *BBS Cryptosuite v2023* family specification describes a mechanism for
+The *BBS Cryptosuite v2023* specification describes a mechanism for
 ensuring the authenticity and integrity of Verifiable Credentials and similar
 types of constrained  digital documents using cryptography, especially through
 the use of digital signatures and related mathematical proofs. It is one of several
