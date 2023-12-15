@@ -93,7 +93,7 @@ provides for selective disclosure and unlinkable proofs. It provides four
 high-level functions that work within the issuer, holder, verifier model.
 Specifically, an issuer uses the BBS Sign function to create a cryptographic
 value known as a "BBS signature" which is used in signing the original
-credential. A holder, on receipt of a credential signed with BBS, then verifies
+credential. A holder, on receipt of a credential signed with BBS, can then verify
 the credential with the BBS Verify function.
 
 The holder then chooses information to selectively disclose from the received
@@ -107,7 +107,7 @@ ProofVerify function to verify the derived credential received from the holder.
 
 Applying the BBS signature scheme to verifiable credentials involves the
 processing specified in this specification. In general the suite uses the RDF
-Dataset Normalization Algorithm to transform an input document into its
+Dataset Canonicalization Algorithm to transform an input document into its
 canonical form. An issuer then uses selective disclosure primitives to separate
 the canonical form into mandatory and non-mandatory statements. These are
 processed separately with other information to serve as the inputs to the BBS
@@ -117,10 +117,10 @@ functions and the BBS Verify function on receipt of the credential to ascertain
 validity.
 
 Similarly, on receipt of a BBS signed credential, a holder uses the RDF Dataset
-Normalization Algorithm to transform an input document into its canonical form,
+Canonicalization Algorithm to transform an input document into its canonical form,
 and then applies selective disclosure primitives to separate the canonical form
 into mandatory and selectively disclosed statements, which are appropriately
-processed and serve as inputs to the BBS ProofGen function. Suitably processed,
+processed and which serve as inputs to the BBS ProofGen function. Suitably processed,
 the output of this function becomes the signed selectively disclosed credential
 sent to a verifier. Using canonicalization and selective disclosure primitives,
 the verifier can then use the BBS verifyProof function to validate the
@@ -138,8 +138,9 @@ the document that's shared.
 
 ### Unlinkability
 
-Repeatedly sharing information in a document can create a correlation and
-tracking risk. For example, repeatedly sharing a driver's license to prove that
+Repeatedly sharing information in a document can result in undesirable
+correlation and
+tracking. For example, repeatedly sharing a driver's license to prove that
 one is above a certain age can lead to using the driver's license number to
 track the individual. A more appropriate sharing would be to just share one's
 age in a way that cannot be used to track the individual. Note that a digital
@@ -159,10 +160,11 @@ with its *selective disclosure* option provides mechanisms for taking a
 verifiable credential and reducing it to an ordered set of *statements*. These
 procedures are slightly modified as to preserve the desirable unlinkability
 properties of the BBS signature scheme, i.e., removing or reducing artifacts
-that can lead to correlation/tracking. Hence we maximally reuse existing
+that can lead to unwanted correlation/tracking. Hence we maximally reuse existing
 procedures while preserving the desirable properties of the BBS signature scheme.
-See the *privacy considerations* section of the document for a full analysis of
-data leakage and unlinkability.
+See the
+[privacy considerations](https://w3c.github.io/vc-di-bbs/#privacy-considerations)
+section of the document for a full analysis of data leakage and unlinkability.
 
 ## Considered alternatives
 
@@ -184,4 +186,3 @@ Additionally, the US Federal Government (DHS) has aligned their latest profile
 for digital identity to use Verifiable Credentials and Data Integrity.
 
 ## Acknowledgements
-
