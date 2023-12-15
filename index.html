@@ -186,6 +186,26 @@
             authors: ["Stefano Tessaro", "Chenzhi Zhu"],
             date: "2023",
             publisher: "Cryptology ePrint Archive, Paper 2023/275"
+          },
+          "NISTIR8053": {
+            title: "NISTIR 8053: De-Identification of Personal Information",
+            href: "https://nvlpubs.nist.gov/nistpubs/ir/2015/NIST.IR.8053.pdf",
+            authors: ["Simson L. Garfinkel"],
+            date: "October 2015"
+          },
+          "Powar2023": {
+            title: "SoK: Managing risks of linkage attacks on data privacy",
+            authors: ["J. Powar", "A. R. Beresford"],
+            publisher: "Proceedings on Privacy Enhancing Technologies",
+            date: "2023",
+            href: "https://petsymposium.org/popets/2023/popets-2023-0043.php"
+          },
+          "Pugliese2020": {
+            title: "Long-Term Observation on Browser Fingerprinting: Users' Trackability and Perspective",
+            authors: ["G. Pugliese", "C. Riess", "F. Gassmann", "Z. Benenson"],
+            publisher: "Proceedings on Privacy Enhancing Technologies",
+            date: "2020",
+            href: "https://petsymposium.org/popets/2020/popets-2020-0041.php"
           }
         },
         lint: {"no-unused-dfns": false},
@@ -1641,10 +1661,434 @@ the proper order.
 
     </section>
 
-    <section>
+    <section class="informative">
       <h2>Privacy Considerations</h2>
-      <p class="issue">TODO: We need to add a complete list of privacy
-      considerations.</p>
+      <section>
+        <h3>Selective Disclosure and Data Leakage</h3>
+        <p>
+Selective disclosure permits a <em>holder</em> to <em>minimize</em> the information
+revealed to a <em>verifier</em> to achieve a particular purpose. In prescribing
+an overall system that enables selective disclosure, care has to be taken that
+additional information that was not meant to be disclosed to the
+<em>verifier</em> is minimized. Such leakage can occur through artifacts of the
+system. Such artifacts can come from higher layers of the system, such as in
+the structure of data or from the lower level cryptographic primitives.
+        </p>
+        <p>
+For example the BBS signature scheme is an extremely space efficient scheme for
+producing a signature on multiple <em>messages</em>, i.e.,  the cryptographic
+signature sent to the <em>holder</em> is a constant size regardless of the
+number of <em>messages</em>. The <em>holder</em> then can selectively disclose
+any of these <em>messages</em> to a <em>verifier</em>, however as part of the
+encryption scheme, the total number of messages signed by the <em>issuer</em>
+has to be revealed to the <em>verifier</em>. If such information leakage needs to
+be avoided then it is recommended to pad the number of messages out to a common
+length as suggested in the privacy considerations section of
+[[CFRG-BBS-SIGNATURE]].
+        </p>
+        <p>
+At the higher levels, how data gets mapped into individual <em>statements</em>
+suitable for selective disclosure, i.e., BBS <em>messages</em>, is a potential
+source of data leakage. This cryptographic suite is able to eliminate many
+structural artifacts used to express JSON data that might leak information
+(nesting, map, or array position, etc.) by using JSON-LD processing to transform
+inputs into RDF. RDF can then be expressed as a canonical, flat format of simple
+subject, property, value statements (referred to as claims in the Verifiable
+Credentials Data Model [[VC-DATA-MODEL-2]]). In the following, we examine RDF
+canonicalization, a general scheme for mapping a verifiable credential in
+JSON-LD format into a set of <em>statements</em> (BBS <em>messages</em>), for
+selective disclosure. We show that after this process is performed, there
+remains a possible source of information leakage, and we show how this leakage
+is mitigated via the use of a keyed pseudo random function (PRF).
+        </p>
+        <p>
+RDF canonicalization can be used to <q>flatten</q> a JSON-LD VC into a set of
+<em>statements</em>. The algorithm is dependent on the content of the VC and
+also employs a cryptographic hash function to help in ordering the
+<em>statements</em>. In essence, how this happens is that each JSON object that
+represents the subject of claims within a JSON-LD document will be assigned an
+id, if it doesn't have an `@id` field defined. Such <em>ids</em> are known as
+<em>blank node ids</em>. These ids are needed to express claims as simple
+subject, property, value statements such that the subject in each claim can be
+differentiated. The id values are deterministically set per
+[[RDF-CANON]] and are based on the data in the document and the
+output of a cryptographic hash function such as SHA-256.
+        </p>
+        <p>
+Below we show two slightly different VCs for a set of windsurf sails and their
+canonicalization into a set of <em>statements</em> that can be used for
+selective disclosure. By changing the year of the 6.1 size sail we see a major
+change in statement ordering between these two VCs. If the <em>holder</em>
+discloses information about just his larger sails (the 7.0 and 7.8) the
+<em>verifier</em> could tell something changed about the set of sails, i.e.,
+information leakage.
+        </p>
+        <pre class="example nohighlight"
+        title="A VC for a set of windsurfing sails">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    {
+      "@vocab": "https://windsurf.grotto-networking.com/selective#"
+    }
+  ],
+  "type": [
+    "VerifiableCredential"
+  ],
+  "credentialSubject": {
+    "sails": [
+      {
+        "size": 5.5,
+        "sailName": "Kihei",
+        "year": 2023
+      },
+      {
+        "size": 6.1,
+        "sailName": "Lahaina",
+        "year": 2023 // Will change this to see the effect on canonicalization
+      },
+      {
+        "size": 7.0,
+        "sailName": "Lahaina",
+        "year": 2020
+      },
+      {
+        "size": 7.8,
+        "sailName": "Lahaina",
+        "year": 2023
+      }
+    ]
+  }
+}
+        </pre>
+        <p>
+Canonical form of the above VC. Assignment of blank node ids, i.e., the
+<q>_:c14nX</q> labels are dependent upon the content of the VC and this also
+affects the ordering of the statements.
+        </p>
+        <pre class="example nohighlight"
+        title="Canonical form of the VC for a set of windsurfing sails">
+_:c14n0 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Lahaina&quot; .
+_:c14n0 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;7.8E0&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .
+_:c14n0 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2023&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n1 &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;https://www.w3.org/2018/credentials#VerifiableCredential&gt; .
+_:c14n1 &lt;https://www.w3.org/2018/credentials#credentialSubject&gt; _:c14n4 .
+_:c14n2 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Lahaina&quot; .
+_:c14n2 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;7&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n2 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2020&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n3 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Kihei&quot; .
+_:c14n3 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;5.5E0&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .
+_:c14n3 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2023&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n0 .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n2 .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n3 .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n5 .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Lahaina&quot; .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;6.1E0&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2023&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+        </pre>
+        <p>
+Updated windsurf sail collection, i.e., the 6.1 size sail has been updated to
+the 2024 model. This changes the ordering of statements via the assignment of
+<em>blank node ids</em>.
+        </p>
+        <pre class="example nohighlight"
+        title="A VC for a slightly updated set of windsurfing sails">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    {
+      "@vocab": "https://windsurf.grotto-networking.com/selective#"
+    }
+  ],
+  "type": [
+    "VerifiableCredential"
+  ],
+  "credentialSubject": {
+    "sails": [
+      {
+        "size": 5.5,
+        "sailName": "Kihei",
+        "year": 2023
+      },
+      {
+        "size": 6.1,
+        "sailName": "Lahaina",
+        "year": 2024 // New sail to update older model, changes canonicalization
+      },
+      {
+        "size": 7.0,
+        "sailName": "Lahaina",
+        "year": 2020
+      },
+      {
+        "size": 7.8,
+        "sailName": "Lahaina",
+        "year": 2023
+      }
+    ]
+  }
+}
+        </pre>
+        <p>
+Canonical form of the previous VC. Note the difference in <em>blank node id</em>
+assignment and ordering of statements.
+        </p>
+        <pre class="example nohighlight"
+        title="Canonical form of the updated VC for a set of windsurfing sails">
+_:c14n0 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Lahaina&quot; .
+_:c14n0 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;6.1E0&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .
+_:c14n0 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2024&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n1 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Lahaina&quot; .
+_:c14n1 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;7.8E0&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .
+_:c14n1 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2023&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n2 &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;https://www.w3.org/2018/credentials#VerifiableCredential&gt; .
+_:c14n2 &lt;https://www.w3.org/2018/credentials#credentialSubject&gt; _:c14n5 .
+_:c14n3 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Lahaina&quot; .
+_:c14n3 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;7&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n3 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2020&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#sailName&gt; &quot;Kihei&quot; .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#size&gt; &quot;5.5E0&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .
+_:c14n4 &lt;https://windsurf.grotto-networking.com/selective#year&gt; &quot;2023&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n0 .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n1 .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n3 .
+_:c14n5 &lt;https://windsurf.grotto-networking.com/selective#sails&gt; _:c14n4 .
+        </pre>
+        <p>
+To prevent such information leakage from the assignment of these blank node ids
+and the ordering they impose on the <em>statements</em>, an HMAC based PRF is
+run on the <em>blank node ids</em>. The HMAC secret key is only shared between
+the <em>issuer</em> and <em>holder</em> and each <em>Base Proof</em> generated
+by the issuer uses a new HMAC key. An example of this can be seen in the
+<a href="https://www.w3.org/TR/vc-di-ecdsa/#example-canonical-hmac-document">
+canonical HMAC test vector</a> of [[DI-ECDSA]].
+<!-- [canonical HMAC test vector](https://w3c.github.io/vc-di-ecdsa/#example-canonical-hmac-document) of [[VC-ECDSA-SD]]. -->
+<!-- <a href="https://www.w3.org/TR/vc-di-ecdsa/#hashmandatorynquads">Section 3.3.17
+hashMandatoryNQuads</a> of the [[DI-ECDSA]] specification, passing -->
+As discussed in the next section, for BBS to preserve unlinkability we do not
+use HMAC based <em>blank node ids</em> but produce a <q>shuffled</q> version of
+the ordering based on the HMAC as shown in test vector <a href="#example-canonical-hmac-document"></a>.
+Note that this furnishes less information hiding concerning <em>blank node
+ids</em> than in the ECDSA-SD approach, since information the number of
+<em>blank node ids</em> can leak, but prevents linkage attacks via the
+essentially unique identifiers produced by applying an HMAC to blank node ids.
+        </p>
+      </section>
+      <section>
+        <h3>Selective Disclosure and Unlinkability</h3>
+        <p>
+In some uses of VCs it can be important to the privacy of a <em>holder</em> to
+prevent the tracking or linking of multiple different <em>verifier</em>
+interactions. In particular we consider two important cases (i) <em>verifier to
+issuer collusion</em>, and (ii) <em>verifier to verifier collusion</em>. In the
+first case, shown in <a href="#verifier-issuer"></a>, a <em>verifier</em>
+reports back to the original
+<em>issuer</em> of the credential on an interaction with a <em>holder</em>. In
+this situation, the <em>issuer</em> could track all the <em>holder</em>
+interactions with various <em>verifiers</em> using the issued VC. In the second
+situation, shown in <a href="#verifier-verifier"></a>, multiple
+<em>verifiers</em> collude to share
+information about <em>holders</em> with whom they have interacted.
+        </p>
+        <figure id="verifier-issuer">
+          <img style="margin: auto; display: block; width: 100%;"
+               src="diagrams/VerifierIssuerCollusion.svg" alt="
+Diagram showing multiple verifiers sending data back to the issuer.
+The diagram is laid out top to bottom with a circle labeled issuer at the top,
+connected to a circle label holder below. From the circle labeled holder there
+are multple arrows to additional circles labeled verifiers. From the circles
+labeled verifiers there are dashed arrows back to the circle labeled issuer
+showing collusion data flow.">
+          <figcaption style="text-align: center;">
+Verifier to verifier collusion.
+          </figcaption>
+        </figure>
+        <figure id="verifier-verifier">
+          <img style="margin: auto; display: block; width: 100%;"
+               src="diagrams/VerifiersCollusion.svg" alt="
+Diagram showing multiple verifiers sharing with each other.
+The diagram is laid out top to bottom with a circle labeled issuer at the top,
+connected to a circle label holder below. From the circle labeled holder there
+are multple arrows to additional circles labeled verifiers. From the circles
+labeled verifiers there are dashed arrows back to other circles labeled issuer
+to show verifier to verifier collusion data flows.">
+          <figcaption style="text-align: center;">
+Verifier to issuer collusion.
+          </figcaption>
+        </figure>
+        <p>
+We use the term <em>unlinkability</em> to describe the property of a VC system
+to prevent such "linkage attacks"  on holder privacy. Although the term
+unlinkability is relatively new section 3.3 of [[NISTIR8053]] discusses and
+gives a case study of <q>Re-identification through Linkage Attacks</q>. A
+systemization of knowledge on <q>linkage attack on data privacy</q> can be found
+in [[Powar2023]]. The most widespread use of linkage attack on user privacy
+occurs via the practice of web browser fingerprinting, a survey of which can be
+found in [[Pugliese2020]].
+        </p>
+        <p>
+To quantify the notion of linkage, [[Powar2023]] introduces the idea of an
+<strong>anonymity set</strong>. In the VC case we are concerned with here, the
+anonymity set would contain the <em>holder</em> of a particular VC and other
+holders associated with a particular <em>issuer</em>. The smaller the anonymity
+set the more likely the holder can be tracked across verifiers. Since a signed
+VC contains a reference to a public key of the issuer, the starting size for the
+anonymity set for a holder possessing a VC from a particular issuer is the
+number of VC issued by that issuer with that particular public/private key pair.
+Non-malicious issuers are expected to minimize the number of public/private key
+pairs used to issue VCs. Note that the anonymity set idea is similar to the
+group privacy concept in [[vc-bitstring-status-list]]. When we use the term
+linkage here we generally mean any mechanism that results in a reduction in size
+of the anonymity set.
+        </p>
+        <p>
+Sources of linkage in a VC system supporting selective disclosure:
+        </p>
+        <ol>
+          <li>
+Artifacts from cryptographic primitives.
+          </li>
+          <li>
+Artifacts from mapping a VC into a set of statements suitable for selective disclosure.
+          </li>
+          <li>
+Artifacts from Proof Options and Mandatory reveal Information in the VC.
+          </li>
+          <li>
+Selectively revealed information in the VC.
+          </li>
+          <li>
+External VC System Based Linkage
+          </li>
+        </ol>
+        <p>
+We discuss each of these below.
+        </p>
+        <section>
+          <h4>Linkage via Cryptographic Artifacts</h4>
+          <p>
+Cryptographic Hashes, HMACs, and digital signatures by their nature generate
+highly unique identifiers. The output of a hash function such as SHA-256, by its
+collision resistance properties, are guaranteed to be essentially unique given
+different inputs and result in a strong linkage, i.e., reduces the anonymity set
+size to one. Similarly deterministic signature algorithms such as Ed25519 and
+deterministic ECDSA will produce essentially unique outputs for different inputs
+and lead to strong linkages.
+          </p>
+          <p>
+This implies that <em>holders</em> can be easily tracked across
+<em>verifiers</em> via digital signature, HMAC, or hash artifacts inside VCs and
+hence are vulnerable to <em>verifier-verifier</em> collusion and
+<em>verifier-issuer</em> collusion. Randomized signature algorithms such as some
+forms of ECDSA can permit the issuer to generate many distinct signatures on the
+same inputs and send these to the <em>holder</em> for use with different
+<em>verifiers</em>. Such an approach could be used to prevent
+<em>verifier-verifier</em> collusion based tracking but cannot help with
+<em>verifier-issuer</em> collusion.
+          </p>
+          <p>
+To achieve unlinkability requires specially designed cryptographic signature
+schemes that allow the <em>holder</em> to generate what is called a <q>zero
+knowledge proof of knowledge of a signature</q> (ZKPKS). What this means is that
+the <em>holder</em> can take a signature from the <em>issuer</em> in such a
+scheme, compute a ZKPKS to send to a <em>verifier</em>. This ZKPKS cannot be
+linked back to the original signature, but has all the desirable properties of a
+signature, i.e., the <em>verifier</em> can use it to verify that the messages
+were signed by the <em>issuers</em> public key and that the messages have not
+been altered. In addition, the <em>holder</em> can generate as many ZKPKSs as
+desired for different <em>verifiers</em> and these are essentially independent
+and unlinkable. BBS is one such signature scheme that supports this capability.
+          </p>
+          <p>
+Although the ZKPKS, known as a <em>BBS proof</em> in this document, has
+guaranteed unlinkability properties. BBS when used with selective disclosure has
+two artifacts that can contribute to linkability. These are the total number of
+messages originally signed, and the index values for the revealed statements.
+See the privacy considerations in [[CFRG-BBS-SIGNATURE]] for a discussion and
+mitigation techniques.
+          </p>
+          <p>
+As mentioned in the section on <q>Issuer's Public Keys</q> of
+[[CFRG-BBS-SIGNATURE]] there is the potential threat that an <em>issuer</em> might
+use multiple public keys with some of those used to track a specific subset of
+users via <em>verifier-issuer</em> collusion. Since the <em>issuers</em> public
+key has to be visible to the <em>verifier</em>, i.e., it is referenced in the BBS
+proof (derived proof) this can be used as a linkage point if the <em>issuer</em>
+has many different public keys and particularly if it uses a subset of those
+keys with a small subset of users (<em>holders</em>).
+          </p>
+        </section>
+        <section>
+          <h4>Linkage via VC Processing</h4>
+          <p>
+We saw in the section on information leakage that RDF canonicalization uses a
+hash function to order statements and that a further <q>shuffle</q> of the order
+of the statements is performed based on an HMAC. This can leave a fingerprint
+that might allow for some linkage. How strong of a linkage is dependent on the
+number of blank nodes, essentially JSON objects within the VC, and the number of
+indexes revealed. Given <em>n</em> blank nodes and <em>k</em> disclosed indexes
+in the worst case this would be a reduction in the anonymity set size by a
+factor of <em>C(n, k)</em>, i.e., the number combinations of size <em>k</em>
+chosen from a set of <em>n</em> elements. One can keep this number quite low by
+reducing the number of blank nodes in the VC, e.g., keep the VC short and
+simple.
+          </p>
+        </section>
+        <section>
+          <h4>Linkage via Proof Options and Mandatory Reveal</h4>
+          <p>
+In the [[vc-data-integrity]] specification, a number of properties of the
+`proof` attribute of a VC are given. Care has to be taken that optional fields
+ought not provide strong linkage across verifiers. The optional fields include:
+<em>id</em>, <em>created</em>, <em>expires</em>, <em>domain</em>,
+<em>challenge</em>, and <em>nonce</em>. For example the optional
+<em>created</em> field is a `dateTimeStamp` object which can specify the
+creation date for the proof down to an arbitrary sub-second granularity. Such
+information, if present, could greatly reduce the size of the anonymity set. If
+the issuer wants to include such information they ought to make it as coarse
+grained as possible, relative to the number of VCs being issued over time.
+          </p>
+          <p>
+The <em>issuer</em> can also compel a <em>holder</em> to reveal certain
+statements to a <em>verifier</em> via the `mandatoryPointers` input used in the
+creation of the <em>Base Proof</em>. See section
+<a href="#base-proof-transformation-bbs-2023"></a>,
+<a href="#example-mandatory-pointers"></a>, and
+<a href="#example-json-pointers-and-values"></a>. By <q>compel</q> we mean that
+a generated Derived Proof will not verify unless these statements are revealed
+to the <em>verifier</em>. Care should be taken such that if such information is
+required to be disclosed, that the anonymity set remains sufficiently large.
+          </p>
+        </section>
+        <section>
+          <h4>Linkage via Holder Selective Reveal</h4>
+          <p>
+As discussed in [[Powar2023]] there are many documented cases of
+re-identification of individuals from linkage attacks. Hence the <em>holder</em>
+is urged  to reveal as little information as possible to help keep the anonymity
+set large. In addition, it has been shown a number of times that innocuous
+seeming information can be highly unique and thus leading to re-identification
+or tracking.  See [[NISTIR8053]] for a walk through of a particularly famous
+case of a former governor of Massachusetts and [[Powar2023]] for further
+analysis and categorization of 94 such public cases.
+          </p>
+        </section>
+        <section>
+          <h4>External VC System Based Linkage</h4>
+          <p>
+It ought to be pointed out that maintaining unlinkability, i.e., anonymity,
+requires care in the systems holding and communicating the VCs. Networking
+artifacts such as IP address (layer 3) or Ethernet/MAC address (layer 2) are
+well known sources of linkage. For example, mobile phone MAC addresses can be
+used to track users if they revisited a particular access point, this led to
+mobile phone manufacturers providing a MAC address randomization feature.
+Public IP addresses generally provide enough information to geolocate an
+individual to a city or region within a country potentially greatly reducing
+the anonymity set.
+          </p>
+        </section>
+      </section>
     </section>
 
     <section class="appendix informative">
