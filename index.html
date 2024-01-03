@@ -2036,6 +2036,23 @@ simple.
           </p>
         </section>
         <section>
+          <h4>Linkage via JSON-LD Node Identifiers</h4>
+          <p>
+JSON-LD is a JSON-based format to serialize Linked Data. As such it supports
+assigning each object (node in JSON-LD terminology) within a document a globally
+unambiguous `@id` attribute (node identifier). This allows for <q>the linking of
+linked data</q>, enabling information about the same entity to be correlated.
+This correlation can be desirable or undesirable, depending on the use case.
+When using BBS for its unlinkability property, globally unambiguous node
+identifiers cannot be used for individuals or for their personally identifiable
+information since the strong linkage they provide is undesirable. Note that the
+usage of such identifiers is acceptable to express statements about non-personal
+information (e.g., using a globally unambiguous identifier to identify a large
+country or a concert event). Also, JSON-LD's use of `@context` which maps terms
+to IRIs does not, in general, affect unlinkability.
+          </p>
+        </section>
+        <section>
           <h4>Linkage via Proof Options and Mandatory Reveal</h4>
           <p>
 In the [[vc-data-integrity]] specification, a number of properties of the
