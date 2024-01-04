@@ -599,8 +599,11 @@ and "mandatoryPointers", is produced  as output.
           </p>
 
           <ol class="algorithm">
+<!-- <span class="codepoint" translate="no"><bdi lang="en">u</bdi><code class="uname">U+0055 LATIN SMALL LETTER U</code></span>  -->
             <li>
-Ensure the `proofValue` string starts with `u`, indicating that it is a
+Ensure the `proofValue` string starts with
+<span class="codepoint" translate="no"><bdi lang="en">u</bdi>
+<code class="uname">U+0055 LATIN SMALL LETTER U</code></span>, indicating that it is a
 multibase-base64url-no-pad-encoded value, and throw an error if it does not.
             </li>
             <li>
@@ -711,10 +714,9 @@ array (e.g., `nonMandatoryIndexes.indexOf(key)`), and add this value to the
                 </li>
               </ol>
             </li>
-
             <li>
-Initialize `bbsMessages` to an array of byte arrays obtained from the
-UTF-8 encoding of the the values in the `nonMandatory` array.
+Initialize `bbsMessages` to an array of byte arrays containing the values in the
+`nonMandatory` array of strings encoded using the UTF-8 [[i18n-glossary]] character encoding.
             </li>
             <li>
 Recompute the `bbsHeader` using the following steps:
@@ -893,8 +895,11 @@ contains a set of five elements, using the names "bbsProof", "labelMap",
 
           <ol class="algorithm">
             <li>
-Ensure the `proofValue` string starts with `u`, indicating that it is a
-multibase-base64url-no-pad-encoded value, and throw an error if it does not.
+Ensure the `proofValue` string starts with
+<span class="codepoint" translate="no"><bdi lang="en">u</bdi>
+<code class="uname">U+0055 LATIN SMALL LETTER U</code></span>, indicating that
+it is a multibase-base64url-no-pad-encoded value, and throw an error if it does
+not.
             </li>
             <li>
 Initialize `decodedProofValue` to the result of base64url-no-pad-decoding the
@@ -1238,8 +1243,8 @@ Initialize `bbsHeader` to the concatenation of `proofHash` and `mandatoryHash` i
 that order.
             </li>
             <li>
-Initialize `bbsMessages` to an array of byte arrays obtained from the
-UTF-8 encoding of the the values in the `nonMandatory` array.
+Initialize `bbsMessages` to an array of byte arrays containing the values in the
+`nonMandatory` array of strings encoded using the UTF-8 character encoding.
             </li>
             <li>
 Compute the `bbsSignature` using the `Sign` procedure of [[CFRG-BBS-Signature]]
