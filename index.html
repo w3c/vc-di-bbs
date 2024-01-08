@@ -428,6 +428,11 @@ and [[?MULTICODEC]].
           <h3>DataIntegrityProof</h3>
 
           <p>
+A proof contains the attributes specified in the
+<a href="https://www.w3.org/TR/vc-data-integrity/#proofs">Proofs section</a>
+of [[VC-DATA-INTEGRITY]] with the following restrictions.
+          </p>
+          <p>
 The `verificationMethod` property of the proof MUST be a URL.
 Dereferencing the `verificationMethod` MUST result in an object
 containing a `type` property with the value set to
@@ -439,15 +444,6 @@ The `type` property of the proof MUST be `DataIntegrityProof`.
           </p>
           <p>
 The `cryptosuite` property of the proof MUST be `bbs-2023`.
-          </p>
-          <p>
-The `created` property of the proof MUST be an [[XMLSCHEMA11-2]]
-formatted date string.
-          </p>
-          <p>
-The `proofPurpose` property of the proof MUST be a string, and MUST
-match the verification relationship expressed by the verification method
-`controller`.
           </p>
           <p>
 The value of the `proofValue` property of the proof MUST be an BBS signature or
