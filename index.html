@@ -602,9 +602,12 @@ and "mandatoryPointers", is produced  as output.
           <ol class="algorithm">
             <li>
 Ensure the `proofValue` string starts with
-<span class="codepoint" translate="no"><bdi lang="en">u</bdi>
-<code class="uname">U+0055 LATIN SMALL LETTER U</code></span>, indicating that it is a
-multibase-base64url-no-pad-encoded value, and throw an error if it does not.
+<span class="codepoint" translate="no">
+  <bdi lang="en"><code title="LATIN SMALL LETTER U">u</code></bdi>
+  (<code class="codepoint">U+0075</code>
+  <code class="uname">LATIN SMALL LETTER U</code>)</span>,
+indicating that it is a `multibase-base64url-no-pad-encoded` value, and throw
+an error if it does not.
             </li>
             <li>
 Initialize `decodedProofValue` to the result of base64url-no-pad-decoding the
