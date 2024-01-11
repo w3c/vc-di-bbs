@@ -567,7 +567,7 @@ Initialize a byte array, `proofValue`, that starts with the BBS base proof
 header bytes `0xd9`, `0x5d`, and `0x02`.
             </li>
             <li>
-Initialize `components` to an array with five elements containing the values of:
+Initialize `components` to an array with three elements containing the values of:
 `bbsSignature`, `hmacKey`, and `mandatoryPointers`.
             </li>
             <li>
@@ -888,7 +888,7 @@ starting with "`u`" and ending with the base64url-no-pad-encoded value of
 The following algorithm parses the components of the derived proof value.
 The required input is a derived proof value (<var>proofValue</var>). A
 A single <em>derived proof value</em> value object is produced as output, which
-contains a set of five elements, using the names "bbsProof", "labelMap",
+contains a set of four elements, using the names "bbsProof", "labelMap",
 "mandatoryIndexes", and "selectiveIndexes".
           </p>
 
@@ -924,7 +924,7 @@ algorithm in Section <a href="#decompresslabelmap"></a>, passing the existing
 second element of `components` as `compressedLabelMap`.
             </li>
             <li>
-Return <em>derived proof value</em> as an object with properties set to the five
+Return <em>derived proof value</em> as an object with properties set to the four
 elements, using the names "`bbsProof`", "`labelMap`", "`mandatoryIndexes`", and
 "`selectiveIndexes`" respectively.
             </li>
