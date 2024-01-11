@@ -622,7 +622,7 @@ bytes `0xd9`, `0x5d`, and `0x02`, and throw an error if it does not.
             </li>
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
-bytes that follow the three-byte ECDSA-SD base proof header. Ensure the result
+bytes that follow the three-byte BBS base proof header. Ensure the result
 is an array of three elements.
             </li>
             <li>
@@ -914,7 +914,7 @@ Initialize `decodedProofValue` to the result of base64url-no-pad-decoding the
 substring that follows the leading `u` in `proofValue`.
             </li>
             <li>
-Ensure that the `decodedProofValue` starts with the ECDSA-SD disclosure proof
+Ensure that the `decodedProofValue` starts with the BBS disclosure proof
 header bytes `0xd9`, `0x5d`, and `0x03`, and throw an error if it does not.
             </li>
 <!-- [bbsProof, labelMapCompressed, mandatoryIndexes, adjSelectedIndexes] -->
