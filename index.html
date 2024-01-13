@@ -1336,7 +1336,9 @@ obtained from the UTF-8 encoding of the elements of the `nonMandatory` array.
 <!-- result = ProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes) -->
             <li>
 Initialize `verificationResult` to the result of applying the verification
-algorithm `ProofVerify` of [[CFRG-BBS-SIGNATURE]]
+algorithm
+`ProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes)` of
+[[CFRG-BBS-SIGNATURE]]
 with `PK` set as the public key of the original issuer, `proof` set as `bbsProof`,
 `header` set as `bbsHeader`, `disclosed_messages` set as `disclosedMessages`,
 `ph` set as `presentationHeader`, and `disclosed_indexes` set as
