@@ -633,7 +633,8 @@ The following algorithm creates data to be used to generate a derived proof. The
 inputs include a JSON-LD document (<var>document</var>), a BBS base proof
 (<var>proof</var>), an array of JSON pointers to use to selectively disclose
 statements (<var>selectivePointers</var>), an OPTIONAL BBS
-<var>presentationHeader</var> (byte array), and any custom JSON-LD API options
+<var>presentationHeader</var> (byte array that defaults to an empty byte array if
+not present), and any custom JSON-LD API options
 (such as a document loader). A single object, <em>disclosure data</em>, is
 produced as output, which contains the "bbsProof", "labelMap",
 "mandatoryIndexes", "selectiveIndexes", "presentationHeader", and
