@@ -1248,9 +1248,10 @@ for the `messages`
             </li>
             <li>
 Initialize `proofValue to the result of calling the algorithm in Section
-<a href="#serializebaseproofvalue"></a>, passing `bbsSignature`,
-`hmacKey`, and `mandatoryPointers` as parameters
-to the algorithm.
+<a href="#serializebaseproofvalue"></a>, passing `bbsSignature`, `bbsHeader`,
+`publicKey`, `hmacKey`, and `mandatoryPointers` as parameters
+to the algorithm. Where `publicKey` is a byte array of the public key encoded
+according to [[CFRG-BBS-SIGNATURE]].
             </li>
             <li>
 Return `proofValue` as <em>digital proof</em>.
