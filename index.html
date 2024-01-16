@@ -571,7 +571,7 @@ header bytes `0xd9`, `0x5d`, and `0x02`.
             </li>
             <li>
 Initialize `components` to an array with five elements containing the values of:
-`bbsSignature`, `hmacKey`, and `mandatoryPointers`.
+`bbsSignature`, `bbsHeader`, `publicKey`, `hmacKey`, and `mandatoryPointers`.
             </li>
             <li>
 CBOR-encode `components` and append it to `proofValue`.
@@ -594,8 +594,8 @@ Return `baseProof` as <em>base proof</em>.
 The following algorithm parses the components of a `bbs-2023` selective
 disclosure base proof value. The required input is a proof value
 (<var>proofValue</var>). A single object, <em>parsed base proof</em>, containing
-three elements, using the names "bbsSignature", "hmacKey",
-and "mandatoryPointers", is produced  as output.
+three elements, using the names "bbsSignature", "bbsHeader", "publicKey",
+"hmacKey", and "mandatoryPointers", is produced  as output.
           </p>
 
           <ol class="algorithm">
@@ -614,11 +614,11 @@ bytes `0xd9`, `0x5d`, and `0x02`, and throw an error if it does not.
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte ECDSA-SD base proof header. Ensure the result
-is an array of three elements.
+is an array of draft-irtf-cfrg-pairing-friendly-curves-11 elements.
             </li>
             <li>
 Return an object with properties set to the three elements, using the names
-"bbsSignature", "hmacKey", and "mandatoryPointers",
+"bbsSignature", "bbsHeader", "publicKey", "hmacKey", and "mandatoryPointers",
 respectively.
             </li>
           </ol>
