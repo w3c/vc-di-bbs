@@ -80,13 +80,6 @@
         alternateFormats: [ {uri: "diff-20111214.html", label: "diff to previous version"} ],
         */
         localBiblio:  {
-          "RDF-DATASET-NORMALIZATION": {
-            title:    "RDF Dataset Normalization 1.0",
-            href:     "http://json-ld.github.io/normalization/spec/",
-            authors:  ["David Longley", "Manu Sporny"],
-            status:   "CGDRAFT",
-            publisher:  "JSON-LD Community Group"
-          },
           "RDF-CONCEPTS": {
             title:    "RDF 1.1 Concepts and Abstract Syntax",
             href:     "https://www.w3.org/TR/rdf11-concepts/",
@@ -284,8 +277,8 @@ credential received from the holder.
       <p>
 Applying the BBS signature scheme to verifiable credentials involves the
 processing specified in this document.
-In general the suite uses the RDF Dataset Normalization Algorithm
-[[RDF-DATASET-NORMALIZATION]] to transform an input document into its canonical
+In general the suite uses the RDF Dataset Canonicalization Algorithm
+[[RDF-CANON]] to transform an input document into its canonical
 form. An issuer then uses selective disclosure primitives to separate the
 canonical form into mandatory and non-mandatory statements. These are processed
 separately with other information to serve as the inputs to the BBS `Sign`
@@ -296,7 +289,7 @@ to ascertain validity.
       </p>
       <p>
 Similarly, on receipt of a BBS signed credential, a holder uses the RDF Dataset
-Normalization Algorithm [[RDF-DATASET-NORMALIZATION]] to transform an input
+Canonicalization Algorithm [[RDF-CANON]] to transform an input
 document into its canonical form, and then applies selective disclosure
 primitives to separate the canonical form into mandatory and selectively
 disclosed statements, which are appropriately processed and serve as inputs to
