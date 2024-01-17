@@ -2186,8 +2186,8 @@ This is shown in the following two examples.
           <pre class="example nohighlight" title="Canonical Base Proof Configuration" data-include="TestVectors/addProofConfigCanon.txt"
           data-include-format="text"></pre>
           <p>
-In the hashing step, we compute the SHAKE-256 hash of the canonicalized proof
-options to produce the `proofHash`, and we compute the SHAKE-256 hash of the
+In the hashing step, we compute the SHA-256 hash of the canonicalized proof
+options to produce the `proofHash`, and we compute the SHA-256 hash of the
 join of all the mandatory N-Quads to produce the `mandatoryHash`. These are
 shown below in hexadecimal format.
           </p>
@@ -2210,6 +2210,15 @@ used in the signed base document shown below.
         </section>
         <section>
           <h4>Derived Proof</h4>
+          <p>
+In the creation of <q>BBS proofs</q> random numbers are utilized and an optional
+`presentationHeader` can be passed in. To furnish a deterministic set of test
+vectors we utilize the <q>Mocked Random Scalars</q> procedure from
+[[CFRG-BBS-SIGNATURE]]. For the generation of the derived proof test vectors the
+following `seed` and `presentationHeader` values in hex are given below.
+          </p>
+          <pre class="example nohighlight" title="seed and presentation header values" data-include="TestVectors/BBSDeriveMaterial.json"
+          data-include-format="text"></pre>
           <p>
 To create a derived proof, a holder starts with a signed document
 containing a base proof. The base document we will use for these test vectors is
