@@ -2211,11 +2211,11 @@ used in the signed base document shown below.
         <section>
           <h4>Derived Proof</h4>
           <p>
-In the creation of <q>BBS proofs</q> random numbers are utilized and an optional
-`presentationHeader` can be passed in. To furnish a deterministic set of test
-vectors we utilize the <q>Mocked Random Scalars</q> procedure from
-[[CFRG-BBS-SIGNATURE]]. For the generation of the derived proof test vectors the
-following `seed` and `presentationHeader` values in hex are given below.
+Random numbers are used, and an optional `presentationHeader` can be an input,
+for the creation of <q>BBS proofs</q>. To furnish a deterministic set of test
+vectors, we used the <q>Mocked Random Scalars</q> procedure from
+[[CFRG-BBS-SIGNATURE]]. The `seed` and `presentationHeader` values we used for
+generation of the derived proof test vectors are given in hex, below.
           </p>
           <pre class="example nohighlight" title="seed and presentation header values" data-include="TestVectors/BBSDeriveMaterial.json"
           data-include-format="text"></pre>
