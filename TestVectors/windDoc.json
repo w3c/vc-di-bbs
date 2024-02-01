@@ -8,6 +8,7 @@
   "type": [
     "VerifiableCredential"
   ],
+  "issuer": "https://vc.example/windsurf/racecommittee",
   "credentialSubject": {
     "sailNumber": "Earth101",
     "sails": [
