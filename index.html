@@ -80,13 +80,6 @@
         alternateFormats: [ {uri: "diff-20111214.html", label: "diff to previous version"} ],
         */
         localBiblio:  {
-          "RDF-DATASET-NORMALIZATION": {
-            title:    "RDF Dataset Normalization 1.0",
-            href:     "http://json-ld.github.io/normalization/spec/",
-            authors:  ["David Longley", "Manu Sporny"],
-            status:   "CGDRAFT",
-            publisher:  "JSON-LD Community Group"
-          },
           "RDF-CONCEPTS": {
             title:    "RDF 1.1 Concepts and Abstract Syntax",
             href:     "https://www.w3.org/TR/rdf11-concepts/",
@@ -209,7 +202,8 @@
           }
         },
         lint: {"no-unused-dfns": false},
-        postProcess: [restrictRefs]
+        postProcess: [restrictRefs],
+        xref: [ "i18n-glossary" ]
       };
     </script>
         <style>
@@ -284,8 +278,8 @@ credential received from the holder.
       <p>
 Applying the BBS signature scheme to verifiable credentials involves the
 processing specified in this document.
-In general the suite uses the RDF Dataset Normalization Algorithm
-[[RDF-DATASET-NORMALIZATION]] to transform an input document into its canonical
+In general the suite uses the RDF Dataset Canonicalization Algorithm
+[[RDF-CANON]] to transform an input document into its canonical
 form. An issuer then uses selective disclosure primitives to separate the
 canonical form into mandatory and non-mandatory statements. These are processed
 separately with other information to serve as the inputs to the BBS `Sign`
@@ -296,7 +290,7 @@ to ascertain validity.
       </p>
       <p>
 Similarly, on receipt of a BBS signed credential, a holder uses the RDF Dataset
-Normalization Algorithm [[RDF-DATASET-NORMALIZATION]] to transform an input
+Canonicalization Algorithm [[RDF-CANON]] to transform an input
 document into its canonical form, and then applies selective disclosure
 primitives to separate the canonical form into mandatory and selectively
 disclosed statements, which are appropriately processed and serve as inputs to
@@ -427,6 +421,11 @@ and [[?MULTICODEC]].
           <h3>DataIntegrityProof</h3>
 
           <p>
+A proof contains the attributes specified in the
+<a href="https://www.w3.org/TR/vc-data-integrity/#proofs">Proofs section</a>
+of [[VC-DATA-INTEGRITY]] with the following restrictions.
+          </p>
+          <p>
 The `verificationMethod` property of the proof MUST be a URL.
 Dereferencing the `verificationMethod` MUST result in an object
 containing a `type` property with the value set to
@@ -440,17 +439,8 @@ The `type` property of the proof MUST be `DataIntegrityProof`.
 The `cryptosuite` property of the proof MUST be `bbs-2023`.
           </p>
           <p>
-The `created` property of the proof MUST be an [[XMLSCHEMA11-2]]
-formatted date string.
-          </p>
-          <p>
-The `proofPurpose` property of the proof MUST be a string, and MUST
-match the verification relationship expressed by the verification method
-`controller`.
-          </p>
-          <p>
-The value of the `proofValue` property of the proof MUST be an BBS signature or
-BBS proof produced according to [[CFRG-BBS-SIGNATURE]] then serialized and encoded
+The value of the `proofValue` property of the proof MUST be a BBS signature or
+BBS proof produced according to [[CFRG-BBS-SIGNATURE]] that is serialized and encoded
 according to procedures in section <a href="#algorithms"></a>.
           </p>
         </section>
@@ -546,6 +536,13 @@ Return <var>labelMapFactoryFunction</var>.
             </li>
           </ol>
 
+          <p class="note informative">
+It should be noted that step 1.2 in the above algorithm is identical to step 1.2
+in <a href="https://www.w3.org/TR/vc-di-ecdsa/#createhmacidlabelmapfunction">
+Section 3.3.4 `createHmacIdLabelMapFunction`</a> of [[DI-ECDSA]],
+so developers might be able to reuse the code or call the function if implementing
+both.
+          </p>
         </section>
 
 
@@ -600,8 +597,13 @@ five elements, using the names "bbsSignature", "bbsHeader", "publicKey",
 
           <ol class="algorithm">
             <li>
-Ensure the `proofValue` string starts with `u`, indicating that it is a
-multibase-base64url-no-pad-encoded value, and throw an error if it does not.
+Ensure the `proofValue` string starts with
+<span class="codepoint" translate="no">
+  <bdi lang="en"><code title="LATIN SMALL LETTER U">u</code></bdi>
+  (<code class="codepoint">U+0075</code>
+  <code class="uname">LATIN SMALL LETTER U</code>)</span>,
+indicating that it is a `multibase-base64url-no-pad-encoded` value, and throw
+an error if it does not.
             </li>
             <li>
 Initialize `decodedProofValue` to the result of base64url-no-pad-decoding the
@@ -613,8 +615,8 @@ bytes `0xd9`, `0x5d`, and `0x02`, and throw an error if it does not.
             </li>
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
-bytes that follow the three-byte ECDSA-SD base proof header. Ensure the result
-is an array of five elements.
+bytes that follow the three-byte BBS base proof header. Ensure the result
+is an array of three elements.
             </li>
             <li>
 Return an object with properties set to the five elements, using the names
@@ -711,10 +713,9 @@ array (e.g., `nonMandatoryIndexes.indexOf(key)`), and add this value to the
                 </li>
               </ol>
             </li>
-
             <li>
-Initialize `bbsMessages` to an array of byte arrays obtained from the
-UTF-8 encoding of the the values in the `nonMandatory` array.
+Initialize `bbsMessages` to an array of byte arrays containing the values in the
+`nonMandatory` array of strings encoded using the <a>UTF-8</a> <a>character encoding</a>.
             </li>
 
             <li>
@@ -861,21 +862,26 @@ starting with "`u`" and ending with the base64url-no-pad-encoded value of
 The following algorithm parses the components of the derived proof value.
 The required input is a derived proof value (<var>proofValue</var>). A
 A single <em>derived proof value</em> value object is produced as output, which
-contains a set of five elements, using the names "bbsProof", "labelMap",
-"mandatoryIndexes", and "selectiveIndexes".
+contains a set of four elements, using the names "`bbsProof`", "`labelMap`",
+"`mandatoryIndexes`", and "`selectiveIndexes`".
           </p>
 
           <ol class="algorithm">
             <li>
-Ensure the `proofValue` string starts with `u`, indicating that it is a
-multibase-base64url-no-pad-encoded value, and throw an error if it does not.
+Ensure the `proofValue` string starts with
+<span class="codepoint" translate="no">
+  <bdi lang="en"><code title="LATIN SMALL LETTER U">u</code></bdi>
+  (<code class="codepoint">U+0075</code>,
+  <code class="uname">LATIN SMALL LETTER U</code>)</span>, indicating that
+it is a `multibase-base64url-no-pad-encoded` value, and throw an error if it does
+not.
             </li>
             <li>
 Initialize `decodedProofValue` to the result of base64url-no-pad-decoding the
 substring that follows the leading `u` in `proofValue`.
             </li>
             <li>
-Ensure that the `decodedProofValue` starts with the ECDSA-SD disclosure proof
+Ensure that the `decodedProofValue` starts with the BBS disclosure proof
 header bytes `0xd9`, `0x5d`, and `0x03`, and throw an error if it does not.
             </li>
 <!-- [bbsProof, labelMapCompressed, mandatoryIndexes, adjSelectedIndexes] -->
@@ -892,7 +898,7 @@ algorithm in Section <a href="#decompresslabelmap"></a>, passing the existing
 second element of `components` as `compressedLabelMap`.
             </li>
             <li>
-Return <em>derived proof value</em> as an object with properties set to the five
+Return <em>derived proof value</em> as an object with properties set to the four
 elements, using the names "`bbsProof`", "`labelMap`", "`mandatoryIndexes`", and
 "`selectiveIndexes`" respectively.
             </li>
@@ -1212,8 +1218,8 @@ Initialize `bbsHeader` to the concatenation of `proofHash` and `mandatoryHash` i
 that order.
             </li>
             <li>
-Initialize `bbsMessages` to an array of byte arrays obtained from the
-UTF-8 encoding of the the values in the `nonMandatory` array.
+Initialize `bbsMessages` to an array of byte arrays containing the values in the
+`nonMandatory` array of strings encoded using the <a>UTF-8</a> <a>character encoding</a>.
             </li>
             <li>
 Compute the `bbsSignature` using the `Sign` procedure of [[CFRG-BBS-Signature]]
@@ -1669,7 +1675,7 @@ structural artifacts used to express JSON data that might leak information
 (nesting, map, or array position, etc.) by using JSON-LD processing to transform
 inputs into RDF. RDF can then be expressed as a canonical, flat format of simple
 subject, property, value statements (referred to as claims in the Verifiable
-Credentials Data Model [[VC-DATA-MODEL-2]]). In the following, we examine RDF
+Credentials Data Model [[VC-DATA-MODEL-2.0]]). In the following, we examine RDF
 canonicalization, a general scheme for mapping a verifiable credential in
 JSON-LD format into a set of <em>statements</em> (BBS <em>messages</em>), for
 selective disclosure. We show that after this process is performed, there
@@ -2008,6 +2014,25 @@ factor of <em>C(n, k)</em>, i.e., the number combinations of size <em>k</em>
 chosen from a set of <em>n</em> elements. One can keep this number quite low by
 reducing the number of blank nodes in the VC, e.g., keep the VC short and
 simple.
+          </p>
+        </section>
+        <section>
+          <h4>Linkage via JSON-LD Node Identifiers</h4>
+          <p>
+JSON-LD is a JSON-based format for serialization of Linked Data. As such, it supports
+assigning a globally unambiguous `@id` attribute (node identifier) to each object
+("node", in JSON-LD terminology) within a document. This allows for <q>the linking
+of linked data</q>, enabling information about the same entity to be correlated.
+This correlation can be desirable or undesirable, depending on the use case.
+          </p>
+          <p>
+When using BBS for its unlinkability feature, globally unambiguous node
+identifiers cannot be used for individuals nor for their personally identifiable
+information, since the strong linkage they provide is undesirable. Note that the
+use of such identifiers is acceptable when expressing statements about non-personal
+information (e.g., using a globally unambiguous identifier to identify a large
+country or a concert event). Also note that JSON-LD's use of `@context`, which
+maps terms to IRIs, does not generally affect unlinkability.
           </p>
         </section>
         <section>
