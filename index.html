@@ -80,13 +80,6 @@
         alternateFormats: [ {uri: "diff-20111214.html", label: "diff to previous version"} ],
         */
         localBiblio:  {
-          "RDF-DATASET-NORMALIZATION": {
-            title:    "RDF Dataset Normalization 1.0",
-            href:     "http://json-ld.github.io/normalization/spec/",
-            authors:  ["David Longley", "Manu Sporny"],
-            status:   "CGDRAFT",
-            publisher:  "JSON-LD Community Group"
-          },
           "RDF-CONCEPTS": {
             title:    "RDF 1.1 Concepts and Abstract Syntax",
             href:     "https://www.w3.org/TR/rdf11-concepts/",
@@ -209,7 +202,8 @@
           }
         },
         lint: {"no-unused-dfns": false},
-        postProcess: [restrictRefs]
+        postProcess: [restrictRefs],
+        xref: [ "i18n-glossary" ]
       };
     </script>
         <style>
@@ -284,8 +278,8 @@ credential received from the holder.
       <p>
 Applying the BBS signature scheme to verifiable credentials involves the
 processing specified in this document.
-In general the suite uses the RDF Dataset Normalization Algorithm
-[[RDF-DATASET-NORMALIZATION]] to transform an input document into its canonical
+In general the suite uses the RDF Dataset Canonicalization Algorithm
+[[RDF-CANON]] to transform an input document into its canonical
 form. An issuer then uses selective disclosure primitives to separate the
 canonical form into mandatory and non-mandatory statements. These are processed
 separately with other information to serve as the inputs to the BBS `Sign`
@@ -296,7 +290,7 @@ to ascertain validity.
       </p>
       <p>
 Similarly, on receipt of a BBS signed credential, a holder uses the RDF Dataset
-Normalization Algorithm [[RDF-DATASET-NORMALIZATION]] to transform an input
+Canonicalization Algorithm [[RDF-CANON]] to transform an input
 document into its canonical form, and then applies selective disclosure
 primitives to separate the canonical form into mandatory and selectively
 disclosed statements, which are appropriately processed and serve as inputs to
@@ -427,6 +421,11 @@ and [[?MULTICODEC]].
           <h3>DataIntegrityProof</h3>
 
           <p>
+A proof contains the attributes specified in the
+<a href="https://www.w3.org/TR/vc-data-integrity/#proofs">Proofs section</a>
+of [[VC-DATA-INTEGRITY]] with the following restrictions.
+          </p>
+          <p>
 The `verificationMethod` property of the proof MUST be a URL.
 Dereferencing the `verificationMethod` MUST result in an object
 containing a `type` property with the value set to
@@ -440,17 +439,8 @@ The `type` property of the proof MUST be `DataIntegrityProof`.
 The `cryptosuite` property of the proof MUST be `bbs-2023`.
           </p>
           <p>
-The `created` property of the proof MUST be an [[XMLSCHEMA11-2]]
-formatted date string.
-          </p>
-          <p>
-The `proofPurpose` property of the proof MUST be a string, and MUST
-match the verification relationship expressed by the verification method
-`controller`.
-          </p>
-          <p>
-The value of the `proofValue` property of the proof MUST be an BBS signature or
-BBS proof produced according to [[CFRG-BBS-SIGNATURE]] then serialized and encoded
+The value of the `proofValue` property of the proof MUST be a BBS signature or
+BBS proof produced according to [[CFRG-BBS-SIGNATURE]] that is serialized and encoded
 according to procedures in section <a href="#algorithms"></a>.
           </p>
         </section>
@@ -546,6 +536,13 @@ Return <var>labelMapFactoryFunction</var>.
             </li>
           </ol>
 
+          <p class="note informative">
+It should be noted that step 1.2 in the above algorithm is identical to step 1.2
+in <a href="https://www.w3.org/TR/vc-di-ecdsa/#createhmacidlabelmapfunction">
+Section 3.3.4 `createHmacIdLabelMapFunction`</a> of [[DI-ECDSA]],
+so developers might be able to reuse the code or call the function if implementing
+both.
+          </p>
         </section>
 
 
@@ -571,7 +568,7 @@ header bytes `0xd9`, `0x5d`, and `0x02`.
             </li>
             <li>
 Initialize `components` to an array with five elements containing the values of:
-`bbsSignature`, `hmacKey`, and `mandatoryPointers`.
+`bbsSignature`, `bbsHeader`, `publicKey`, `hmacKey`, and `mandatoryPointers`.
             </li>
             <li>
 CBOR-encode `components` and append it to `proofValue`.
@@ -594,14 +591,19 @@ Return `baseProof` as <em>base proof</em>.
 The following algorithm parses the components of a `bbs-2023` selective
 disclosure base proof value. The required input is a proof value
 (<var>proofValue</var>). A single object, <em>parsed base proof</em>, containing
-three elements, using the names "bbsSignature", "hmacKey",
-and "mandatoryPointers", is produced  as output.
+five elements, using the names "bbsSignature", "bbsHeader", "publicKey",
+"hmacKey", and "mandatoryPointers", is produced  as output.
           </p>
 
           <ol class="algorithm">
             <li>
-Ensure the `proofValue` string starts with `u`, indicating that it is a
-multibase-base64url-no-pad-encoded value, and throw an error if it does not.
+Ensure the `proofValue` string starts with
+<span class="codepoint" translate="no">
+  <bdi lang="en"><code title="LATIN SMALL LETTER U">u</code></bdi>
+  (<code class="codepoint">U+0075</code>
+  <code class="uname">LATIN SMALL LETTER U</code>)</span>,
+indicating that it is a `multibase-base64url-no-pad-encoded` value, and throw
+an error if it does not.
             </li>
             <li>
 Initialize `decodedProofValue` to the result of base64url-no-pad-decoding the
@@ -613,12 +615,12 @@ bytes `0xd9`, `0x5d`, and `0x02`, and throw an error if it does not.
             </li>
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
-bytes that follow the three-byte ECDSA-SD base proof header. Ensure the result
+bytes that follow the three-byte BBS base proof header. Ensure the result
 is an array of three elements.
             </li>
             <li>
-Return an object with properties set to the three elements, using the names
-"bbsSignature", "hmacKey", and "mandatoryPointers",
+Return an object with properties set to the five elements, using the names
+"bbsSignature", "bbsHeader", "publicKey", "hmacKey", and "mandatoryPointers",
 respectively.
             </li>
           </ol>
@@ -643,7 +645,7 @@ produced as output, which contains the `bbsProof`, `labelMap`,
 
           <ol class="algorithm">
             <li>
-Initialize `bbsSignature`, `hmacKey`,  and
+Initialize `bbsSignature`, `bbsHeader`, `publicKey`, `hmacKey`,  and
 `mandatoryPointers` to the values of the associated properties in the object
 returned when calling the algorithm in Section
 <a href="#parsebaseproofvalue"></a>, passing the `proofValue` from `proof`.
@@ -714,36 +716,9 @@ array (e.g., `nonMandatoryIndexes.indexOf(key)`), and add this value to the
                 </li>
               </ol>
             </li>
-
             <li>
-Initialize `bbsMessages` to an array of byte arrays obtained from the
-UTF-8 encoding of the the values in the `nonMandatory` array.
-            </li>
-            <li>
-Recompute the `bbsHeader` using the following steps:
-
-              <ol class="algorithm">
-                <li>
-Initialize `proofHash` to the result of calling the RDF Dataset Canonicalization
-algorithm [[RDF-CANON]] on `proof` with the `proofValue` removed and then
-cryptographically
-hashing the result using the same hash that is used by the signature algorithm,
-i.e., SHAKE-256. Note: This step can be performed in parallel;
-it only needs to be completed before this algorithm terminates, as the result is
-part of the return value.
-                </li>
-                <li>
-Initialize `mandatoryHash` to the result of calling the algorithm in
-<a href="https://www.w3.org/TR/vc-di-ecdsa/#hashmandatorynquads">Section 3.3.17
-hashMandatoryNQuads</a> of the [[DI-ECDSA]] specification, passing the values
-from the map
-<var>groups.mandatory.matching</var> and utilizing the SHAKE-256 algorithm.
-                </li>
-                <li>
-Set  `bbsHeader` to the concatenation of `proofHash` and `mandatoryHash` in that
-order.
-                </li>
-              </ol>
+Initialize `bbsMessages` to an array of byte arrays containing the values in the
+`nonMandatory` array of strings encoded using the <a>UTF-8</a> <a>character encoding</a>.
             </li>
 
             <li>
@@ -899,15 +874,20 @@ contains a set of five elements, using the names `bbsProof`, `labelMap`,
 
           <ol class="algorithm">
             <li>
-Ensure the `proofValue` string starts with `u`, indicating that it is a
-multibase-base64url-no-pad-encoded value, and throw an error if it does not.
+Ensure the `proofValue` string starts with
+<span class="codepoint" translate="no">
+  <bdi lang="en"><code title="LATIN SMALL LETTER U">u</code></bdi>
+  (<code class="codepoint">U+0075</code>,
+  <code class="uname">LATIN SMALL LETTER U</code>)</span>, indicating that
+it is a `multibase-base64url-no-pad-encoded` value, and throw an error if it does
+not.
             </li>
             <li>
 Initialize `decodedProofValue` to the result of base64url-no-pad-decoding the
 substring that follows the leading `u` in `proofValue`.
             </li>
             <li>
-Ensure that the `decodedProofValue` starts with the ECDSA-SD disclosure proof
+Ensure that the `decodedProofValue` starts with the BBS disclosure proof
 header bytes `0xd9`, `0x5d`, and `0x03`, and throw an error if it does not.
             </li>
             <li>
@@ -1244,8 +1224,8 @@ Initialize `bbsHeader` to the concatenation of `proofHash` and `mandatoryHash` i
 that order.
             </li>
             <li>
-Initialize `bbsMessages` to an array of byte arrays obtained from the
-UTF-8 encoding of the the values in the `nonMandatory` array.
+Initialize `bbsMessages` to an array of byte arrays containing the values in the
+`nonMandatory` array of strings encoded using the <a>UTF-8</a> <a>character encoding</a>.
             </li>
             <li>
 Compute the `bbsSignature` using the `Sign` procedure of [[CFRG-BBS-Signature]]
@@ -1254,9 +1234,10 @@ for the `messages`
             </li>
             <li>
 Initialize `proofValue to the result of calling the algorithm in Section
-<a href="#serializebaseproofvalue"></a>, passing `bbsSignature`,
-`hmacKey`, and `mandatoryPointers` as parameters
-to the algorithm.
+<a href="#serializebaseproofvalue"></a>, passing `bbsSignature`, `bbsHeader`,
+`publicKey`, `hmacKey`, and `mandatoryPointers` as parameters
+to the algorithm. Where `publicKey` is a byte array of the public key encoded
+according to [[CFRG-BBS-SIGNATURE]].
             </li>
             <li>
 Return `proofValue` as <em>digital proof</em>.
@@ -1703,7 +1684,7 @@ structural artifacts used to express JSON data that might leak information
 (nesting, map, or array position, etc.) by using JSON-LD processing to transform
 inputs into RDF. RDF can then be expressed as a canonical, flat format of simple
 subject, property, value statements (referred to as claims in the Verifiable
-Credentials Data Model [[VC-DATA-MODEL-2]]). In the following, we examine RDF
+Credentials Data Model [[VC-DATA-MODEL-2.0]]). In the following, we examine RDF
 canonicalization, a general scheme for mapping a verifiable credential in
 JSON-LD format into a set of <em>statements</em> (BBS <em>messages</em>), for
 selective disclosure. We show that after this process is performed, there
@@ -2045,6 +2026,25 @@ simple.
           </p>
         </section>
         <section>
+          <h4>Linkage via JSON-LD Node Identifiers</h4>
+          <p>
+JSON-LD is a JSON-based format for serialization of Linked Data. As such, it supports
+assigning a globally unambiguous `@id` attribute (node identifier) to each object
+("node", in JSON-LD terminology) within a document. This allows for <q>the linking
+of linked data</q>, enabling information about the same entity to be correlated.
+This correlation can be desirable or undesirable, depending on the use case.
+          </p>
+          <p>
+When using BBS for its unlinkability feature, globally unambiguous node
+identifiers cannot be used for individuals nor for their personally identifiable
+information, since the strong linkage they provide is undesirable. Note that the
+use of such identifiers is acceptable when expressing statements about non-personal
+information (e.g., using a globally unambiguous identifier to identify a large
+country or a concert event). Also note that JSON-LD's use of `@context`, which
+maps terms to IRIs, does not generally affect unlinkability.
+          </p>
+        </section>
+        <section>
           <h4>Linkage via Proof Options and Mandatory Reveal</h4>
           <p>
 In the [[vc-data-integrity]] specification, a number of properties of the
@@ -2195,8 +2195,8 @@ This is shown in the following two examples.
           <pre class="example nohighlight" title="Canonical Base Proof Configuration" data-include="TestVectors/addProofConfigCanon.txt"
           data-include-format="text"></pre>
           <p>
-In the hashing step, we compute the SHAKE-256 hash of the canonicalized proof
-options to produce the `proofHash`, and we compute the SHAKE-256 hash of the
+In the hashing step, we compute the SHA-256 hash of the canonicalized proof
+options to produce the `proofHash`, and we compute the SHA-256 hash of the
 join of all the mandatory N-Quads to produce the `mandatoryHash`. These are
 shown below in hexadecimal format.
           </p>
@@ -2219,6 +2219,15 @@ used in the signed base document shown below.
         </section>
         <section>
           <h4>Derived Proof</h4>
+          <p>
+Random numbers are used, and an optional `presentationHeader` can be an input,
+for the creation of <q>BBS proofs</q>. To furnish a deterministic set of test
+vectors, we used the <q>Mocked Random Scalars</q> procedure from
+[[CFRG-BBS-SIGNATURE]]. The `seed` and `presentationHeader` values we used for
+generation of the derived proof test vectors are given in hex, below.
+          </p>
+          <pre class="example nohighlight" title="seed and presentation header values" data-include="TestVectors/BBSDeriveMaterial.json"
+          data-include-format="text"></pre>
           <p>
 To create a derived proof, a holder starts with a signed document
 containing a base proof. The base document we will use for these test vectors is
