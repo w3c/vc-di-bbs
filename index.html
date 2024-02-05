@@ -567,8 +567,8 @@ Initialize a byte array, `proofValue`, that starts with the BBS base proof
 header bytes `0xd9`, `0x5d`, and `0x02`.
             </li>
             <li>
-Initialize `components` to an array with three elements containing the values of:
-`bbsSignature`, `hmacKey`, and `mandatoryPointers`.
+Initialize `components` to an array with five elements containing the values of:
+`bbsSignature`, `bbsHeader`, `publicKey`, `hmacKey`, and `mandatoryPointers`.
             </li>
             <li>
 CBOR-encode `components` and append it to `proofValue`.
@@ -591,8 +591,8 @@ Return `baseProof` as <em>base proof</em>.
 The following algorithm parses the components of a `bbs-2023` selective
 disclosure base proof value. The required input is a proof value
 (<var>proofValue</var>). A single object, <em>parsed base proof</em>, containing
-three elements, using the names "bbsSignature", "hmacKey",
-and "mandatoryPointers", is produced  as output.
+five elements, using the names "bbsSignature", "bbsHeader", "publicKey",
+"hmacKey", and "mandatoryPointers", is produced  as output.
           </p>
 
           <ol class="algorithm">
@@ -619,8 +619,8 @@ bytes that follow the three-byte BBS base proof header. Ensure the result
 is an array of three elements.
             </li>
             <li>
-Return an object with properties set to the three elements, using the names
-"bbsSignature", "hmacKey", and "mandatoryPointers",
+Return an object with properties set to the five elements, using the names
+"bbsSignature", "bbsHeader", "publicKey", "hmacKey", and "mandatoryPointers",
 respectively.
             </li>
           </ol>
@@ -642,7 +642,7 @@ produced as output, which contains the "bbsProof", "labelMap",
 
           <ol class="algorithm">
             <li>
-Initialize `bbsSignature`, `hmacKey`,  and
+Initialize `bbsSignature`, `bbsHeader`, `publicKey`, `hmacKey`,  and
 `mandatoryPointers` to the values of the associated properties in the object
 returned when calling the algorithm in Section
 <a href="#parsebaseproofvalue"></a>, passing the `proofValue` from `proof`.
@@ -717,37 +717,11 @@ array (e.g., `nonMandatoryIndexes.indexOf(key)`), and add this value to the
 Initialize `bbsMessages` to an array of byte arrays containing the values in the
 `nonMandatory` array of strings encoded using the <a>UTF-8</a> <a>character encoding</a>.
             </li>
-            <li>
-Recompute the `bbsHeader` using the following steps:
-
-              <ol class="algorithm">
-                <li>
-Initialize `proofHash` to the result of calling the RDF Dataset Canonicalization
-algorithm [[RDF-CANON]] on `proof` with the `proofValue` removed and then
-cryptographically
-hashing the result using the same hash that is used by the signature algorithm,
-i.e., SHAKE-256. Note: This step can be performed in parallel;
-it only needs to be completed before this algorithm terminates, as the result is
-part of the return value.
-                </li>
-                <li>
-Initialize `mandatoryHash` to the result of calling the algorithm in
-<a href="https://www.w3.org/TR/vc-di-ecdsa/#hashmandatorynquads">Section 3.3.17
-hashMandatoryNQuads</a> of the [[DI-ECDSA]] specification, passing the values
-from the map
-<var>groups.mandatory.matching</var> and utilizing the SHAKE-256 algorithm.
-                </li>
-                <li>
-Set  `bbsHeader` to the concatenation of `proofHash` and `mandatoryHash` in that
-order.
-                </li>
-              </ol>
-            </li>
 
             <li>
 Set `bbsProof` to the value computed by the `ProofGen` procedure from
 [[CFRG-BBS-SIGNATURE]], i.e. `ProofGen(PK, signature, header, ph, messages, disclosed_indexes)`,
-where `PK` is the original issuers public key, `signature` is the
+where `PK` is the original issuer's public key `publicKey`, `signature` is the
 `bbsSignature`, `header` is the `bbsHeader`, `ph` is an empty byte array,
 `messages` is `bbsMessages`, and `disclosed_indexes` is `selectiveIndexes`.
             </li>
@@ -1254,9 +1228,10 @@ for the `messages`
             </li>
             <li>
 Initialize `proofValue to the result of calling the algorithm in Section
-<a href="#serializebaseproofvalue"></a>, passing `bbsSignature`,
-`hmacKey`, and `mandatoryPointers` as parameters
-to the algorithm.
+<a href="#serializebaseproofvalue"></a>, passing `bbsSignature`, `bbsHeader`,
+`publicKey`, `hmacKey`, and `mandatoryPointers` as parameters
+to the algorithm. Where `publicKey` is a byte array of the public key encoded
+according to [[CFRG-BBS-SIGNATURE]].
             </li>
             <li>
 Return `proofValue` as <em>digital proof</em>.
