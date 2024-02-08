@@ -723,7 +723,7 @@ Initialize `bbsMessages` to an array of byte arrays containing the values in the
 
             <li>
 Set `bbsProof` to the value computed by the `ProofGen` procedure from
-[[CFRG-BBS-SIGNATURE]], i.e.
+[[CFRG-BBS-SIGNATURE]], i.e.,
 `ProofGen(PK, signature, header, ph, messages, disclosed_indexes)`,
 where `PK` is the original issuers public key, `signature` is the
 `bbsSignature`, `header` is the `bbsHeader`, `ph` is the  `presentationHeader`
@@ -867,7 +867,7 @@ starting with "`u`" and ending with the base64url-no-pad-encoded value of
           <p>
 The following algorithm parses the components of the derived proof value.
 The required input is a derived proof value (<var>proofValue</var>). A
-A single <em>derived proof value</em> value object is produced as output, which
+single <em>derived proof value</em> object is produced as output, which
 contains a set of five elements, using the names `bbsProof`, `labelMap`,
 `mandatoryIndexes`, `selectiveIndexes`, and `presentationHeader`.
           </p>
@@ -895,7 +895,7 @@ Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS disclosure proof header. Ensure the result
 is an array of five elements —
 a byte array, a map of integers to integers, an
-array of integers, another array of integers and a byte array; otherwise, throw
+array of integers, another array of integers, and a byte array; otherwise, throw
 an error.
             </li>
             <li>
@@ -905,8 +905,8 @@ second element of `components` as `compressedLabelMap`.
             </li>
             <li>
 Return <em>derived proof value</em> as an object with properties set to the five
-elements, using the names "`bbsProof`", "`labelMap`", "`mandatoryIndexes`",
-"`selectiveIndexes`", and "`presentationHeader`" respectively.
+elements, using the names `bbsProof`, `labelMap`, `mandatoryIndexes`,
+`selectiveIndexes`, and `presentationHeader`, respectively.
             </li>
           </ol>
 
@@ -921,8 +921,8 @@ BBS-protected <a>verifiable credential</a>. The inputs include a JSON-LD
 document (<var>document</var>), a BBS disclosure proof (<var>proof</var>),
 and any custom JSON-LD API options (such as a document loader). A single
 <em>verify data</em> object value is produced as output containing the following
-fields: "`bbsProof`", "`proofHash`", "`mandatoryHash`", "`selectedIndexes`",
-"`presentationHeader`", and "`nonMandatory`".
+fields: `bbsProof`, `proofHash`, `mandatoryHash`, `selectedIndexes`,
+`presentationHeader`, and `nonMandatory`.
           </p>
 
           <ol class="algorithm">
