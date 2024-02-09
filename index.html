@@ -454,7 +454,7 @@ according to procedures in section <a href="#algorithms"></a>.
       <p>
 The following algorithms describe how to use verifiable credentials with
 the BBS Signature Scheme [[CFRG-BBS-SIGNATURE]]. When using the BBS signature
-scheme the SHAKE-256 variant SHOULD be used.
+scheme the SHA-256 variant SHOULD be used.
       </p>
 
       <p>
@@ -649,7 +649,7 @@ returned when calling the algorithm in Section
             </li>
             <li>
 Initialize `hmac` to an HMAC API using `hmacKey`. The HMAC uses the same hash
-algorithm used in the signature algorithm, i.e., SHAKE-256.
+algorithm used in the signature algorithm, i.e., SHA-256.
             </li>
             <li>
 Initialize `labelMapFactoryFunction` to the result of calling the
@@ -924,7 +924,7 @@ fields: "`bbsProof`", "`proofHash`", "`mandatoryHash`", "`selectedIndexes`", and
 Initialize `proofHash` to the result of performing RDF Dataset Canonicalization
 [[RDF-CANON]] on the proof options, i.e., the proof  portion of the document
 with the `proofValue` removed. The hash used is the same as that used in
-the signature algorithm, i.e., SHA-256 for a P-256 curve. Note: This step can be
+the signature algorithm, i.e., SHA-256. Note: This step can be
 performed in parallel; it only needs to be completed before this algorithm needs
 to use the `proofHash` value.
             </li>
@@ -1035,7 +1035,7 @@ MUST use UTF-8 encoding.
             <li>
 Initialize `hmac` to an HMAC API using a locally generated and exportable HMAC
 key. The HMAC uses the same hash algorithm used in the signature algorithm,
-i.e., SHAKE-256.
+i.e., SHA-256.
             </li>
             <li>
 Initialize `labelMapFactoryFunction` to the result of calling the
@@ -1096,7 +1096,7 @@ as an object is produced as output.
 Initialize `proofHash` to the result of calling the RDF Dataset Canonicalization
 algorithm [[RDF-CANON]] on `canonicalProofConfig` and then cryptographically
 hashing the result using the same hash that is used by the signature algorithm,
-i.e., SHAKE-256. Note: This step can be performed in parallel;
+i.e., SHA-256. Note: This step can be performed in parallel;
 it only needs to be completed before this algorithm terminates, as the result is
 part of the return value.
             </li>
@@ -1104,7 +1104,7 @@ part of the return value.
 Initialize `mandatoryHash` to the result of calling the the algorithm in
 <a href="https://www.w3.org/TR/vc-di-ecdsa/#hashmandatorynquads">Section 3.3.17
 hashMandatoryNQuads</a> of the [[DI-ECDSA]] specification, passing
-<var>transformedDocument</var>.`mandatory` and utilizing the SHAKE-256
+<var>transformedDocument</var>.`mandatory` and using the SHA-256
 algorithm.
             </li>
             <li>
