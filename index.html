@@ -634,10 +634,13 @@ respectively.
 The following algorithm creates data to be used to generate a derived proof. The
 inputs include a JSON-LD document (<var>document</var>), a BBS base proof
 (<var>proof</var>), an array of JSON pointers to use to selectively disclose
-statements (<var>selectivePointers</var>), and any custom JSON-LD API options
+statements (<var>selectivePointers</var>), an OPTIONAL BBS
+<var>presentationHeader</var> (byte array that defaults to an empty byte array if
+not present), and any custom JSON-LD API options
 (such as a document loader). A single object, <em>disclosure data</em>, is
-produced as output, which contains the "bbsProof", "labelMap",
-"mandatoryIndexes", "selectiveIndexes", and "revealDocument" fields.
+produced as output, which contains the `bbsProof`, `labelMap`,
+`mandatoryIndexes`, `selectiveIndexes`, `presentationHeader`, and
+`revealDocument` fields.
           </p>
 
           <ol class="algorithm">
@@ -720,9 +723,10 @@ Initialize `bbsMessages` to an array of byte arrays containing the values in the
 
             <li>
 Set `bbsProof` to the value computed by the `ProofGen` procedure from
-[[CFRG-BBS-SIGNATURE]], i.e. `ProofGen(PK, signature, header, ph, messages, disclosed_indexes)`,
-where `PK` is the original issuer's public key `publicKey`, `signature` is the
-`bbsSignature`, `header` is the `bbsHeader`, `ph` is an empty byte array,
+[[CFRG-BBS-SIGNATURE]], i.e.,
+`ProofGen(PK, signature, header, ph, messages, disclosed_indexes)`,
+where `PK` is the original issuers public key, `signature` is the
+`bbsSignature`, `header` is the `bbsHeader`, `ph` is the  `presentationHeader`
 `messages` is `bbsMessages`, and `disclosed_indexes` is `selectiveIndexes`.
             </li>
 
@@ -823,9 +827,10 @@ Return `map` as <em>decompressed label map</em>.
 
           <p>
 The following algorithm serializes a derived proof value. The required inputs
-are a BBS proof (<var>bbsProof</var>),  a label map (<var>labelMap</var>), an
-array of mandatory indexes (<var>mandatoryIndexes</var>), and an array of
-selective indexes (<var>selectiveIndexes</var>). A single <em>derived proof</em>
+are a BBS proof (<var>bbsProof</var>), a label map (<var>labelMap</var>), an
+array of mandatory indexes (<var>mandatoryIndexes</var>), an array of
+selective indexes (<var>selectiveIndexes</var>), and a BBS presentation header
+(<var>presentationHeader</var>). A single <em>derived proof</em>
 value, serialized as a byte string, is produced as output.
           </p>
 
@@ -839,8 +844,9 @@ Initialize a byte array, `proofValue`, that starts with the BBS disclosure
 proof header bytes `0xd9`, `0x5d`, and `0x03`.
             </li>
             <li>
-Initialize `components` to an array with four elements containing the values of
-`bbsProof`, `compressedLabelMap`, `mandatoryIndexes`, and `selectiveIndexes`.
+Initialize `components` to an array with five elements containing the values of
+`bbsProof`, `compressedLabelMap`, `mandatoryIndexes`, `selectiveIndexes`, and
+`presentationHeader`.
             </li>
             <li>
 CBOR-encode `components` and append it to `proofValue`.
@@ -861,9 +867,9 @@ starting with "`u`" and ending with the base64url-no-pad-encoded value of
           <p>
 The following algorithm parses the components of the derived proof value.
 The required input is a derived proof value (<var>proofValue</var>). A
-A single <em>derived proof value</em> value object is produced as output, which
-contains a set of four elements, using the names "`bbsProof`", "`labelMap`",
-"`mandatoryIndexes`", and "`selectiveIndexes`".
+single <em>derived proof value</em> object is produced as output, which
+contains a set of five elements, using the names `bbsProof`, `labelMap`,
+`mandatoryIndexes`, `selectiveIndexes`, and `presentationHeader`.
           </p>
 
           <ol class="algorithm">
@@ -884,13 +890,13 @@ substring that follows the leading `u` in `proofValue`.
 Ensure that the `decodedProofValue` starts with the BBS disclosure proof
 header bytes `0xd9`, `0x5d`, and `0x03`, and throw an error if it does not.
             </li>
-<!-- [bbsProof, labelMapCompressed, mandatoryIndexes, adjSelectedIndexes] -->
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS disclosure proof header. Ensure the result
-is an array of four elements —
+is an array of five elements —
 a byte array, a map of integers to integers, an
-array of integers, and another array of integers; otherwise, throw an error.
+array of integers, another array of integers, and a byte array; otherwise, throw
+an error.
             </li>
             <li>
 Replace the second element in `components` using the result of calling the
@@ -898,9 +904,9 @@ algorithm in Section <a href="#decompresslabelmap"></a>, passing the existing
 second element of `components` as `compressedLabelMap`.
             </li>
             <li>
-Return <em>derived proof value</em> as an object with properties set to the four
-elements, using the names "`bbsProof`", "`labelMap`", "`mandatoryIndexes`", and
-"`selectiveIndexes`" respectively.
+Return <em>derived proof value</em> as an object with properties set to the five
+elements, using the names `bbsProof`, `labelMap`, `mandatoryIndexes`,
+`selectiveIndexes`, and `presentationHeader`, respectively.
             </li>
           </ol>
 
@@ -915,8 +921,8 @@ BBS-protected <a>verifiable credential</a>. The inputs include a JSON-LD
 document (<var>document</var>), a BBS disclosure proof (<var>proof</var>),
 and any custom JSON-LD API options (such as a document loader). A single
 <em>verify data</em> object value is produced as output containing the following
-fields: "`bbsProof`", "`proofHash`", "`mandatoryHash`", "`selectedIndexes`", and
-"`nonMandatory`".
+fields: `bbsProof`, `proofHash`, `mandatoryHash`, `selectedIndexes`,
+`presentationHeader`, and `nonMandatory`.
           </p>
 
           <ol class="algorithm">
@@ -929,9 +935,9 @@ performed in parallel; it only needs to be completed before this algorithm needs
 to use the `proofHash` value.
             </li>
             <li>
-Initialize `bbsProof`, `labelMap`, `mandatoryIndexes`, and `selectiveIndexes` to
-the values associated with their property names in the object returned when
-calling the algorithm in Section
+Initialize `bbsProof`, `labelMap`, `mandatoryIndexes`, `selectiveIndexes`, and
+`presentationHeader` to the values associated with their property names in the
+object returned when calling the algorithm in Section
 <a href="#parsederivedproofvalue"></a>, passing `proofValue` from `proof`.
             </li>
             <li>
@@ -1249,7 +1255,8 @@ The following algorithm, to be called by a holder of a `bbs-2023`-protected
 The derived proof is to be given to the <a>verifier</a>. The inputs include a
 JSON-LD document (<var>document</var>), a BBS base proof
 (<var>proof</var>), an array of JSON pointers to use to selectively disclose
-statements (<var>selectivePointers</var>), and any custom JSON-LD API options,
+statements (<var>selectivePointers</var>), an OPTIONAL BBS
+<var>presentationHeader</var> (a byte array), and any custom JSON-LD API options,
 such as a document loader. A single <em>selectively revealed document</em>
 value, represented as an object, is produced as output.
           </p>
@@ -1260,8 +1267,8 @@ Initialize `bbsProof`,  `labelMap`, `mandatoryIndexes`, `selectiveIndexes`, and
 `revealDocument` to the values associated with their
 property names in the object returned when calling the algorithm in
 Section <a href="#createdisclosuredata"></a>, passing the `document`, `proof`,
-`selectivePointers`, and any custom JSON-LD API options, such as a document
-loader.
+`selectivePointers`, `presentationHeader`, and any custom JSON-LD API options,
+such as a document loader.
             </li>
             <li>
 Initialize `newProof` to a shallow copy of `proof`.
@@ -1297,9 +1304,9 @@ custom JSON-LD API options (such as a document loader). A single boolean
           <ol class="algorithm">
             <!-- [bbsProof, labelMapCompressed, mandatoryIndexes, adjSelectedIndexes] -->
             <li>
-Initialize `bbsProof`, `proofHash`, `mandatoryHash`, `selectedIndexes`, and
-`nonMandatory` to the values associated with their property
-names in the object returned when calling the algorithm in Section
+Initialize `bbsProof`, `proofHash`, `mandatoryHash`, `selectedIndexes`,
+`presentationHeader` and `nonMandatory` to the values associated with their
+property names in the object returned when calling the algorithm in Section
 <a href="#createverifydata"></a>, passing the `document`, `proof`, and any
 custom JSON-LD API options (such as a document loader).
             </li>
@@ -1311,10 +1318,12 @@ obtained from the UTF-8 encoding of the elements of the `nonMandatory` array.
 <!-- result = ProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes) -->
             <li>
 Initialize `verificationResult` to the result of applying the verification
-algorithm `ProofVerify` of [[CFRG-BBS-SIGNATURE]]
+algorithm
+`ProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes)` of
+[[CFRG-BBS-SIGNATURE]]
 with `PK` set as the public key of the original issuer, `proof` set as `bbsProof`,
 `header` set as `bbsHeader`, `disclosed_messages` set as `disclosedMessages`,
-`ph` set as an empty byte array, and `disclosed_indexes` set as
+`ph` set as `presentationHeader`, and `disclosed_indexes` set as
 `selectiveIndexes`. Return `verificationResult` as <em>verification result</em>.
             </li>
           </ol>
