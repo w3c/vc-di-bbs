@@ -1042,9 +1042,10 @@ MUST use UTF-8 encoding.
           </p>
           <ol class="algorithm">
             <li>
-Initialize `hmac` to an HMAC API using a locally generated and exportable HMAC
+Initialize |hmac| to an HMAC API using a locally generated and exportable HMAC
 key. The HMAC uses the same hash algorithm used in the signature algorithm,
-i.e., SHA-256.
+i.e., SHA-256. Per the recommendations of [[RFC2104]], the HMAC key MUST be the
+same length as the digest size; for SHA-256, this is 256 bits or 32 bytes.
             </li>
             <li>
 Initialize `labelMapFactoryFunction` to the result of calling the
