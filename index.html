@@ -201,9 +201,11 @@
             href: "https://petsymposium.org/popets/2020/popets-2020-0041.php"
           }
         },
-        lint: {"no-unused-dfns": false},
-        postProcess: [restrictRefs],
-        xref: [ "i18n-glossary" ]
+        lint: { "informative-dfn": false },
+        postProcess: [],
+        xref: [
+          "INFRA", "I18N-GLOSSARY", "VC-DATA-MODEL-2.0", "VC-DATA-INTEGRITY"
+        ]
       };
     </script>
         <style>
@@ -303,11 +305,13 @@ the BBS `verifyProof` function to validate the credential.
       <section id="terminology">
         <h3>Terminology</h3>
 
-        <div data-include="https://w3c.github.io/vc-data-integrity/terms.html"></div>
+        <p>
+Terminology used throughout this document is defined in the
+<a data-cite="VC-DATA-INTEGRITY#terminology">Terminology</a> section of the
+[[[VC-DATA-INTEGRITY]]] specification.
+        </p>
 
       </section>
-
-
 
       <section id="conformance">
         <p>
@@ -718,7 +722,7 @@ array (e.g., `nonMandatoryIndexes.indexOf(key)`), and add this value to the
             </li>
             <li>
 Initialize `bbsMessages` to an array of byte arrays containing the values in the
-`nonMandatory` array of strings encoded using the <a>UTF-8</a> <a>character encoding</a>.
+`nonMandatory` array of strings encoded using the UTF-8 <a>character encoding</a>.
             </li>
 
             <li>
@@ -1225,7 +1229,7 @@ that order.
             </li>
             <li>
 Initialize `bbsMessages` to an array of byte arrays containing the values in the
-`nonMandatory` array of strings encoded using the <a>UTF-8</a> <a>character encoding</a>.
+`nonMandatory` array of strings encoded using the UTF-8 <a>character encoding</a>.
             </li>
             <li>
 Compute the `bbsSignature` using the `Sign` procedure of [[CFRG-BBS-Signature]]
