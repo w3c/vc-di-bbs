@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>BBS Cryptosuite v2023</title>
+    <title>Data Integrity BBS Cryptosuites v1.0</title>
     <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
     <!--
       === NOTA BENE ===
@@ -14,11 +14,11 @@
     <script type="text/javascript" class="remove">
       const respecConfig = {
         // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
-        specStatus:           "ED",
+        specStatus: "WD",
 
         // the specification's short name, as in http://www.w3.org/TR/short-name/
         shortName: "vc-di-bbs",
-        subtitle: "Securing Verifiable Credentials with Selective Disclosure using BBS Signatures",
+        subtitle: "Achieving Unlinkable Data Integrity with Pairing-based Cryptography",
         group: "vc",
         // latestVersion: "https://www.w3.org/community/reports/credentials/CG-FINAL-vc-di-bbs-20230405/",
 
@@ -201,9 +201,11 @@
             href: "https://petsymposium.org/popets/2020/popets-2020-0041.php"
           }
         },
-        lint: {"no-unused-dfns": false},
-        postProcess: [restrictRefs],
-        xref: ["INFRA", "VC-DATA-MODEL-2.0", "VC-DATA-INTEGRITY", "i18n-glossary"]
+        lint: { "informative-dfn": false },
+        postProcess: [],
+        xref: [
+          "INFRA", "I18N-GLOSSARY", "VC-DATA-MODEL-2.0", "VC-DATA-INTEGRITY"
+        ]
       };
     </script>
         <style>
@@ -309,8 +311,6 @@ Terminology used throughout this document is defined in the
         </p>
 
       </section>
-
-
 
       <section id="conformance">
         <p>
@@ -721,7 +721,7 @@ array (e.g., `nonMandatoryIndexes.indexOf(key)`), and add this value to the
             </li>
             <li>
 Initialize `bbsMessages` to an array of byte arrays containing the values in the
-`nonMandatory` array of strings encoded using the <a>UTF-8</a> <a>character encoding</a>.
+`nonMandatory` array of strings encoded using the UTF-8 <a>character encoding</a>.
             </li>
 
             <li>
@@ -1229,7 +1229,7 @@ that order.
             </li>
             <li>
 Initialize `bbsMessages` to an array of byte arrays containing the values in the
-`nonMandatory` array of strings encoded using the <a>UTF-8</a> <a>character encoding</a>.
+`nonMandatory` array of strings encoded using the UTF-8 <a>character encoding</a>.
             </li>
             <li>
 Compute the `bbsSignature` using the `Sign` procedure of [[CFRG-BBS-Signature]]
