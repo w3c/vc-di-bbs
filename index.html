@@ -1435,27 +1435,49 @@ Return `revealDocument` as the <em>selectively revealed document</em>.
 
         </section>
 
-
         <section>
           <h4>Verify Derived Proof (bbs-2023)</h4>
 
           <p>
-The following algorithm attempts verification of a `bbs-2023` derived
-proof. This algorithm is called by a verifier of an BBS-protected
-<a>verifiable credential</a>. The inputs include a JSON-LD document
-(<var>document</var>), a BBS disclosure proof (<var>proof</var>), and any
-custom JSON-LD API options (such as a document loader). A single boolean
-<em>verification result</em> value is produced as output.
+The following algorithm specifies how to verify a [=data integrity proof=] given
+an <a>secured data document</a>. Required inputs are an
+<a>secured data document</a> ([=map=] |securedDocument|). This algorithm returns
+a <dfn>verification result</dfn>, which is a [=struct=] whose
+[=struct/items=] are:
+          </p>
+
+          <dl>
+            <dt><dfn data-dfn-for="verification result">verified</dfn></dt>
+            <dd>`true` or `false`</dd>
+            <dt><dfn data-dfn-for="verification result">verifiedDocument</dfn></dt>
+            <dd>
+<a data-cite="INFRA#nulls">Null</a>, if [=verification result/verified=] is
+`false`; otherwise, an [=unsecured data document=]
+            </dd>
+          </dl>
+
+          <p>
+To verify a derived proof, perform the following steps:
           </p>
 
           <ol class="algorithm">
-            <!-- [bbsProof, labelMapCompressed, mandatoryIndexes, adjSelectedIndexes] -->
+            <li>
+Let |unsecuredDocument| be a copy of |securedDocument| with
+the `proof` value removed.
+            </li>
+            <li>
+Let |proofConfig| be a copy of |securedDocument|.|proof| with `proofValue`
+removed.
+            </li>
+            <li>
+Let |proof| be the value of |securedDocument|.|proof|.
+            </li>
             <li>
 Initialize `bbsProof`, `proofHash`, `mandatoryHash`, `selectedIndexes`,
 `presentationHeader`, `pseudonym`, and `nonMandatory` to the values associated with their
 property names in the object returned when calling the algorithm in Section
-<a href="#createverifydata"></a>, passing the `document`, `proof`, and any
-custom JSON-LD API options (such as a document loader).
+<a href="#createverifydata"></a>, passing the |unsecuredDocument|, |proof|, and
+any custom JSON-LD API options (such as a document loader).
             </li>
             <li>
 Initialize `bbsHeader` to the concatenation of `proofHash` and `mandatoryHash`
@@ -1463,7 +1485,7 @@ in that order. Initialize `disclosedMessages` to an array of byte arrays
 obtained from the UTF-8 encoding of the elements of the `nonMandatory` array.
             </li>
             <li>
-Initialize `verificationResult` to the result of applying the verification
+Initialize |verified| to the result of applying the verification
 algorithm below, depending on whether the |pseudonym| value is empty.
             <ol class="algorithm">
               <li>
@@ -1495,14 +1517,23 @@ This applies to the "pseudonym with issuer known pid" and "pseudonym with
 hidden pid" cases.
               </li>
             </ol>
-
+          </li>
+          <li>
+Return a [=verification result=] with [=struct/items=]:
+              <dl data-link-for="verification result">
+                <dt>[=verified=]</dt>
+                <dd>|verified|</dd>
+                <dt>[=verifiedDocument=]</dt>
+                <dd>
+|unsecuredDocument| if |verified| is `true`, otherwise <a
+data-cite="INFRA#nulls">Null</a>
+                </dd>
+              </dl>
             </li>
           </ol>
 
         </section>
-
       </section>
-
     </section>
     <section class="informative">
       <h2>Optional Features</h2>
