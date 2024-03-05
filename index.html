@@ -488,6 +488,45 @@ by default, and abort processing upon detection.
       </p>
 
       <section>
+        <h3>Instantiate Cryptosuite</h3>
+
+        <p>
+This algorithm is used to configure a cryptographic suite to be used by the
+<a data-cite="VC-DATA-INTEGRITY#add-proof">Add Proof</a> and
+<a href="VC-DATA-INTEGRITY#verify-proof">Verify Proof</a>
+functions in [[[VC-DATA-INTEGRITY]]]. The algorithm takes an options object
+([=map=] |options|) as input and returns a [=data integrity cryptographic suite
+instance|cryptosuite instance=] ([=struct=] |cryptosuite|).
+        </p>
+
+        <ol class="algorithm">
+          <li>
+Initialize |cryptosuite| to an empty [=struct=].
+          </li>
+          <li>
+If |options|.|type| does not equal `DataIntegrityProof`, return |cryptosuite|.
+          </li>
+          <li>
+If |options|.|cryptosuite| is `bbs-2023` then:
+            <ol class="algorithm">
+              <li>
+Set |cryptosuite|.|createProof| to the algorithm in Section
+[[[#create-base-proof-bbs-2023]]].
+              </li>
+              <li>
+Set |cryptosuite|.|verifyProof| to the algorithm in Section
+[[[#verify-derived-proof-bbs-2023]]].
+              </li>
+            </ol>
+          </li>
+          <li>
+Return |cryptosuite|.
+          </li>
+        </ol>
+
+      </section>
+
+      <section>
         <h3>Selective Disclosure Functions</h3>
 
         <section>
