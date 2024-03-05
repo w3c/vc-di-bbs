@@ -1091,24 +1091,49 @@ in this section also include the verification of such a data integrity proof.
         </p>
 
         <section>
-          <h4>Add Base Proof (bbs-2023)</h4>
+          <h4>Create Base Proof (bbs-2023)</h4>
 
           <p>
-To generate a base proof, the algorithm in
-<a href="https://www.w3.org/TR/vc-data-integrity/#add-proof">
-Section 4.1: Add Proof</a> of the Data Integrity
-[[VC-DATA-INTEGRITY]] specification MUST be executed.
-For that algorithm, the cryptographic suite specific
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-transformation-algorithm">
-transformation algorithm</a> is defined in Section
-<a href="#base-proof-transformation-bbs-2023"></a>, the
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-hashing-algorithm">
-hashing algorithm</a> is defined in Section <a href="#base-proof-hashing-bbs-2023"></a>,
-and the
-<a href="https://www.w3.org/TR/vc-data-integrity/#dfn-proof-serialization-algorithm">
-proof serialization algorithm</a> is defined in Section
-<a href="#base-proof-serialization-bbs-2023"></a>.
+The following algorithm specifies how to create a [=data integrity proof=] given
+an <a>unsecured data document</a>. Required inputs are an
+<a>unsecured data document</a> ([=map=] |unsecuredDocument|), and a set of proof
+options ([=map=] |options|). A [=data integrity proof=] ([=map=]), or an error,
+is produced as output.
           </p>
+
+          <ol class="algorithm">
+            <li>
+Let |proof| be a clone of the proof options, |options|.
+            </li>
+            <li>
+Let |proofConfig| be the result of running the algorithm in
+Section [[[#base-proof-configuration-bbs-2023]]] with
+|options| passed as a parameter.
+            </li>
+            <li>
+Let |transformedData| be the result of running the algorithm in Section <a
+href="#base-proof-transformation-bbs-2023"></a> with |unsecuredDocument|,
+|proofConfig|, and |options| passed as parameters.
+            </li>
+            <li>
+Let |hashData| be the result of running the algorithm in Section
+[[[#base-proof-hashing-bbs-2023]]] with |transformedData| and |proofConfig|
+passed as a parameters.
+            </li>
+            <li>
+Let |proofBytes| be the result of running the algorithm in Section
+[[[#base-proof-serialization-bbs-2023]]] with |hashData| and
+|options| passed as parameters.
+            </li>
+            <li>
+Let |proof|.|proofValue| be a <a data-cite="VC-DATA-INTEGRITY#multibase-0">
+base64url-encoded Multibase value</a> of the |proofBytes|.
+            </li>
+            <li>
+Return |proof| as the [=data integrity proof=].
+            </li>
+          </ol>
+
         </section>
 
         <section>
