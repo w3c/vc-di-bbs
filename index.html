@@ -1431,7 +1431,34 @@ hidden pid" cases.
       </section>
 
     </section>
-
+    <section class="informative">
+      <h2>Optional Features</h2>
+      <p>
+The cryptographic properties of BBS signatures permits variants that
+can support advanced functionalities. This specification has limited itself to
+supporting only the most relevant of these enhancements which we explain in the
+following sections. The variables |commitment_with_proof|, |use_pseudonyms|,
+|pid| and |pseudonym| are associated with these features and are not otherwise
+needed for BBS signatures and proofs.
+      </p>
+      <section>
+        <h3>Anonymous Holder Binding</h3>
+        <p>Description TBD.</p>
+      </section>
+      <section>
+        <h3>Pseudonyms with Issuer known PID</h3>
+        <p>
+Description TBD. Example controlled substance purchase credential. Allows for
+issuer monitoring but privacy against verifier collusion.
+        </p>
+      </section>
+      <h3>Pseudonyms with Hidden PID</h3>
+      <p>
+Description TBD. Allows verifier to recognize returning holder but cannot link
+with verifier-verifier collusion or verifier-issuer collusion.
+      </p>
+    </section>
+    </section>
     <section>
       <h2>Security Considerations</h2>
 
