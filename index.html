@@ -744,7 +744,7 @@ Set `bbsProof` to the value computed by the appropriate procedure given below
 based on the values of the |commitment_with_proof| and |pid| options.
               <ol class="algorithm">
                 <li>
-If both |commitment_with_proof| and |pid| options are empty
+If both |commitment_with_proof| and |pid| options are empty,
 set `bbsProof` to the value computed by the `ProofGen` procedure from
 [[CFRG-BBS-SIGNATURE]], i.e.,
 `ProofGen(PK, signature, header, ph, messages, disclosed_indexes)`,
@@ -753,7 +753,7 @@ where `PK` is the original issuers public key, `signature` is the
 `messages` is `bbsMessages`, and `disclosed_indexes` is `selectiveIndexes`.
                 </li>
                 <li>
-If |commitment_with_proof| is not empty and |pid| is empty
+If |commitment_with_proof| is not empty and |pid| is empty,
 set `bbsProof` to the value computed by the `ProofGen` procedure from
 [[CFRG-Blind-BBS-Signature]], where `PK` is the original issuers public key,
 `signature` is the
@@ -763,9 +763,9 @@ set `bbsProof` to the value computed by the `ProofGen` procedure from
 "anonymous holder binding" option.
                 </li>
                 <li>
-If |pid| is not empty. Compute the |pseudonym| according to the procedures given
-in [[CFRG-Pseudonym-BBS-Signature]].
-set `bbsProof` to the value computed by the `ProofGen` procedure from
+If |pid| is not empty, compute the |pseudonym| according to the procedures given
+in [[CFRG-Pseudonym-BBS-Signature]],
+and set `bbsProof` to the value computed by the `ProofGen` procedure from
 [[CFRG-Pseudonym-BBS-Signature]], where `PK` is the original issuers public key,
 `signature` is the
 `bbsSignature`, `header` is the `bbsHeader`, `ph` is the  `presentationHeader`
@@ -805,7 +805,7 @@ value associated with `inputLabel` as a key in `labelMap` as the value.
             </li>
             <li>
 Return an object with properties matching `bbsProof`, "verifierLabelMap" for `labelMap`,
-`mandatoryIndexes`, `selectiveIndexes`, `revealDocument` and |pseudonym| if
+`mandatoryIndexes`, `selectiveIndexes`, `revealDocument`, and |pseudonym|, if
 computed.
             </li>
           </ol>
@@ -879,7 +879,7 @@ are a BBS proof (<var>bbsProof</var>), a label map (<var>labelMap</var>), an
 array of mandatory indexes (<var>mandatoryIndexes</var>), an array of
 selective indexes (<var>selectiveIndexes</var>), and a BBS presentation header
 (<var>presentationHeader</var>).
-Optional inputs are |pseudonym|.
+Optional input is |pseudonym|.
 A single <em>derived proof</em>
 value, serialized as a byte string, is produced as output.
           </p>
@@ -918,7 +918,7 @@ starting with "`u`" and ending with the base64url-no-pad-encoded value of
 The following algorithm parses the components of the derived proof value.
 The required input is a derived proof value (<var>proofValue</var>). A
 single <em>derived proof value</em> object is produced as output, which
-contains a set of six elements, using the names `bbsProof`, `labelMap`,
+contains a set of six elements, having the names `bbsProof`, `labelMap`,
 `mandatoryIndexes`, `selectiveIndexes`, `presentationHeader`, `pseudonym.
           </p>
 
@@ -956,7 +956,7 @@ second element of `components` as `compressedLabelMap`.
             <li>
 Return <em>derived proof value</em> as an object with properties set to the five
 elements, using the names `bbsProof`, `labelMap`, `mandatoryIndexes`,
-`selectiveIndexes`, `presentationHeader`, and `pseudonym` respectively.
+`selectiveIndexes`, `presentationHeader`, and `pseudonym`, respectively.
             </li>
           </ol>
 
@@ -1026,7 +1026,7 @@ primitive, passing `mandatory`.
             </li>
             <li>
 Return an object with properties matching `baseSignature`, `proofHash`,
-`nonMandatory`, `mandatoryHash`, `selectiveIndexes` and `pseudonym`.
+`nonMandatory`, `mandatoryHash`, `selectiveIndexes`, and `pseudonym`.
             </li>
           </ol>
 
@@ -1281,34 +1281,34 @@ Initialize `bbsMessages` to an array of byte arrays containing the values in the
 `nonMandatory` array of strings encoded using the UTF-8 <a>character encoding</a>.
             </li>
             <li>
-Compute the `bbsSignature` using the procedures below dependent on the values
+Compute the `bbsSignature` using the procedures below, dependent on the values
 of |commitment_with_proof| and |use_pseudonyms| options.
               <ol class="algorithm">
                 <li>
-If |commitment_with_proof| is empty and |use_pseudonyms| is false compute the
-`bbsSignature` the `Sign` procedure of [[CFRG-BBS-Signature]]
-with appropriate key material and `bbsHeader` for the `header` and `bbsMessages`
+If |commitment_with_proof| is empty and |use_pseudonyms| is false, compute the
+`bbsSignature` using the `Sign` procedure of [[CFRG-BBS-Signature]],
+with appropriate key material, `bbsHeader` for the `header`, and `bbsMessages`
 for the `messages`.
                 </li>
                 <li>
-If |commitment_with_proof| is not empty and |use_pseudonyms| is false compute the
-`bbsSignature` the `Sign` procedure of [[CFRG-Blind-BBS-Signature]]
-with appropriate key material and `bbsHeader` for the `header` and `bbsMessages`
+If |commitment_with_proof| is not empty and |use_pseudonyms| is false, compute the
+`bbsSignature` using the `Sign` procedure of [[CFRG-Blind-BBS-Signature]],
+with appropriate key material, `bbsHeader` for the `header`, and `bbsMessages`
 for the `messages`. This provides for "anonymous holder binding".
                 </li>
                 <li>
-If |commitment_with_proof| is empty and |use_pseudonyms| is true. Generate a
+If |commitment_with_proof| is empty and |use_pseudonyms| is true, generate a
 cryptographically random 32 byte |pid| value. Compute the
-`bbsSignature` the `Sign` procedure of [[CFRG-Pseudonym-BBS-Signature]]
-with appropriate key material and `bbsHeader` for the `header`, `bbsMessages`
+`bbsSignature` using the `Sign` procedure of [[CFRG-Pseudonym-BBS-Signature]],
+with appropriate key material, `bbsHeader` for the `header`, `bbsMessages`
 for the `messages`, and |pid| for the `pid`. Retain the |pid| value for use when
 calling <a href="#serializebaseproofvalue"></a> below.
 This provides for "pseudonym with issuer known pid".
                 </li>
                 <li>
-If |commitment_with_proof| is not empty and |use_pseudonyms| is true. Compute
-the `bbsSignature` the `Sign` procedure of [[CFRG-Pseudonym-BBS-Signature]]
-with appropriate key material and `bbsHeader` for the `header`, `bbsMessages`
+If |commitment_with_proof| is not empty and |use_pseudonyms| is true, compute
+the `bbsSignature` using the `Sign` procedure of [[CFRG-Pseudonym-BBS-Signature]],
+with appropriate key material, `bbsHeader` for the `header`, `bbsMessages`
 for the `messages`, and |commitment_with_proof| for the `commitment_with_proof`.
 This provides for "pseudonym with hidden pid".
                 </li>
@@ -1319,7 +1319,7 @@ Initialize `proofValue to the result of calling the algorithm in Section
 <a href="#serializebaseproofvalue"></a>, passing `bbsSignature`, `bbsHeader`,
 `publicKey`, `hmacKey`, `mandatoryPointers`, and the `pid` value, if one was
 generated, as parameters
-to the algorithm. Where `publicKey` is a byte array of the public key encoded
+to the algorithm, where `publicKey` is a byte array of the public key encoded
 according to [[CFRG-BBS-SIGNATURE]].
             </li>
             <li>
@@ -1403,7 +1403,7 @@ obtained from the UTF-8 encoding of the elements of the `nonMandatory` array.
             </li>
             <li>
 Initialize `verificationResult` to the result of applying the verification
-algorithm below depending on whether the |pseudonym| value is empty.
+algorithm below, depending on whether the |pseudonym| value is empty.
             <ol class="algorithm">
               <li>
 If the |pseudonym| value is empty,
@@ -1424,7 +1424,7 @@ initialize `verificationResult` to the result of applying the verification
 algorithm
 `PseudonymProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes, pseudonym)`
 of
-[[CFRG-Pseudonym-BBS-Signature]].
+[[CFRG-Pseudonym-BBS-Signature]],
 with `PK` set as the public key of the original issuer, `proof` set as `bbsProof`,
 `header` set as `bbsHeader`, `disclosed_messages` set as `disclosedMessages`,
 `ph` set as `presentationHeader`, `disclosed_indexes` set as
@@ -1446,11 +1446,11 @@ hidden pid" cases.
     <section class="informative">
       <h2>Optional Features</h2>
       <p>
-The cryptographic properties of BBS signatures permits variants that
-can support advanced functionalities. This specification has limited itself to
-supporting only the most relevant of these enhancements which we explain in the
+The cryptographic properties of BBS signatures permit variants that
+can support advanced functionalities. This specification is limited to
+supporting only the most relevant of these enhancements, which we explain in the
 following sections. The variables |commitment_with_proof|, |use_pseudonyms|,
-|pid| and |pseudonym| are associated with these features and are not otherwise
+|pid|, and |pseudonym| are associated with these features and are not otherwise
 needed for BBS signatures and proofs.
       </p>
       <p class="issue at-risk" title="Optional BBS features are at risk">
@@ -1465,32 +1465,32 @@ feature.
         <h3>Anonymous Holder Binding</h3>
         <p>
 This feature binds, at the time of issuance, a document with base proof, to a
-secret, known only to the holder, in such a way, that only the holder can generate
+secret, known only to a holder, in such a way, that only that holder can generate
 a revealed document with derived proof that will verify. For example, if an
-adversary obtained the document with base proof they could not create a revealed
+adversary obtained the document with base proof, they could not create a revealed
 document with derived proof that can verify.
         </p>
         <p>
-To provide for this functionality a holder generates a |holder_secret| value
-which generally should be at least 32 bytes long and cryptographically randomly
-generated. This value is never shared by the holder. Instead the holder
+To provide for this functionality, a holder generates a |holder_secret| value
+which should generally be at least 32 bytes long and cryptographically randomly
+generated. This value is never shared by the holder. Instead, the holder
 generates a commitment along with a zero knowledge proof of knowledge of this
-value using the "Commitment Generation" procedure of [[CFRG-Blind-BBS-Signature]].
+value, using the "Commitment Generation" procedure of [[CFRG-Blind-BBS-Signature]].
 This computation involves cryptographically random values and will
 return to the holder the |commitment_with_proof| which will be sent to the
 issuer along with |secret_prover_blind| which is kept secret and is needed
 during derived proof generation by the holder.
-Note that a holder can run the "Commitment Generation" multiple times for use
-with different issuers to produce unlinkable |commitment_with_proof| values.
+Note that a holder can run the "Commitment Generation" procedure multiple times
+to produce unlinkable |commitment_with_proof| values for use with different issuers.
         </p>
         <p>
 The issuer, on receipt of the |commitment_with_proof|, follows the procedures of
-[[CFRG-Blind-BBS-Signature]] to produce a base proof (signature) over the document and
-the commitment furnished by the holder.
+[[CFRG-Blind-BBS-Signature]] to produce a base proof (signature) over the document
+with the commitment furnished by the holder.
         </p>
         <p>
 When the holder wants to create a selectively disclosed document with derived
-proof they use their |holder_secret| (as a "commited message") and the
+proof, they use their |holder_secret| (as a "commited message") and the
 |secret_prover_blind| in the proof generation procedure of
 [[CFRG-Blind-BBS-Signature]].
         </p>
@@ -1501,38 +1501,38 @@ proof verification procedures of [[CFRG-BBS-SIGNATURE]].
 
       </section>
       <section>
-        <h3>Pseudonyms with Issuer known PID</h3>
+        <h3>Pseudonyms with Issuer-known PID</h3>
         <p>
 This feature is a privacy preserving enhancement that allows a verifier that has
 seen a selectively revealed document with derived proof from a holder to
-recognize the holder again when presenting a new selectively revealed document
+recognize that the same holder is presenting a new selectively revealed document
 with derived proof. Note that this may just be a new unlinkable proof (derived
-proof) on the same selectively revealed information. By privacy preserving we
-mean that no uniquely identfiable information is added that would allow tracking
-between different verifiers that may share information between themselves. This
+proof) on the same selectively revealed information. By "privacy preserving," we
+mean that no uniquely identifiable information is added that would allow tracking
+between different verifiers that may share information amongst themselves. This
 variant does allow for the issuer to monitor usage if verifiers share
 information with the issuer.
         </p>
         <p>
-To furnish this capability before creating the base proof for a document an
+To furnish this capability, before creating the base proof for a document, an
 issuer generates a value known as a |pid| (prover id) which should be
 cryptographically random and at least 32 bytes long. This value is shared with
-the holder but kept secret otherwise. This value is then used in creating the
+the holder but otherwise kept secret. This value is then used in creating the
 base proof via the signing procedure in [[CFRG-Pseudonym-BBS-Signature]].
         </p>
         <p>
 The holder receives the document with base proof which includes the |pid| value
 from the issuer. The holder obtains a |verifier_id| associated with the verifier
-they intend to create a revealed document with derived proof for. Using the
-procedures of [[CFRG-Pseudonym-BBS-Signature]] a cryptographic |pseudonym| value
+for which they intend to create a revealed document with derived proof. Using the
+procedures of [[CFRG-Pseudonym-BBS-Signature]], a cryptographic |pseudonym| value
 is generated. The derived proof value is generated via the proof generation
-procedure of [[CFRG-Pseudonym-BBS-Signature]] and this value along with the
-|psudeonym| are given to the verifier. Note that the |pid| value cannot be
+procedure of [[CFRG-Pseudonym-BBS-Signature]], and this value along with the
+|pseudonym| are given to the verifier. Note that the |pid| value cannot be
 recovered from the |pseudonym|.
         </p>
         <p>
 When the verifier receives the revealed document with derived proof and
-|pseudonym| they use the proof verification procedures of
+|pseudonym|, they use the proof verification procedures of
 [[CFRG-Pseudonym-BBS-Signature]].
         </p>
       </section>
@@ -1540,36 +1540,36 @@ When the verifier receives the revealed document with derived proof and
       <p>
 This feature is a privacy preserving enhancement that allows a verifier that has
 seen a selectively revealed document with derived proof from a holder to
-recognize the holder again when presenting a new selectively revealed document
+recognize that the same holder is presenting a new selectively revealed document
 with derived proof. Note that this may just be a new unlinkable proof (derived
-proof) on the same selectively revealed information. By privacy preserving we
-mean that no uniquely identfiable information is added that would allow tracking
-between different verifiers that may share information between themselves or if
-verifiers share information with the issuer.
+proof) on the same selectively revealed information. By "privacy preserving," we
+mean that no uniquely identifiable information is added that would allow tracking
+between different verifiers that may share information amongst themselves and/or
+with the issuer.
         </p>
         <p>
-To provide for this capability a holder needs to generate a secret |pid| value
+To provide for this capability, a holder needs to generate a secret |pid| value
 that should be at least 32 bytes long and generated in cryptographically random
-manner. The holder then used the "Commitment Generation" procedure of
+manner. The holder then uses the "Commitment Generation" procedure of
 [[CFRG-Blind-BBS-Signature]] to generate a |commitment_with_proof| value.
 This value needs to be conveyed to the issuer who will use it in the issuance
-of a document with base proof in accordance with [[CFRG-Blind-BBS-Signature]]
-and [[CFRG-Pseudonym-BBS-Signature]] which is sent to the holder. The |pid|
+of a document with base proof, in accordance with [[CFRG-Blind-BBS-Signature]]
+and [[CFRG-Pseudonym-BBS-Signature]], which is sent to the holder. The |pid|
 value is never shared by the holder.
         </p>
         <p>
-The holder obtains a |verifier_id| associated with the verifier
-they intend to create a revealed document with derived proof for. Using the
-procedures of [[CFRG-Pseudonym-BBS-Signature]] a cryptographic |pseudonym| value
+The holder obtains a |verifier_id| associated with the verifier for which
+they intend to create a revealed document with derived proof. Using the
+procedures of [[CFRG-Pseudonym-BBS-Signature]], a cryptographic |pseudonym| value
 is generated from their |pid| value and the |verifier_id|. The derived proof
 value is generated via the proof generation
-procedure of [[CFRG-Pseudonym-BBS-Signature]] and this value along with the
-|psudeonym| are given to the verifier. Note that the |pid| value cannot be
+procedure of [[CFRG-Pseudonym-BBS-Signature]], and this value is given to the
+verifier along with the |pseudonym|. Note that the |pid| value cannot be
 recovered from the |pseudonym|.
         </p>
         <p>
 When the verifier receives the revealed document with derived proof and
-|pseudonym| they use the proof verification procedures of
+|pseudonym|, they use the proof verification procedures of
 [[CFRG-Pseudonym-BBS-Signature]].
         </p>
     </section>
