@@ -582,19 +582,20 @@ Initialize a byte array, `proofValue`, that starts with the BBS base proof
 header bytes `0xd9`, `0x5d`, and `0x02`.
             </li>
             <li>
-Initialize `components` to an array with five elements containing the values of:
-`bbsSignature`, `bbsHeader`, `publicKey`, `hmacKey`, and `mandatoryPointers`.
+Initialize |components| to an array with five elements containing the values of:
+|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, and |mandatoryPointers|.
             </li>
             <li>
-CBOR-encode `components` and append it to `proofValue`.
+CBOR-encode |components| per [[RFC8949]] where CBOR tagging MUST NOT be used on
+any of the |components|. Append the produced encoded value to |proofValue|.
             </li>
             <li>
-Initialize `baseProof` to a string with the multibase-base64url-no-pad-encoding
+Initialize |baseProof| to a string with the multibase-base64url-no-pad-encoding
 of `proofValue`. That is, return a string starting with "`u`" and ending with the
-base64url-no-pad-encoded value of `proofValue`.
+base64url-no-pad-encoded value of |proofValue|.
             </li>
             <li>
-Return `baseProof` as <em>base proof</em>.
+Return |baseProof| as <em>base proof</em>.
             </li>
           </ol>
 
@@ -893,16 +894,17 @@ Initialize a byte array, `proofValue`, that starts with the BBS disclosure
 proof header bytes `0xd9`, `0x5d`, and `0x03`.
             </li>
             <li>
-Initialize `components` to an array with five elements containing the values of
-`bbsProof`, `compressedLabelMap`, `mandatoryIndexes`, `selectiveIndexes`,
-`presentationHeader`, and `pseudonym`.
+Initialize |components| to an array with five elements containing the values of
+|bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
+|presentationHeader|, and |pseudonym|.
             </li>
             <li>
-CBOR-encode `components` and append it to `proofValue`.
+CBOR-encode |components| per [[RFC8949]] where CBOR tagging MUST NOT be used on
+any of the |components|. Append the produced encoded value to |proofValue|.
             </li>
             <li>
 Return the <em>derived proof</em> as a string with the
-multibase-base64url-no-pad-encoding of `proofValue`. That is, return a string
+multibase-base64url-no-pad-encoding of |proofValue|. That is, return a string
 starting with "`u`" and ending with the base64url-no-pad-encoded value of
 `proofValue`.
             </li>
