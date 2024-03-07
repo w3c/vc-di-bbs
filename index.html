@@ -1538,9 +1538,40 @@ When the verifier receives the revealed document with derived proof and
       </section>
       <h3>Pseudonyms with Hidden PID</h3>
       <p>
-Description TBD. Allows verifier to recognize returning holder but cannot link
-with verifier-verifier collusion or verifier-issuer collusion.
-      </p>
+This feature is a privacy preserving enhancement that allows a verifier that has
+seen a selectively revealed document with derived proof from a holder to
+recognize the holder again when presenting a new selectively revealed document
+with derived proof. Note that this may just be a new unlinkable proof (derived
+proof) on the same selectively revealed information. By privacy preserving we
+mean that no uniquely identfiable information is added that would allow tracking
+between different verifiers that may share information between themselves or if
+verifiers share information with the issuer.
+        </p>
+        <p>
+To provide for this capability a holder needs to generate a secret |pid| value
+that should be at least 32 bytes long and generated in cryptographically random
+manner. The holder then used the "Commitment Generation" procedure of
+[[CFRG-Blind-BBS-Signature]] to generate a |commitment_with_proof| value.
+This value needs to be conveyed to the issuer who will use it in the issuance
+of a document with base proof in accordance with [[CFRG-Blind-BBS-Signature]]
+and [[CFRG-Pseudonym-BBS-Signature]] which is sent to the holder. The |pid|
+value is never shared by the holder.
+        </p>
+        <p>
+The holder obtains a |verifier_id| associated with the verifier
+they intend to create a revealed document with derived proof for. Using the
+procedures of [[CFRG-Pseudonym-BBS-Signature]] a cryptographic |pseudonym| value
+is generated from their |pid| value and the |verifier_id|. The derived proof
+value is generated via the proof generation
+procedure of [[CFRG-Pseudonym-BBS-Signature]] and this value along with the
+|psudeonym| are given to the verifier. Note that the |pid| value cannot be
+recovered from the |pseudonym|.
+        </p>
+        <p>
+When the verifier receives the revealed document with derived proof and
+|pseudonym| they use the proof verification procedures of
+[[CFRG-Pseudonym-BBS-Signature]].
+        </p>
     </section>
     </section>
     <section>
