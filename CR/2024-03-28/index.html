@@ -4220,7 +4220,7 @@ is not fit for production deployment.
   </p><p>
                       This document is governed by the
                       <a id="w3c_process_revision" href="https://www.w3.org/2023/Process-20231103/">03 November 2023 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
-                    </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#sotd">Status of This Document</a></li><li class="tocline"><a class="tocxref" href="#introduction"><bdi class="secno">1. </bdi>Introduction</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#terminology"><bdi class="secno">1.1 </bdi>Terminology</a></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">1.2 </bdi>Conformance</a></li></ol></li><li class="tocline"><a class="tocxref" href="#data-model"><bdi class="secno">2. </bdi>Data Model</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#verification-methods"><bdi class="secno">2.1 </bdi>Verification Methods</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#multikey"><bdi class="secno">2.1.1 </bdi>Multikey</a></li></ol></li><li class="tocline"><a class="tocxref" href="#proof-representations"><bdi class="secno">2.2 </bdi>Proof Representations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#dataintegrityproof"><bdi class="secno">2.2.1 </bdi>DataIntegrityProof</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#algorithms"><bdi class="secno">3. </bdi>Algorithms</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#instantiate-cryptosuite"><bdi class="secno">3.1 </bdi>Instantiate Cryptosuite</a></li><li class="tocline"><a class="tocxref" href="#selective-disclosure-functions"><bdi class="secno">3.2 </bdi>Selective Disclosure Functions</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#createshuffledidlabelmapfunction"><bdi class="secno">3.2.1 </bdi>createShuffledIdLabelMapFunction</a></li></ol></li><li class="tocline"><a class="tocxref" href="#bbs-2023-functions"><bdi class="secno">3.3 </bdi>bbs-2023 Functions</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#serializebaseproofvalue"><bdi class="secno">3.3.1 </bdi>serializeBaseProofValue</a></li><li class="tocline"><a class="tocxref" href="#parsebaseproofvalue"><bdi class="secno">3.3.2 </bdi>parseBaseProofValue</a></li><li class="tocline"><a class="tocxref" href="#createdisclosuredata"><bdi class="secno">3.3.3 </bdi>createDisclosureData</a></li><li class="tocline"><a class="tocxref" href="#compresslabelmap"><bdi class="secno">3.3.4 </bdi>compressLabelMap</a></li><li class="tocline"><a class="tocxref" href="#decompresslabelmap"><bdi class="secno">3.3.5 </bdi>decompressLabelMap</a></li><li class="tocline"><a class="tocxref" href="#serializederivedproofvalue"><bdi class="secno">3.3.6 </bdi>serializeDerivedProofValue</a></li><li class="tocline"><a class="tocxref" href="#parsederivedproofvalue"><bdi class="secno">3.3.7 </bdi>parseDerivedProofValue</a></li><li class="tocline"><a class="tocxref" href="#createverifydata"><bdi class="secno">3.3.8 </bdi>createVerifyData</a></li></ol></li><li class="tocline"><a class="tocxref" href="#bbs-2023"><bdi class="secno">3.4 </bdi>bbs-2023</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#create-base-proof-bbs-2023"><bdi class="secno">3.4.1 </bdi>Create Base Proof (bbs-2023)</a></li><li class="tocline"><a class="tocxref" href="#base-proof-transformation-bbs-2023"><bdi class="secno">3.4.2 </bdi>Base Proof Transformation (bbs-2023)</a></li><li class="tocline"><a class="tocxref" href="#base-proof-hashing-bbs-2023"><bdi class="secno">3.4.3 </bdi>Base Proof Hashing (bbs-2023)</a></li><li class="tocline"><a class="tocxref" href="#base-proof-configuration-bbs-2023"><bdi class="secno">3.4.4 </bdi>Base Proof Configuration (bbs-2023)</a></li><li class="tocline"><a class="tocxref" href="#base-proof-serialization-bbs-2023"><bdi class="secno">3.4.5 </bdi>Base Proof Serialization (bbs-2023)</a></li><li class="tocline"><a class="tocxref" href="#add-derived-proof-bbs-2023"><bdi class="secno">3.4.6 </bdi>Add Derived Proof (bbs-2023)</a></li><li class="tocline"><a class="tocxref" href="#verify-derived-proof-bbs-2023"><bdi class="secno">3.4.7 </bdi>Verify Derived Proof (bbs-2023)</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#security-considerations"><bdi class="secno">4. </bdi>Security Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#base-proof-security-properties"><bdi class="secno">4.1 </bdi>Base Proof Security Properties</a></li><li class="tocline"><a class="tocxref" href="#derived-proof-security-properties"><bdi class="secno">4.2 </bdi>Derived Proof Security Properties</a></li></ol></li><li class="tocline"><a class="tocxref" href="#privacy-considerations"><bdi class="secno">5. </bdi>Privacy Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#selective-disclosure-and-data-leakage"><bdi class="secno">5.1 </bdi>Selective Disclosure and Data Leakage</a></li><li class="tocline"><a class="tocxref" href="#selective-disclosure-and-unlinkability"><bdi class="secno">5.2 </bdi>Selective Disclosure and Unlinkability</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#linkage-via-cryptographic-artifacts"><bdi class="secno">5.2.1 </bdi>Linkage via Cryptographic Artifacts</a></li><li class="tocline"><a class="tocxref" href="#linkage-via-vc-processing"><bdi class="secno">5.2.2 </bdi>Linkage via VC Processing</a></li><li class="tocline"><a class="tocxref" href="#linkage-via-json-ld-node-identifiers"><bdi class="secno">5.2.3 </bdi>Linkage via JSON-LD Node Identifiers</a></li><li class="tocline"><a class="tocxref" href="#linkage-via-proof-options-and-mandatory-reveal"><bdi class="secno">5.2.4 </bdi>Linkage via Proof Options and Mandatory Reveal</a></li><li class="tocline"><a class="tocxref" href="#linkage-via-holder-selective-reveal"><bdi class="secno">5.2.5 </bdi>Linkage via Holder Selective Reveal</a></li><li class="tocline"><a class="tocxref" href="#external-vc-system-based-linkage"><bdi class="secno">5.2.6 </bdi>External VC System Based Linkage</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#test-vectors"><bdi class="secno">A. </bdi>Test Vectors</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#base-proof"><bdi class="secno">A.1 </bdi>Base Proof</a></li><li class="tocline"><a class="tocxref" href="#derived-proof"><bdi class="secno">A.2 </bdi>Derived Proof</a></li></ol></li><li class="tocline"><a class="tocxref" href="#acknowledgements"><bdi class="secno">B. </bdi>Acknowledgements</a></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">C. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">C.1 </bdi>Normative references</a></li><li class="tocline"><a class="tocxref" href="#informative-references"><bdi class="secno">C.2 </bdi>Informative references</a></li></ol></li></ol></nav>
+                    </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#sotd">Status of This Document</a></li><li class="tocline"><a class="tocxref" href="#introduction"><bdi class="secno">1. </bdi>Introduction</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#terminology"><bdi class="secno">1.1 </bdi>Terminology</a></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">1.2 </bdi>Conformance</a></li></ol></li><li class="tocline"><a class="tocxref" href="#data-model"><bdi class="secno">2. </bdi>Data Model</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#verification-methods"><bdi class="secno">2.1 </bdi>Verification Methods</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#multikey"><bdi class="secno">2.1.1 </bdi>Multikey</a></li></ol></li><li class="tocline"><a class="tocxref" href="#proof-representations"><bdi class="secno">2.2 </bdi>Proof Representations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#dataintegrityproof"><bdi class="secno">2.2.1 </bdi>DataIntegrityProof</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#algorithms"><bdi class="secno">3. </bdi>Algorithms</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#instantiate-cryptosuite"><bdi class="secno">3.1 </bdi>Instantiate Cryptosuite</a></li><li class="tocline"><a class="tocxref" href="#selective-disclosure-functions"><bdi class="secno">3.2 </bdi>Selective Disclosure Functions</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#createshuffledidlabelmapfunction"><bdi class="secno">3.2.1 </bdi>createShuffledIdLabelMapFunction</a></li></ol></li><li class="tocline"><a class="tocxref" href="#bbs-2023-functions"><bdi class="secno">3.3 </bdi>bbs-2023 Functions</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#serializebaseproofvalue"><bdi class="secno">3.3.1 </bdi>serializeBaseProofValue</a></li><li class="tocline"><a class="tocxref" href="#parsebaseproofvalue"><bdi class="secno">3.3.2 </bdi>parseBaseProofValue</a></li><li class="tocline"><a class="tocxref" href="#createdisclosuredata"><bdi class="secno">3.3.3 </bdi>createDisclosureData</a></li><li class="tocline"><a class="tocxref" href="#compresslabelmap"><bdi class="secno">3.3.4 </bdi>compressLabelMap</a></li><li class="tocline"><a class="tocxref" href="#decompresslabelmap"><bdi class="secno">3.3.5 </bdi>decompressLabelMap</a></li><li class="tocline"><a class="tocxref" href="#serializederivedproofvalue"><bdi class="secno">3.3.6 </bdi>serializeDerivedProofValue</a></li><li class="tocline"><a class="tocxref" href="#parsederivedproofvalue"><bdi class="secno">3.3.7 </bdi>parseDerivedProofValue</a></li><li class="tocline"><a class="tocxref" href="#createverifydata"><bdi class="secno">3.3.8 </bdi>createVerifyData</a></li></ol></li><li class="tocline"><a class="tocxref" href="#bbs-2023"><bdi class="secno">3.4 </bdi>bbs-2023</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#create-base-proof-bbs-2023"><bdi class="secno">3.4.1 </bdi>Create Base Proof (bbs-2023)</a></li><li class="tocline"><a class="tocxref" href="#base-proof-transformation-bbs-2023"><bdi class="secno">3.4.2 </bdi>Base Proof Transformation (bbs-2023)</a></li><li class="tocline"><a class="tocxref" href="#base-proof-hashing-bbs-2023"><bdi class="secno">3.4.3 </bdi>Base Proof Hashing (bbs-2023)</a></li><li class="tocline"><a class="tocxref" href="#base-proof-configuration-bbs-2023"><bdi class="secno">3.4.4 </bdi>Base Proof Configuration (bbs-2023)</a></li><li class="tocline"><a class="tocxref" href="#base-proof-serialization-bbs-2023"><bdi class="secno">3.4.5 </bdi>Base Proof Serialization (bbs-2023)</a></li><li class="tocline"><a class="tocxref" href="#add-derived-proof-bbs-2023"><bdi class="secno">3.4.6 </bdi>Add Derived Proof (bbs-2023)</a></li><li class="tocline"><a class="tocxref" href="#verify-derived-proof-bbs-2023"><bdi class="secno">3.4.7 </bdi>Verify Derived Proof (bbs-2023)</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#optional-features"><bdi class="secno">4. </bdi>Optional Features</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#anonymous-holder-binding"><bdi class="secno">4.1 </bdi>Anonymous Holder Binding</a></li><li class="tocline"><a class="tocxref" href="#pseudonyms-with-issuer-known-pid"><bdi class="secno">4.2 </bdi>Pseudonyms with Issuer known PID</a></li><li class="tocline"><a class="tocxref" href="#pseudonyms-with-hidden-pid"><bdi class="secno">4.3 </bdi>Pseudonyms with Hidden PID</a></li></ol></li><li class="tocline"><a class="tocxref" href="#security-considerations"><bdi class="secno">5. </bdi>Security Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#base-proof-security-properties"><bdi class="secno">5.1 </bdi>Base Proof Security Properties</a></li><li class="tocline"><a class="tocxref" href="#derived-proof-security-properties"><bdi class="secno">5.2 </bdi>Derived Proof Security Properties</a></li></ol></li><li class="tocline"><a class="tocxref" href="#privacy-considerations"><bdi class="secno">6. </bdi>Privacy Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#selective-disclosure-and-data-leakage"><bdi class="secno">6.1 </bdi>Selective Disclosure and Data Leakage</a></li><li class="tocline"><a class="tocxref" href="#selective-disclosure-and-unlinkability"><bdi class="secno">6.2 </bdi>Selective Disclosure and Unlinkability</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#linkage-via-cryptographic-artifacts"><bdi class="secno">6.2.1 </bdi>Linkage via Cryptographic Artifacts</a></li><li class="tocline"><a class="tocxref" href="#linkage-via-vc-processing"><bdi class="secno">6.2.2 </bdi>Linkage via VC Processing</a></li><li class="tocline"><a class="tocxref" href="#linkage-via-json-ld-node-identifiers"><bdi class="secno">6.2.3 </bdi>Linkage via JSON-LD Node Identifiers</a></li><li class="tocline"><a class="tocxref" href="#linkage-via-proof-options-and-mandatory-reveal"><bdi class="secno">6.2.4 </bdi>Linkage via Proof Options and Mandatory Reveal</a></li><li class="tocline"><a class="tocxref" href="#linkage-via-holder-selective-reveal"><bdi class="secno">6.2.5 </bdi>Linkage via Holder Selective Reveal</a></li><li class="tocline"><a class="tocxref" href="#external-vc-system-based-linkage"><bdi class="secno">6.2.6 </bdi>External VC System Based Linkage</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#test-vectors"><bdi class="secno">A. </bdi>Test Vectors</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#base-proof"><bdi class="secno">A.1 </bdi>Base Proof</a></li><li class="tocline"><a class="tocxref" href="#derived-proof"><bdi class="secno">A.2 </bdi>Derived Proof</a></li></ol></li><li class="tocline"><a class="tocxref" href="#acknowledgements"><bdi class="secno">B. </bdi>Acknowledgements</a></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">C. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">C.1 </bdi>Normative references</a></li><li class="tocline"><a class="tocxref" href="#informative-references"><bdi class="secno">C.2 </bdi>Informative references</a></li></ol></li></ol></nav>
 
     <section id="introduction"><div class="header-wrapper"><h2 id="x1-introduction"><bdi class="secno">1. </bdi>Introduction</h2><a class="self-link" href="#introduction" aria-label="Permalink for Section 1."></a></div>
 
@@ -4657,7 +4657,10 @@ inputs include a JSON-LD document (<var>document</var>), a BBS base proof
 (<var>proof</var>), an array of JSON pointers to use to selectively disclose
 statements (<var>selectivePointers</var>), an <em class="rfc2119">OPTIONAL</em> BBS
 <var>presentationHeader</var> (byte array that defaults to an empty byte array if
-not present), and any custom JSON-LD API options
+not present),
+an <em class="rfc2119">OPTIONAL</em>
+<var>commitment_with_proof</var> (a byte array), an <em class="rfc2119">OPTIONAL</em> <var>pid</var> value (a byte array),
+and any custom JSON-LD API options
 (such as a document loader). A single object, <em>disclosure data</em>, is
 produced as output, which contains the <code>bbsProof</code>, <code>labelMap</code>,
 <code>mandatoryIndexes</code>, <code>selectiveIndexes</code>, <code>presentationHeader</code>, and
@@ -4741,15 +4744,43 @@ array (e.g., <code>nonMandatoryIndexes.indexOf(key)</code>), and add this value 
 Initialize <code>bbsMessages</code> to an array of byte arrays containing the values in the
 <code>nonMandatory</code> array of strings encoded using the UTF-8 <a data-type="dfn" href="https://www.w3.org/TR/i18n-glossary/#dfn-character-encoding">character encoding</a>.
             </li>
-
             <li>
-Set <code>bbsProof</code> to the value computed by the <code>ProofGen</code> procedure from
+Set <code>bbsProof</code> to the value computed by the appropriate procedure given below
+based on the values of the <var>commitment_with_proof</var> and <var>pid</var> options.
+              <ol class="algorithm">
+                <li>
+If both <var>commitment_with_proof</var> and <var>pid</var> options are empty
+set <code>bbsProof</code> to the value computed by the <code>ProofGen</code> procedure from
 [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-SIGNATURE</a></cite>], i.e.,
 <code>ProofGen(PK, signature, header, ph, messages, disclosed_indexes)</code>,
 where <code>PK</code> is the original issuers public key, <code>signature</code> is the
 <code>bbsSignature</code>, <code>header</code> is the <code>bbsHeader</code>, <code>ph</code> is the  <code>presentationHeader</code>
 <code>messages</code> is <code>bbsMessages</code>, and <code>disclosed_indexes</code> is <code>selectiveIndexes</code>.
+                </li>
+                <li>
+If <var>commitment_with_proof</var> is not empty and <var>pid</var> is empty
+set <code>bbsProof</code> to the value computed by the <code>ProofGen</code> procedure from
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-blind-bbs-signature" title="Blind BBS Signatures">CFRG-Blind-BBS-Signature</a></cite>], where <code>PK</code> is the original issuers public key,
+<code>signature</code> is the
+<code>bbsSignature</code>, <code>header</code> is the <code>bbsHeader</code>, <code>ph</code> is the  <code>presentationHeader</code>
+<code>messages</code> is <code>bbsMessages</code>, <code>disclosed_indexes</code> is <code>selectiveIndexes</code>, and
+<code>commitment_with_proof</code> is the <code>commitment_with_proof</code>. This is the
+"anonymous holder binding" option.
+                </li>
+                <li>
+If <var>pid</var> is not empty. Compute the <var>pseudonym</var> according to the procedures given
+in [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-pseudonym-bbs-signature" title="Pseudonym BBS Signatures">CFRG-Pseudonym-BBS-Signature</a></cite>].
+set <code>bbsProof</code> to the value computed by the <code>ProofGen</code> procedure from
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-pseudonym-bbs-signature" title="Pseudonym BBS Signatures">CFRG-Pseudonym-BBS-Signature</a></cite>], where <code>PK</code> is the original issuers public key,
+<code>signature</code> is the
+<code>bbsSignature</code>, <code>header</code> is the <code>bbsHeader</code>, <code>ph</code> is the  <code>presentationHeader</code>
+<code>messages</code> is <code>bbsMessages</code>, <code>disclosed_indexes</code> is <code>selectiveIndexes</code>, and
+<var>psuedonym</var> is the <code>pseudonym</code>. This is for both "pseudonym with issuer known
+pid" and "pseudonym with hidden pid" cases.
+                </li>
+              </ol>
             </li>
+
 
             <li>
 Initialize <var>revealDocument</var> to the result of the "selectJsonLd"
@@ -4779,7 +4810,8 @@ value associated with <code>inputLabel</code> as a key in <code>labelMap</code> 
             </li>
             <li>
 Return an object with properties matching <code>bbsProof</code>, "verifierLabelMap" for <code>labelMap</code>,
-<code>mandatoryIndexes</code>, <code>selectiveIndexes</code>, and <code>revealDocument</code>.
+<code>mandatoryIndexes</code>, <code>selectiveIndexes</code>, <code>revealDocument</code> and <var>pseudonym</var> if
+computed.
             </li>
           </ol>
 
@@ -4850,7 +4882,9 @@ The following algorithm serializes a derived proof value. The required inputs
 are a BBS proof (<var>bbsProof</var>), a label map (<var>labelMap</var>), an
 array of mandatory indexes (<var>mandatoryIndexes</var>), an array of
 selective indexes (<var>selectiveIndexes</var>), and a BBS presentation header
-(<var>presentationHeader</var>). A single <em>derived proof</em>
+(<var>presentationHeader</var>).
+Optional inputs are <var>pseudonym</var>.
+A single <em>derived proof</em>
 value, serialized as a byte string, is produced as output.
           </p>
 
@@ -4865,8 +4899,8 @@ proof header bytes <code>0xd9</code>, <code>0x5d</code>, and <code>0x03</code>.
             </li>
             <li>
 Initialize <var>components</var> to an array with five elements containing the values of
-<var>bbsProof</var>, <var>compressedLabelMap</var>, <var>mandatoryIndexes</var>, <var>selectiveIndexes</var>, and
-<var>presentationHeader</var>.
+<var>bbsProof</var>, <var>compressedLabelMap</var>, <var>mandatoryIndexes</var>, <var>selectiveIndexes</var>,
+<var>presentationHeader</var>, and <var>pseudonym</var>.
             </li>
             <li>
 CBOR-encode <var>components</var> per [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc8949" title="Concise Binary Object Representation (CBOR)">RFC8949</a></cite>] where CBOR tagging <em class="rfc2119">MUST NOT</em> be used on
@@ -4889,8 +4923,8 @@ starting with "<code>u</code>" and ending with the base64url-no-pad-encoded valu
 The following algorithm parses the components of the derived proof value.
 The required input is a derived proof value (<var>proofValue</var>). A
 single <em>derived proof value</em> object is produced as output, which
-contains a set of five elements, using the names <code>bbsProof</code>, <code>labelMap</code>,
-<code>mandatoryIndexes</code>, <code>selectiveIndexes</code>, and <code>presentationHeader</code>.
+contains a set of six elements, using the names <code>bbsProof</code>, <code>labelMap</code>,
+<code>mandatoryIndexes</code>, <code>selectiveIndexes</code>, <code>presentationHeader</code>, `pseudonym.
           </p>
 
           <ol class="algorithm">
@@ -4914,7 +4948,7 @@ header bytes <code>0xd9</code>, <code>0x5d</code>, and <code>0x03</code>, and th
             <li>
 Initialize <code>components</code> to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS disclosure proof header. Ensure the result
-is an array of five elements —
+is an array of six elements —
 a byte array, a map of integers to integers, an
 array of integers, another array of integers, and a byte array; otherwise, throw
 an error.
@@ -4927,7 +4961,7 @@ second element of <code>components</code> as <code>compressedLabelMap</code>.
             <li>
 Return <em>derived proof value</em> as an object with properties set to the five
 elements, using the names <code>bbsProof</code>, <code>labelMap</code>, <code>mandatoryIndexes</code>,
-<code>selectiveIndexes</code>, and <code>presentationHeader</code>, respectively.
+<code>selectiveIndexes</code>, <code>presentationHeader</code>, and <code>pseudonym</code> respectively.
             </li>
           </ol>
 
@@ -4956,8 +4990,9 @@ performed in parallel; it only needs to be completed before this algorithm needs
 to use the <code>proofHash</code> value.
             </li>
             <li>
-Initialize <code>bbsProof</code>, <code>labelMap</code>, <code>mandatoryIndexes</code>, <code>selectiveIndexes</code>, and
-<code>presentationHeader</code> to the values associated with their property names in the
+Initialize <code>bbsProof</code>, <code>labelMap</code>, <code>mandatoryIndexes</code>, <code>selectiveIndexes</code>,
+<code>presentationHeader</code>, and <code>pseudonym</code> to the values associated with their
+property names in the
 object returned when calling the algorithm in Section
 <a href="#parsederivedproofvalue" class="sec-ref"><bdi class="secno">3.3.7 </bdi>parseDerivedProofValue</a>, passing <code>proofValue</code> from <code>proof</code>.
             </li>
@@ -4996,7 +5031,7 @@ primitive, passing <code>mandatory</code>.
             </li>
             <li>
 Return an object with properties matching <code>baseSignature</code>, <code>proofHash</code>,
-<code>nonMandatory</code>, <code>mandatoryHash</code>, and <code>selectiveIndexes</code>.
+<code>nonMandatory</code>, <code>mandatoryHash</code>, <code>selectiveIndexes</code> and <code>pseudonym</code>.
             </li>
           </ol>
 
@@ -5234,8 +5269,10 @@ in the Data Integrity [<cite><a class="bibref" data-link-type="biblio" href="#bi
 <a href="https://www.w3.org/TR/vc-data-integrity/#algorithms">
 Section 4: Algorithms</a>. Required inputs are
 cryptographic hash data (<var>hashData</var>) and
-<em>proof options</em> (<var>options</var>). The
-<em>proof options</em> <em class="rfc2119">MUST</em> contain a type identifier for the
+<em>proof options</em> (<var>options</var>).
+Optional inputs include a <var>commitment_with_proof</var> byte array and/or a
+<var>use_pseudonyms</var> boolean.
+The <em>proof options</em> <em class="rfc2119">MUST</em> contain a type identifier for the
 <a href="https://www.w3.org/TR/vc-data-integrity/#dfn-cryptosuite">
 cryptographic suite</a> (<var>type</var>) and <em class="rfc2119">MAY</em> contain a cryptosuite
 identifier (<var>cryptosuite</var>). A single <em>digital proof</em> value
@@ -5257,14 +5294,44 @@ Initialize <code>bbsMessages</code> to an array of byte arrays containing the va
 <code>nonMandatory</code> array of strings encoded using the UTF-8 <a data-type="dfn" href="https://www.w3.org/TR/i18n-glossary/#dfn-character-encoding">character encoding</a>.
             </li>
             <li>
-Compute the <code>bbsSignature</code> using the <code>Sign</code> procedure of [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-Signature</a></cite>]
+Compute the <code>bbsSignature</code> using the procedures below dependent on the values
+of <var>commitment_with_proof</var> and <var>use_pseudonyms</var> options.
+              <ol class="algorithm">
+                <li>
+If <var>commitment_with_proof</var> is empty and <var>use_pseudonyms</var> is false compute the
+<code>bbsSignature</code> the <code>Sign</code> procedure of [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-Signature</a></cite>]
 with appropriate key material and <code>bbsHeader</code> for the <code>header</code> and <code>bbsMessages</code>
-for the <code>messages</code>
+for the <code>messages</code>.
+                </li>
+                <li>
+If <var>commitment_with_proof</var> is not empty and <var>use_pseudonyms</var> is false compute the
+<code>bbsSignature</code> the <code>Sign</code> procedure of [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-blind-bbs-signature" title="Blind BBS Signatures">CFRG-Blind-BBS-Signature</a></cite>]
+with appropriate key material and <code>bbsHeader</code> for the <code>header</code> and <code>bbsMessages</code>
+for the <code>messages</code>. This provides for "anonymous holder binding".
+                </li>
+                <li>
+If <var>commitment_with_proof</var> is empty and <var>use_pseudonyms</var> is true. Generate a
+cryptographically random 32 byte <var>pid</var> value. Compute the
+<code>bbsSignature</code> the <code>Sign</code> procedure of [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-pseudonym-bbs-signature" title="Pseudonym BBS Signatures">CFRG-Pseudonym-BBS-Signature</a></cite>]
+with appropriate key material and <code>bbsHeader</code> for the <code>header</code>, <code>bbsMessages</code>
+for the <code>messages</code>, and <var>pid</var> for the <code>pid</code>. Retain the <var>pid</var> value for use when
+calling <a href="#serializebaseproofvalue" class="sec-ref"><bdi class="secno">3.3.1 </bdi>serializeBaseProofValue</a> below.
+This provides for "pseudonym with issuer known pid".
+                </li>
+                <li>
+If <var>commitment_with_proof</var> is not empty and <var>use_pseudonyms</var> is true. Compute
+the <code>bbsSignature</code> the <code>Sign</code> procedure of [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-pseudonym-bbs-signature" title="Pseudonym BBS Signatures">CFRG-Pseudonym-BBS-Signature</a></cite>]
+with appropriate key material and <code>bbsHeader</code> for the <code>header</code>, <code>bbsMessages</code>
+for the <code>messages</code>, and <var>commitment_with_proof</var> for the <code>commitment_with_proof</code>.
+This provides for "pseudonym with hidden pid".
+                </li>
+              </ol>
             </li>
             <li>
 Initialize `proofValue to the result of calling the algorithm in Section
 <a href="#serializebaseproofvalue" class="sec-ref"><bdi class="secno">3.3.1 </bdi>serializeBaseProofValue</a>, passing <code>bbsSignature</code>, <code>bbsHeader</code>,
-<code>publicKey</code>, <code>hmacKey</code>, and <code>mandatoryPointers</code> as parameters
+<code>publicKey</code>, <code>hmacKey</code>, <code>mandatoryPointers</code>, and the <code>pid</code> value, if one was
+generated, as parameters
 to the algorithm. Where <code>publicKey</code> is a byte array of the public key encoded
 according to [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-SIGNATURE</a></cite>].
             </li>
@@ -5285,7 +5352,9 @@ The derived proof is to be given to the <a data-type="dfn" href="https://www.w3.
 JSON-LD document (<var>document</var>), a BBS base proof
 (<var>proof</var>), an array of JSON pointers to use to selectively disclose
 statements (<var>selectivePointers</var>), an <em class="rfc2119">OPTIONAL</em> BBS
-<var>presentationHeader</var> (a byte array), and any custom JSON-LD API options,
+<var>presentationHeader</var> (a byte array), an <em class="rfc2119">OPTIONAL</em>
+<var>commitment_with_proof</var> (a byte array), an <em class="rfc2119">OPTIONAL</em> <var>pid</var> value (a byte array),
+and any custom JSON-LD API options,
 such as a document loader. A single <em>selectively revealed document</em>
 value, represented as an object, is produced as output.
           </p>
@@ -5305,7 +5374,8 @@ Initialize <code>newProof</code> to a shallow copy of <code>proof</code>.
             <li>
 Replace <code>proofValue</code> in <code>newProof</code> with the result of calling the algorithm
 in Section <a href="#serializederivedproofvalue" class="sec-ref"><bdi class="secno">3.3.6 </bdi>serializeDerivedProofValue</a>, passing <code>bbsProof</code>,
-<code>labelMap</code>, <code>mandatoryIndexes</code>, and <code>selectiveIndexes</code>.
+<code>labelMap</code>, <code>mandatoryIndexes</code>, <code>selectiveIndexes</code>, <var>commitment_with_proof</var>, and
+<var>pid</var>.
             </li>
             <li>
 Set the value of the "<code>proof</code>" property in <code>revealDocument</code> to <code>newProof</code>.
@@ -5356,7 +5426,7 @@ Let <var>proof</var> be the value of <var>securedDocument</var>.<var>proof</var>
             </li>
             <li>
 Initialize <code>bbsProof</code>, <code>proofHash</code>, <code>mandatoryHash</code>, <code>selectedIndexes</code>,
-<code>presentationHeader</code> and <code>nonMandatory</code> to the values associated with their
+<code>presentationHeader</code>, <code>pseudonym</code>, and <code>nonMandatory</code> to the values associated with their
 property names in the object returned when calling the algorithm in Section
 <a href="#createverifydata" class="sec-ref"><bdi class="secno">3.3.8 </bdi>createVerifyData</a>, passing the <var>unsecuredDocument</var>, <var>proof</var>, and
 any custom JSON-LD API options (such as a document loader).
@@ -5368,11 +5438,36 @@ obtained from the UTF-8 encoding of the elements of the <code>nonMandatory</code
             </li>
             <li>
 Let <var data-type="boolean">verified</var> be the result of applying the verification
-algorithm <code>ProofVerify(PK, proof, header, ph, disclosed_messages,
-disclosed_indexes)</code> of [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-SIGNATURE</a></cite>] with <code>PK</code> set as the public key of
-the original issuer, <code>proof</code> set as <code>bbsProof</code>, <code>header</code> set as <code>bbsHeader</code>,
-<code>disclosed_messages</code> set as <code>disclosedMessages</code>, <code>ph</code> set as
-<code>presentationHeader</code>, and <code>disclosed_indexes</code> set as <code>selectiveIndexes</code>.
+algorithm below depending on whether the <var>pseudonym</var> value is empty.
+            <ol class="algorithm">
+              <li>
+If the <var>pseudonym</var> value is empty,
+initialize <code>verificationResult</code> to the result of applying the verification
+algorithm
+<code>ProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes)</code> of
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-SIGNATURE</a></cite>]
+with <code>PK</code> set as the public key of the original issuer, <code>proof</code> set as <code>bbsProof</code>,
+<code>header</code> set as <code>bbsHeader</code>, <code>disclosed_messages</code> set as <code>disclosedMessages</code>,
+<code>ph</code> set as <code>presentationHeader</code>, and <code>disclosed_indexes</code> set as
+<code>selectiveIndexes</code>. Return <code>verificationResult</code> as <em>verification result</em>.
+This applies to the regular BBS proof case as well as "anonymous holder binding"
+case.
+              </li>
+              <li>
+If the <var>pseudonym</var> value is not empty,
+initialize <var data-type="boolean">verified</var> to the result of applying the verification
+algorithm
+<code>PseudonymProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes, pseudonym)</code>
+of
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-pseudonym-bbs-signature" title="Pseudonym BBS Signatures">CFRG-Pseudonym-BBS-Signature</a></cite>].
+with <code>PK</code> set as the public key of the original issuer, <code>proof</code> set as <code>bbsProof</code>,
+<code>header</code> set as <code>bbsHeader</code>, <code>disclosed_messages</code> set as <code>disclosedMessages</code>,
+<code>ph</code> set as <code>presentationHeader</code>, <code>disclosed_indexes</code> set as
+<code>selectiveIndexes</code>, and <code>pseudonym</code>.
+This applies to the "pseudonym with issuer known pid" and "pseudonym with
+hidden pid" cases.
+                </li>
+              </ol>
             </li>
             <li>
 Return a <a data-link-type="dfn|abstract-op" href="#dfn-verification-result" class="internalDFN" id="ref-for-dfn-verification-result-1">verification result</a> with <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://infra.spec.whatwg.org/#struct-item">items</a>:
@@ -5390,8 +5485,78 @@ Return a <a data-link-type="dfn|abstract-op" href="#dfn-verification-result" cla
         </section>
       </section>
     </section>
+    <section class="informative" id="optional-features"><div class="header-wrapper"><h2 id="x4-optional-features"><bdi class="secno">4. </bdi>Optional Features</h2><a class="self-link" href="#optional-features" aria-label="Permalink for Section 4."></a></div><p><em>This section is non-normative.</em></p>
 
-    <section id="security-considerations"><div class="header-wrapper"><h2 id="x4-security-considerations"><bdi class="secno">4. </bdi>Security Considerations</h2><a class="self-link" href="#security-considerations" aria-label="Permalink for Section 4."></a></div>
+      <p>
+The cryptographic properties of BBS signatures permits variants that
+can support advanced functionalities. This specification has limited itself to
+supporting only the most relevant of these enhancements which we explain in the
+following sections. The variables <var>commitment_with_proof</var>, <var>use_pseudonyms</var>,
+<var>pid</var> and <var>pseudonym</var> are associated with these features and are not otherwise
+needed for BBS signatures and proofs.
+      </p>
+      <div class="issue" id="issue-container-number-1"><div role="heading" class="issue-title marker" id="h-issue" aria-level="3"><span>Issue 1</span><span class="issue-label">: Optional BBS features are at risk</span></div><p class="at-risk">
+The optional BBS features described in this section, and included in the
+algorithms in this specification, are at risk and will be removed before
+the finalization of this specification if their respective specifications
+at the IETF do not reach RFC status on the same timeline or if there
+are not at least two independent implementations for each optional
+feature.
+      </p></div>
+      <section id="anonymous-holder-binding"><div class="header-wrapper"><h3 id="x4-1-anonymous-holder-binding"><bdi class="secno">4.1 </bdi>Anonymous Holder Binding</h3><a class="self-link" href="#anonymous-holder-binding" aria-label="Permalink for Section 4.1"></a></div>
+
+        <p>
+This feature binds, at the time of issuance, a document with base proof, to a
+secret, known only to the holder, in such a way, that only the holder can generate
+a revealed document with derived proof that will verify. For example, if an
+adversary obtained the document with base proof they could not create a revealed
+document with derived proof that can verify.
+        </p>
+        <p>
+To provide for this functionality a holder generates a <var>holder_secret</var> value
+which generally should be at least 32 bytes long and cryptographically randomly
+generated. This value is never shared by the holder. Instead the holder
+generates a commitment along with a zero knowledge proof of knowledge of this
+value using the "Commitment Generation" procedure of [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-blind-bbs-signature" title="Blind BBS Signatures">CFRG-Blind-BBS-Signature</a></cite>].
+This computation involves cryptographically random values and will
+return to the holder the <var>commitment_with_proof</var> which will be sent to the
+issuer along with <var>secret_prover_blind</var> which is kept secret and is needed
+during derived proof generation by the holder.
+Note that a holder can run the "Commitment Generation" multiple times for use
+with different issuers to produce unlinkable <var>commitment_with_proof</var> values.
+        </p>
+        <p>
+The issuer, on receipt of the <var>commitment_with_proof</var>, follows the procedures of
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-blind-bbs-signature" title="Blind BBS Signatures">CFRG-Blind-BBS-Signature</a></cite>] to produce a base proof (signature) over the document and
+the commitment furnished by the holder.
+        </p>
+        <p>
+When the holder wants to create a selectively disclosed document with derived
+proof they use their <var>holder_secret</var> (as a "commited message") and the
+<var>secret_prover_blind</var> in the proof generation procedure of
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-blind-bbs-signature" title="Blind BBS Signatures">CFRG-Blind-BBS-Signature</a></cite>].
+        </p>
+        <p>
+Verification of the revealed document with derived proof uses the "regular" BBS
+proof verification procedures of [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-SIGNATURE</a></cite>].
+        </p>
+
+      </section>
+      <section id="pseudonyms-with-issuer-known-pid"><div class="header-wrapper"><h3 id="x4-2-pseudonyms-with-issuer-known-pid"><bdi class="secno">4.2 </bdi>Pseudonyms with Issuer known PID</h3><a class="self-link" href="#pseudonyms-with-issuer-known-pid" aria-label="Permalink for Section 4.2"></a></div>
+
+        <p>
+Description TBD. Example controlled substance purchase credential. Allows for
+issuer monitoring but privacy against verifier collusion.
+        </p>
+      </section>
+      <section id="pseudonyms-with-hidden-pid"><div class="header-wrapper"><h3 id="x4-3-pseudonyms-with-hidden-pid"><bdi class="secno">4.3 </bdi>Pseudonyms with Hidden PID</h3><a class="self-link" href="#pseudonyms-with-hidden-pid" aria-label="Permalink for Section 4.3"></a></div>
+      <p>
+Description TBD. Allows verifier to recognize returning holder but cannot link
+with verifier-verifier collusion or verifier-issuer collusion.
+      </p>
+    </section></section>
+
+    <section id="security-considerations"><div class="header-wrapper"><h2 id="x5-security-considerations"><bdi class="secno">5. </bdi>Security Considerations</h2><a class="self-link" href="#security-considerations" aria-label="Permalink for Section 5."></a></div>
 
 
       <p class="advisement">
@@ -5401,7 +5566,7 @@ Return a <a data-link-type="dfn|abstract-op" href="#dfn-verification-result" cla
         Security Considerations section of the Data Integrity specification</a>.
       </p>
 
-      <section class="informative" id="base-proof-security-properties"><div class="header-wrapper"><h3 id="x4-1-base-proof-security-properties"><bdi class="secno">4.1 </bdi>Base Proof Security Properties</h3><a class="self-link" href="#base-proof-security-properties" aria-label="Permalink for Section 4.1"></a></div><p><em>This section is non-normative.</em></p>
+      <section class="informative" id="base-proof-security-properties"><div class="header-wrapper"><h3 id="x5-1-base-proof-security-properties"><bdi class="secno">5.1 </bdi>Base Proof Security Properties</h3><a class="self-link" href="#base-proof-security-properties" aria-label="Permalink for Section 5.1"></a></div><p><em>This section is non-normative.</em></p>
 
 
         <p>
@@ -5674,7 +5839,7 @@ security considerations related to pairing friendly curves are discussed in
         </p>
       </section>
 
-      <section class="informative" id="derived-proof-security-properties"><div class="header-wrapper"><h3 id="x4-2-derived-proof-security-properties"><bdi class="secno">4.2 </bdi>Derived Proof Security Properties</h3><a class="self-link" href="#derived-proof-security-properties" aria-label="Permalink for Section 4.2"></a></div><p><em>This section is non-normative.</em></p>
+      <section class="informative" id="derived-proof-security-properties"><div class="header-wrapper"><h3 id="x5-2-derived-proof-security-properties"><bdi class="secno">5.2 </bdi>Derived Proof Security Properties</h3><a class="self-link" href="#derived-proof-security-properties" aria-label="Permalink for Section 5.2"></a></div><p><em>This section is non-normative.</em></p>
 
         <p>
 The security of the derived proof is dependent on the security properties of
@@ -5708,9 +5873,9 @@ the proper order.
 
     </section>
 
-    <section class="informative" id="privacy-considerations"><div class="header-wrapper"><h2 id="x5-privacy-considerations"><bdi class="secno">5. </bdi>Privacy Considerations</h2><a class="self-link" href="#privacy-considerations" aria-label="Permalink for Section 5."></a></div><p><em>This section is non-normative.</em></p>
+    <section class="informative" id="privacy-considerations"><div class="header-wrapper"><h2 id="x6-privacy-considerations"><bdi class="secno">6. </bdi>Privacy Considerations</h2><a class="self-link" href="#privacy-considerations" aria-label="Permalink for Section 6."></a></div><p><em>This section is non-normative.</em></p>
 
-      <section id="selective-disclosure-and-data-leakage"><div class="header-wrapper"><h3 id="x5-1-selective-disclosure-and-data-leakage"><bdi class="secno">5.1 </bdi>Selective Disclosure and Data Leakage</h3><a class="self-link" href="#selective-disclosure-and-data-leakage" aria-label="Permalink for Section 5.1"></a></div>
+      <section id="selective-disclosure-and-data-leakage"><div class="header-wrapper"><h3 id="x6-1-selective-disclosure-and-data-leakage"><bdi class="secno">6.1 </bdi>Selective Disclosure and Data Leakage</h3><a class="self-link" href="#selective-disclosure-and-data-leakage" aria-label="Permalink for Section 6.1"></a></div>
 
         <p>
 Selective disclosure permits a <em>holder</em> to <em>minimize</em> the information
@@ -5925,7 +6090,7 @@ ids</em> than in the ECDSA-SD approach, since information the number of
 essentially unique identifiers produced by applying an HMAC to blank node ids.
         </p>
       </section>
-      <section id="selective-disclosure-and-unlinkability"><div class="header-wrapper"><h3 id="x5-2-selective-disclosure-and-unlinkability"><bdi class="secno">5.2 </bdi>Selective Disclosure and Unlinkability</h3><a class="self-link" href="#selective-disclosure-and-unlinkability" aria-label="Permalink for Section 5.2"></a></div>
+      <section id="selective-disclosure-and-unlinkability"><div class="header-wrapper"><h3 id="x6-2-selective-disclosure-and-unlinkability"><bdi class="secno">6.2 </bdi>Selective Disclosure and Unlinkability</h3><a class="self-link" href="#selective-disclosure-and-unlinkability" aria-label="Permalink for Section 6.2"></a></div>
 
         <p>
 In some uses of VCs it can be important to the privacy of a <em>holder</em> to
@@ -6013,7 +6178,7 @@ External VC System Based Linkage
         <p>
 We discuss each of these below.
         </p>
-        <section id="linkage-via-cryptographic-artifacts"><div class="header-wrapper"><h4 id="x5-2-1-linkage-via-cryptographic-artifacts"><bdi class="secno">5.2.1 </bdi>Linkage via Cryptographic Artifacts</h4><a class="self-link" href="#linkage-via-cryptographic-artifacts" aria-label="Permalink for Section 5.2.1"></a></div>
+        <section id="linkage-via-cryptographic-artifacts"><div class="header-wrapper"><h4 id="x6-2-1-linkage-via-cryptographic-artifacts"><bdi class="secno">6.2.1 </bdi>Linkage via Cryptographic Artifacts</h4><a class="self-link" href="#linkage-via-cryptographic-artifacts" aria-label="Permalink for Section 6.2.1"></a></div>
 
           <p>
 Cryptographic Hashes, HMACs, and digital signatures by their nature generate
@@ -6067,7 +6232,7 @@ has many different public keys and particularly if it uses a subset of those
 keys with a small subset of users (<em>holders</em>).
           </p>
         </section>
-        <section id="linkage-via-vc-processing"><div class="header-wrapper"><h4 id="x5-2-2-linkage-via-vc-processing"><bdi class="secno">5.2.2 </bdi>Linkage via VC Processing</h4><a class="self-link" href="#linkage-via-vc-processing" aria-label="Permalink for Section 5.2.2"></a></div>
+        <section id="linkage-via-vc-processing"><div class="header-wrapper"><h4 id="x6-2-2-linkage-via-vc-processing"><bdi class="secno">6.2.2 </bdi>Linkage via VC Processing</h4><a class="self-link" href="#linkage-via-vc-processing" aria-label="Permalink for Section 6.2.2"></a></div>
 
           <p>
 We saw in the section on information leakage that RDF canonicalization uses a
@@ -6083,7 +6248,7 @@ reducing the number of blank nodes in the VC, e.g., keep the VC short and
 simple.
           </p>
         </section>
-        <section id="linkage-via-json-ld-node-identifiers"><div class="header-wrapper"><h4 id="x5-2-3-linkage-via-json-ld-node-identifiers"><bdi class="secno">5.2.3 </bdi>Linkage via JSON-LD Node Identifiers</h4><a class="self-link" href="#linkage-via-json-ld-node-identifiers" aria-label="Permalink for Section 5.2.3"></a></div>
+        <section id="linkage-via-json-ld-node-identifiers"><div class="header-wrapper"><h4 id="x6-2-3-linkage-via-json-ld-node-identifiers"><bdi class="secno">6.2.3 </bdi>Linkage via JSON-LD Node Identifiers</h4><a class="self-link" href="#linkage-via-json-ld-node-identifiers" aria-label="Permalink for Section 6.2.3"></a></div>
 
           <p>
 JSON-LD is a JSON-based format for serialization of Linked Data. As such, it supports
@@ -6102,7 +6267,7 @@ country or a concert event). Also note that JSON-LD's use of <code>@context</cod
 maps terms to IRIs, does not generally affect unlinkability.
           </p>
         </section>
-        <section id="linkage-via-proof-options-and-mandatory-reveal"><div class="header-wrapper"><h4 id="x5-2-4-linkage-via-proof-options-and-mandatory-reveal"><bdi class="secno">5.2.4 </bdi>Linkage via Proof Options and Mandatory Reveal</h4><a class="self-link" href="#linkage-via-proof-options-and-mandatory-reveal" aria-label="Permalink for Section 5.2.4"></a></div>
+        <section id="linkage-via-proof-options-and-mandatory-reveal"><div class="header-wrapper"><h4 id="x6-2-4-linkage-via-proof-options-and-mandatory-reveal"><bdi class="secno">6.2.4 </bdi>Linkage via Proof Options and Mandatory Reveal</h4><a class="self-link" href="#linkage-via-proof-options-and-mandatory-reveal" aria-label="Permalink for Section 6.2.4"></a></div>
 
           <p>
 In the [<cite><a class="bibref" data-link-type="biblio" href="#bib-vc-data-integrity" title="Verifiable Credential Data Integrity 1.0">vc-data-integrity</a></cite>] specification, a number of properties of the
@@ -6128,7 +6293,7 @@ to the <em>verifier</em>. Care should be taken such that if such information is
 required to be disclosed, that the anonymity set remains sufficiently large.
           </p>
         </section>
-        <section id="linkage-via-holder-selective-reveal"><div class="header-wrapper"><h4 id="x5-2-5-linkage-via-holder-selective-reveal"><bdi class="secno">5.2.5 </bdi>Linkage via Holder Selective Reveal</h4><a class="self-link" href="#linkage-via-holder-selective-reveal" aria-label="Permalink for Section 5.2.5"></a></div>
+        <section id="linkage-via-holder-selective-reveal"><div class="header-wrapper"><h4 id="x6-2-5-linkage-via-holder-selective-reveal"><bdi class="secno">6.2.5 </bdi>Linkage via Holder Selective Reveal</h4><a class="self-link" href="#linkage-via-holder-selective-reveal" aria-label="Permalink for Section 6.2.5"></a></div>
 
           <p>
 As discussed in [<cite><a class="bibref" data-link-type="biblio" href="#bib-powar2023" title="SoK: Managing risks of linkage attacks on data privacy">Powar2023</a></cite>] there are many documented cases of
@@ -6141,7 +6306,7 @@ case of a former governor of Massachusetts and [<cite><a class="bibref" data-lin
 analysis and categorization of 94 such public cases.
           </p>
         </section>
-        <section id="external-vc-system-based-linkage"><div class="header-wrapper"><h4 id="x5-2-6-external-vc-system-based-linkage"><bdi class="secno">5.2.6 </bdi>External VC System Based Linkage</h4><a class="self-link" href="#external-vc-system-based-linkage" aria-label="Permalink for Section 5.2.6"></a></div>
+        <section id="external-vc-system-based-linkage"><div class="header-wrapper"><h4 id="x6-2-6-external-vc-system-based-linkage"><bdi class="secno">6.2.6 </bdi>External VC System Based Linkage</h4><a class="self-link" href="#external-vc-system-based-linkage" aria-label="Permalink for Section 6.2.6"></a></div>
 
           <p>
 It ought to be pointed out that maintaining unlinkability, i.e., anonymity,
@@ -6894,6 +7059,10 @@ document shown below.
 
     <dl class="bibliography"><dt id="bib-cfrg-bbs-signature">[CFRG-BBS-SIGNATURE]</dt><dd>
       <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html"><cite>The BBS Signature Scheme</cite></a>. Tobias Looker; Vasilis Kalos; Andrew Whitehead; Mike Lodder. Draft. URL: <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html">https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html</a>
+    </dd><dt id="bib-cfrg-blind-bbs-signature">[CFRG-Blind-BBS-Signature]</dt><dd>
+      <a href="https://www.ietf.org/id/draft-kalos-bbs-blind-signatures-00.html"><cite>Blind BBS Signatures</cite></a>. Vasilis Kalos; Greg Bernstein. Draft. URL: <a href="https://www.ietf.org/id/draft-kalos-bbs-blind-signatures-00.html">https://www.ietf.org/id/draft-kalos-bbs-blind-signatures-00.html</a>
+    </dd><dt id="bib-cfrg-pseudonym-bbs-signature">[CFRG-Pseudonym-BBS-Signature]</dt><dd>
+      <a href="https://www.ietf.org/id/draft-kalos-bbs-blind-signatures-00.html"><cite>Pseudonym BBS Signatures</cite></a>. Vasilis Kalos; Greg Bernstein. Draft. URL: <a href="https://www.ietf.org/id/draft-kalos-bbs-blind-signatures-00.html">https://www.ietf.org/id/draft-kalos-bbs-blind-signatures-00.html</a>
     </dd><dt id="bib-di-ecdsa">[DI-ECDSA]</dt><dd>
       <a href="https://www.w3.org/TR/vc-di-ecdsa/"><cite>The Elliptic Curve Digital Signature Algorithm Cryptosuites v1.0</cite></a>. David Longley; Manu Sporny; Marty Reed.  W3C Verifiable Credentials Working Group. W3C Working Draft. URL: <a href="https://www.w3.org/TR/vc-di-ecdsa/">https://www.w3.org/TR/vc-di-ecdsa/</a>
     </dd><dt id="bib-infra">[INFRA]</dt><dd>
