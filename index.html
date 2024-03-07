@@ -1451,19 +1451,6 @@ feature.
       </p>
       <section>
         <h3>Anonymous Holder Binding</h3>
-<!-- **Anonymous Holder Binding**: This "locks" a BBS signature to a secret value known only to the holder.
-  This prevents an adversary that may have obtained the VC with base proof (BBS signature) from creating a
-  VC with derived proof (BBS proof) that can verify without knowing the secret value. Holder needs to send
-  a Blind BBS commitment with proof to the *issuer*. After verifying the commitment from the holder the
-  issuer uses the Blind BBS extension to BBS to produce a signature over an unsigned document which is
-  sent to the holder (no other information is needed if the *signer_blind* can be omitted). The holder
-  with its information about the commitment, and the signature can use the BlindProofGen algorithm to
-  generate the revealed document with derived proof. The verifier uses the **regular** BBS proof
-  verification procedure without modification to verify the derived document.
-
-*Additional Features*: No secret information is shared between holder and issuer (only the commitment).
-The holder's secret value can be reused across different issues without tracking with the use of a
-different *secret_prover_blind* per *issuer*. -->
         <p>
 This feature binds, at the time of issuance, a document with base proof, to a
 secret, known only to the holder, in such a way, that only the holder can generate
