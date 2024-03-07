@@ -199,6 +199,18 @@
             publisher: "Proceedings on Privacy Enhancing Technologies",
             date: "2020",
             href: "https://petsymposium.org/popets/2020/popets-2020-0041.php"
+          },
+          "CFRG-Blind-BBS-Signature": {
+            title: "Blind BBS Signatures",
+            authors: ["V. Kalos", "G. Bernstein"],
+            date: "2024",
+            href: "https://www.ietf.org/archive/id/draft-kalos-bbs-blind-signatures-00.html#name-proof-generation"
+          },
+          "CFRG-Pseudonym-BBS-Signature": {
+            title: "BBS per Verifier Linkability",
+            authors: ["V. Kalos"],
+            date: "2023",
+            href: "https://basileioskal.github.io/bbs-per-verifier-id/draft-vasilis-bbs-per-verifier-linkability.html"
           }
         },
         lint: { "informative-dfn": false },
@@ -1491,8 +1503,37 @@ proof verification procedures of [[CFRG-BBS-SIGNATURE]].
       <section>
         <h3>Pseudonyms with Issuer known PID</h3>
         <p>
-Description TBD. Example controlled substance purchase credential. Allows for
-issuer monitoring but privacy against verifier collusion.
+This feature is a privacy preserving enhancement that allows a verifier that has
+seen a selectively revealed document with derived proof from a holder to
+recognize the holder again when presenting a new selectively revealed document
+with derived proof. Note that this may just be a new unlinkable proof (derived
+proof) on the same selectively revealed information. By privacy preserving we
+mean that no uniquely identfiable information is added that would allow tracking
+between different verifiers that may share information between themselves. This
+variant does allow for the issuer to monitor usage if verifiers share
+information with the issuer.
+        </p>
+        <p>
+To furnish this capability before creating the base proof for a document an
+issuer generates a value known as a |pid| (prover id) which should be
+cryptographically random and at least 32 bytes long. This value is shared with
+the holder but kept secret otherwise. This value is then used in creating the
+base proof via the signing procedure in [[CFRG-Pseudonym-BBS-Signature]].
+        </p>
+        <p>
+The holder receives the document with base proof which includes the |pid| value
+from the issuer. The holder obtains a |verifier_id| associated with the verifier
+they intend to create a revealed document with derived proof for. Using the
+procedures of [[CFRG-Pseudonym-BBS-Signature]] a cryptographic |pseudonym| value
+is generated. The derived proof value is generated via the proof generation
+procedure of [[CFRG-Pseudonym-BBS-Signature]] and this value along with the
+|psudeonym| are given to the verifier. Note that the |pid| value cannot be
+recovered from the |pseudonym|.
+        </p>
+        <p>
+When the verifier receives the revealed document with derived proof and
+|pseudonym| they use the proof verification procedures of
+[[CFRG-Pseudonym-BBS-Signature]].
         </p>
       </section>
       <h3>Pseudonyms with Hidden PID</h3>
