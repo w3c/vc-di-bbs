@@ -906,8 +906,8 @@ starting with "`u`" and ending with the base64url-no-pad-encoded value of
 The following algorithm parses the components of the derived proof value.
 The required input is a derived proof value (<var>proofValue</var>). A
 single <em>derived proof value</em> object is produced as output, which
-contains a set of five elements, using the names `bbsProof`, `labelMap`,
-`mandatoryIndexes`, `selectiveIndexes`, and `presentationHeader`.
+contains a set of six elements, using the names `bbsProof`, `labelMap`,
+`mandatoryIndexes`, `selectiveIndexes`, `presentationHeader`, `pseudonym.
           </p>
 
           <ol class="algorithm">
@@ -931,7 +931,7 @@ header bytes `0xd9`, `0x5d`, and `0x03`, and throw an error if it does not.
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS disclosure proof header. Ensure the result
-is an array of five elements —
+is an array of six elements —
 a byte array, a map of integers to integers, an
 array of integers, another array of integers, and a byte array; otherwise, throw
 an error.
@@ -944,7 +944,7 @@ second element of `components` as `compressedLabelMap`.
             <li>
 Return <em>derived proof value</em> as an object with properties set to the five
 elements, using the names `bbsProof`, `labelMap`, `mandatoryIndexes`,
-`selectiveIndexes`, and `presentationHeader`, respectively.
+`selectiveIndexes`, `presentationHeader`, and `pseudonym` respectively.
             </li>
           </ol>
 
@@ -973,8 +973,9 @@ performed in parallel; it only needs to be completed before this algorithm needs
 to use the `proofHash` value.
             </li>
             <li>
-Initialize `bbsProof`, `labelMap`, `mandatoryIndexes`, `selectiveIndexes`, and
-`presentationHeader` to the values associated with their property names in the
+Initialize `bbsProof`, `labelMap`, `mandatoryIndexes`, `selectiveIndexes`,
+`presentationHeader`, and `pseudonym` to the values associated with their
+property names in the
 object returned when calling the algorithm in Section
 <a href="#parsederivedproofvalue"></a>, passing `proofValue` from `proof`.
             </li>
@@ -1013,7 +1014,7 @@ primitive, passing `mandatory`.
             </li>
             <li>
 Return an object with properties matching `baseSignature`, `proofHash`,
-`nonMandatory`, `mandatoryHash`, and `selectiveIndexes`.
+`nonMandatory`, `mandatoryHash`, `selectiveIndexes` and `pseudonym`.
             </li>
           </ol>
 
@@ -1378,7 +1379,7 @@ custom JSON-LD API options (such as a document loader). A single boolean
             <!-- [bbsProof, labelMapCompressed, mandatoryIndexes, adjSelectedIndexes] -->
             <li>
 Initialize `bbsProof`, `proofHash`, `mandatoryHash`, `selectedIndexes`,
-`presentationHeader` and `nonMandatory` to the values associated with their
+`presentationHeader`, `pseudonym`, and `nonMandatory` to the values associated with their
 property names in the object returned when calling the algorithm in Section
 <a href="#createverifydata"></a>, passing the `document`, `proof`, and any
 custom JSON-LD API options (such as a document loader).
@@ -1388,9 +1389,13 @@ Initialize `bbsHeader` to the concatenation of `proofHash` and `mandatoryHash`
 in that order. Initialize `disclosedMessages` to an array of byte arrays
 obtained from the UTF-8 encoding of the elements of the `nonMandatory` array.
             </li>
-<!-- result = ProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes) -->
             <li>
 Initialize `verificationResult` to the result of applying the verification
+algorithm below depending on whether the |pseudonym| value is empty.
+            <ol class="algorithm">
+              <li>
+If the |pseudonym| value is empty,
+initialize `verificationResult` to the result of applying the verification
 algorithm
 `ProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes)` of
 [[CFRG-BBS-SIGNATURE]]
@@ -1398,6 +1403,26 @@ with `PK` set as the public key of the original issuer, `proof` set as `bbsProof
 `header` set as `bbsHeader`, `disclosed_messages` set as `disclosedMessages`,
 `ph` set as `presentationHeader`, and `disclosed_indexes` set as
 `selectiveIndexes`. Return `verificationResult` as <em>verification result</em>.
+This applies to the regular BBS proof case as well as "anonymous holder binding"
+case.
+              </li>
+              <li>
+If the |pseudonym| value is not empty,
+initialize `verificationResult` to the result of applying the verification
+algorithm
+`PseudonymProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes, pseudonym)`
+of
+[[CFRG-Pseudonym-BBS-Signature]].
+with `PK` set as the public key of the original issuer, `proof` set as `bbsProof`,
+`header` set as `bbsHeader`, `disclosed_messages` set as `disclosedMessages`,
+`ph` set as `presentationHeader`, `disclosed_indexes` set as
+`selectiveIndexes`, and `pseudonym`. Return `verificationResult` as
+<em>verification result</em>.
+This applies to the "pseudonym with issuer known pid" and "pseudonym with
+hidden pid" cases.
+              </li>
+            </ol>
+
             </li>
           </ol>
 
