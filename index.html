@@ -743,7 +743,7 @@ where `PK` is the original issuers public key, `signature` is the
                 <li>
 If |commitment_with_proof| is not empty and |pid| is empty
 set `bbsProof` to the value computed by the `ProofGen` procedure from
-[[CFRG-Blind-BBS-SIGNATURE]], where `PK` is the original issuers public key,
+[[CFRG-Blind-BBS-Signature]], where `PK` is the original issuers public key,
 `signature` is the
 `bbsSignature`, `header` is the `bbsHeader`, `ph` is the  `presentationHeader`
 `messages` is `bbsMessages`, `disclosed_indexes` is `selectiveIndexes`, and
@@ -1442,16 +1442,64 @@ following sections. The variables |commitment_with_proof|, |use_pseudonyms|,
 needed for BBS signatures and proofs.
       </p>
       <p class="issue at-risk" title="Optional BBS features are at risk">
-The optional BBS features described in this section, and included in the 
+The optional BBS features described in this section, and included in the
 algorithms in this specification, are at risk and will be removed before
-the finalization of this specification if their respective specifications 
-at the IETF do not reach RFC status on the same timeline or if there 
+the finalization of this specification if their respective specifications
+at the IETF do not reach RFC status on the same timeline or if there
 are not at least two independent implementations for each optional
 feature.
-      </p> 
+      </p>
       <section>
         <h3>Anonymous Holder Binding</h3>
-        <p>Description TBD.</p>
+<!-- **Anonymous Holder Binding**: This "locks" a BBS signature to a secret value known only to the holder.
+  This prevents an adversary that may have obtained the VC with base proof (BBS signature) from creating a
+  VC with derived proof (BBS proof) that can verify without knowing the secret value. Holder needs to send
+  a Blind BBS commitment with proof to the *issuer*. After verifying the commitment from the holder the
+  issuer uses the Blind BBS extension to BBS to produce a signature over an unsigned document which is
+  sent to the holder (no other information is needed if the *signer_blind* can be omitted). The holder
+  with its information about the commitment, and the signature can use the BlindProofGen algorithm to
+  generate the revealed document with derived proof. The verifier uses the **regular** BBS proof
+  verification procedure without modification to verify the derived document.
+
+*Additional Features*: No secret information is shared between holder and issuer (only the commitment).
+The holder's secret value can be reused across different issues without tracking with the use of a
+different *secret_prover_blind* per *issuer*. -->
+        <p>
+This feature binds, at the time of issuance, a document with base proof, to a
+secret, known only to the holder, in such a way, that only the holder can generate
+a revealed document with derived proof that will verify. For example, if an
+adversary obtained the document with base proof they could not create a revealed
+document with derived proof that can verify.
+        </p>
+        <p>
+To provide for this functionality a holder generates a |holder_secret| value
+which generally should be at least 32 bytes long and cryptographically randomly
+generated. This value is never shared by the holder. Instead the holder
+generates a commitment along with a zero knowledge proof of knowledge of this
+value using the "Commitment Generation" procedure of [[CFRG-Blind-BBS-Signature]].
+This computation involves cryptographically random values and will
+return to the holder the |commitment_with_proof| which will be sent to the
+issuer along with |secret_prover_blind| which is kept secret and is needed
+during derived proof generation by the holder.
+Note that a holder can run the "Commitment Generation" multiple times for use
+with different issuers to produce unlinkable |commitment_with_proof| values.
+        </p>
+        <p>
+The issuer, on receipt of the |commitment_with_proof|, follows the procedures of
+[[CFRG-Blind-BBS-Signature]] to produce a base proof (signature) over the document and
+the commitment furnished by the holder.
+        </p>
+        <p>
+When the holder wants to create a selectively disclosed document with derived
+proof they use their |holder_secret| (as a "commited message") and the
+|secret_prover_blind| in the proof generation procedure of
+[[CFRG-Blind-BBS-Signature]].
+        </p>
+        <p>
+Verification of the revealed document with derived proof uses the "regular" BBS
+proof verification procedures of [[CFRG-BBS-SIGNATURE]].
+        </p>
+
       </section>
       <section>
         <h3>Pseudonyms with Issuer known PID</h3>
