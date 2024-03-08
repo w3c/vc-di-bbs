@@ -607,7 +607,8 @@ Return |baseProof| as <em>base proof</em>.
 The following algorithm parses the components of a `bbs-2023` selective
 disclosure base proof value. The required input is a proof value
 (<var>proofValue</var>). A single object, <em>parsed base proof</em>, containing
-five elements, using the names "bbsSignature", "bbsHeader", "publicKey",
+five  or seven elements, using the names "bbsSignature", "bbsHeader",
+"publicKey",
 "hmacKey", "mandatoryPointers", and optional feature parameters "pid" and
 "signer_blind" is produced  as output.
           </p>
@@ -922,8 +923,9 @@ starting with "`u`" and ending with the base64url-no-pad-encoded value of
 The following algorithm parses the components of the derived proof value.
 The required input is a derived proof value (<var>proofValue</var>). A
 single <em>derived proof value</em> object is produced as output, which
-contains a set of six elements, having the names `bbsProof`, `labelMap`,
-`mandatoryIndexes`, `selectiveIndexes`, `presentationHeader`, and `pseudonym.
+contains a set of five or six elements, having the names `bbsProof`, `labelMap`,
+`mandatoryIndexes`, `selectiveIndexes`, `presentationHeader`, and the optional
+`pseudonym` parameter.
           </p>
 
           <ol class="algorithm">
@@ -1298,8 +1300,8 @@ This provides for "pseudonym with issuer known pid".
                 </li>
                 <li>
 If |commitment_with_proof| is not empty and |use_pseudonyms| is true, compute
-the `bbsSignature` using the `Sign` procedure of [[CFRG-Blind-BBS-Signature]]
-and [[CFRG-Pseudonym-BBS-Signature]], with appropriate key material, `bbsHeader`
+the `bbsSignature` using the `Sign` procedure of
+[[CFRG-Pseudonym-BBS-Signature]], with appropriate key material, `bbsHeader`
 for the `header`, `bbsMessages` for the `messages`, and |commitment_with_proof|
 for the `commitment_with_proof`. If the signing procedure uses the optional
 |signer_blind| parameter retain this value for use when calling
@@ -1554,8 +1556,8 @@ manner. The holder then uses the "Commitment Generation" procedure of
 [[CFRG-Blind-BBS-Signature]] to generate a |commitment_with_proof| value and
 a private |secret_prover_blind| value.
 This value needs to be conveyed to the issuer who will use it in the issuance
-of a document with base proof, in accordance with [[CFRG-Blind-BBS-Signature]]
-and [[CFRG-Pseudonym-BBS-Signature]], which is sent to the holder. The |pid|
+of a document with base proof, in accordance with
+[[CFRG-Pseudonym-BBS-Signature]], which is sent to the holder. The |pid|
 value is never shared by the holder. If the issuer chooses to use the optional
 |signer_blind| parameter when creating the signature in this value needs to be
 conveyed to the holder as part of the base proof value.
@@ -1567,7 +1569,7 @@ procedures of [[CFRG-Pseudonym-BBS-Signature]], a cryptographic |pseudonym|
 value is generated from their |pid| value and the |verifier_id|. The derived
 proof value is generated via the proof generation using the |pid|,
 |secret_prover_blind|, |verifier_id|, and |signer_blind| using the
-procedures of [[CFRG-Pseudonym-BBS-Signature]] and [[CFRG-Blind-BBS-Signature]],
+procedures of [[CFRG-Pseudonym-BBS-Signature]],
 and this value is given to the
 verifier along with the |pseudonym|. Note that the |pid| value cannot be
 recovered from the |pseudonym|.
