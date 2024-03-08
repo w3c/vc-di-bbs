@@ -947,7 +947,7 @@ header bytes `0xd9`, `0x5d`, and `0x03`, and throw an error if it does not.
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS disclosure proof header. Ensure the result
-is an array of six elements —
+is an array of five or six elements —
 a byte array, a map of integers to integers, an
 array of integers, another array of integers, and a byte array; otherwise, throw
 an error.
