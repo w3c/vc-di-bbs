@@ -1279,7 +1279,10 @@ for the `messages`.
 If |commitment_with_proof| is not empty and |use_pseudonyms| is false, compute the
 `bbsSignature` using the `Sign` procedure of [[CFRG-Blind-BBS-Signature]],
 with appropriate key material, `bbsHeader` for the `header`, and `bbsMessages`
-for the `messages`. This provides for "anonymous holder binding".
+for the `messages`. If the signing procedure uses the optional |signer_blind|
+parameter retain this value for use when calling
+<a href="#serializebaseproofvalue"></a> below. This provides for the
+"anonymous holder binding" feature.
                 </li>
                 <li>
 If |commitment_with_proof| is empty and |use_pseudonyms| is true, generate a
@@ -1292,20 +1295,24 @@ This provides for "pseudonym with issuer known pid".
                 </li>
                 <li>
 If |commitment_with_proof| is not empty and |use_pseudonyms| is true, compute
-the `bbsSignature` using the `Sign` procedure of [[CFRG-Pseudonym-BBS-Signature]],
-with appropriate key material, `bbsHeader` for the `header`, `bbsMessages`
-for the `messages`, and |commitment_with_proof| for the `commitment_with_proof`.
-This provides for "pseudonym with hidden pid".
+the `bbsSignature` using the `Sign` procedure of [[CFRG-Blind-BBS-Signature]]
+and [[CFRG-Pseudonym-BBS-Signature]], with appropriate key material, `bbsHeader`
+for the `header`, `bbsMessages` for the `messages`, and |commitment_with_proof|
+for the `commitment_with_proof`. If the signing procedure uses the optional
+|signer_blind| parameter retain this value for use when calling
+<a href="#serializebaseproofvalue"></a> below.
+This provides for the "pseudonym with hidden pid" feature.
                 </li>
               </ol>
             </li>
             <li>
 Initialize `proofValue to the result of calling the algorithm in Section
 <a href="#serializebaseproofvalue"></a>, passing `bbsSignature`, `bbsHeader`,
-`publicKey`, `hmacKey`, `mandatoryPointers`, and the `pid` value, if one was
-generated, as parameters
-to the algorithm, where `publicKey` is a byte array of the public key encoded
-according to [[CFRG-BBS-SIGNATURE]].
+`publicKey`, `hmacKey`, `mandatoryPointers`, `pid`, and `signer_blind` values as
+paramters. Use empty byte arrays for `pid` and `signer_blind` if they are not
+used.
+Note `publicKey` is a byte array of the public key encoded according to
+[[CFRG-BBS-SIGNATURE]].
             </li>
             <li>
 Return `proofValue` as <em>digital proof</em>.
