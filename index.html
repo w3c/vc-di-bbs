@@ -1472,7 +1472,7 @@ This computation involves cryptographically random values and computes
 the |commitment_with_proof| and |secret_prover_blind| values. The
 |commitment_with_proof| is conveyed to the issuer while the
 |secret_prover_blind| is kept secret and is retained by the holder for use
-during derived proof generation.
+in generation of derived proofs.
 Note that a holder can run the "Commitment Generation" procedure multiple times
 to produce unlinkable |commitment_with_proof| values for use with different issuers.
         </p>
@@ -1481,13 +1481,13 @@ The issuer, on receipt of the |commitment_with_proof|, follows the procedures of
 [[CFRG-Blind-BBS-Signature]] to produce a base proof (signature) over the document
 with the commitment furnished by the holder. If the issuer chooses to use the
 |signer_blind| parameter when creating the signature in
-[[CFRG-Blind-BBS-Signature]] this value needs to be conveyed to the holder as
+[[CFRG-Blind-BBS-Signature]], this value needs to be conveyed to the holder as
 part of the base proof value.
         </p>
         <p>
 When the holder wants to create a selectively disclosed document with derived
-proof, they use their |holder_secret| (as a "commited message") the
-|secret_prover_blind|, and if supplied in the base proof the |signer_blind|
+proof, they use their |holder_secret| (as a "commited message"), the
+|secret_prover_blind|, and, if supplied in the base proof, the |signer_blind|
 in the proof generation procedure of
 [[CFRG-Blind-BBS-Signature]].
         </p>
