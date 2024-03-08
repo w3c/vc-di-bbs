@@ -1541,19 +1541,24 @@ with the issuer.
 To provide for this capability, a holder needs to generate a secret |pid| value
 that should be at least 32 bytes long and generated in cryptographically random
 manner. The holder then uses the "Commitment Generation" procedure of
-[[CFRG-Blind-BBS-Signature]] to generate a |commitment_with_proof| value.
+[[CFRG-Blind-BBS-Signature]] to generate a |commitment_with_proof| value and
+a private |secret_prover_blind| value.
 This value needs to be conveyed to the issuer who will use it in the issuance
 of a document with base proof, in accordance with [[CFRG-Blind-BBS-Signature]]
 and [[CFRG-Pseudonym-BBS-Signature]], which is sent to the holder. The |pid|
-value is never shared by the holder.
+value is never shared by the holder. If the issuer chooses to use the optional
+|signer_blind| parameter when creating the signature in this value needs to be
+conveyed to the holder as part of the base proof value.
         </p>
         <p>
 The holder obtains a |verifier_id| associated with the verifier for which
 they intend to create a revealed document with derived proof. Using the
-procedures of [[CFRG-Pseudonym-BBS-Signature]], a cryptographic |pseudonym| value
-is generated from their |pid| value and the |verifier_id|. The derived proof
-value is generated via the proof generation
-procedure of [[CFRG-Pseudonym-BBS-Signature]], and this value is given to the
+procedures of [[CFRG-Pseudonym-BBS-Signature]], a cryptographic |pseudonym|
+value is generated from their |pid| value and the |verifier_id|. The derived
+proof value is generated via the proof generation using the |pid|,
+|secret_prover_blind|, |verifier_id|, and |signer_blind| using the
+procedures of [[CFRG-Pseudonym-BBS-Signature]] and [[CFRG-Blind-BBS-Signature]],
+and this value is given to the
 verifier along with the |pseudonym|. Note that the |pid| value cannot be
 recovered from the |pseudonym|.
         </p>
