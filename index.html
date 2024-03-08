@@ -895,7 +895,7 @@ proof header bytes `0xd9`, `0x5d`, and `0x03`.
             </li>
             <li>
 Initialize |components| to an array with six elements containing the values of
-|bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|, 
+|bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
 |presentationHeader|, and |pseudonym|.
             </li>
             <li>
@@ -1461,22 +1461,27 @@ which should generally be at least 32 bytes long and cryptographically randomly
 generated. This value is never shared by the holder. Instead, the holder
 generates a commitment along with a zero knowledge proof of knowledge of this
 value, using the "Commitment Generation" procedure of [[CFRG-Blind-BBS-Signature]].
-This computation involves cryptographically random values and will
-return to the holder the |commitment_with_proof| which will be sent to the
-issuer along with |secret_prover_blind| which is kept secret and is needed
-during derived proof generation by the holder.
+This computation involves cryptographically random values and computes
+the |commitment_with_proof| and |secret_prover_blind| values. The
+|commitment_with_proof| is conveyed to the issuer while the
+|secret_prover_blind| is kept secret and is retained by the holder for use
+during derived proof generation.
 Note that a holder can run the "Commitment Generation" procedure multiple times
 to produce unlinkable |commitment_with_proof| values for use with different issuers.
         </p>
         <p>
 The issuer, on receipt of the |commitment_with_proof|, follows the procedures of
 [[CFRG-Blind-BBS-Signature]] to produce a base proof (signature) over the document
-with the commitment furnished by the holder.
+with the commitment furnished by the holder. If the issuer chooses to use the
+|signer_blind| parameter when creating the signature in
+[[CFRG-Blind-BBS-Signature]] this value needs to be conveyed to the holder as
+part of the base proof value.
         </p>
         <p>
 When the holder wants to create a selectively disclosed document with derived
-proof, they use their |holder_secret| (as a "commited message") and the
-|secret_prover_blind| in the proof generation procedure of
+proof, they use their |holder_secret| (as a "commited message") the
+|secret_prover_blind|, and if supplied in the base proof the |signer_blind|
+in the proof generation procedure of
 [[CFRG-Blind-BBS-Signature]].
         </p>
         <p>
