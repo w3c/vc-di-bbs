@@ -774,7 +774,7 @@ and set `bbsProof` to the value computed by the `ProofGen` procedure from
 `signature` is the
 `bbsSignature`, `header` is the `bbsHeader`, `ph` is the  `presentationHeader`
 `messages` is `bbsMessages`, `disclosed_indexes` is `selectiveIndexes`, and
-|psuedonym| is the `pseudonym`. This is for both "pseudonym with issuer known
+|pseudonym| is the `pseudonym`. This is for both "pseudonym with issuer known
 pid" and "pseudonym with hidden pid" cases.
                 </li>
               </ol>
@@ -898,9 +898,9 @@ Initialize a byte array, `proofValue`, that starts with the BBS disclosure
 proof header bytes `0xd9`, `0x5d`, and `0x03`.
             </li>
             <li>
-Initialize |components| to an array with six elements containing the values of
+Initialize |components| to an array with elements containing the values of
 |bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
-|presentationHeader|, and |pseudonym|.
+|presentationHeader|, and, if provided,|pseudonym|.
             </li>
             <li>
 CBOR-encode |components| per [[RFC8949]] where CBOR tagging MUST NOT be used on
@@ -1285,8 +1285,8 @@ If |commitment_with_proof| is not empty and |use_pseudonyms| is false, compute t
 `bbsSignature` using the `Sign` procedure of [[CFRG-Blind-BBS-Signature]],
 with appropriate key material, `bbsHeader` for the `header`, and `bbsMessages`
 for the `messages`. If the signing procedure uses the optional |signer_blind|
-parameter retain this value for use when calling
-<a href="#serializebaseproofvalue"></a> below. This provides for the
+parameter, retain this value for use when calling
+<a href="#serializebaseproofvalue"></a> (below). This provides for the
 "anonymous holder binding" feature.
                 </li>
                 <li>
