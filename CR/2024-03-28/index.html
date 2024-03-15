@@ -1,15 +1,13 @@
 <!DOCTYPE html><html lang="en" dir="ltr"><head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-<meta name="generator" content="ReSpec 34.4.0">
+<meta name="generator" content="ReSpec 34.5.0">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <style>
 span.example-title{text-transform:none}
 :is(aside,div).example,div.illegal-example{padding:.5em;margin:1em 0;position:relative;clear:both}
 div.illegal-example{color:red}
 div.illegal-example p{color:#000}
-:is(aside,div).example{border-left-width:.5em;border-left-style:solid;border-color:#e0cb52;background:#fcfaee}
 aside.example div.example{border-left-width:.1em;border-color:#999;background:#fff}
-.example pre{background-color:rgba(0,0,0,.03)}
 </style>
 <style>
 .issue-label{text-transform:initial}
@@ -18,7 +16,7 @@ aside.example div.example{border-left-width:.1em;border-color:#999;background:#f
 span.warning{padding:.1em .5em .15em}
 .issue.closed span.issue-number{text-decoration:line-through}
 .issue.closed span.issue-number::after{content:" (Closed)";font-size:smaller}
-.warning{border-color:#f11;border-width:.2em;border-style:solid;background:#fbe9e9}
+.warning{border-color:#f11;border-color:var(--warning-border,#f11);border-width:.2em;border-style:solid;background:#fbe9e9;background:var(--warning-bg,#fbe9e9);color:#000;color:var(--text,#000)}
 .warning-title:before{content:"⚠";font-size:1.3em;float:left;padding-right:.3em;margin-top:-.3em}
 li.task-list-item{list-style:none}
 input.task-list-item-checkbox{margin:0 .35em .25em -1.6em;vertical-align:middle}
@@ -26,13 +24,13 @@ input.task-list-item-checkbox{margin:0 .35em .25em -1.6em;vertical-align:middle}
 </style>
 <style>
 dfn{cursor:pointer}
-.dfn-panel{position:absolute;z-index:35;min-width:300px;max-width:500px;padding:.5em .75em;margin-top:.6em;font-family:"Helvetica Neue",sans-serif;font-size:small;background:#fff;color:#000;box-shadow:0 1em 3em -.4em rgba(0,0,0,.3),0 0 1px 1px rgba(0,0,0,.05);border-radius:2px}
+.dfn-panel{position:absolute;z-index:35;min-width:300px;max-width:500px;padding:.5em .75em;margin-top:.6em;font-family:"Helvetica Neue",sans-serif;font-size:small;background:#fff;background:var(--indextable-hover-bg,#fff);color:#000;color:var(--text,#000);box-shadow:0 1em 3em -.4em rgba(0,0,0,.3),0 0 1px 1px rgba(0,0,0,.05);box-shadow:0 1em 3em -.4em var(--tocsidebar-shadow,rgba(0,0,0,.3)),0 0 1px 1px var(--tocsidebar-shadow,rgba(0,0,0,.05));border-radius:2px}
 .dfn-panel:not(.docked)>.caret{position:absolute;top:-9px}
-.dfn-panel:not(.docked)>.caret::after,.dfn-panel:not(.docked)>.caret::before{content:"";position:absolute;border:10px solid transparent;border-top:0;border-bottom:10px solid #fff;top:0}
-.dfn-panel:not(.docked)>.caret::before{border-bottom:9px solid #a2a9b1}
+.dfn-panel:not(.docked)>.caret::after,.dfn-panel:not(.docked)>.caret::before{content:"";position:absolute;border:10px solid transparent;border-top:0;border-bottom:10px solid #fff;border-bottom-color:var(--indextable-hover-bg,#fff);top:0}
+.dfn-panel:not(.docked)>.caret::before{border-bottom:9px solid #a2a9b1;border-bottom-color:var(--indextable-hover-bg,#a2a9b1)}
 .dfn-panel *{margin:0}
-.dfn-panel b{display:block;color:#000;margin-top:.25em}
-.dfn-panel ul a[href]{color:#333}
+.dfn-panel b{display:block;color:#000;color:var(--text,#000);margin-top:.25em}
+.dfn-panel ul a[href]{color:#333;color:var(--text,#333)}
 .dfn-panel>div{display:flex}
 .dfn-panel a.self-link{font-weight:700;margin-right:auto}
 .dfn-panel .marker{padding:.1em;margin-left:.5em;border-radius:.2em;text-align:center;white-space:nowrap;font-size:90%;color:#040b1c}
@@ -71,7 +69,6 @@ cite .bibref{font-style:normal}
 a[href].orcid{padding-left:4px;padding-right:4px}
 a[href].orcid>svg{margin-bottom:-2px}
 .toc a,.tof a{text-decoration:none}
-a .figno,a .secno{color:#000}
 ol.tof,ul.tof{list-style:none outside none}
 .caption{margin-top:.5em;font-style:italic}
 table.simple{border-spacing:0;border-collapse:collapse;border-bottom:3px solid #005a9c}
@@ -146,15 +143,19 @@ The Signature Suite utilizes BBS signatures to provide selective disclosure and
 unlinkable derived proofs.">
 <link rel="canonical" href="https://www.w3.org/TR/vc-di-bbs/">
 <style>
-.hljs{display:block;overflow-x:auto;padding:.5em;color:#383a42;background:#fafafa}
-.hljs-comment,.hljs-quote{color:#717277;font-style:italic}
-.hljs-doctag,.hljs-formula,.hljs-keyword{color:#a626a4}
-.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{color:#ca4706;font-weight:700}
-.hljs-literal{color:#0b76c5}
-.hljs-addition,.hljs-attribute,.hljs-meta-string,.hljs-regexp,.hljs-string{color:#42803c}
-.hljs-built_in,.hljs-class .hljs-title{color:#9a6a01}
-.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{color:#986801}
-.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{color:#336ae3}
+.hljs{--base:#fafafa;--mono-1:#383a42;--mono-2:#686b77;--mono-3:#717277;--hue-1:#0b76c5;--hue-2:#336ae3;--hue-3:#a626a4;--hue-4:#42803c;--hue-5:#ca4706;--hue-5-2:#c91243;--hue-6:#986801;--hue-6-2:#9a6a01}
+@media (prefers-color-scheme:dark){
+.hljs{--base:#282c34;--mono-1:#abb2bf;--mono-2:#818896;--mono-3:#5c6370;--hue-1:#56b6c2;--hue-2:#61aeee;--hue-3:#c678dd;--hue-4:#98c379;--hue-5:#e06c75;--hue-5-2:#be5046;--hue-6:#d19a66;--hue-6-2:#e6c07b}
+}
+.hljs{display:block;overflow-x:auto;padding:.5em;color:#383a42;color:var(--mono-1,#383a42);background:#fafafa;background:var(--base,#fafafa)}
+.hljs-comment,.hljs-quote{color:#717277;color:var(--mono-3,#717277);font-style:italic}
+.hljs-doctag,.hljs-formula,.hljs-keyword{color:#a626a4;color:var(--hue-3,#a626a4)}
+.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{color:#ca4706;color:var(--hue-5,#ca4706);font-weight:700}
+.hljs-literal{color:#0b76c5;color:var(--hue-1,#0b76c5)}
+.hljs-addition,.hljs-attribute,.hljs-meta-string,.hljs-regexp,.hljs-string{color:#42803c;color:var(--hue-4,#42803c)}
+.hljs-built_in,.hljs-class .hljs-title{color:#9a6a01;color:var(--hue-6-2,#9a6a01)}
+.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{color:#986801;color:var(--hue-6,#986801)}
+.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{color:#336ae3;color:var(--hue-2,#336ae3)}
 .hljs-emphasis{font-style:italic}
 .hljs-strong{font-weight:700}
 .hljs-link{text-decoration:underline}
@@ -162,8 +163,8 @@ unlinkable derived proofs.">
 <style>
 var{position:relative;cursor:pointer}
 var[data-type]::after,var[data-type]::before{position:absolute;left:50%;top:-6px;opacity:0;transition:opacity .4s;pointer-events:none}
-var[data-type]::before{content:"";transform:translateX(-50%);border-width:4px 6px 0 6px;border-style:solid;border-color:transparent;border-top-color:#000}
-var[data-type]::after{content:attr(data-type);transform:translateX(-50%) translateY(-100%);background:#000;text-align:center;font-family:"Dank Mono","Fira Code",monospace;font-style:normal;padding:6px;border-radius:3px;color:#daca88;text-indent:0;font-weight:400}
+var[data-type]::before{content:"";transform:translateX(-50%);border-width:4px 6px 0 6px;border-style:solid;border-color:transparent;border-top-color:#222}
+var[data-type]::after{content:attr(data-type);transform:translateX(-50%) translateY(-100%);background:#222;text-align:center;font-family:"Dank Mono","Fira Code",monospace;font-style:normal;padding:6px;border-radius:3px;color:#daca88;text-indent:0;font-weight:400}
 var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 </style>
 <script id="initialUserConfig" type="application/json">{
@@ -275,8 +276,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     },
     "MULTIBASE": {
       "title": "Multibase",
-      "href": "https://tools.ietf.org/html/draft-multiformats-multibase-01",
-      "id": "multibase"
+      "href": "https://tools.ietf.org/html/draft-multiformats-multibase-01"
     },
     "MULTICODEC": {
       "title": "Multicodec",
@@ -294,25 +294,6 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       ],
       "status": "Draft",
       "id": "cfrg-bbs-signature"
-    },
-    "CFRG-Blind-BBS-Signature": {
-      "title": "Blind BBS Signatures",
-      "authors": [
-        "V. Kalos",
-        "G. Bernstein"
-      ],
-      "date": "2024",
-      "href": "https://www.ietf.org/archive/id/draft-kalos-bbs-blind-signatures-00.html#name-proof-generation",
-      "id": "cfrg-blind-bbs-signature"
-    },
-    "CFRG-Pseudonym-BBS-Signature": {
-      "title": "BBS per Verifier Linkability",
-      "authors": [
-        "V. Kalos"
-      ],
-      "date": "2023",
-      "href": "https://basileioskal.github.io/bbs-per-verifier-id/draft-vasilis-bbs-per-verifier-linkability.html",
-      "id": "cfrg-pseudonym-bbs-signature"
     },
     "CFRG-PAIRING-FRIENDLY": {
       "title": "Pairing-Friendly Curves",
@@ -403,6 +384,25 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       "date": "2020",
       "href": "https://petsymposium.org/popets/2020/popets-2020-0041.php",
       "id": "pugliese2020"
+    },
+    "CFRG-Blind-BBS-Signature": {
+      "title": "Blind BBS Signatures",
+      "authors": [
+        "V. Kalos",
+        "G. Bernstein"
+      ],
+      "date": "2024",
+      "href": "https://www.ietf.org/archive/id/draft-kalos-bbs-blind-signatures-00.html#name-proof-generation",
+      "id": "cfrg-blind-bbs-signature"
+    },
+    "CFRG-Pseudonym-BBS-Signature": {
+      "title": "BBS per Verifier Linkability",
+      "authors": [
+        "V. Kalos"
+      ],
+      "date": "2023",
+      "href": "https://basileioskal.github.io/bbs-per-verifier-id/draft-vasilis-bbs-per-verifier-linkability.html",
+      "id": "cfrg-pseudonym-bbs-signature"
     }
   },
   "lint": {
@@ -709,11 +709,6 @@ key. Implementations of this specification will raise errors in the event of a
 
       <section id="proof-representations"><div class="header-wrapper"><h3 id="x2-2-proof-representations"><bdi class="secno">2.2 </bdi>Proof Representations</h3><a class="self-link" href="#proof-representations" aria-label="Permalink for Section 2.2"></a></div>
         
-
-        <p>
-This suite relies on detached digital signatures represented using [<cite><a class="bibref" data-link-type="biblio" href="#bib-multibase" title="Multibase">MULTIBASE</a></cite>]
-and [<cite><a class="bibref" data-link-type="biblio" href="#bib-multicodec" title="Multicodec">MULTICODEC</a></cite>].
-        </p>
 
         <section id="dataintegrityproof"><div class="header-wrapper"><h4 id="x2-2-1-dataintegrityproof"><bdi class="secno">2.2.1 </bdi>DataIntegrityProof</h4><a class="self-link" href="#dataintegrityproof" aria-label="Permalink for Section 2.2.1"></a></div>
           
@@ -1392,7 +1387,8 @@ Section <a href="#base-proof-configuration-bbs-2023" data-matched-text="[[[#base
 <var>options</var> passed as a parameter.
             </li>
             <li>
-Let <var>transformedData</var> be the result of running the algorithm in Section <a href="#base-proof-transformation-bbs-2023" class="sec-ref"><bdi class="secno">3.4.2 </bdi>Base Proof Transformation (bbs-2023)</a> with <var>unsecuredDocument</var>,
+Let <var>transformedData</var> be the result of running the algorithm in Section
+<a href="#base-proof-transformation-bbs-2023" data-matched-text="[[[#base-proof-transformation-bbs-2023]]]" class="sec-ref"><bdi class="secno">3.4.2 </bdi>Base Proof Transformation (bbs-2023)</a> with <var>unsecuredDocument</var>,
 <var>proofConfig</var>, and <var>options</var> passed as parameters.
             </li>
             <li>
@@ -1720,7 +1716,7 @@ Return <code>revealDocument</code> as the <em>selectively revealed document</em>
 
           <p>
 The following algorithm specifies how to verify a <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://www.w3.org/TR/vc-data-integrity/#dfn-data-integrity-proof">data integrity proof</a> given
-an <a data-type="dfn" href="https://www.w3.org/TR/vc-data-integrity/#dfn-secured-data-document">secured data document</a>. Required inputs are an
+an <a data-type="dfn" href="https://www.w3.org/TR/vc-data-integrity/#dfn-secured-data-document">secured data document</a>. Required inputs are a
 <a data-type="dfn" href="https://www.w3.org/TR/vc-data-integrity/#dfn-secured-data-document">secured data document</a> (<a data-link-type="dfn|abstract-op" data-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map">map</a> <var>securedDocument</var>). This algorithm returns
 a <dfn id="dfn-verification-result" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">verification result</dfn>, which is a <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://infra.spec.whatwg.org/#struct">struct</a> whose
 <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://infra.spec.whatwg.org/#struct-item">items</a> are:
@@ -1754,10 +1750,10 @@ Let <var>proof</var> be the value of <var>securedDocument</var>.<var>proof</var>
             </li>
             <li>
 Initialize <code>bbsProof</code>, <code>proofHash</code>, <code>mandatoryHash</code>, <code>selectedIndexes</code>,
-<code>presentationHeader</code>, <code>pseudonym</code>, and <code>nonMandatory</code> to the values associated with their
-property names in the object returned when calling the algorithm in Section
-<a href="#createverifydata" class="sec-ref"><bdi class="secno">3.3.8 </bdi>createVerifyData</a>, passing the <var>unsecuredDocument</var>, <var>proof</var>, and
-any custom JSON-LD API options (such as a document loader).
+<code>presentationHeader</code>, <code>pseudonym</code>, and <code>nonMandatory</code> to the values associated
+with their property names in the object returned when calling the algorithm in
+Section <a href="#createverifydata" class="sec-ref"><bdi class="secno">3.3.8 </bdi>createVerifyData</a>, passing the <var>unsecuredDocument</var>,
+<var>proof</var>, and any custom JSON-LD API options (such as a document loader).
             </li>
             <li>
 Initialize <code>bbsHeader</code> to the concatenation of <code>proofHash</code> and <code>mandatoryHash</code>
@@ -1765,46 +1761,41 @@ in that order. Initialize <code>disclosedMessages</code> to an array of byte arr
 obtained from the UTF-8 encoding of the elements of the <code>nonMandatory</code> array.
             </li>
             <li>
-Let <var data-type="boolean">verified</var> be the result of applying the verification
+Initialize <var>verified</var> to the result of applying the verification
 algorithm below, depending on whether the <var>pseudonym</var> value is empty.
             <ol class="algorithm">
               <li>
-If the <var>pseudonym</var> value is empty,
-initialize <code>verificationResult</code> to the result of applying the verification
-algorithm
-<code>ProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes)</code> of
-[<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-SIGNATURE</a></cite>]
-with <code>PK</code> set as the public key of the original issuer, <code>proof</code> set as <code>bbsProof</code>,
-<code>header</code> set as <code>bbsHeader</code>, <code>disclosed_messages</code> set as <code>disclosedMessages</code>,
-<code>ph</code> set as <code>presentationHeader</code>, and <code>disclosed_indexes</code> set as
-<code>selectiveIndexes</code>. Return <code>verificationResult</code> as <em>verification result</em>.
-This applies to the regular BBS proof case as well as "anonymous holder binding"
+If the <var>pseudonym</var> value is empty, initialize <var>verified</var> to the result of
+applying the verification algorithm <code>ProofVerify(PK, proof, header, ph,
+disclosed_messages, disclosed_indexes)</code> of [<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-bbs-signature" title="The BBS Signature Scheme">CFRG-BBS-SIGNATURE</a></cite>] with <code>PK</code> set
+as the public key of the original issuer, <code>proof</code> set as <code>bbsProof</code>, <code>header</code>
+set as <code>bbsHeader</code>, <code>disclosed_messages</code> set as <code>disclosedMessages</code>, <code>ph</code> set as
+<code>presentationHeader</code>, and <code>disclosed_indexes</code> set as <code>selectiveIndexes</code>. This
+applies to the regular BBS proof case as well as "anonymous holder binding"
 case.
               </li>
               <li>
-If the <var>pseudonym</var> value is not empty,
-initialize <var data-type="boolean">verified</var> to the result of applying the verification
-algorithm
-<code>PseudonymProofVerify(PK, proof, header, ph, disclosed_messages, disclosed_indexes, pseudonym)</code>
-of
-[<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-pseudonym-bbs-signature" title="BBS per Verifier Linkability">CFRG-Pseudonym-BBS-Signature</a></cite>],
-with <code>PK</code> set as the public key of the original issuer, <code>proof</code> set as <code>bbsProof</code>,
-<code>header</code> set as <code>bbsHeader</code>, <code>disclosed_messages</code> set as <code>disclosedMessages</code>,
-<code>ph</code> set as <code>presentationHeader</code>, <code>disclosed_indexes</code> set as
-<code>selectiveIndexes</code>, and <code>pseudonym</code>.
-This applies to the "pseudonym with issuer known pid" and "pseudonym with
-hidden pid" cases.
-                </li>
-              </ol>
-            </li>
-            <li>
+If the <var>pseudonym</var> value is not empty, initialize <var>verified</var> to the result of
+applying the verification algorithm <code>PseudonymProofVerify(PK, proof, header, ph,
+disclosed_messages, disclosed_indexes, pseudonym)</code> of
+[<cite><a class="bibref" data-link-type="biblio" href="#bib-cfrg-pseudonym-bbs-signature" title="BBS per Verifier Linkability">CFRG-Pseudonym-BBS-Signature</a></cite>], with <code>PK</code> set as the public key of the
+original issuer, <code>proof</code> set as <code>bbsProof</code>, <code>header</code> set as <code>bbsHeader</code>,
+<code>disclosed_messages</code> set as <code>disclosedMessages</code>, <code>ph</code> set as
+<code>presentationHeader</code>, <code>disclosed_indexes</code> set as <code>selectiveIndexes</code>, and
+<code>pseudonym</code>. This applies to the "pseudonym with issuer known pid" and
+"pseudonym with hidden pid" cases.
+              </li>
+            </ol>
+          </li>
+          <li>
 Return a <a data-link-type="dfn|abstract-op" href="#dfn-verification-result" class="internalDFN" id="ref-for-dfn-verification-result-1">verification result</a> with <a data-link-type="dfn|abstract-op" data-type="dfn" href="https://infra.spec.whatwg.org/#struct-item">items</a>:
               <dl data-link-for="verification result">
                 <dt><a data-link-type="dfn|abstract-op" href="#dfn-verified" class="internalDFN" id="ref-for-dfn-verified-2">verified</a></dt>
-                <dd><var data-type="boolean">verified</var></dd>
+                <dd><var>verified</var></dd>
                 <dt><a data-link-type="dfn|abstract-op" href="#dfn-verifieddocument" class="internalDFN" id="ref-for-dfn-verifieddocument-1">verifiedDocument</a></dt>
                 <dd>
-<var>unsecuredDocument</var> if <var data-type="boolean">verified</var> is <code>true</code>, otherwise <a href="https://infra.spec.whatwg.org/#nulls">Null</a>
+<var>unsecuredDocument</var> if <var>verified</var> is <code>true</code>, otherwise
+<a href="https://infra.spec.whatwg.org/#nulls">Null</a>
                 </dd>
               </dl>
             </li>
@@ -3465,8 +3456,6 @@ document shown below.
       <a href="https://www.w3.org/TR/vc-di-ecdsa/"><cite>The Elliptic Curve Digital Signature Algorithm Cryptosuites v1.0</cite></a>. David Longley; Manu Sporny; Marty Reed.  W3C Verifiable Credentials Working Group. W3C Working Draft. URL: <a href="https://www.w3.org/TR/vc-di-ecdsa/">https://www.w3.org/TR/vc-di-ecdsa/</a>
     </dd><dt id="bib-infra">[INFRA]</dt><dd>
       <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Anne van Kesteren; Domenic Denicola.  WHATWG. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
-    </dd><dt id="bib-multibase">[MULTIBASE]</dt><dd>
-      <a href="https://tools.ietf.org/html/draft-multiformats-multibase-01"><cite>Multibase</cite></a>. URL: <a href="https://tools.ietf.org/html/draft-multiformats-multibase-01">https://tools.ietf.org/html/draft-multiformats-multibase-01</a>
     </dd><dt id="bib-rdf-canon">[RDF-CANON]</dt><dd>
       <a href="https://www.w3.org/TR/rdf-canon/"><cite>RDF Dataset Canonicalization</cite></a>. Dave Longley; Gregg Kellogg; Dan Yamamoto.  W3C. 30 November 2023. W3C Candidate Recommendation. URL: <a href="https://www.w3.org/TR/rdf-canon/">https://www.w3.org/TR/rdf-canon/</a>
     </dd><dt id="bib-rfc2104">[RFC2104]</dt><dd>
