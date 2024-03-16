@@ -185,9 +185,9 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     },
     {
       "name": "Manu Sporny",
-      "url": "https://digitalbazaar.com/",
+      "url": "https://www.linkedin.com/in/manusporny/",
       "company": "Digital Bazaar",
-      "companyURL": "https://digitalbazaar.com/",
+      "companyURL": "https://www.digitalbazaar.com/",
       "w3cid": 41758
     }
   ],
@@ -205,25 +205,6 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       "status": "Recommendation",
       "publisher": "W3C"
     },
-    "RDF-N-Quads": {
-      "title": "RDF 1.1 N-Quads",
-      "href": "http://json-ld.github.io/normalization/spec/",
-      "authors": [
-        "Gaven Carothers"
-      ],
-      "status": "Recommendation"
-    },
-    "VC-DATA-INTEGRITY": {
-      "title": "Verifiable Credential Data Integrity 1.0",
-      "href": "https://www.w3.org/TR/vc-data-integrity/",
-      "authors": [
-        "David Longley",
-        "Manu Sporny"
-      ],
-      "status": "Working Draft",
-      "publisher": "W3C Verifiable Credentials Working Group",
-      "id": "vc-data-integrity"
-    },
     "DI-ECDSA": {
       "title": "The Elliptic Curve Digital Signature Algorithm Cryptosuites v1.0",
       "href": "https://www.w3.org/TR/vc-di-ecdsa/",
@@ -235,28 +216,6 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       "status": "WD",
       "publisher": "W3C Verifiable Credentials Working Group",
       "id": "di-ecdsa"
-    },
-    "JSON-LD-FRAMING": {
-      "title": "JSON-LD 1.1 Framing",
-      "href": "https://www.w3.org/TR/json-ld11-framing",
-      "authors": [
-        "Dave Longley",
-        "Gregg Kellogg",
-        "Pierre-Antoine Champin"
-      ],
-      "status": "Candidate Recommendation",
-      "publisher": "W3C"
-    },
-    "JSON-LD": {
-      "title": "JSON-LD 1.1",
-      "href": "https://www.w3.org/TR/json-ld11",
-      "authors": [
-        "Dave Longley",
-        "Gregg Kellogg",
-        "Pierre-Antoine Champin"
-      ],
-      "status": "Candidate Recommendation",
-      "publisher": "W3C"
     },
     "VC-DATA-MODEL-2": {
       "title": "Verifiable Credentials Data Model v2.0",
@@ -273,15 +232,6 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       ],
       "status": "Working Draft",
       "publisher": "W3C Verifiable Credentials Working Group"
-    },
-    "MULTIBASE": {
-      "title": "Multibase",
-      "href": "https://tools.ietf.org/html/draft-multiformats-multibase-01"
-    },
-    "MULTICODEC": {
-      "title": "Multicodec",
-      "href": "https://github.com/multiformats/multicodec/",
-      "id": "multicodec"
     },
     "CFRG-BBS-SIGNATURE": {
       "title": "The BBS Signature Scheme",
@@ -449,7 +399,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
         <dt>Editors:</dt><dd class="editor p-author h-card vcard" data-editor-id="140479">
     <a class="u-url url p-name fn" href="https://www.grotto-networking.com/">Greg Bernstein</a> (<span class="p-org org h-org">Invited Expert</span>)
   </dd><dd class="editor p-author h-card vcard" data-editor-id="41758">
-    <a class="u-url url p-name fn" href="https://digitalbazaar.com/">Manu Sporny</a> (<a class="p-org org h-org" href="https://digitalbazaar.com/">Digital Bazaar</a>)
+    <a class="u-url url p-name fn" href="https://www.linkedin.com/in/manusporny/">Manu Sporny</a> (<a class="p-org org h-org" href="https://www.digitalbazaar.com/">Digital Bazaar</a>)
   </dd>
         
         
@@ -667,8 +617,7 @@ other encodings <em class="rfc2119">MUST NOT</em> be allowed.
           <p class="advisement">
 Developers are advised to not accidentally publish a representation of a private
 key. Implementations of this specification will raise errors in the event of a
-[<cite><a class="bibref" data-link-type="biblio" href="#bib-multicodec" title="Multicodec">MULTICODEC</a></cite>] value other than <code>0xeb01</code> being used in a
-<code>publicKeyMultibase</code> value.
+value other than <code>0xeb01</code> being used in a <code>publicKeyMultibase</code> value.
           </p>
 
           <div class="example" id="example-a-bls12-381-g2-group-public-key-encoded-as-a-multikey">
@@ -771,7 +720,7 @@ by default, and abort processing upon detection.
         <p>
 This algorithm is used to configure a cryptographic suite to be used by the
 <a href="https://www.w3.org/TR/vc-data-integrity/#add-proof">Add Proof</a> and
-<a href="VC-DATA-INTEGRITY#verify-proof">Verify Proof</a>
+<a href="https://www.w3.org/TR/vc-data-integrity/#verify-proof">Verify Proof</a>
 functions in <cite><a data-matched-text="[[[VC-DATA-INTEGRITY]]]" href="https://www.w3.org/TR/vc-data-integrity/">Verifiable Credential Data Integrity 1.0</a></cite>. The algorithm takes an options object
 (<a data-link-type="dfn|abstract-op" data-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map">map</a> <var>options</var>) as input and returns a <a data-link-type="dfn|abstract-op" data-lt="data integrity cryptographic suite instance" data-type="dfn" href="https://www.w3.org/TR/vc-data-integrity/#dfn-data-integrity-cryptographic-suite-instance">cryptosuite instance</a> (<a data-link-type="dfn|abstract-op" data-type="dfn" href="https://infra.spec.whatwg.org/#struct">struct</a> <var>cryptosuite</var>).
         </p>
@@ -3467,7 +3416,7 @@ document shown below.
     </dd><dt id="bib-rfc8949">[RFC8949]</dt><dd>
       <a href="https://www.rfc-editor.org/rfc/rfc8949"><cite>Concise Binary Object Representation (CBOR)</cite></a>. C. Bormann; P. Hoffman.  IETF. December 2020. Internet Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc8949">https://www.rfc-editor.org/rfc/rfc8949</a>
     </dd><dt id="bib-vc-data-integrity">[VC-DATA-INTEGRITY]</dt><dd>
-      <a href="https://www.w3.org/TR/vc-data-integrity/"><cite>Verifiable Credential Data Integrity 1.0</cite></a>. David Longley; Manu Sporny.  W3C Verifiable Credentials Working Group. Working Draft. URL: <a href="https://www.w3.org/TR/vc-data-integrity/">https://www.w3.org/TR/vc-data-integrity/</a>
+      <a href="https://www.w3.org/TR/vc-data-integrity/"><cite>Verifiable Credential Data Integrity 1.0</cite></a>. Manu Sporny; Dave Longley; Greg Bernstein; Dmitri Zagidulin; Sebastian Crane.  W3C. 10 December 2023. W3C Candidate Recommendation. URL: <a href="https://www.w3.org/TR/vc-data-integrity/">https://www.w3.org/TR/vc-data-integrity/</a>
     </dd><dt id="bib-vc-data-model-2.0">[VC-DATA-MODEL-2.0]</dt><dd>
       <a href="https://www.w3.org/TR/vc-data-model-2.0/"><cite>Verifiable Credentials Data Model v2.0</cite></a>. Manu Sporny; Ted Thibodeau Jr; Ivan Herman; Michael Jones; Gabe Cohen.  W3C. 7 February 2024. W3C Candidate Recommendation. URL: <a href="https://www.w3.org/TR/vc-data-model-2.0/">https://www.w3.org/TR/vc-data-model-2.0/</a>
     </dd><dt id="bib-xmlschema11-2">[XMLSCHEMA11-2]</dt><dd>
@@ -3479,8 +3428,6 @@ document shown below.
       <a href="https://eprint.iacr.org/2016/663"><cite>Anonymous Attestation Using the Strong Diffie Hellman Assumption Revisited</cite></a>. Jan Camenisch; Manu Drijvers; Anja Lehmann.  Cryptology ePrint Archive, Paper 2016/663. 2016. URL: <a href="https://eprint.iacr.org/2016/663">https://eprint.iacr.org/2016/663</a>
     </dd><dt id="bib-cfrg-pairing-friendly">[CFRG-PAIRING-FRIENDLY]</dt><dd>
       <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-11.html"><cite>Pairing-Friendly Curves</cite></a>. Yumi Sakemi; Tetsutaro Kobayashi; Tsunekazu Saito; Riad S. Wahby. Draft. URL: <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-11.html">https://www.ietf.org/archive/id/draft-irtf-cfrg-pairing-friendly-curves-11.html</a>
-    </dd><dt id="bib-multicodec">[MULTICODEC]</dt><dd>
-      <a href="https://github.com/multiformats/multicodec/"><cite>Multicodec</cite></a>. URL: <a href="https://github.com/multiformats/multicodec/">https://github.com/multiformats/multicodec/</a>
     </dd><dt id="bib-nistir8053">[NISTIR8053]</dt><dd>
       <a href="https://nvlpubs.nist.gov/nistpubs/ir/2015/NIST.IR.8053.pdf"><cite>NISTIR 8053: De-Identification of Personal Information</cite></a>. Simson L. Garfinkel. October 2015. URL: <a href="https://nvlpubs.nist.gov/nistpubs/ir/2015/NIST.IR.8053.pdf">https://nvlpubs.nist.gov/nistpubs/ir/2015/NIST.IR.8053.pdf</a>
     </dd><dt id="bib-powar2023">[Powar2023]</dt><dd>
