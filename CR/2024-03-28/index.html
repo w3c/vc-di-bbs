@@ -110,30 +110,46 @@ dd{margin-left:0}
         
 <style>
 
-          pre .highlight {
-            font-weight: bold;
-            color: green;
-          }
-          pre .comment {
-            font-weight: bold;
-            color: Gray;
-          }
-          .color-text {
-            font-weight: bold;
-            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-          }
-          ol.algorithm {
-            counter-reset: numsection;
-            list-style-type: none;
-          }
-          ol.algorithm li {
-            margin: 0.5em 0;
-          }
-          ol.algorithm li:before {
-            font-weight: bold;
-            counter-increment: numsection;
-            content: counters(numsection, ".") ") ";
-          }
+code {
+  color: rgb(199, 73, 0);
+  font-weight: bold;
+}
+pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+pre .highlight {
+  font-weight: bold;
+  color: Green;
+}
+pre .subject {
+  font-weight: bold;
+  color: RoyalBlue;
+}
+pre .property {
+  font-weight: bold;
+  color: DarkGoldenrod;
+}
+pre .comment {
+  font-weight: bold;
+  color: SteelBlue;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+ol.algorithm {
+  counter-reset: numsection;
+  list-style-type: none;
+}
+ol.algorithm li {
+  margin: 0.5em 0;
+}
+ol.algorithm li:before {
+  font-weight: bold;
+  counter-increment: numsection;
+  content: counters(numsection, ".") ") ";
+}
               
 </style>
   
@@ -1052,7 +1068,7 @@ algorithm, passing <code>document</code>, and <code>combinedPointers</code> as <
             </li>
             <li>
 Run the RDF Dataset Canonicalization Algorithm [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-canon" title="RDF Dataset Canonicalization">RDF-CANON</a></cite>] on
-the joined <var>combinedGroup.deskolemizedNQuads</var>, passing any custom
+the joined <var>combinedGroup</var>.<var>deskolemizedNQuads</var>, passing any custom
 options, and get the canonical bnode identifier map, <var>canonicalIdMap</var>.
 Note: This map includes the canonical blank node identifiers that a verifier
 will produce when they canonicalize the reveal document.
@@ -1507,8 +1523,8 @@ valid [<cite><a class="bibref" data-link-type="biblio" href="#bib-xmlschema11-2"
 raised.
             </li>
             <li>
-Set <var>proofConfig</var>.<var>@context</var> to
-<var>unsecuredDocument</var>.<var>@context</var>.
+Set <var>proofConfig</var>.|@context| to
+<var>unsecuredDocument</var>.|@context|.
             </li>
             <li>
 Let <var>canonicalProofConfig</var> be the result of applying the Universal RDF Dataset
