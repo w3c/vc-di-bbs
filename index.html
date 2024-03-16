@@ -515,14 +515,14 @@ Return |cryptosuite|.
           <p>
 The following algorithm creates a label map factory function that uses an
 HMAC to shuffle canonical blank node identifiers. The required input is an HMAC
-(previously initialized with a secret key), <var>HMAC</var>. A function,
+(previously initialized with a secret key), |HMAC|. A function,
 <em>labelMapFactoryFunction</em>, is produced as output.
           </p>
 
           <ol class="algorithm">
             <li>
-Create a function, <var>labelMapFactoryFunction</var>, with one required input
-(a canonical node identifier map, <var>canonicalIdMap</var>), that will
+Create a function, |labelMapFactoryFunction|, with one required input
+(a canonical node identifier map, |canonicalIdMap|), that will
 return a blank node identifier map, <em>bnodeIdMap</em>, as output. Set the
 function's implementation to:
               <ol class="algorithm">
@@ -530,7 +530,7 @@ function's implementation to:
 Generate a new empty bnode identifier map, <em>bnodeIdMap</em>.
                 </li>
                 <li>
-For each map entry, <em>entry</em>, in <var>canonicalIdMap</var>:
+For each map entry, <em>entry</em>, in |canonicalIdMap|:
                   <ol class="algorithm">
                     <li>
 Perform an HMAC operation on the canonical identifier from the value in <em>entry</em> to get an HMAC
@@ -542,7 +542,7 @@ followed by appending a base64url-no-pad encoded version of the <em>digest</em>
 value.
                     </li>
                     <li>
-Add a new entry, <var>newEntry</var>, to <em>bnodeIdMap</em> using the key
+Add a new entry, |newEntry|, to <em>bnodeIdMap</em> using the key
 from <em>entry</em> and <em>b64urlDigest</em> as the value.
                     </li>
                   </ol>
@@ -567,7 +567,7 @@ Return <em>bnodeIdMap</em>.
               </ol>
             </li>
             <li>
-Return <var>labelMapFactoryFunction</var>.
+Return |labelMapFactoryFunction|.
             </li>
           </ol>
 
@@ -590,9 +590,9 @@ both.
           <p>
 The following algorithm serializes the base proof value, including the
 BBS signature, HMAC key, and mandatory pointers.
-The required inputs are a base signature <var>bbsSignature</var>,
-an HMAC key <var>hmacKey</var>, and an array of
-<var>mandatoryPointers</var>.
+The required inputs are a base signature |bbsSignature|,
+an HMAC key |hmacKey|, and an array of
+|mandatoryPointers|.
 A single <em>base proof</em> string value is produced as output.
           </p>
 
@@ -626,7 +626,7 @@ Return |baseProof| as <em>base proof</em>.
           <p>
 The following algorithm parses the components of a `bbs-2023` selective
 disclosure base proof value. The required input is a proof value
-(<var>proofValue</var>). A single object, <em>parsed base proof</em>, containing
+(|proofValue|). A single object, <em>parsed base proof</em>, containing
 five  or seven elements, using the names "bbsSignature", "bbsHeader",
 "publicKey",
 "hmacKey", "mandatoryPointers", and optional feature parameters "pid" and
@@ -670,10 +670,10 @@ respectively.
 
           <p>
 The following algorithm creates data to be used to generate a derived proof. The
-inputs include a JSON-LD document (<var>document</var>), a BBS base proof
-(<var>proof</var>), an array of JSON pointers to use to selectively disclose
-statements (<var>selectivePointers</var>), an OPTIONAL BBS
-<var>presentationHeader</var> (byte array that defaults to an empty byte array if
+inputs include a JSON-LD document (|document|), a BBS base proof
+(|proof|), an array of JSON pointers to use to selectively disclose
+statements (|selectivePointers|), an OPTIONAL BBS
+|presentationHeader| (byte array that defaults to an empty byte array if
 not present),
 an OPTIONAL
 |commitment_with_proof| (a byte array), an OPTIONAL |pid| value (a byte array),
@@ -802,18 +802,18 @@ pid" and "pseudonym with hidden pid" cases.
 
 
             <li>
-Initialize <var>revealDocument</var> to the result of the "selectJsonLd"
+Initialize |revealDocument| to the result of the "selectJsonLd"
 algorithm, passing `document`, and `combinedPointers` as `pointers`.
             </li>
             <li>
 Run the RDF Dataset Canonicalization Algorithm [[RDF-CANON]] on
-the joined <var>combinedGroup.deskolemizedNQuads</var>, passing any custom
-options, and get the canonical bnode identifier map, <var>canonicalIdMap</var>.
+the joined |combinedGroup|.|deskolemizedNQuads|, passing any custom
+options, and get the canonical bnode identifier map, |canonicalIdMap|.
 Note: This map includes the canonical blank node identifiers that a verifier
 will produce when they canonicalize the reveal document.
             </li>
             <li>
-Initialize <var>verifierLabelMap</var> to an empty map. This map will map
+Initialize |verifierLabelMap| to an empty map. This map will map
 the canonical blank node identifiers produced by the verifier when they
 canonicalize the revealed document, to the blank node identifiers that were
 originally signed in the base proof.
@@ -840,7 +840,7 @@ computed.
           <h4>compressLabelMap</h4>
           <p>
 The following algorithm compresses a label map. The required input is
-label map (<var>labelMap</var>). The output is a <em>compressed label map</em>.
+label map (|labelMap|). The output is a <em>compressed label map</em>.
           </p>
 
           <ol class="algorithm">
@@ -868,7 +868,7 @@ Return `map` as <em>compressed label map</em>.
 
           <p>
 The following algorithm decompresses a label map. The required input is a
-compressed label map (<var>compressedLabelMap</var>). The output is a
+compressed label map (|compressedLabelMap|). The output is a
 <em>decompressed label map</em>.
           </p>
 
@@ -899,10 +899,10 @@ Return `map` as <em>decompressed label map</em>.
 
           <p>
 The following algorithm serializes a derived proof value. The required inputs
-are a BBS proof (<var>bbsProof</var>), a label map (<var>labelMap</var>), an
-array of mandatory indexes (<var>mandatoryIndexes</var>), an array of
-selective indexes (<var>selectiveIndexes</var>), and a BBS presentation header
-(<var>presentationHeader</var>).
+are a BBS proof (|bbsProof|), a label map (|labelMap|), an
+array of mandatory indexes (|mandatoryIndexes|), an array of
+selective indexes (|selectiveIndexes|), and a BBS presentation header
+(|presentationHeader|).
 Optional input is |pseudonym|.
 A single <em>derived proof</em>
 value, serialized as a byte string, is produced as output.
@@ -941,7 +941,7 @@ starting with "`u`" and ending with the base64url-no-pad-encoded value of
 
           <p>
 The following algorithm parses the components of the derived proof value.
-The required input is a derived proof value (<var>proofValue</var>). A
+The required input is a derived proof value (|proofValue|). A
 single <em>derived proof value</em> object is produced as output, which
 contains a set of five or six elements, having the names `bbsProof`, `labelMap`,
 `mandatoryIndexes`, `selectiveIndexes`, `presentationHeader`, and the optional
@@ -994,7 +994,7 @@ elements, using the names `bbsProof`, `labelMap`, `mandatoryIndexes`,
           <p>
 The following algorithm creates the data needed to perform verification of a
 BBS-protected <a>verifiable credential</a>. The inputs include a JSON-LD
-document (<var>document</var>), a BBS disclosure proof (<var>proof</var>),
+document (|document|), a BBS disclosure proof (|proof|),
 and any custom JSON-LD API options (such as a document loader). A single
 <em>verify data</em> object value is produced as output containing the following
 fields: `bbsProof`, `proofHash`, `mandatoryHash`, `selectedIndexes`,
@@ -1127,14 +1127,14 @@ hashing algorithm in Section <a href="#base-proof-hashing-bbs-2023"></a>.
           <p>
 Required inputs to this algorithm are an
 <a data-cite="vc-data-integrity#dfn-unsecured-data-document">
-unsecured data document</a> (<var>unsecuredDocument</var>) and
-transformation options (<var>options</var>). The
+unsecured data document</a> (|unsecuredDocument|) and
+transformation options (|options|). The
 transformation options MUST contain a type identifier for the
 <a data-cite="vc-data-integrity#dfn-cryptosuite">
-cryptographic suite</a> (<var>type</var>), a cryptosuite
-identifier (<var>cryptosuite</var>), and a verification method
-(<var>verificationMethod</var>). The transformation options MUST contain an
-array of mandatory JSON pointers (<var>mandatoryPointers</var>) and MAY contain
+cryptographic suite</a> (|type|), a cryptosuite
+identifier (|cryptosuite|), and a verification method
+(|verificationMethod|). The transformation options MUST contain an
+array of mandatory JSON pointers (|mandatoryPointers|) and MAY contain
 additional options, such as a JSON-LD document loader. A <em>transformed data
 document</em> is produced as output. Whenever this algorithm encodes strings, it
 MUST use UTF-8 encoding.
@@ -1152,7 +1152,7 @@ Initialize `labelMapFactoryFunction` to the result of calling the
             </li>
             <li>
 Initialize `groupDefinitions` to a map with an entry with a key of the string
-"`mandatory`" and a value of <var>mandatoryPointers</var>.
+"`mandatory`" and a value of |mandatoryPointers|.
             </li>
             <li>
 Initialize `groups` to the result of calling the algorithm in
@@ -1195,8 +1195,8 @@ algorithms in Section <a href="#base-proof-serialization-bbs-2023"></a>.
 
           <p>
 The required inputs to this algorithm are a <em>transformed data document</em>
-(<var>transformedDocument</var>) and <em>canonical proof configuration</em>
-(<var>canonicalProofConfig</var>). A <em>hash data</em> value represented
+(|transformedDocument|) and <em>canonical proof configuration</em>
+(|canonicalProofConfig|). A <em>hash data</em> value represented
 as an object is produced as output.
           </p>
 
@@ -1213,11 +1213,11 @@ part of the return value.
 Initialize `mandatoryHash` to the result of calling the the algorithm in
 <a href="https://www.w3.org/TR/vc-di-ecdsa/#hashmandatorynquads">Section 3.3.17
 hashMandatoryNQuads</a> of the [[DI-ECDSA]] specification, passing
-<var>transformedDocument</var>.`mandatory` and using the SHA-256
+|transformedDocument|.`mandatory` and using the SHA-256
 algorithm.
             </li>
             <li>
-Initialize `hashData` as a deep copy of <var>transformedDocument</var>, and
+Initialize `hashData` as a deep copy of |transformedDocument|, and
 add `proofHash` as "`proofHash`" and `mandatoryHash` as "`mandatoryHash`" to that
 object.
             </li>
@@ -1263,8 +1263,8 @@ valid [[XMLSCHEMA11-2]] datetime, an `INVALID_PROOF_DATETIME` error MUST be
 raised.
             </li>
             <li>
-Set |proofConfig|.<var>@context</var> to
-|unsecuredDocument|.<var>@context</var>.
+Set |proofConfig|.|@context| to
+|unsecuredDocument|.|@context|.
             </li>
             <li>
 Let |canonicalProofConfig| be the result of applying the Universal RDF Dataset
@@ -1290,14 +1290,14 @@ algorithm is designed to be used in conjunction with the algorithms defined
 in the Data Integrity [[VC-DATA-INTEGRITY]] specification,
 <a data-cite="vc-data-integrity#algorithms">
 Section 4: Algorithms</a>. Required inputs are
-cryptographic hash data (<var>hashData</var>) and
-<em>proof options</em> (<var>options</var>).
+cryptographic hash data (|hashData|) and
+<em>proof options</em> (|options|).
 Optional inputs include a |commitment_with_proof| byte array and/or a
 |use_pseudonyms| boolean.
 The <em>proof options</em> MUST contain a type identifier for the
 <a data-cite="vc-data-integrity#dfn-cryptosuite">
-cryptographic suite</a> (<var>type</var>) and MAY contain a cryptosuite
-identifier (<var>cryptosuite</var>). A single <em>digital proof</em> value
+cryptographic suite</a> (|type|) and MAY contain a cryptosuite
+identifier (|cryptosuite|). A single <em>digital proof</em> value
 represented as series of bytes is produced as output.
           </p>
 
@@ -1305,7 +1305,7 @@ represented as series of bytes is produced as output.
             <li>
 Initialize `proofHash`, `mandatoryPointers`, `mandatoryHash`, `nonMandatory`,
 and `hmacKey` to the values associated with their property names in
-<var>hashData</var>.
+|hashData|.
             </li>
             <li>
 Initialize `bbsHeader` to the concatenation of `proofHash` and `mandatoryHash` in
@@ -1378,10 +1378,10 @@ Return `proofValue` as <em>digital proof</em>.
 The following algorithm, to be called by a holder of a `bbs-2023`-protected
 <a>verifiable credential</a>, creates a selective disclosure derived proof.
 The derived proof is to be given to the <a>verifier</a>. The inputs include a
-JSON-LD document (<var>document</var>), a BBS base proof
-(<var>proof</var>), an array of JSON pointers to use to selectively disclose
-statements (<var>selectivePointers</var>), an OPTIONAL BBS
-<var>presentationHeader</var> (a byte array), an OPTIONAL
+JSON-LD document (|document|), a BBS base proof
+(|proof|), an array of JSON pointers to use to selectively disclose
+statements (|selectivePointers|), an OPTIONAL BBS
+|presentationHeader| (a byte array), an OPTIONAL
 |commitment_with_proof| (a byte array), an OPTIONAL |pid| value (a byte array),
 and any custom JSON-LD API options,
 such as a document loader. A single <em>selectively revealed document</em>
