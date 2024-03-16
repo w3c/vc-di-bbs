@@ -47,8 +47,8 @@
             name: "Greg Bernstein", url: "https://www.grotto-networking.com/",
             company: "Invited Expert", w3cid: 140479
           }, {
-            name: "Manu Sporny", url: "https://digitalbazaar.com/",
-            company: "Digital Bazaar", companyURL: "https://digitalbazaar.com/",
+            name: "Manu Sporny", url: "https://www.linkedin.com/in/manusporny/",
+            company: "Digital Bazaar", companyURL: "https://www.digitalbazaar.com/",
             w3cid: 41758
           }
         ],
@@ -88,39 +88,12 @@
             status:   "Recommendation",
             publisher:  "W3C"
           },
-          "RDF-N-Quads": {
-            title:    "RDF 1.1 N-Quads",
-            href:     "http://json-ld.github.io/normalization/spec/",
-            authors:  ["Gaven Carothers"],
-            status:   "Recommendation",
-          },
-          "VC-DATA-INTEGRITY": {
-            title:    "Verifiable Credential Data Integrity 1.0",
-            href:     "https://www.w3.org/TR/vc-data-integrity/",
-            authors:  ["David Longley", "Manu Sporny"],
-            status:   "Working Draft",
-            publisher:  "W3C Verifiable Credentials Working Group"
-          },
           "DI-ECDSA": {
               title:    "The Elliptic Curve Digital Signature Algorithm Cryptosuites v1.0",
               href:     "https://www.w3.org/TR/vc-di-ecdsa/",
               authors:  ["David Longley", "Manu Sporny", "Marty Reed"],
               status:   "WD",
               publisher:  "W3C Verifiable Credentials Working Group"
-          },
-          "JSON-LD-FRAMING": {
-            title:    "JSON-LD 1.1 Framing",
-            href:     "https://www.w3.org/TR/json-ld11-framing",
-            authors:  ["Dave Longley", "Gregg Kellogg", "Pierre-Antoine Champin"],
-            status:   "Candidate Recommendation",
-            publisher:  "W3C"
-          },
-          "JSON-LD": {
-            title:    "JSON-LD 1.1",
-            href:     "https://www.w3.org/TR/json-ld11",
-            authors:  ["Dave Longley", "Gregg Kellogg", "Pierre-Antoine Champin"],
-            status:   "Candidate Recommendation",
-            publisher:  "W3C"
           },
           "VC-DATA-MODEL-2": {
             title: "Verifiable Credentials Data Model v2.0",
@@ -132,14 +105,6 @@
             ],
             status: "Working Draft",
             publisher: "W3C Verifiable Credentials Working Group"
-          },
-          MULTIBASE: {
-            title: "Multibase",
-            href: "https://tools.ietf.org/html/draft-multiformats-multibase-01",
-          },
-          MULTICODEC: {
-            title: "Multicodec",
-            href: "https://github.com/multiformats/multicodec/",
           },
           "CFRG-BBS-SIGNATURE": {
             title:    "The BBS Signature Scheme",
@@ -494,7 +459,7 @@ by default, and abort processing upon detection.
         <p>
 This algorithm is used to configure a cryptographic suite to be used by the
 <a data-cite="VC-DATA-INTEGRITY#add-proof">Add Proof</a> and
-<a href="VC-DATA-INTEGRITY#verify-proof">Verify Proof</a>
+<a data-cite="VC-DATA-INTEGRITY#verify-proof">Verify Proof</a>
 functions in [[[VC-DATA-INTEGRITY]]]. The algorithm takes an options object
 ([=map=] |options|) as input and returns a [=data integrity cryptographic suite
 instance|cryptosuite instance=] ([=struct=] |cryptosuite|).
