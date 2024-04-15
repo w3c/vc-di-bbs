@@ -1607,8 +1607,9 @@ When the verifier receives the revealed document with derived proof and
 [[CFRG-Pseudonym-BBS-Signature]].
         </p>
       </section>
-      <h3>Pseudonyms with Hidden PID</h3>
-      <p>
+      <section>
+        <h3>Pseudonyms with Hidden PID</h3>
+        <p>
 This feature is a privacy preserving enhancement that allows a verifier that has
 seen a selectively revealed document with derived proof from a holder to
 recognize that the same holder is presenting a new selectively revealed document
@@ -1648,7 +1649,192 @@ When the verifier receives the revealed document with derived proof and
 |pseudonym|, they use the proof verification procedures of
 [[CFRG-Pseudonym-BBS-Signature]].
         </p>
-    </section>
+      </section>
+      <section class="informative">
+        <h3>Optional Feature Summary</h3>
+        <p>
+This section provides a summaries of the inputs, outputs, proof serialiation,
+tasks, and procedures for "baseline" BBS proofs as well as those for the
+optional features. By <em>baseline</em> BBS we mean BBS base and derived proofs
+without additional features. All the optional features are "additive" in the
+sense that some additional input, task, or, output is generated in
+<em>addition</em> to that of the "baseline" BBS signatures/proofs.
+        </p>
+        <table class="complex data">
+          <caption>Table 1 <em>Issuer Create Base: Inputs and such.</em> </caption>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Tasks</th>
+              <th>Inputs</th>
+              <th>Signing Algorithm</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Baseline BBS</td>
+              <td><em>baseline</em>: BBS signature generation from VC</td>
+              <td> <em>baseline</em>: document, proof options, key material, mandatory pointers</td>
+              <td>BBS</td>
+            </tr>
+            <tr>
+              <td>Anonymous Holder Binding</td>
+              <td><em>baseline</em> + selected index adjustment</td>
+              <td><em>baseline</em> + commitment with proof to holder secret from holder</td>
+              <td>Blind BBS</td>
+            </tr>
+            <tr>
+              <td>Pseudonym with Issuer Pid</td>
+              <td><em>baseline</em> + Generate pid</td>
+              <td><em>baseline</em></td>
+              <td>Pseudonym BBS</td>
+            </tr>
+            <tr>
+              <td>Pseudonym with Hidden Pid</td>
+              <td><em>baseline</em> + selected index adjustment</td>
+              <td><em>baseline</em> + commitment with proof to secret pid from holder</td>
+              <td>Pseudonym/Blind BBS</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="complex data">
+          <caption>Table 2 <em>Issuer Create Base: Headers and Serialization.</em> </caption>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Proof Header Bytes</th>
+              <th>Serialized Output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Baseline BBS</td>
+              <td>`0xd9`, `0x5d`, and `0x02`</td>
+              <td><em>baseline</em>: bbsSignature, bbsHeader, publicKey, hmacKey, and mandatoryPointers</td>
+            </tr>
+            <tr>
+              <td>Anonymous Holder Binding</td>
+              <td>`0xd9`, `0x5d`, and `0x04`</td>
+              <td><em>baseline</em> + signerBlind</td>
+            </tr>
+            <tr>
+              <td>Pseudonym with Issuer Pid</td>
+              <td>`0xd9`, `0x5d`, and `0x06`</td>
+              <td> <em>baseline</em> + pid</td>
+            </tr>
+            <tr>
+              <td>Pseudonym with Hidden Pid</td>
+              <td>`0xd9`, `0x5d`, and `0x08`</td>
+              <td><em>baseline</em> + signerBlind</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="complex data">
+          <caption>Table 3 <em>Holder Add Derived: Inputs and such.</em> </caption>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Tasks</th>
+              <th>Inputs</th>
+              <th>Proof Generation Algorithm</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Baseline BBS</td>
+              <td>BBS derived proof generation from VC with base proof</td>
+              <td><em>baseline</em>: (from base proof serialization) bbsSignature, bbsHeader, publicKey, hmacKey, and mandatoryPointers; selectivePointers (holders choice)</td>
+              <td>BBS</td>
+            </tr>
+            <tr>
+              <td>Anonymous Holder Binding</td>
+              <td><em>baseline</em></td>
+              <td><em>baseline</em> + holder secret, prover blind (both known to holder), signer blind (included in base proof from issuer)</td>
+              <td>Blind BBS</td>
+            </tr>
+            <tr>
+              <td>Pseudonym with Issuer Pid</td>
+              <td><em>baseline</em> + Generate pseudonym</td>
+              <td><em>baseline</em> + verifier id (from verifier), pid (included in base from issuer)</td>
+              <td>Pseudonym BBS</td>
+            </tr>
+            <tr>
+              <td>Pseudonym with Hidden Pid</td>
+              <td><em>baseline</em> + Generate pseudonym</td>
+              <td><em>baseline</em> + pid, prover blind (both known to holder), signer blind (included in base from issuer), verifier id (from verifier)</td>
+              <td>Pseudonym/Blind BBS</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="complex data">
+          <caption>Table 4 <em>Holder Add Derived: Headers and Serialization.</em> </caption>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Proof Header Bytes</th>
+              <th>Serialized Output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Baseline BBS</td>
+              <td>`0xd9`, `0x5d`, and `0x03`</td>
+              <td><em>baseline</em>: bbsProof, compressedLabelMap, mandatoryIndexes, selectiveIndexes, presentationHeader</td>
+            </tr>
+            <tr>
+              <td>Anonymous Holder Binding</td>
+              <td>`0xd9`, `0x5d`, and `0x05`</td>
+              <td><em>baseline</em></td>
+            </tr>
+            <tr>
+              <td>Pseudonym with Issuer Pid </td>
+              <td>`0xd9`, `0x5d`, and `0x07`</td>
+              <td><em>baseline</em> + pseudonym</td>
+            </tr>
+            <tr>
+              <td>Pseudonym with Hidden Pid</td>
+              <td>`0xd9`, `0x5d`, and `0x09`</td>
+              <td><em>baseline</em> + pseudonym</td>
+            </tr>
+          </tbody>
+        </table>
+
+         <table class="complex data">
+          <caption>Table 5 <em>Verify Derived: Inputs and Algorithms.</em> </caption>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Inputs</th>
+              <th>Proof Verification Algorithm</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>BBS baseline</td>
+              <td><em>baseline</em>: (from derived proof serialization) bbsProof, compressedLabelMap, mandatoryIndexes, selectiveIndexes, presentationHeader</td>
+              <td>BBS</td>
+            </tr>
+            <tr>
+              <td>Anonymous Holder Binding</td>
+              <td><em>baseline</em></td>
+              <td>Blind BBS</td>
+            </tr>
+            <tr>
+              <td>Pseudonym with Issuer Pid</td>
+              <td><em>baseline</em> + verifier id (known to verifier),  pseudonym (included in derived proof)</td>
+              <td>Pseudonym BBS</td>
+            </tr>
+            <tr>
+              <td>Pseudonym with Hidden Pid</td>
+              <td><em>baseline</em> + verifier id (known to verifier), pseudonym (included in derived proof)</td>
+              <td>Pseudonym/Blind BBS</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </section>
     <section>
       <h2>Security Considerations</h2>
