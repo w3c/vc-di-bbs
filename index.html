@@ -1077,9 +1077,21 @@ in this section also include the verification of such a data integrity proof.
           <p>
 The following algorithm specifies how to create a [=data integrity proof=] given
 an <a>unsecured data document</a>. Required inputs are an
-<a>unsecured data document</a> ([=map=] |unsecuredDocument|), and a set of proof
-options ([=map=] |options|). A [=data integrity proof=] ([=map=]), or an error,
+<a>unsecured data document</a> ([=map=] |unsecuredDocument|), a set of proof
+options ([=map=] |options|), an array of mandatory JSON pointers
+(|mandatoryPointers|), a |featureOption| indicator parameter, and, depending on
+the |featureOption|, a |commitment_with_proof| byte array.
+A [=data integrity proof=] ([=map=]), or an error,
 is produced as output.
+          </p>
+          <p>
+The |featureOption| parameter is used to indicate which optional feature, if
+any, is being used. It can take one of the following values `"baseline"`,
+`"anonymous_holder_binding"`, `"pseudonym_issuer_pid"`, or
+`"pseudonym_hidden_pid"`. Note that `"baseline"` is used to denote the case of
+no optional features. In the cases where the |featureOption| is set to
+`"anonymous_holder_binding"` or `"pseudonym_hidden_pid"`, the
+|commitment_with_proof| input MUST be supplied.
           </p>
 
           <ol class="algorithm">
@@ -1103,8 +1115,9 @@ passed as a parameters.
             </li>
             <li>
 Let |proofBytes| be the result of running the algorithm in Section
-[[[#base-proof-serialization-bbs-2023]]] with |hashData| and
-|options| passed as parameters.
+[[[#base-proof-serialization-bbs-2023]]] with |hashData|,
+|options|, |featureOption|, and if required |commitment_with_proof passed as
+parameters.
             </li>
             <li>
 Let |proof|.|proofValue| be a <a data-cite="VC-DATA-INTEGRITY#multibase-0">
