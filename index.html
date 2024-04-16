@@ -603,7 +603,7 @@ Depending upon the value of the |featureOption| set up the |proofValue| as
 follows.
             </li>
             <li>
-If |proofValue| equals `"baseline"`:
+If |featureOption| equals `"baseline"`:
               <ol class="algorithm">
                 <li>
 Initialize a byte array, |proofValue|, that starts with the BBS base proof
@@ -616,7 +616,7 @@ Initialize |components| to an array with five elements containing the values of:
               </ol>
             </li>
             <li>
-If |proofValue| equals `"anonymous_holder_binding"`:
+If |featureOption| equals `"anonymous_holder_binding"`:
               <ol class="algorithm">
                 <li>
 Initialize a byte array, |proofValue|, that starts with the BBS base proof
@@ -630,7 +630,7 @@ Initialize |components| to an array with five elements containing the values of:
               </ol>
             </li>
             <li>
-If |proofValue| equals `"pseudonym_issuer_pid"`:
+If |featureOption| equals `"pseudonym_issuer_pid"`:
               <ol class="algorithm">
                 <li>
 Initialize a byte array, |proofValue|, that starts with the BBS base proof
@@ -644,7 +644,7 @@ Initialize |components| to an array with five elements containing the values of:
               </ol>
             </li>
             <li>
-If |proofValue| equals `"pseudonym_hidden_pid"`:
+If |featureOption| equals `"pseudonym_hidden_pid"`:
               <ol class="algorithm">
                 <li>
 Initialize a byte array, |proofValue|, that starts with the BBS base proof
@@ -1024,8 +1024,8 @@ The following algorithm serializes a derived proof value. The required inputs
 are a BBS proof (|bbsProof|), a label map (|labelMap|), an
 array of mandatory indexes (|mandatoryIndexes|), an array of
 selective indexes (|selectiveIndexes|), and a BBS presentation header
-(|presentationHeader|).
-Optional input is |pseudonym|.
+(|presentationHeader|), the |featureOption| indicator, and possibly a
+|pseudonym| value depending on the |featureOption| value.
 A single <em>derived proof</em>
 value, serialized as a byte string, is produced as output.
           </p>
@@ -1036,14 +1036,66 @@ Initialize `compressedLabelMap` to the result of calling the algorithm in
 Section <a href="#compresslabelmap"></a>, passing `labelMap` as the parameter.
             </li>
             <li>
-Initialize a byte array, `proofValue`, that starts with the BBS disclosure
-proof header bytes `0xd9`, `0x5d`, and `0x03`.
-            </li>
-            <li>
+ Depending on the value of |featureOption| do the following:
+              <ol class="algorithm">
+                <li>
+If |featureOption| equals `"baseline"`:
+                  <ol class="algorithm">
+                    <li>
+Initialize |proofValue| to start with the
+disclosure proof header bytes `0xd9`, `0x5d`, and `0x03`.
+                    </li>
+                    <li>
+Initialize |components| to an array with elements containing the values of
+|bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|, and
+|presentationHeader|.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+If |featureOption| equals `"anonymous_holder_binding"`:
+                  <ol class="algorithm">
+                    <li>
+Initialize |proofValue| to start with the
+disclosure proof header bytes `0xd9`, `0x5d`, and `0x05`.
+                    </li>
+                    <li>
+Initialize |components| to an array with elements containing the values of
+|bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|, and
+|presentationHeader|.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+If |featureOption| equals `"pseudonym_issuer_pid"`:
+                  <ol class="algorithm">
+                    <li>
+Initialize |proofValue| to start with the
+disclosure proof header bytes `0xd9`, `0x5d`, and `0x07`.
+                    </li>
+                    <li>
 Initialize |components| to an array with elements containing the values of
 |bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
-|presentationHeader|, and, if provided,|pseudonym|.
-            </li>
+|presentationHeader|, and |pseudonym|.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+If |featureOption| equals `"pseudonym_hidden_pid"`:
+                  <ol class="algorithm">
+                    <li>
+Initialize |proofValue| to start with the
+disclosure proof header bytes `0xd9`, `0x5d`, and `0x09`.
+                    </li>
+                    <li>
+Initialize |components| to an array with elements containing the values of
+|bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
+|presentationHeader|, and |pseudonym|.
+                    </li>
+                  </ol>
+                </li>
+              </ol>
+
             <li>
 CBOR-encode |components| per [[RFC8949]] where CBOR tagging MUST NOT be used on
 any of the |components|. Append the produced encoded value to |proofValue|.
