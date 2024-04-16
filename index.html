@@ -726,48 +726,47 @@ inputs include a JSON-LD document (|document|), a BBS base proof
 (|proof|), an array of JSON pointers to use to selectively disclose
 statements (|selectivePointers|), an OPTIONAL BBS
 |presentationHeader| (byte array that defaults to an empty byte array if
-not present),
-an OPTIONAL
-|commitment_with_proof| (a byte array), an OPTIONAL |pid| value (a byte array),
+not present), a |featureOption| indicator, additional inputs as required by
+the |featureOption| (see <a href="#add-derived-proof-bbs-2023">Add Derived Proof</a>),
 and any custom JSON-LD API options
 (such as a document loader). A single object, <em>disclosure data</em>, is
-produced as output, which contains the `bbsProof`, `labelMap`,
-`mandatoryIndexes`, `selectiveIndexes`, `presentationHeader`, and
-`revealDocument` fields.
+produced as output, which contains the |bbsProof|, |labelMap|,
+|mandatoryIndexes|, |selectiveIndexes|, |presentationHeader|,
+|revealDocument|, and |pseudonym| (if computed) fields.
           </p>
 
           <ol class="algorithm">
             <li>
-Initialize `bbsSignature`, `bbsHeader`, `publicKey`, `hmacKey`,
-`mandatoryPointers`, and the optional feature parameters `pid` and
-`signer_blind` to the values of the associated properties in the object
+Initialize |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|,
+|mandatoryPointers|, and the optional feature parameters |pid| and
+|signer_blind| to the values of the associated properties in the object
 returned when calling the algorithm in Section
 <a href="#parsebaseproofvalue"></a>, passing the `proofValue` from `proof`.
             </li>
             <li>
-Initialize `hmac` to an HMAC API using `hmacKey`. The HMAC uses the same hash
+Initialize |hmac| to an HMAC API using |hmacKey|. The HMAC uses the same hash
 algorithm used in the signature algorithm, i.e., SHA-256.
             </li>
             <li>
-Initialize `labelMapFactoryFunction` to the result of calling the
-`createShuffledIdLabelMapFunction` algorithm passing `hmac` as `HMAC`.
+Initialize |labelMapFactoryFunction| to the result of calling the
+|createShuffledIdLabelMapFunction| algorithm passing |hmac| as |HMAC|.
             </li>
             <li>
-Initialize `combinedPointers` to the concatenation of `mandatoryPointers`
-and `selectivePointers`.
+Initialize |combinedPointers| to the concatenation of |mandatoryPointers|
+and |selectivePointers|.
             </li>
             <li>
-Initialize `groupDefinitions` to a map with the following entries: key of
-the string `"mandatory"` and value of `mandatoryPointers`; key of the string
-`"selective"` and value of `selectivePointers`; and key of the string `"combined"`
-and value of `combinedPointers`.
+Initialize |groupDefinitions| to a map with the following entries: key of
+the string `"mandatory"` and value of |mandatoryPointers|; key of the string
+`"selective"` and value of |selectivePointers|; and key of the string `"combined"`
+and value of |combinedPointers|.
             </li>
             <li>
-Initialize `groups` and `labelMap` to the result of calling the algorithm in
+Initialize |groups| and |labelMap| to the result of calling the algorithm in
 <a href="https://www.w3.org/TR/vc-di-ecdsa/#canonicalizeandgroup">Section 3.3.16
-canonicalizeAndGroup</a> of the [[DI-ECDSA]] specification, passing `document`
-`labelMapFactoryFunction`,
-`groupDefinitions`, and any custom JSON-LD
+canonicalizeAndGroup</a> of the [[DI-ECDSA]] specification, passing |document|
+|labelMapFactoryFunction|,
+|groupDefinitions|, and any custom JSON-LD
 API options. Note: This step transforms the document into an array of canonical
 N-Quads whose order has been shuffled based on 'hmac' applied blank node
 identifiers, and groups
@@ -780,15 +779,15 @@ statement list, i.e., find the position at which a mandatory statement occurs
 in the list of combined statements. One method for doing this is given below.
               <ol class="algorithm">
                 <li>
-Initialize `mandatoryIndexes` to an empty array. Set `mandatoryMatch` to
-`groups.mandatory.matching` map; set `combinedMatch` to
-`groups.combined.matching`; and set `combinedIndexes` to the ordered array of
-just the keys of the `combinedMatch` map.
+Initialize |mandatoryIndexes| to an empty array. Set |mandatoryMatch| to
+|groups.mandatory.matching| map; set |combinedMatch| to
+|groups.combined.matching|; and set |combinedIndexes| to the ordered array of
+just the keys of the |combinedMatch| map.
                 </li>
                 <li>
-For each key in the `mandatoryMatch` map, find its index in the `combinedIndexes`
+For each key in the |mandatoryMatch| map, find its index in the |combinedIndexes|
 array (e.g., `combinedIndexes.indexOf(key)`), and add this value to the
-`mandatoryIndexes` array.
+|mandatoryIndexes| array.
                 </li>
               </ol>
             </li>
@@ -798,28 +797,29 @@ statement list, i.e., find the position at which a selected statement occurs in
 the list of non-mandatory statements. One method for doing this is given below.
               <ol class="algorithm">
                 <li>
-Initialize `selectiveIndexes` to an empty array. Set `selectiveMatch` to the
-`groups.selective.matching` map; set `mandatoryNonMatch` to the map
-`groups.mandatory.nonMatching`; and `nonMandatoryIndexes` to to the ordered array of
-just the keys of the `mandatoryNonMatch` map.
+Initialize |selectiveIndexes| to an empty array. Set |selectiveMatch| to the
+|groups.selective.matching| map; set |mandatoryNonMatch| to the map
+|groups.mandatory.nonMatching|; and |nonMandatoryIndexes| to to the ordered
+array of just the keys of the |mandatoryNonMatch| map.
                 </li>
                 <li>
-For each key in the `selectiveMatch` map, find its index in the `nonMandatoryIndexes`
-array (e.g., `nonMandatoryIndexes.indexOf(key)`), and add this value to the
-`selectiveIndexes` array.
+For each key in the |selectiveMatch| map, find its index in the
+|nonMandatoryIndexes| array (e.g., `nonMandatoryIndexes.indexOf(key)`), and add
+this value to the |selectiveIndexes| array.
                 </li>
               </ol>
             </li>
             <li>
-Initialize `bbsMessages` to an array of byte arrays containing the values in the
-`nonMandatory` array of strings encoded using the UTF-8 <a>character encoding</a>.
+Initialize |bbsMessages| to an array of byte arrays containing the values in the
+|nonMandatory| array of strings encoded using the UTF-8
+<a>character encoding</a>.
             </li>
             <li>
-Set `bbsProof` to the value computed by the appropriate procedure given below
-based on the values of the |commitment_with_proof| and |pid| options.
+Set |bbsProof| to the value computed by the appropriate procedure given below
+based on the value of the |featureOption| parameter.
               <ol class="algorithm">
                 <li>
-If both |commitment_with_proof| and |pid| options are empty,
+If |featureOption| equals `"baseline"`,
 set `bbsProof` to the value computed by the `ProofGen` procedure from
 [[CFRG-BBS-SIGNATURE]], i.e.,
 `ProofGen(PK, signature, header, ph, messages, disclosed_indexes)`,
@@ -828,34 +828,57 @@ where `PK` is the original issuers public key, `signature` is the
 `messages` is `bbsMessages`, and `disclosed_indexes` is `selectiveIndexes`.
                 </li>
                 <li>
-If |commitment_with_proof| is not empty and |pid| is empty,
+If |featureOption| equals `"anonymous_holder_binding"`,
 set `bbsProof` to the value computed by the `ProofGen` procedure from
-[[CFRG-Blind-BBS-Signature]], where `PK` is the original issuers public key,
-`signature` is the
-`bbsSignature`, `header` is the `bbsHeader`, `ph` is the  `presentationHeader`
-`messages` is `bbsMessages`, `disclosed_indexes` is `selectiveIndexes`,
+[[CFRG-Blind-BBS-Signature]], where |PK| is the original issuers public key,
+|signature| is the
+|bbsSignature|, |header| is the |bbsHeader|, |ph| is the  |presentationHeader|,
+|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
 `commitment_with_proof`, and `signer_blind`. The holder will also furnish its
-"secret value" that was used to compute the `commitment_with_proof`. This is the
-"anonymous holder binding" option.
+|holder_secret|, and |proverBlind| that was used to compute the
+|commitment_with_proof|. This is the
+<a href="#anonymous-holder-binding">Anonymous Holder Binding</a> feature option.
+In addition to the |bbsProof| the Blind BBS `ProofGen` procedure will also
+produce and updated (adjusted) list of indexes which should be used to update
+the |selectiveIndexes| variable in subsequent processing. <span class="note">To
+be updated when IETF API is finalized.</span>
                 </li>
                 <li>
-If |pid| is not empty, compute the |pseudonym| according to the procedures given
+If |featureOption| equals `"pseudonym_issuer_pid"`, compute the |pseudonym|
+according to the procedures given
 in [[CFRG-Pseudonym-BBS-Signature]],
-and set `bbsProof` to the value computed by the `ProofGen` procedure from
-[[CFRG-Pseudonym-BBS-Signature]], where `PK` is the original issuers public key,
-`signature` is the
-`bbsSignature`, `header` is the `bbsHeader`, `ph` is the  `presentationHeader`
-`messages` is `bbsMessages`, `disclosed_indexes` is `selectiveIndexes`, and
-|pseudonym| is the `pseudonym`. This is for both "pseudonym with issuer known
-pid" and "pseudonym with hidden pid" cases.
+and set |bsProof| to the value computed by the `ProofGen` procedure from
+[[CFRG-Pseudonym-BBS-Signature]], where |PK| is the original issuers public key,
+|signature| is the
+|bbsSignature|, |header| is the |bbsHeader|, |ph| is the  |presentationHeader|
+|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|, and
+|pseudonym| is the `pseudonym`. This is for the
+<a href="#pseudonyms-with-issuer-known-pid">Pseudonyms with Issuer-known PID</a>
+feature option. <span class="note">To be updated when IETF API is finalized.
+</span>
+                </li>
+                <li>
+If |featureOption| equals `"pseudonym_hidden_pid"`, compute the |pseudonym|
+according to the procedures given
+in [[CFRG-Pseudonym-BBS-Signature]],
+and set |bsProof| to the value computed by the `ProofGen` procedure from
+[[CFRG-Pseudonym-BBS-Signature]], where |PK| is the original issuers public key,
+|signature| is the
+|bbsSignature|, |header| is the |bbsHeader|, |ph| is the  |presentationHeader|
+|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
+|commitment_with_proof|, |pid|, |proverBlind|, |signer_blind|, and
+|pseudonym| is the `pseudonym`. This is for the
+<a href="#pseudonyms-with-hidden-pid">Pseudonyms with Hidden PID</a>
+feature option. <span class="note">To be updated when IETF API is finalized.
+</span>
                 </li>
               </ol>
             </li>
 
 
             <li>
-Initialize |revealDocument| to the result of the "selectJsonLd"
-algorithm, passing `document`, and `combinedPointers` as `pointers`.
+Initialize |revealDocument| to the result of the "selectJsonLd" algorithm from
+[[DI-ECDSA]], passing `document`, and `combinedPointers` as `pointers`.
             </li>
             <li>
 Run the RDF Dataset Canonicalization Algorithm [[RDF-CANON]] on
@@ -880,8 +903,8 @@ value associated with `inputLabel` as a key in `labelMap` as the value.
               </ol>
             </li>
             <li>
-Return an object with properties matching `bbsProof`, "verifierLabelMap" for `labelMap`,
-`mandatoryIndexes`, `selectiveIndexes`, `revealDocument`, and |pseudonym|, if
+Return an object with properties matching |bbsProof|, "verifierLabelMap" for |labelMap|,
+|mandatoryIndexes|, |selectiveIndexes|, |revealDocument|, and |pseudonym|, if
 computed.
             </li>
           </ol>
