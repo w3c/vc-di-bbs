@@ -679,9 +679,10 @@ Return |baseProof| as <em>base proof</em>.
 The following algorithm parses the components of a `bbs-2023` selective
 disclosure base proof value. The required input is a proof value
 (|proofValue|). A single object, <em>parsed base proof</em>, containing
-five  or seven elements, using the names "bbsSignature", "bbsHeader",
+six or seven elements, using the names "bbsSignature", "bbsHeader",
 "publicKey",
-"hmacKey", "mandatoryPointers", and optional feature parameters "pid" and
+"hmacKey", "mandatoryPointers", "featureOption", and possibly optional feature
+parameters "pid" and
 "signer_blind" is produced  as output.
           </p>
 
@@ -696,22 +697,68 @@ indicating that it is a `multibase-base64url-no-pad-encoded` value, and throw
 an error if it does not.
             </li>
             <li>
-Initialize `decodedProofValue` to the result of base64url-no-pad-decoding the
+Initialize |decodedProofValue| to the result of base64url-no-pad-decoding the
 substring following the leading `u` in `proofValue`.
             </li>
             <li>
-Ensure that the `decodedProofValue` starts with the BBS base proof header
-bytes `0xd9`, `0x5d`, and `0x02`, and throw an error if it does not.
+Check that the BBS base proof starts with an allowed header value and set the
+|featureOption| variable as follows:
+              <ol class="algorithm">
+                <li>
+If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x02` set
+|featureOption| to `"baseline"`.
+                </li>
+                <li>
+If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x04` set
+|featureOption| to `"anonymous_holder_binding"`.
+                </li>
+                <li>
+If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x06` set
+|featureOption| to `"pseudonym_issuer_pid"`.
+                </li>
+                <li>
+If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x08` set
+|featureOption| to `"pseudonym_hidden_pid"`.
+                </li>
+                <li>
+If the |decodedProofValue| starts with any other three byte sequence throw an
+error.
+                </li>
+              </ol>
+
             </li>
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS base proof header.
             </li>
             <li>
-Return an object with properties set to the following elements, using the names
-"bbsSignature", "bbsHeader", "publicKey", "hmacKey", "mandatoryPointers", (and
-optional feature parameters) "pid" and "signer_blind"
-respectively.
+Based on the value of |featureOption| return an object based on |components|
+as follows:
+              <ol class="algorithm">
+                <li>
+If |featureOption| equals `"baseline"` set the property names for the object
+based on |components| to "bbsSignature", "bbsHeader", "publicKey", "hmacKey",
+"mandatoryPointers" in that order and add |featureOption| as a property.
+                </li>
+                <li>
+If |featureOption| equals `"anonymous_holder_binding"` set the property names
+for the object based on |components| to "bbsSignature", "bbsHeader",
+"publicKey", "hmacKey", "mandatoryPointers", "signer_blind" in that order and
+add |featureOption| as a property.
+                </li>
+                <li>
+If |featureOption| equals `"pseudonym_issuer_pid"` set the property names
+for the object based on |components| to "bbsSignature", "bbsHeader",
+"publicKey", "hmacKey", "mandatoryPointers", "pid" in that order and
+add |featureOption| as a property.
+                </li>
+                <li>
+If |featureOption| equals `"pseudonym_hidden_pid"` set the property names
+for the object based on |components| to "bbsSignature", "bbsHeader",
+"publicKey", "hmacKey", "mandatoryPointers", "signer_blind" in that order and
+add |featureOption| as a property.
+                </li>
+              </ol>
             </li>
           </ol>
 
