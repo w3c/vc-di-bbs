@@ -1205,9 +1205,9 @@ performed in parallel; it only needs to be completed before this algorithm needs
 to use the `proofHash` value.
             </li>
             <li>
-Initialize `bbsProof`, `labelMap`, `mandatoryIndexes`, `selectiveIndexes`,
-`presentationHeader`, and `pseudonym` to the values associated with their
-property names in the
+Initialize |bbsProof|, |labelMap|, |mandatoryIndexes|, |selectiveIndexes|,
+|presentationHeader|,  |featureOption|, and, possibly, |pseudonym| to the values
+associated with their property names in the
 object returned when calling the algorithm in Section
 <a href="#parsederivedproofvalue"></a>, passing `proofValue` from `proof`.
             </li>
@@ -1245,8 +1245,9 @@ Initialize `mandatoryHash` to the result of calling the "`hashMandatory`"
 primitive, passing `mandatory`.
             </li>
             <li>
-Return an object with properties matching `baseSignature`, `proofHash`,
-`nonMandatory`, `mandatoryHash`, `selectiveIndexes`, and `pseudonym`.
+Return an object with properties matching |baseSignature|, |proofHash|,
+|nonMandatory|, |mandatoryHash|, |selectiveIndexes|, |featureOption|, and,
+possibly |pseudonym|.
             </li>
           </ol>
 
