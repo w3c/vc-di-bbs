@@ -1117,9 +1117,10 @@ starting with "`u`" and ending with the base64url-no-pad-encoded value of
 The following algorithm parses the components of the derived proof value.
 The required input is a derived proof value (|proofValue|). A
 single <em>derived proof value</em> object is produced as output, which
-contains a set of five or six elements, having the names `bbsProof`, `labelMap`,
-`mandatoryIndexes`, `selectiveIndexes`, `presentationHeader`, and the optional
-`pseudonym` parameter.
+contains a set of six or seven elements, having the names "bbsProof",
+"labelMap", "mandatoryIndexes", "selectiveIndexes", "presentationHeader",
+"featureOption", and possibly "pseudonym" depending on the value of the
+|featureOption| parameter.
           </p>
 
           <ol class="algorithm">
@@ -1133,20 +1134,38 @@ it is a `multibase-base64url-no-pad-encoded` value, and throw an error if it doe
 not.
             </li>
             <li>
-Initialize `decodedProofValue` to the result of base64url-no-pad-decoding the
+Initialize |decodedProofValue| to the result of base64url-no-pad-decoding the
 substring that follows the leading `u` in `proofValue`.
             </li>
             <li>
-Ensure that the `decodedProofValue` starts with the BBS disclosure proof
-header bytes `0xd9`, `0x5d`, and `0x03`, and throw an error if it does not.
-            </li>
+Check that the BBS disclosure proof starts with an allowed header value and set
+the |featureOption| variable as follows:
+              <ol class="algorithm">
+                <li>
+If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
+`0x03`, set |featureOption| to `"baseline"`.
+                </li>
+                <li>
+If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
+`0x05`, set |featureOption| to `"anonymous_holder_binding"`.
+                </li>
+                <li>
+If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
+`0x07`, set |featureOption| to `"pseudonym_issuer_pid"`.
+                </li>
+                <li>
+If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
+`0x09`, set |featureOption| to `"pseudonym_hidden_pid"`.
+                </li>
+              </ol>
+
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS disclosure proof header. Ensure the result
 is an array of five or six elements —
 a byte array, a map of integers to integers, an
-array of integers, another array of integers, and a byte array; otherwise, throw
-an error.
+array of integers, another array of integers, and one or two byte arrays;
+otherwise, throw an error.
             </li>
             <li>
 Replace the second element in `components` using the result of calling the
@@ -1155,8 +1174,9 @@ second element of `components` as `compressedLabelMap`.
             </li>
             <li>
 Return <em>derived proof value</em> as an object with properties set to the five
-elements, using the names `bbsProof`, `labelMap`, `mandatoryIndexes`,
-`selectiveIndexes`, `presentationHeader`, and optional `pseudonym`, respectively.
+elements, using the names "bbsProof", "labelMap", "mandatoryIndexes",
+"selectiveIndexes", "presentationHeader", and optional "pseudonym", respectively.
+In addition, add |featureOption| and its value to the object.
             </li>
           </ol>
 
