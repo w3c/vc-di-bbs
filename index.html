@@ -1451,20 +1451,40 @@ The derived proof is to be given to the <a>verifier</a>. The inputs include a
 JSON-LD document (|document|), a BBS base proof
 (|proof|), an array of JSON pointers to use to selectively disclose
 statements (|selectivePointers|), an OPTIONAL BBS
-|presentationHeader| (a byte array), an OPTIONAL
-|commitment_with_proof| (a byte array), an OPTIONAL |pid| value (a byte array),
+|presentationHeader| (a byte array), a |featureOption| parameter, additional
+parameters supporting the |featureOption| selected (see below),
 and any custom JSON-LD API options,
 such as a document loader. A single <em>selectively revealed document</em>
 value, represented as an object, is produced as output.
           </p>
-
+          <p>
+In the case where |featureOption| equals `"anonymous_holder_binding"` the
+REQUIRED additional inputs are |holderSecret| and |proverBlind|. These would
+have been precomputed by the holder. See
+<a href="#anonymous-holder-binding">Anonymous Holder Binding</a> for background
+information.
+          </p>
+          <p>
+In the case where |featureOption| equals `"pseudonym_issuer_pid"` the REQUIRED
+additional input is the |verifier_id| which is communicated to the holder by the
+verifier. See <a href="#pseudonyms-with-issuer-known-pid">Pseudonyms with
+Issuer-known PID</a> for background information.
+          </p>
+          <p>
+In the case where |featureOption| equals `"pseudonym_hidden_pid"` the REQUIRED
+additional inputs are the |pid|, |proverBlind| (both known to
+holder),  |verifier_id| which is communicated to the holder by the verifier. See
+See <a href="#pseudonyms-with-hidden-pid">Pseudonyms with
+Hidden PID</a> for background information.
+          </p>
           <ol>
             <li>
-Initialize `bbsProof`,  `labelMap`, `mandatoryIndexes`, `selectiveIndexes`, and
-`revealDocument` to the values associated with their
+Initialize |bbsProof|,  |labelMap|, |mandatoryIndexes|, |selectiveIndexes|, and
+|revealDocument| to the values associated with their
 property names in the object returned when calling the algorithm in
-Section <a href="#createdisclosuredata"></a>, passing the `document`, `proof`,
-`selectivePointers`, `presentationHeader`, and any custom JSON-LD API options,
+Section <a href="#createdisclosuredata"></a>, passing the |document|, |proof|,
+|selectivePointers|, |presentationHeader|, |featureOption|, required additional
+inputs based on the |featureOption|, and any custom JSON-LD API options,
 such as a document loader.
             </li>
             <li>
