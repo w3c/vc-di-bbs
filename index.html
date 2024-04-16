@@ -590,20 +590,72 @@ both.
           <p>
 The following algorithm serializes the base proof value, including the
 BBS signature, HMAC key, and mandatory pointers.
-The required inputs are a base signature |bbsSignature|,
-an HMAC key |hmacKey|, and an array of
-|mandatoryPointers|.
+The required inputs are a base signature |bbsSignature|, |bbsHeader|,
+|publicKey|, an HMAC key |hmacKey|, an array of
+|mandatoryPointers|, |featureOption|,and depending on
+the |featureOption| value the |pid|, and |signer_blind| values.
 A single <em>base proof</em> string value is produced as output.
           </p>
 
           <ol class="algorithm">
             <li>
-Initialize a byte array, `proofValue`, that starts with the BBS base proof
-header bytes `0xd9`, `0x5d`, and `0x02`.
+Depending upon the value of the |featureOption| set up the |proofValue| as
+follows.
             </li>
             <li>
+If |proofValue| equals `"baseline"`:
+              <ol class="algorithm">
+                <li>
+Initialize a byte array, |proofValue|, that starts with the BBS base proof
+header bytes `0xd9`, `0x5d`, and `0x02`.
+                </li>
+                <li>
 Initialize |components| to an array with five elements containing the values of:
 |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, and |mandatoryPointers|.
+                </li>
+              </ol>
+            </li>
+            <li>
+If |proofValue| equals `"anonymous_holder_binding"`:
+              <ol class="algorithm">
+                <li>
+Initialize a byte array, |proofValue|, that starts with the BBS base proof
+header bytes `0xd9`, `0x5d`, and `0x04`.
+                </li>
+                <li>
+Initialize |components| to an array with five elements containing the values of:
+|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
+|signerBlind|.
+                </li>
+              </ol>
+            </li>
+            <li>
+If |proofValue| equals `"pseudonym_issuer_pid"`:
+              <ol class="algorithm">
+                <li>
+Initialize a byte array, |proofValue|, that starts with the BBS base proof
+header bytes `0xd9`, `0x5d`, and `0x06`.
+                </li>
+                <li>
+Initialize |components| to an array with five elements containing the values of:
+|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
+|pid|.
+                </li>
+              </ol>
+            </li>
+            <li>
+If |proofValue| equals `"pseudonym_hidden_pid"`:
+              <ol class="algorithm">
+                <li>
+Initialize a byte array, |proofValue|, that starts with the BBS base proof
+header bytes `0xd9`, `0x5d`, and `0x08`.
+                </li>
+                <li>
+Initialize |components| to an array with five elements containing the values of:
+|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
+|signerBlind|.
+                </li>
+              </ol>
             </li>
             <li>
 CBOR-encode |components| per [[RFC8949]] where CBOR tagging MUST NOT be used on
@@ -1357,7 +1409,7 @@ cryptographically random 32 byte |pid| value. Compute the
 with appropriate key material, `bbsHeader` for the `header`, `bbsMessages`
 for the `messages`, and |pid| for the `pid`. Retain the |pid| value for use when
 calling <a href="#serializebaseproofvalue"></a> below.
-This provides for <a href="#pseudonym-with-issuer-known-pid">Pseudonym with
+This provides for <a href="#pseudonyms-with-issuer-known-pid">Pseudonym with
 Issuer-known PID</a> feature.
                 </li>
                 <li>
@@ -1368,7 +1420,7 @@ for the `header`, `bbsMessages` for the `messages`, and |commitment_with_proof|
 for the `commitment_with_proof`. If the signing procedure uses the optional
 |signer_blind| parameter retain this value for use when calling
 <a href="#serializebaseproofvalue"></a> below.
-This provides for the <a href="#pseudonym-with-hidden-pid">Pseudonym with
+This provides for the <a href="#pseudonyms-with-hidden-pid">Pseudonym with
   Hidden PID</a> feature.
                 </li>
               </ol>
