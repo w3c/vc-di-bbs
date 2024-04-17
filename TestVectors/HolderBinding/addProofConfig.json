@@ -1,0 +1,13 @@
+{
+  "type": "DataIntegrityProof",
+  "cryptosuite": "bbs-2023",
+  "created": "2023-08-15T23:36:38Z",
+  "verificationMethod": "did:key:zUC7DerdEmfZ8f4pFajXgGwJoMkV1ofMTmEG5UoNvnWiPiLuGKNeqgRpLH2TV4Xe5mJ2cXV76gRN7LFQwapF1VFu6x2yrr5ci1mXqC1WNUrnHnLgvfZfMH7h6xP6qsf9EKRQrPQ#zUC7DerdEmfZ8f4pFajXgGwJoMkV1ofMTmEG5UoNvnWiPiLuGKNeqgRpLH2TV4Xe5mJ2cXV76gRN7LFQwapF1VFu6x2yrr5ci1mXqC1WNUrnHnLgvfZfMH7h6xP6qsf9EKRQrPQ",
+  "proofPurpose": "assertionMethod",
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://w3id.org/security/data-integrity/v2",
+    "https://w3id.org/vdl/v1",
+    "https://w3id.org/vdl/aamva/v1"
+  ]
+}

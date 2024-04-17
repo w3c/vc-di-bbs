@@ -1,0 +1,56 @@
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://w3id.org/security/data-integrity/v2",
+    "https://w3id.org/vdl/v1",
+    "https://w3id.org/vdl/aamva/v1"
+  ],
+  "type": [
+    "VerifiableCredential",
+    "Iso18013DriversLicenseCredential"
+  ],
+  "issuer": {
+    "id": "did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5",
+    "name": "Utopia Department of Motor Vehicles",
+    "url": "https://dmv.utopia.example/",
+    "image": "https://dmv.utopia.example/logo.png"
+  },
+  "expirationDate": "2028-11-15T12:00:00-06:00",
+  "credentialSubject": {
+    "type": "LicensedDriver",
+    "driversLicense": {
+      "type": "Iso18013DriversLicense",
+      "issuing_country": "UA",
+      "driving_privileges": [
+        {
+          "codes": [
+            {
+              "code": "D"
+            }
+          ],
+          "vehicle_category_code": "D",
+          "issue_date": "2019-01-01",
+          "expiry_date": "2027-01-01"
+        },
+        {
+          "codes": [
+            {
+              "code": "C"
+            }
+          ],
+          "vehicle_category_code": "C",
+          "issue_date": "2019-01-01",
+          "expiry_date": "2017-01-01"
+        }
+      ]
+    }
+  },
+  "proof": {
+    "type": "DataIntegrityProof",
+    "cryptosuite": "bbs-2023",
+    "created": "2023-08-15T23:36:38Z",
+    "verificationMethod": "did:key:zUC7DerdEmfZ8f4pFajXgGwJoMkV1ofMTmEG5UoNvnWiPiLuGKNeqgRpLH2TV4Xe5mJ2cXV76gRN7LFQwapF1VFu6x2yrr5ci1mXqC1WNUrnHnLgvfZfMH7h6xP6qsf9EKRQrPQ#zUC7DerdEmfZ8f4pFajXgGwJoMkV1ofMTmEG5UoNvnWiPiLuGKNeqgRpLH2TV4Xe5mJ2cXV76gRN7LFQwapF1VFu6x2yrr5ci1mXqC1WNUrnHnLgvfZfMH7h6xP6qsf9EKRQrPQ",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "u2V0FhVkDcI6DkI56Wal7T8E6mFDmgMM-CAsaT2sqrP_Smywqdm4GRyNT5OFgdlzhvUttnJNgWpW8CDH1bZki5Oc1le6laklDqWXqFeBzvEdmbrDqs-2Yq-Bqn0VQOJLOz5SWQ1OgsoKN9Q4oCR0bkj0isGyeuBtJU_lf-qbmsCglhWHmUsCaWgNofe8a-gYKNcx06lkWshWawKql9qcFjklJmJjCgar9-tA7-5z06S9heNUVYb5dH4Tykhoz9331NKwma5Tph5xQ_9YpLZ5w4SZBvYMPiG9OMzRTHONSSJzSwThnms4dwd1vYBXdvaBEIExLyZPply63VpKdMUCvfwYoJPxypUExswV0AfOZuI3rCvCAc0plQLfrePd1Rn0MWvtsZP8rE8DCUujm6jrfJgr8wLGmTiNeEzoRgUMeD-dxx1yLHlO7054V4fPeeICEYFr-kYmc4RMvqI3-pDzN-dXyXAnYH6VBbx8_g3U0SYYb612zJlzzE6lD1EFoqHCzNcleN3gMcKGQJCpSv7Oupa0fSH8HjMlsFOMM7WAROdQo6KZyULDP7ahN9JGJdXxy9p9o4sA09VK8r-NLDu1zowuP6mQHlgMJofKdWvRfH1p8TE2XphR9ceSOY6tduCxurH9CNOU_OIqJgNadu7z2BPHnK202i0QZ8E8nwHgR8ywsz8klJGnQvih8e3hPtfI_EYjCygOYrE3HuXRWGpMXz4y0pVEqVoaX2rKnlnHnZqKd5Kg1LNzcFIUugJx9IuO1fHC9c5tJjmVSu31q1NjnWdcBxxpOaGZWqr6B2-WNmV1jqoWDVCsO4tzaD_ZaNdawELvyrToljxO90HmatbFdLh8U2ovZsf_CsNliRd9fW5Rst801Oef2BCZ1wAPvqXtqf8kp01gDeIEvtlJTSZfdm_MsIK9eUwdsaSUqqzHNGLMHrGksTX8ZVxQO9AxV7ZBS2-Sy2-UhDD8abevrmu20ig5tq7inqsLz83oB6GH606-Vi8zEBTvXOaIdXUy-9qJl_7CRv2l7MbyY_Fn_ws8vMDqKjigrxMU7VeEkWTpmACFCVKOxj7sIXmS4IQM6NfnS4AJEfzEbMWIrYvBOqjpdKrvxcIvQWU57NB13jQSSNWlQkmFcaOI6PClVWlrDkl1XJKekLnu-z9Q0GYaEfjFT4pY6df4kkTujAAEBAgIAhwABAgUGCAmGAgMHCQwSRBEzd6o"
+  }
+}

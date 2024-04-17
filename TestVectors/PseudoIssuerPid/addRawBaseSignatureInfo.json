@@ -1,0 +1,7 @@
+{
+  "bbsSignature": "90033356d76cc3876dc5efa916bfedeb5bfc140a73d0c17aff8a9d20a4ed551c41f85e26c44f5d27b15ee2f0871b5f5d272491e4cf712187f7fa943966fefa510a1a88423e04af372c09b21ad0b00c2e",
+  "mandatoryPointers": [
+    "/issuer",
+    "/expirationDate"
+  ]
+}

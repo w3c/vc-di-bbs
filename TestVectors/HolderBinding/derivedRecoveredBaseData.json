@@ -1,0 +1,8 @@
+{
+  "bbsSignature": "94837945a72df96ba2cfd0928aa032361e57836731e6fcd8d466e6a3ef2f408846603a4ef779954456ee1751021c042252d7f88e96cd3cc00b3e28afd8b9dfa3abb22dd2d4cd91f0e1bdfc79bffbc237",
+  "hmacKey": "00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+  "mandatoryPointers": [
+    "/issuer",
+    "/expirationDate"
+  ]
+}
