@@ -3043,34 +3043,368 @@ document shown below.
         <section>
           <h4>Anonymous Holder Binding Feature</h4>
           <section>
-            <h5>Commitment Generation</h5>
+            <p>TODO: explanatory text...</p>
+            <h5>Holder Binding Commitment Generation</h5>
+            <pre class="example nohighlight" title="Holder's Secret" data-include="TestVectors/FeatureInputs/holderSecret.json"
+            data-include-format="text"></pre>
+            <pre class="example nohighlight" title="Commitment Information" data-include="TestVectors/HolderBinding/commitmentInfo.json"
+            data-include-format="text"></pre>
           </section>
           <section>
-            <h5>Base Proof</h5>
+            <h5>Holder Binding Base Proof</h5>
+            <p>
+To add a selective disclosure base proof to a document, the issuer needs
+the following cryptographic key material:
+          </p>
+          <ol>
+            <li>
+The issuer's private/public key pair, i.e., the key pair corresponding to the
+verification method that will be part of the proof.
+            </li>
+            <li>
+An HMAC key. This is used to randomize the order of the blank node IDs to avoid
+potential information leakage via the blank node ID ordering. This is used only
+once, and is shared between issuer and holder. The HMAC in this case is
+functioning as a pseudorandom function (PRF).
+            </li>
+          </ol>
+          <p>
+The key material used for generating the test vectors to test <i>add base
+proof</i> is shown below. Hexadecimal representation is used for the BBS key
+pairs and the HMAC key.
+          </p>
+          <pre class="example nohighlight" title="Private and Public keys for Signature"
+          data-include="TestVectors/BBSKeyMaterial.json"
+          data-include-format="text">
+          </pre>
+          <p>
+In this scenario we consider an electronic version of a drivers license.
+          </p>
+          <pre class="example nohighlight" title="Credential without Proof" data-include="TestVectors/FeatureInputs/license.json"
+          data-include-format="text"></pre>
+          <p>
+To preserve the holder's privacy the only "mandatory" field is the "issuer" as
+realized in the mandatory pointers given below.
+          </p>
+          <pre class="example nohighlight" title="Mandatory Pointers" data-include="TestVectors/FeatureInputs/licenseMandatory.json"
+          data-include-format="text"></pre>
+          <p>
+          <p>
+Transformation of the unsigned document begins with canonicalizing the document,
+as shown below.
+          </p>
+          <pre class="example nohighlight" title="Canonical Document" data-include="TestVectors/HolderBinding/addBaseDocCanon.json"
+          data-include-format="text"></pre>
+          <p>
+To prevent possible information leakage from the ordering of the blank node IDs
+these are processed through a PRF (i.e., the HMAC) to give the canonicalized HMAC
+document shown below. This represents an ordered list of statements that will be
+subject to mandatory and selective disclosure, i.e., it is from this list that
+statements are grouped.
+          </p>
+          <pre class="example nohighlight" title="Canonical HMAC Document" data-include="TestVectors/HolderBinding/addBaseDocHMACCanon.json"
+          data-include-format="text"></pre>
+          <p>
+The above canonical document gets grouped into mandatory and non-mandatory
+statements. The final output of the selective disclosure transformation process
+is shown below. Each statement is now grouped as mandatory or non-mandatory, and
+its index in the previous list of statements is remembered.
+          </p>
+          <pre class="example nohighlight" title="Add Base Transformation" data-include="TestVectors/HolderBinding/addBaseTransform.json"
+          data-include-format="text"></pre>
+          <p>
+The next step is to create the base proof configuration and canonicalize it.
+This is shown in the following two examples.
+          </p>
+          <pre class="example nohighlight" title="Base Proof Configuration" data-include="TestVectors/HolderBinding/addProofConfig.json"
+          data-include-format="text"></pre>
+          <pre class="example nohighlight" title="Canonical Base Proof Configuration" data-include="TestVectors/HolderBinding/addProofConfigCanon.txt"
+          data-include-format="text"></pre>
+          <p>
+In the hashing step, we compute the SHA-256 hash of the canonicalized proof
+options to produce the `proofHash`, and we compute the SHA-256 hash of the
+join of all the mandatory N-Quads to produce the `mandatoryHash`. These are
+shown below in hexadecimal format.
+          </p>
+          <pre class="example nohighlight" title="Add Base Hashes" data-include="TestVectors/HolderBinding/addHashData.json"
+          data-include-format="text"></pre>
+          <p>
+<span class="note">Need to explain use of blind signature algorithm and include
+signer_blind in data.</span>
+Shown below are the computed `bbsSignature` in hexadecimal, and the
+`mandatoryPointers`. These are are fed to the final serialization step with the
+`hmacKey`.
+          </p>
+          <pre class="example nohighlight" title="Add Base Signing" data-include="TestVectors/HolderBinding/addRawBaseSignatureInfo.json"
+          data-include-format="text"></pre>
+          <p>
+Finally, the values above are run through the algorithm of Section
+<a href="#serializebaseproofvalue"></a>, to produce the `proofValue` which is
+used in the signed base document shown below.
+          </p>
+          <pre class="example nohighlight" title="Signed Base Document" data-include="TestVectors/HolderBinding/addSignedSDBase.json"
+          data-include-format="text"></pre>
           </section>
           <section>
-            <h5>Derived Proof</h5>
+            <h5>Holder Binding Derived Proof</h5>
+            <p>
+Random numbers are used, and an optional `presentationHeader` can be an input,
+for the creation of <q>BBS proofs</q>. To furnish a deterministic set of test
+vectors, we used the <q>Mocked Random Scalars</q> procedure from
+[[CFRG-BBS-SIGNATURE]]. The `seed` and `presentationHeader` values we used for
+generation of the derived proof test vectors are given in hex, below.
+          </p>
+          <pre class="example nohighlight" title="seed and presentation header values" data-include="TestVectors/BBSDeriveMaterial.json"
+          data-include-format="text"></pre>
+          <p>
+To create a derived proof, a holder starts with a signed document
+containing a base proof. The base document we will use for these test vectors is
+the final example from Section <a href="#holder-binding-base-proof"></a>, above. The first
+step is to run the algorithm of Section <a href="#parsebaseproofvalue"></a> to
+recover `bbsSignature`, `hmacKey`, and `mandatoryPointers`, as shown below.
+<span class="note">Need to add  signer_blind value here.</span>
+          </p>
+          <pre class="example nohighlight" title="Recovered Base Signature Data" data-include="TestVectors/HolderBinding/derivedRecoveredBaseData.json"
+          data-include-format="text"></pre>
+          <p>
+Next, the holder needs to indicate what else, if anything, they wish to reveal
+to the verifiers, by specifying JSON pointers for selective disclosure. In this
+case the holder only wishes to reveal their driving priveledges.
+          </p>
+          <pre class="example nohighlight" title="Selective Disclosure Pointers" data-include="TestVectors/FeatureInputs/licenseSelective.json"
+          data-include-format="text"></pre>
+          <p>
+To produce the `revealDocument` (i.e., the unsigned document that will
+eventually be signed and sent to the verifier), we append the selective pointers
+to the mandatory pointers, and input these combined pointers along with the
+document without proof to the `selectJsonLd` algorithm of [[DI-ECDSA]],
+to get the result shown below.
+          </p>
+          <pre class="example nohighlight" title="Unsigned Reveal Document" data-include="TestVectors/HolderBinding/derivedUnsignedReveal.json"
+          data-include-format="text"></pre>
+          <p>
+Now that we know what the revealed document looks like, we need to furnish
+appropriately updated information to the verifier about which statements are
+mandatory, and the indexes for the selected non-mandatory statements. Running
+step 6 of the
+<a href="#createdisclosuredata"></a> yields an abundance of information about
+various statement groups relative to the original document. Below we show a
+portion of the indexes for those groups.
+          </p>
+          <pre class="example nohighlight" title="Derived Group Indexes" data-include="TestVectors/HolderBinding/derivedGroupIndexes.json"
+          data-include-format="text"></pre>
+          <p>
+The verifier needs to be able to aggregate and hash the mandatory statements. To
+enable this, we furnish them with a list of indexes of the mandatory statements
+adjusted to their positions in the reveal document (i.e., relative to the
+`combinedIndexes`), while the `selectiveIndexes` need to be adjusted relative to
+their positions within the `nonMandatoryIndexes`. These "adjusted" indexes are
+shown below.
+          </p>
+          <pre class="example nohighlight" title="Adjusted Mandatory and Selective Indexes" data-include="TestVectors/HolderBinding/derivedAdjIndexes.json"
+          data-include-format="text"></pre>
+
+          <p>
+The last important piece of disclosure data is a mapping of canonical blank node
+IDs to HMAC-based shuffled IDs, the `labelMap`, computed according to Section
+<a href="#createdisclosuredata"></a>. This is shown below along with
+the rest of the disclosure data minus the reveal document.
+          </p>
+          <pre class="example nohighlight" title="Disclosure Data" data-include="TestVectors/HolderBinding/derivedDisclosureData.json"
+          data-include-format="text"></pre>
+          <p>
+Finally, using the disclosure data above with the algorithm of Section
+<a href="#serializederivedproofvalue"></a>, we obtain the signed derived (reveal)
+document shown below.
+          </p>
+          <pre class="example nohighlight" title="Signed Derived Document" data-include="TestVectors/HolderBinding/derivedRevealDocument.json"
+          data-include-format="text"></pre>
           </section>
         </section>
         <section>
           <h4>Pseudonym with Issuer-known PID Feature</h4>
           <section>
-            <h5>Base Proof</h5>
+            <h5>Issuer PID Base Proof</h5>
+            <p>
+To add a selective disclosure base proof to a document, the issuer needs
+the following cryptographic key material:
+          </p>
+          <ol>
+            <li>
+The issuer's private/public key pair, i.e., the key pair corresponding to the
+verification method that will be part of the proof.
+            </li>
+            <li>
+An HMAC key. This is used to randomize the order of the blank node IDs to avoid
+potential information leakage via the blank node ID ordering. This is used only
+once, and is shared between issuer and holder. The HMAC in this case is
+functioning as a pseudorandom function (PRF).
+            </li>
+          </ol>
+          <p>
+The key material used for generating the test vectors to test <i>add base
+proof</i> is shown below. Hexadecimal representation is used for the BBS key
+pairs and the HMAC key.
+          </p>
+          <pre class="example nohighlight" title="Private and Public keys for Signature"
+          data-include="TestVectors/BBSKeyMaterial.json"
+          data-include-format="text">
+          </pre>
+          <p>
+In this scenario we consider an electronic version of a drivers license.
+          </p>
+          <pre class="example nohighlight" title="Credential without Proof" data-include="TestVectors/FeatureInputs/license.json"
+          data-include-format="text"></pre>
+          <p>
+To preserve the holder's privacy the only "mandatory" field is the "issuer" as
+realized in the mandatory pointers given below.
+          </p>
+          <pre class="example nohighlight" title="Mandatory Pointers" data-include="TestVectors/FeatureInputs/licenseMandatory.json"
+          data-include-format="text"></pre>
+          <p>
+          <p>
+Transformation of the unsigned document begins with canonicalizing the document,
+as shown below.
+          </p>
+          <pre class="example nohighlight" title="Canonical Document" data-include="TestVectors/PseudoIssuerPid/addBaseDocCanon.json"
+          data-include-format="text"></pre>
+          <p>
+To prevent possible information leakage from the ordering of the blank node IDs
+these are processed through a PRF (i.e., the HMAC) to give the canonicalized HMAC
+document shown below. This represents an ordered list of statements that will be
+subject to mandatory and selective disclosure, i.e., it is from this list that
+statements are grouped.
+          </p>
+          <pre class="example nohighlight" title="Canonical HMAC Document" data-include="TestVectors/PseudoIssuerPid/addBaseDocHMACCanon.json"
+          data-include-format="text"></pre>
+          <p>
+The above canonical document gets grouped into mandatory and non-mandatory
+statements. The final output of the selective disclosure transformation process
+is shown below. Each statement is now grouped as mandatory or non-mandatory, and
+its index in the previous list of statements is remembered.
+          </p>
+          <pre class="example nohighlight" title="Add Base Transformation" data-include="TestVectors/PseudoIssuerPid/addBaseTransform.json"
+          data-include-format="text"></pre>
+          <p>
+The next step is to create the base proof configuration and canonicalize it.
+This is shown in the following two examples.
+          </p>
+          <pre class="example nohighlight" title="Base Proof Configuration" data-include="TestVectors/PseudoIssuerPid/addProofConfig.json"
+          data-include-format="text"></pre>
+          <pre class="example nohighlight" title="Canonical Base Proof Configuration" data-include="TestVectors/PseudoIssuerPid/addProofConfigCanon.txt"
+          data-include-format="text"></pre>
+          <p>
+In the hashing step, we compute the SHA-256 hash of the canonicalized proof
+options to produce the `proofHash`, and we compute the SHA-256 hash of the
+join of all the mandatory N-Quads to produce the `mandatoryHash`. These are
+shown below in hexadecimal format.
+          </p>
+          <pre class="example nohighlight" title="Add Base Hashes" data-include="TestVectors/PseudoIssuerPid/addHashData.json"
+          data-include-format="text"></pre>
+          <p>
+<span class="note">Need to explain pid generation and use of pseudonym signing
+algorithm and include pid in data.</span>
+Shown below are the computed `bbsSignature` in hexadecimal, and the
+`mandatoryPointers`. These are are fed to the final serialization step with the
+`hmacKey`.
+          </p>
+          <pre class="example nohighlight" title="Add Base Signing" data-include="TestVectors/PseudoIssuerPid/addRawBaseSignatureInfo.json"
+          data-include-format="text"></pre>
+          <p>
+Finally, the values above are run through the algorithm of Section
+<a href="#serializebaseproofvalue"></a>, to produce the `proofValue` which is
+used in the signed base document shown below.
+          </p>
+          <pre class="example nohighlight" title="Signed Base Document" data-include="TestVectors/PseudoIssuerPid/addSignedSDBase.json"
+          data-include-format="text"></pre>
           </section>
           <section>
-            <h5>Derived Proof</h5>
+            <h5>Issuer PID Derived Proof</h5>
+            <p>
+Random numbers are used, and an optional `presentationHeader` can be an input,
+for the creation of <q>BBS proofs</q>. To furnish a deterministic set of test
+vectors, we used the <q>Mocked Random Scalars</q> procedure from
+[[CFRG-BBS-SIGNATURE]]. The `seed` and `presentationHeader` values we used for
+generation of the derived proof test vectors are given in hex, below.
+          </p>
+          <pre class="example nohighlight" title="seed and presentation header values" data-include="TestVectors/BBSDeriveMaterial.json"
+          data-include-format="text"></pre>
+          <p>
+To create a derived proof, a holder starts with a signed document
+containing a base proof. The base document we will use for these test vectors is
+the final example from Section <a href="#holder-binding-base-proof"></a>, above. The first
+step is to run the algorithm of Section <a href="#parsebaseproofvalue"></a> to
+recover `bbsSignature`, `hmacKey`, and `mandatoryPointers`, as shown below.
+<span class="note">Need to add  signer_blind value here.</span>
+          </p>
+          <pre class="example nohighlight" title="Recovered Base Signature Data" data-include="TestVectors/PseudoIssuerPid/derivedRecoveredBaseData.json"
+          data-include-format="text"></pre>
+          <p>
+Next, the holder needs to indicate what else, if anything, they wish to reveal
+to the verifiers, by specifying JSON pointers for selective disclosure. In this
+case the holder only wishes to reveal their driving priveledges.
+          </p>
+          <pre class="example nohighlight" title="Selective Disclosure Pointers" data-include="TestVectors/FeatureInputs/licenseSelective.json"
+          data-include-format="text"></pre>
+          <p>
+To produce the `revealDocument` (i.e., the unsigned document that will
+eventually be signed and sent to the verifier), we append the selective pointers
+to the mandatory pointers, and input these combined pointers along with the
+document without proof to the `selectJsonLd` algorithm of [[DI-ECDSA]],
+to get the result shown below.
+          </p>
+          <pre class="example nohighlight" title="Unsigned Reveal Document" data-include="TestVectors/PseudoIssuerPid/derivedUnsignedReveal.json"
+          data-include-format="text"></pre>
+          <p>
+Now that we know what the revealed document looks like, we need to furnish
+appropriately updated information to the verifier about which statements are
+mandatory, and the indexes for the selected non-mandatory statements. Running
+step 6 of the
+<a href="#createdisclosuredata"></a> yields an abundance of information about
+various statement groups relative to the original document. Below we show a
+portion of the indexes for those groups.
+          </p>
+          <pre class="example nohighlight" title="Derived Group Indexes" data-include="TestVectors/PseudoIssuerPid/derivedGroupIndexes.json"
+          data-include-format="text"></pre>
+          <p>
+The verifier needs to be able to aggregate and hash the mandatory statements. To
+enable this, we furnish them with a list of indexes of the mandatory statements
+adjusted to their positions in the reveal document (i.e., relative to the
+`combinedIndexes`), while the `selectiveIndexes` need to be adjusted relative to
+their positions within the `nonMandatoryIndexes`. These "adjusted" indexes are
+shown below.
+          </p>
+          <pre class="example nohighlight" title="Adjusted Mandatory and Selective Indexes" data-include="TestVectors/PseudoIssuerPid/derivedAdjIndexes.json"
+          data-include-format="text"></pre>
+
+          <p>
+The last important piece of disclosure data is a mapping of canonical blank node
+IDs to HMAC-based shuffled IDs, the `labelMap`, computed according to Section
+<a href="#createdisclosuredata"></a>. This is shown below along with
+the rest of the disclosure data minus the reveal document.
+<span class="note">Need to show pseudonym calculation and its inclusion...</span>
+          </p>
+          <pre class="example nohighlight" title="Disclosure Data" data-include="TestVectors/PseudoIssuerPid/derivedDisclosureData.json"
+          data-include-format="text"></pre>
+          <p>
+Finally, using the disclosure data above with the algorithm of Section
+<a href="#serializederivedproofvalue"></a>, we obtain the signed derived (reveal)
+document shown below.
+          </p>
+          <pre class="example nohighlight" title="Signed Derived Document" data-include="TestVectors/PseudoIssuerPid/derivedRevealDocument.json"
+          data-include-format="text"></pre>
           </section>
         </section>
         <section>
           <h4>Pseuonym with Hidden PID Feature</h4>
           <section>
-            <h5>Commitment Generation</h5>
+            <h5>Hidden PID Commitment Generation</h5>
           </section>
           <section>
-            <h5>Base Proof</h5>
+            <h5>Hidden PID Base Proof</h5>
           </section>
           <section>
-            <h5>Derived Proof</h5>
+            <h5>Hidden PID Derived Proof</h5>
           </section>
         </section>
     </section>
