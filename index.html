@@ -592,14 +592,14 @@ The following algorithm serializes the base proof value, including the
 BBS signature, HMAC key, and mandatory pointers.
 The required inputs are a base signature |bbsSignature|, |bbsHeader|,
 |publicKey|, an HMAC key |hmacKey|, an array of
-|mandatoryPointers|, |featureOption|,and depending on
+|mandatoryPointers|, |featureOption|, and depending on
 the |featureOption| value the |pid|, and |signer_blind| values.
 A single <em>base proof</em> string value is produced as output.
           </p>
 
           <ol class="algorithm">
             <li>
-Depending upon the value of the |featureOption| set up the |proofValue| as
+Depending upon the value of the |featureOption|, set up the |proofValue| as
 follows.
             </li>
             <li>
@@ -623,8 +623,8 @@ Initialize a byte array, |proofValue|, that starts with the BBS base proof
 header bytes `0xd9`, `0x5d`, and `0x04`.
                 </li>
                 <li>
-Initialize |components| to an array with five elements containing the values of:
-|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
+Initialize |components| to an array with six elements containing the values of:
+|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|, and
 |signerBlind|.
                 </li>
               </ol>
@@ -637,8 +637,8 @@ Initialize a byte array, |proofValue|, that starts with the BBS base proof
 header bytes `0xd9`, `0x5d`, and `0x06`.
                 </li>
                 <li>
-Initialize |components| to an array with five elements containing the values of:
-|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
+Initialize |components| to an array with six elements containing the values of:
+|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|, and
 |pid|.
                 </li>
               </ol>
@@ -651,8 +651,8 @@ Initialize a byte array, |proofValue|, that starts with the BBS base proof
 header bytes `0xd9`, `0x5d`, and `0x08`.
                 </li>
                 <li>
-Initialize |components| to an array with five elements containing the values of:
-|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
+Initialize |components| to an array with six elements containing the values of:
+|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|, and
 |signerBlind|.
                 </li>
               </ol>
@@ -698,30 +698,30 @@ an error if it does not.
             </li>
             <li>
 Initialize |decodedProofValue| to the result of base64url-no-pad-decoding the
-substring following the leading `u` in `proofValue`.
+substring that follows the leading `u` in `proofValue`.
             </li>
             <li>
 Check that the BBS base proof starts with an allowed header value and set the
 |featureOption| variable as follows:
               <ol class="algorithm">
                 <li>
-If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x02` set
+If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x02`, set
 |featureOption| to `"baseline"`.
                 </li>
                 <li>
-If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x04` set
+If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x04`, set
 |featureOption| to `"anonymous_holder_binding"`.
                 </li>
                 <li>
-If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x06` set
+If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x06`, set
 |featureOption| to `"pseudonym_issuer_pid"`.
                 </li>
                 <li>
-If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x08` set
+If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x08`, set
 |featureOption| to `"pseudonym_hidden_pid"`.
                 </li>
                 <li>
-If the |decodedProofValue| starts with any other three byte sequence throw an
+If the |decodedProofValue| starts with any other three byte sequence, throw an
 error.
                 </li>
               </ol>
@@ -732,30 +732,30 @@ Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS base proof header.
             </li>
             <li>
-Based on the value of |featureOption| return an object based on |components|
+Based on the value of |featureOption|, return an object based on |components|,
 as follows:
               <ol class="algorithm">
                 <li>
-If |featureOption| equals `"baseline"` set the property names for the object
+If |featureOption| equals `"baseline"`, set the property names for the object
 based on |components| to "bbsSignature", "bbsHeader", "publicKey", "hmacKey",
-"mandatoryPointers" in that order and add |featureOption| as a property.
+and "mandatoryPointers", in that order, and add |featureOption| as a property.
                 </li>
                 <li>
-If |featureOption| equals `"anonymous_holder_binding"` set the property names
+If |featureOption| equals `"anonymous_holder_binding"`, set the property names
 for the object based on |components| to "bbsSignature", "bbsHeader",
-"publicKey", "hmacKey", "mandatoryPointers", "signer_blind" in that order and
+"publicKey", "hmacKey", "mandatoryPointers", and "signer_blind", in that order, and
 add |featureOption| as a property.
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_issuer_pid"` set the property names
+If |featureOption| equals `"pseudonym_issuer_pid"`, set the property names
 for the object based on |components| to "bbsSignature", "bbsHeader",
-"publicKey", "hmacKey", "mandatoryPointers", "pid" in that order and
+"publicKey", "hmacKey", "mandatoryPointers", and "pid", in that order, and
 add |featureOption| as a property.
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_hidden_pid"` set the property names
+If |featureOption| equals `"pseudonym_hidden_pid"`, set the property names
 for the object based on |components| to "bbsSignature", "bbsHeader",
-"publicKey", "hmacKey", "mandatoryPointers", "signer_blind" in that order and
+"publicKey", "hmacKey", "mandatoryPointers", and "signer_blind", in that order, and
 add |featureOption| as a property.
                 </li>
               </ol>
@@ -815,7 +815,7 @@ canonicalizeAndGroup</a> of the [[DI-ECDSA]] specification, passing |document|
 |labelMapFactoryFunction|,
 |groupDefinitions|, and any custom JSON-LD
 API options. Note: This step transforms the document into an array of canonical
-N-Quads whose order has been shuffled based on 'hmac' applied blank node
+N-Quads whose order has been shuffled based on 'hmac'-applied blank node
 identifiers, and groups
 the N-Quad strings according to selections based on JSON pointers.
             </li>
@@ -879,14 +879,14 @@ If |featureOption| equals `"anonymous_holder_binding"`,
 set `bbsProof` to the value computed by the `ProofGen` procedure from
 [[CFRG-Blind-BBS-Signature]], where |PK| is the original issuers public key,
 |signature| is the
-|bbsSignature|, |header| is the |bbsHeader|, |ph| is the  |presentationHeader|,
+|bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|,
 |messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
 `commitment_with_proof`, and `signer_blind`. The holder will also furnish its
 |holder_secret|, and |proverBlind| that was used to compute the
 |commitment_with_proof|. This is the
 <a href="#anonymous-holder-binding">Anonymous Holder Binding</a> feature option.
-In addition to the |bbsProof| the Blind BBS `ProofGen` procedure will also
-produce and updated (adjusted) list of indexes which should be used to update
+In addition to the |bbsProof|, the Blind BBS `ProofGen` procedure will also
+produce an updated (adjusted) list of indexes which should be used to update
 the |selectiveIndexes| variable in subsequent processing. <span class="note">To
 be updated when IETF API is finalized.</span>
                 </li>
@@ -897,7 +897,7 @@ in [[CFRG-Pseudonym-BBS-Signature]],
 and set |bsProof| to the value computed by the `ProofGen` procedure from
 [[CFRG-Pseudonym-BBS-Signature]], where |PK| is the original issuers public key,
 |signature| is the
-|bbsSignature|, |header| is the |bbsHeader|, |ph| is the  |presentationHeader|
+|bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|
 |messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|, and
 |pseudonym| is the `pseudonym`. This is for the
 <a href="#pseudonyms-with-issuer-known-pid">Pseudonyms with Issuer-known PID</a>
@@ -1207,7 +1207,7 @@ to use the |proofHash| value.
             </li>
             <li>
 Initialize |bbsProof|, |labelMap|, |mandatoryIndexes|, |selectiveIndexes|,
-|presentationHeader|,  |featureOption|, and, possibly, |pseudonym| to the values
+|presentationHeader|, |featureOption|, and, possibly, |pseudonym| to the values
 associated with their property names in the
 object returned when calling the algorithm in Section
 <a href="#parsederivedproofvalue"></a>, passing |proofValue| from |proof|.
@@ -1285,7 +1285,7 @@ The |featureOption| parameter is used to indicate which optional feature, if
 any, is being used. It can take one of the following values `"baseline"`,
 `"anonymous_holder_binding"`, `"pseudonym_issuer_pid"`, or
 `"pseudonym_hidden_pid"`. Note that `"baseline"` is used to denote the case of
-no optional features. In the cases where the |featureOption| is set to
+no optional features. If |featureOption| is set to
 `"anonymous_holder_binding"` or `"pseudonym_hidden_pid"`, the
 |commitment_with_proof| input MUST be supplied.
           </p>
@@ -1312,7 +1312,7 @@ passed as a parameters.
             <li>
 Let |proofBytes| be the result of running the algorithm in Section
 [[[#base-proof-serialization-bbs-2023]]] with |hashData|,
-|options|, |featureOption|, and if required |commitment_with_proof| passed as
+|options|, |featureOption|, and, if required, |commitment_with_proof| passed as
 parameters.
             </li>
             <li>
@@ -1500,11 +1500,11 @@ in the Data Integrity [[VC-DATA-INTEGRITY]] specification,
 <a data-cite="vc-data-integrity#algorithms">
 Section 4: Algorithms</a>. Required inputs are
 cryptographic hash data (|hashData|),
-<em>proof options</em> (|options|), |featureOption|, and if required
+<em>proof options</em> (|options|), |featureOption|, and, if required,
 |commitment_with_proof|.
 If |featureOption| is set to `"anonymous_holder_binding"` or
 `"pseudonym_hidden_pid"`, the
-|commitment_with_proof| input MUST be supplied and otherwise an error should be
+|commitment_with_proof| input MUST be supplied; if not supplied, an error SHOULD be
 returned.
 The <em>proof options</em> MUST contain a type identifier for the
 <a data-cite="vc-data-integrity#dfn-cryptosuite">
@@ -1602,22 +1602,22 @@ such as a document loader. A single <em>selectively revealed document</em>
 value, represented as an object, is produced as output.
           </p>
           <p>
-In the case where |featureOption| equals `"anonymous_holder_binding"` the
+If |featureOption| equals `"anonymous_holder_binding"`, the
 REQUIRED additional inputs are |holderSecret| and |proverBlind|. These would
 have been precomputed by the holder. See
 <a href="#anonymous-holder-binding">Anonymous Holder Binding</a> for background
 information.
           </p>
           <p>
-In the case where |featureOption| equals `"pseudonym_issuer_pid"` the REQUIRED
+If |featureOption| equals `"pseudonym_issuer_pid"`, the REQUIRED
 additional input is the |verifier_id| which is communicated to the holder by the
 verifier. See <a href="#pseudonyms-with-issuer-known-pid">Pseudonyms with
 Issuer-known PID</a> for background information.
           </p>
           <p>
-In the case where |featureOption| equals `"pseudonym_hidden_pid"` the REQUIRED
+If |featureOption| equals `"pseudonym_hidden_pid"`, the REQUIRED
 additional inputs are the |pid|, |proverBlind| (both known to
-holder),  |verifier_id| which is communicated to the holder by the verifier. See
+holder), and |verifier_id| which is communicated to the holder by the verifier.
 See <a href="#pseudonyms-with-hidden-pid">Pseudonyms with
 Hidden PID</a> for background information.
           </p>
@@ -1705,7 +1705,7 @@ Initialize |verified| to the result of applying the verification
 algorithm below, depending the |featureOption| value.
             <ol class="algorithm">
               <li>
-If the |featureOption| equals `"baseline"`, Initialize |verified| to the result of
+If the |featureOption| equals `"baseline"`, initialize |verified| to the result of
 applying the verification algorithm `ProofVerify(PK, proof, header, ph,
 disclosed_messages, disclosed_indexes)` of [[CFRG-BBS-SIGNATURE]] with `PK` set
 as the public key of the original issuer, `proof` set as `bbsProof`, `header`
@@ -1713,7 +1713,8 @@ set as `bbsHeader`, `disclosed_messages` set as `disclosedMessages`, `ph` set as
 `presentationHeader`, and `disclosed_indexes` set as `selectiveIndexes`.
               </li>
               <li>
-If the |featureOption| equals `"anonymous_holder_binding"`, Initialize |verified| to the result of
+If the |featureOption| equals `"anonymous_holder_binding"`,
+initialize |verified| to the result of
 applying the verification algorithm `ProofVerify` algorithm of
 [[CFRG-Blind-BBS-Signature]].  <span class="note">To
   be updated when IETF API is finalized.</span>
@@ -1895,12 +1896,12 @@ When the verifier receives the revealed document with derived proof and
       <section class="informative">
         <h3>Optional Feature Summary</h3>
         <p>
-This section provides a summaries of the inputs, outputs, proof serialiation,
+This section provides summaries of the inputs, outputs, proof serialiation,
 tasks, and procedures for "baseline" BBS proofs as well as those for the
-optional features. By <em>baseline</em> BBS we mean BBS base and derived proofs
+optional features. By <em>baseline</em> BBS, we mean BBS base and derived proofs
 without additional features. All the optional features are "additive" in the
-sense that some additional input, task, or, output is generated in
-<em>addition</em> to that of the "baseline" BBS signatures/proofs.
+sense that some additional input, task, or output is generated
+<em>in addition</em> to those of the "baseline" BBS signatures/proofs.
         </p>
         <table class="complex data">
           <caption>Table 1 <em>Issuer Create Base: Inputs and such.</em> </caption>
