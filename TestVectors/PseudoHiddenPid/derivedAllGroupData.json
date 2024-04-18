@@ -135,10 +135,10 @@
         "<did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> <https://schema.org/image> <https://dmv.utopia.example/logo.png> .\n",
         "<did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> <https://schema.org/name> \"Utopia Department of Motor Vehicles\" .\n",
         "<did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> <https://schema.org/url> <https://dmv.utopia.example/> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicenseCredential> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://www.w3.org/2018/credentials#expirationDate> \"2028-11-15T12:00:00-06:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://www.w3.org/2018/credentials#issuer> <did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> .\n"
+        "_:_de78141e-f601-493a-b660-68722421c467_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicenseCredential> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_2 <https://www.w3.org/2018/credentials#expirationDate> \"2028-11-15T12:00:00-06:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_2 <https://www.w3.org/2018/credentials#issuer> <did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> .\n"
       ]
     },
     "selective": {
@@ -273,14 +273,14 @@
         ]
       },
       "deskolemizedNQuads": [
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicense> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#drivingPrivileges> \"[{\\\"codes\\\":[{\\\"code\\\":\\\"D\\\"}],\\\"expiry_date\\\":\\\"2027-01-01\\\",\\\"issue_date\\\":\\\"2019-01-01\\\",\\\"vehicle_category_code\\\":\\\"D\\\"},{\\\"codes\\\":[{\\\"code\\\":\\\"C\\\"}],\\\"expiry_date\\\":\\\"2017-01-01\\\",\\\"issue_date\\\":\\\"2019-01-01\\\",\\\"vehicle_category_code\\\":\\\"C\\\"}]\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#issuingCountry> \"UA\" .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#LicensedDriver> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_1 <https://w3id.org/vdl#license> _:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicenseCredential> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_1 .\n"
+        "_:_de78141e-f601-493a-b660-68722421c467_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicense> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#drivingPrivileges> \"[{\\\"codes\\\":[{\\\"code\\\":\\\"D\\\"}],\\\"expiry_date\\\":\\\"2027-01-01\\\",\\\"issue_date\\\":\\\"2019-01-01\\\",\\\"vehicle_category_code\\\":\\\"D\\\"},{\\\"codes\\\":[{\\\"code\\\":\\\"C\\\"}],\\\"expiry_date\\\":\\\"2017-01-01\\\",\\\"issue_date\\\":\\\"2019-01-01\\\",\\\"vehicle_category_code\\\":\\\"C\\\"}]\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#issuingCountry> \"UA\" .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#LicensedDriver> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_1 <https://w3id.org/vdl#license> _:_de78141e-f601-493a-b660-68722421c467_0 .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicenseCredential> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_de78141e-f601-493a-b660-68722421c467_1 .\n"
       ]
     },
     "combined": {
@@ -418,16 +418,16 @@
         "<did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> <https://schema.org/image> <https://dmv.utopia.example/logo.png> .\n",
         "<did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> <https://schema.org/name> \"Utopia Department of Motor Vehicles\" .\n",
         "<did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> <https://schema.org/url> <https://dmv.utopia.example/> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicense> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#drivingPrivileges> \"[{\\\"codes\\\":[{\\\"code\\\":\\\"D\\\"}],\\\"expiry_date\\\":\\\"2027-01-01\\\",\\\"issue_date\\\":\\\"2019-01-01\\\",\\\"vehicle_category_code\\\":\\\"D\\\"},{\\\"codes\\\":[{\\\"code\\\":\\\"C\\\"}],\\\"expiry_date\\\":\\\"2017-01-01\\\",\\\"issue_date\\\":\\\"2019-01-01\\\",\\\"vehicle_category_code\\\":\\\"C\\\"}]\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#issuingCountry> \"UA\" .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#LicensedDriver> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_1 <https://w3id.org/vdl#license> _:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicenseCredential> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_1 .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://www.w3.org/2018/credentials#expirationDate> \"2028-11-15T12:00:00-06:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
-        "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://www.w3.org/2018/credentials#issuer> <did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> .\n"
+        "_:_de78141e-f601-493a-b660-68722421c467_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicense> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#drivingPrivileges> \"[{\\\"codes\\\":[{\\\"code\\\":\\\"D\\\"}],\\\"expiry_date\\\":\\\"2027-01-01\\\",\\\"issue_date\\\":\\\"2019-01-01\\\",\\\"vehicle_category_code\\\":\\\"D\\\"},{\\\"codes\\\":[{\\\"code\\\":\\\"C\\\"}],\\\"expiry_date\\\":\\\"2017-01-01\\\",\\\"issue_date\\\":\\\"2019-01-01\\\",\\\"vehicle_category_code\\\":\\\"C\\\"}]\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#issuingCountry> \"UA\" .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#LicensedDriver> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_1 <https://w3id.org/vdl#license> _:_de78141e-f601-493a-b660-68722421c467_0 .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicenseCredential> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_de78141e-f601-493a-b660-68722421c467_1 .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_2 <https://www.w3.org/2018/credentials#expirationDate> \"2028-11-15T12:00:00-06:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+        "_:_de78141e-f601-493a-b660-68722421c467_2 <https://www.w3.org/2018/credentials#issuer> <did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> .\n"
       ]
     }
   },
@@ -542,13 +542,13 @@
                     "@value": "UTA"
                   }
                 ],
-                "@id": "urn:bnid:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0"
+                "@id": "urn:bnid:_de78141e-f601-493a-b660-68722421c467_0"
               }
             ],
             "@type": [
               "https://w3id.org/vdl#LicensedDriver"
             ],
-            "@id": "urn:bnid:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_1"
+            "@id": "urn:bnid:_de78141e-f601-493a-b660-68722421c467_1"
           }
         ],
         "https://schema.org/description": [
@@ -602,7 +602,7 @@
           "https://www.w3.org/2018/credentials#VerifiableCredential",
           "https://w3id.org/vdl#Iso18013DriversLicenseCredential"
         ],
-        "@id": "urn:bnid:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2"
+        "@id": "urn:bnid:_de78141e-f601-493a-b660-68722421c467_2"
       }
     ],
     "compact": {
@@ -612,7 +612,7 @@
         "https://w3id.org/vdl/v1",
         "https://w3id.org/vdl/aamva/v1"
       ],
-      "id": "urn:bnid:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2",
+      "id": "urn:bnid:_de78141e-f601-493a-b660-68722421c467_2",
       "type": [
         "VerifiableCredential",
         "Iso18013DriversLicenseCredential"
@@ -621,10 +621,10 @@
       "image": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUg...kSuQmCC",
       "name": "Utopia Driver's License",
       "credentialSubject": {
-        "id": "urn:bnid:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_1",
+        "id": "urn:bnid:_de78141e-f601-493a-b660-68722421c467_1",
         "type": "LicensedDriver",
         "driversLicense": {
-          "id": "urn:bnid:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0",
+          "id": "urn:bnid:_de78141e-f601-493a-b660-68722421c467_0",
           "type": "Iso18013DriversLicense",
           "birth_date": "1998-08-28",
           "document_number": "542426814",
@@ -678,47 +678,47 @@
     "<did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> <https://schema.org/image> <https://dmv.utopia.example/logo.png> .\n",
     "<did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> <https://schema.org/name> \"Utopia Department of Motor Vehicles\" .\n",
     "<did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> <https://schema.org/url> <https://dmv.utopia.example/> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicense> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#birthDate> \"1998-08-28\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#documentNumber> \"542426814\" .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#drivingPrivileges> \"[{\\\"codes\\\":[{\\\"code\\\":\\\"D\\\"}],\\\"expiry_date\\\":\\\"2027-01-01\\\",\\\"issue_date\\\":\\\"2019-01-01\\\",\\\"vehicle_category_code\\\":\\\"D\\\"},{\\\"codes\\\":[{\\\"code\\\":\\\"C\\\"}],\\\"expiry_date\\\":\\\"2017-01-01\\\",\\\"issue_date\\\":\\\"2019-01-01\\\",\\\"vehicle_category_code\\\":\\\"C\\\"}]\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#expiryDate> \"2028-08-27T12:00:00-06:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#familyName> \"TURNER\" .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#givenName> \"SUSAN\" .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#issueDate> \"2023-01-15T10:00:00-07:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#issuingAuthority> \"UADMV\" .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#issuingCountry> \"UA\" .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#portrait> <data:image/jpeg;base64,/9j/4AAQSkZJR...RSClooooP/2Q==> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#sex> \"2\"^^<http://www.w3.org/2001/XMLSchema#unsignedInt> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl#unDistinguishingSign> \"UTA\" .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl/aamva#akaSuffix> \"1ST\" .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl/aamva#familyNameTruncation> \"N\" .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 <https://w3id.org/vdl/aamva#givenNameTruncation> \"N\" .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#LicensedDriver> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_1 <https://w3id.org/vdl#license> _:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0 .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicenseCredential> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://schema.org/description> \"A license granting driving privileges in Utopia.\" .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://schema.org/image> <data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUg...kSuQmCC> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://schema.org/name> \"Utopia Driver's License\" .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_1 .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://www.w3.org/2018/credentials#expirationDate> \"2028-11-15T12:00:00-06:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://www.w3.org/2018/credentials#issuanceDate> \"2023-11-15T10:00:00-07:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
-    "_:_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2 <https://www.w3.org/2018/credentials#issuer> <did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> .\n"
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicense> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#birthDate> \"1998-08-28\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#documentNumber> \"542426814\" .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#drivingPrivileges> \"[{\\\"codes\\\":[{\\\"code\\\":\\\"D\\\"}],\\\"expiry_date\\\":\\\"2027-01-01\\\",\\\"issue_date\\\":\\\"2019-01-01\\\",\\\"vehicle_category_code\\\":\\\"D\\\"},{\\\"codes\\\":[{\\\"code\\\":\\\"C\\\"}],\\\"expiry_date\\\":\\\"2017-01-01\\\",\\\"issue_date\\\":\\\"2019-01-01\\\",\\\"vehicle_category_code\\\":\\\"C\\\"}]\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#expiryDate> \"2028-08-27T12:00:00-06:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#familyName> \"TURNER\" .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#givenName> \"SUSAN\" .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#issueDate> \"2023-01-15T10:00:00-07:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#issuingAuthority> \"UADMV\" .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#issuingCountry> \"UA\" .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#portrait> <data:image/jpeg;base64,/9j/4AAQSkZJR...RSClooooP/2Q==> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#sex> \"2\"^^<http://www.w3.org/2001/XMLSchema#unsignedInt> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl#unDistinguishingSign> \"UTA\" .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl/aamva#akaSuffix> \"1ST\" .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl/aamva#familyNameTruncation> \"N\" .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_0 <https://w3id.org/vdl/aamva#givenNameTruncation> \"N\" .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#LicensedDriver> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_1 <https://w3id.org/vdl#license> _:_de78141e-f601-493a-b660-68722421c467_0 .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/vdl#Iso18013DriversLicenseCredential> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_2 <https://schema.org/description> \"A license granting driving privileges in Utopia.\" .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_2 <https://schema.org/image> <data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUg...kSuQmCC> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_2 <https://schema.org/name> \"Utopia Driver's License\" .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_de78141e-f601-493a-b660-68722421c467_1 .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_2 <https://www.w3.org/2018/credentials#expirationDate> \"2028-11-15T12:00:00-06:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_2 <https://www.w3.org/2018/credentials#issuanceDate> \"2023-11-15T10:00:00-07:00\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:_de78141e-f601-493a-b660-68722421c467_2 <https://www.w3.org/2018/credentials#issuer> <did:key:z6MkjxvA4FNrQUhr8f7xhdQuP1VPzErkcnfxsRaU5oFgy2E5> .\n"
   ],
   "labelMap": {
     "dataType": "Map",
     "value": [
       [
-        "_daec96ef-d8f6-4da2-926f-6d9512c9b58f_2",
+        "_de78141e-f601-493a-b660-68722421c467_2",
         "b1"
       ],
       [
-        "_daec96ef-d8f6-4da2-926f-6d9512c9b58f_1",
+        "_de78141e-f601-493a-b660-68722421c467_1",
         "b0"
       ],
       [
-        "_daec96ef-d8f6-4da2-926f-6d9512c9b58f_0",
+        "_de78141e-f601-493a-b660-68722421c467_0",
         "b2"
       ]
     ]
