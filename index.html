@@ -3242,98 +3242,54 @@ document shown below.
           <section>
             <h5>Issuer PID Base Proof</h5>
             <p>
-To add a selective disclosure base proof to a document, the issuer needs
-the following cryptographic key material:
+To issue a credential under the <em>pseudonym with issuer-known PID</em> feature
+the issuer generates a cryptographically random |pid| value for a holder. This
+value is shared with the holder but is otherwise kept secret. This value is
+shown below.
           </p>
-          <ol>
-            <li>
-The issuer's private/public key pair, i.e., the key pair corresponding to the
-verification method that will be part of the proof.
-            </li>
-            <li>
-An HMAC key. This is used to randomize the order of the blank node IDs to avoid
-potential information leakage via the blank node ID ordering. This is used only
-once, and is shared between issuer and holder. The HMAC in this case is
-functioning as a pseudorandom function (PRF).
-            </li>
-          </ol>
-          <p>
-The key material used for generating the test vectors to test <i>add base
-proof</i> is shown below. Hexadecimal representation is used for the BBS key
-pairs and the HMAC key.
-          </p>
-          <pre class="example nohighlight" title="Private and Public keys for Signature"
-          data-include="TestVectors/BBSKeyMaterial.json"
-          data-include-format="text">
-          </pre>
-          <p>
-In this scenario we consider an electronic version of a drivers license.
-          </p>
-          <pre class="example nohighlight" title="Credential without Proof" data-include="TestVectors/FeatureInputs/license.json"
+          <pre class="example nohighlight" title="Issuer Generated PID" data-include="TestVectors/FeatureInputs/issuerPid.json"
           data-include-format="text"></pre>
           <p>
-To preserve the holder's privacy the only "mandatory" field is the "issuer" as
-realized in the mandatory pointers given below.
+This example will make use of the same key material shown in
+<a href="#example-private-and-public-keys-for-signature-0">private and public
+keys for signature</a>. It will utilize the same unsigned document shown in
+<a href="#example-credential-without-proof-for-features">credential without
+proof for features</a> and the same mandatory pointers shown in
+<a href="#example-mandatory-pointers-for-features">mandatory pointers for
+features</a>. This results in the same
+<a href="#example-canonical-document-for-features">canonical document for
+features</a>, the same <a href="#example-canonical-hmac-document-for-features">
+canonical HMAC document</a>, and the same
+<a href="#example-add-base-transformation-for-features">add base
+  transformation</a>.
           </p>
-          <pre class="example nohighlight" title="Mandatory Pointers" data-include="TestVectors/FeatureInputs/licenseMandatory.json"
-          data-include-format="text"></pre>
           <p>
-          <p>
-Transformation of the unsigned document begins with canonicalizing the document,
-as shown below.
+This example makes use of the same
+<a href="#example-base-proof-configuration-for-features">proof configuration</a>.
+This results in the same
+<a href="#example-canonical-base-proof-configuration-for-features">canonical
+base proof</a>. Combining this with the above assumptions leads to the same
+<a href="#example-add-base-hashes-for-features">base hashes</a>.
           </p>
-          <pre class="example nohighlight" title="Canonical Document" data-include="TestVectors/PseudoIssuerPid/addBaseDocCanon.json"
-          data-include-format="text"></pre>
           <p>
-To prevent possible information leakage from the ordering of the blank node IDs
-these are processed through a PRF (i.e., the HMAC) to give the canonicalized HMAC
-document shown below. This represents an ordered list of statements that will be
-subject to mandatory and selective disclosure, i.e., it is from this list that
-statements are grouped.
+Since |featureOption| is equal to `"pseudonym_issuer_pid"` the procedure of
+section <a href="#base-proof-serialization-bbs-2023">Base Proof
+Serialization</a> will produce the output shown below. This makes use of the
+signature generation algorithm of [[CFRG-Pseudonym-BBS-Signature]]. Note the
+inclusion of the
+|pid| value as this needs to be communicated to the holder.
           </p>
-          <pre class="example nohighlight" title="Canonical HMAC Document" data-include="TestVectors/PseudoIssuerPid/addBaseDocHMACCanon.json"
-          data-include-format="text"></pre>
-          <p>
-The above canonical document gets grouped into mandatory and non-mandatory
-statements. The final output of the selective disclosure transformation process
-is shown below. Each statement is now grouped as mandatory or non-mandatory, and
-its index in the previous list of statements is remembered.
-          </p>
-          <pre class="example nohighlight" title="Add Base Transformation" data-include="TestVectors/PseudoIssuerPid/addBaseTransform.json"
-          data-include-format="text"></pre>
-          <p>
-The next step is to create the base proof configuration and canonicalize it.
-This is shown in the following two examples.
-          </p>
-          <pre class="example nohighlight" title="Base Proof Configuration" data-include="TestVectors/PseudoIssuerPid/addProofConfig.json"
-          data-include-format="text"></pre>
-          <pre class="example nohighlight" title="Canonical Base Proof Configuration" data-include="TestVectors/PseudoIssuerPid/addProofConfigCanon.txt"
-          data-include-format="text"></pre>
-          <p>
-In the hashing step, we compute the SHA-256 hash of the canonicalized proof
-options to produce the `proofHash`, and we compute the SHA-256 hash of the
-join of all the mandatory N-Quads to produce the `mandatoryHash`. These are
-shown below in hexadecimal format.
-          </p>
-          <pre class="example nohighlight" title="Add Base Hashes" data-include="TestVectors/PseudoIssuerPid/addHashData.json"
-          data-include-format="text"></pre>
-          <p>
-<span class="note">Need to explain pid generation and use of pseudonym signing
-algorithm and include pid in data.</span>
-Shown below are the computed `bbsSignature` in hexadecimal, and the
-`mandatoryPointers`. These are are fed to the final serialization step with the
-`hmacKey`.
-          </p>
-          <pre class="example nohighlight" title="Add Base Signing" data-include="TestVectors/PseudoIssuerPid/addRawBaseSignatureInfo.json"
+          <pre class="example nohighlight" title="Add Base Signing for Issuer PID" data-include="TestVectors/PseudoIssuerPid/addRawBaseSignatureInfo.json"
           data-include-format="text"></pre>
           <p>
 Finally, the values above are run through the algorithm of Section
 <a href="#serializebaseproofvalue"></a>, to produce the `proofValue` which is
 used in the signed base document shown below.
           </p>
-          <pre class="example nohighlight" title="Signed Base Document" data-include="TestVectors/PseudoIssuerPid/addSignedSDBase.json"
+          <pre class="example nohighlight" title="Signed Base Document for Issuer PID" data-include="TestVectors/PseudoIssuerPid/addSignedSDBase.json"
           data-include-format="text"></pre>
           </section>
+
           <section>
             <h5>Issuer PID Derived Proof</h5>
             <p>
@@ -3353,7 +3309,7 @@ step is to run the algorithm of Section <a href="#parsebaseproofvalue"></a> to
 recover `bbsSignature`, `hmacKey`, and `mandatoryPointers`, as shown below.
 <span class="note">Need to add  signer_blind value here.</span>
           </p>
-          <pre class="example nohighlight" title="Recovered Base Signature Data" data-include="TestVectors/PseudoIssuerPid/derivedRecoveredBaseData.json"
+          <pre class="example nohighlight" title="Recovered Base Signature Data for Issuer PID" data-include="TestVectors/PseudoIssuerPid/derivedRecoveredBaseData.json"
           data-include-format="text"></pre>
           <p>
 Next, the holder needs to indicate what else, if anything, they wish to reveal
