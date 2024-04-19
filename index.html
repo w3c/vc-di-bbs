@@ -2864,68 +2864,53 @@ used in the signed base document shown below.
           <section>
             <h5>Issuer PID Derived Proof</h5>
             <p>
-Random numbers are used, and an optional `presentationHeader` can be an input,
-for the creation of <q>BBS proofs</q>. To furnish a deterministic set of test
-vectors, we used the <q>Mocked Random Scalars</q> procedure from
-[[CFRG-BBS-SIGNATURE]]. The `seed` and `presentationHeader` values we used for
-generation of the derived proof test vectors are given in hex, below.
+As explained in section <a href="derived-proof">Derived Proof</a> we utilze a
+mocked random number generation procedure and demonstrate the use of a
+|presentationHeader|. The same |seed| and |presentationHeader| are used here
+as given in section
+<a href="#example-seed-and-presentation-header-values">example seed and
+presentation header values</a>.
           </p>
-          <pre class="example nohighlight" title="seed and presentation header values" data-include="TestVectors/BBSDeriveMaterial.json"
-          data-include-format="text"></pre>
           <p>
 To create a derived proof, a holder starts with a signed document
 containing a base proof. The base document we will use for these test vectors is
-the final example from Section <a href="#holder-binding-base-proof"></a>, above. The first
+the final example from Section
+<a href="#example-signed-base-document-for-issuer-pid"></a>, above. The first
 step is to run the algorithm of Section <a href="#parsebaseproofvalue"></a> to
-recover `bbsSignature`, `hmacKey`, and `mandatoryPointers`, as shown below.
-<span class="note">Need to add  signer_blind value here.</span>
+recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
+|pid|, and |featureOption| as shown below.
           </p>
-          <pre class="example nohighlight" title="Recovered Base Signature Data for Issuer PID" data-include="TestVectors/PseudoIssuerPid/derivedRecoveredBaseData.json"
+          <pre class="example nohighlight"
+          title="Recovered Base Signature Data for Issuer PID"
+          data-include="TestVectors/PseudoIssuerPid/derivedRecoveredBaseData.json"
           data-include-format="text"></pre>
           <p>
 Next, the holder needs to indicate what else, if anything, they wish to reveal
 to the verifiers, by specifying JSON pointers for selective disclosure. In this
-case the holder only wishes to reveal their driving priveledges.
-          </p>
-          <pre class="example nohighlight" title="Selective Disclosure Pointers" data-include="TestVectors/FeatureInputs/licenseSelective.json"
-          data-include-format="text"></pre>
+case the holder reveals the same information as given in example
+<a href="#example-selective-disclosure-pointers-for-features">selective
+disclosure pointers for features</a>. This results in the same |revealDocument|
+as shown in example <a href="#example-unsigned-reveal-document-for-features">
+unsigned reveal document for features</a>.
           <p>
-To produce the `revealDocument` (i.e., the unsigned document that will
-eventually be signed and sent to the verifier), we append the selective pointers
-to the mandatory pointers, and input these combined pointers along with the
-document without proof to the `selectJsonLd` algorithm of [[DI-ECDSA]],
-to get the result shown below.
+Running <a href="#createdisclosuredata"></a> yields the same information as
+shown in examples <a href="#example-derived-group-indexes-for-features">derived
+group indexes for features</a> and
+<a href="#example-adjusted-mandatory-and-selective-indexes-for-features">
+adjusted mandatory and selective indexes for features</a>.
+
           </p>
-          <pre class="example nohighlight" title="Unsigned Reveal Document" data-include="TestVectors/PseudoIssuerPid/derivedUnsignedReveal.json"
-          data-include-format="text"></pre>
-          <p>
-Now that we know what the revealed document looks like, we need to furnish
-appropriately updated information to the verifier about which statements are
-mandatory, and the indexes for the selected non-mandatory statements. Running
-step 6 of the
-<a href="#createdisclosuredata"></a> yields an abundance of information about
-various statement groups relative to the original document. Below we show a
-portion of the indexes for those groups.
-          </p>
-          <pre class="example nohighlight" title="Derived Group Indexes" data-include="TestVectors/PseudoIssuerPid/derivedGroupIndexes.json"
-          data-include-format="text"></pre>
-          <p>
-The verifier needs to be able to aggregate and hash the mandatory statements. To
-enable this, we furnish them with a list of indexes of the mandatory statements
-adjusted to their positions in the reveal document (i.e., relative to the
-`combinedIndexes`), while the `selectiveIndexes` need to be adjusted relative to
-their positions within the `nonMandatoryIndexes`. These "adjusted" indexes are
-shown below.
-          </p>
-          <pre class="example nohighlight" title="Adjusted Mandatory and Selective Indexes" data-include="TestVectors/PseudoIssuerPid/derivedAdjIndexes.json"
-          data-include-format="text"></pre>
 
           <p>
-The last important piece of disclosure data is a mapping of canonical blank node
-IDs to HMAC-based shuffled IDs, the `labelMap`, computed according to Section
-<a href="#createdisclosuredata"></a>. This is shown below along with
-the rest of the disclosure data minus the reveal document.
-<span class="note">Need to show pseudonym calculation and its inclusion...</span>
+Within <a href="#createdisclosuredata"></a> we compute the |psuedonym| based on
+the |verfifier_id| shown below.
+          </p>
+          <pre class="example nohighlight" title="Verifier Id" data-include="TestVectors/FeatureInputs/verifierInfo.json"
+          data-include-format="text"></pre>
+          <p>
+          <p>
+The final output of <a href="#createdisclosuredata"></a> is shown below. Note
+the inclusion of the computed |pseudonym| and the |featureOption| value.
           </p>
           <pre class="example nohighlight" title="Disclosure Data" data-include="TestVectors/PseudoIssuerPid/derivedDisclosureData.json"
           data-include-format="text"></pre>
