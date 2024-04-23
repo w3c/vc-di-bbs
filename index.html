@@ -3072,7 +3072,7 @@ document shown below.
           <section>
             <h5>Holder Binding Commitment Generation</h5>
             <p>
-The first step in using the <em>anonymous holder binding</em> feature is for the
+The first steps in using the <em>anonymous holder binding</em> feature are for the
 holder to generate its |holderSecret| value and then compute a commitment with
 proof for this value according to the <em>commitment computation</em> procedure
 of [[CFRG-Blind-BBS-Signature]]. Example values and outputs of this procedure
@@ -3097,8 +3097,9 @@ The addition of a base proof under the anonymous holder binding option begins
 with the issuer receiving a |commitmentWithProof| value from the holder and then
 verifying that value with the <em>commitment verification</em> procedure of
 [[CFRG-Blind-BBS-Signature]].
-The key same cryptographic key material as explained and used in section
-<a href="#base-proof">Base Proof</a> will be used here and is repeated below.
+The cryptographic key material explained and used in section
+<a href="#base-proof">Base Proof</a> will also be used here, and is
+repeated below.
           </p>
           <pre class="example nohighlight"
           title="Private and Public keys for Signature"
@@ -3107,22 +3108,22 @@ The key same cryptographic key material as explained and used in section
           </pre>
           <p>
 As part of the <em>blind signature generation</em> from
-[[CFRG-Blind-BBS-Signature]] one can include a |signer_blind| which we show
+[[CFRG-Blind-BBS-Signature]], one can include a |signer_blind| which we show
 below.
           </p>
           <pre class="example nohighlight" title="Holder Binding Signer Blind"
           data-include="TestVectors/FeatureInputs/signerBlindHB.json"
           data-include-format="text"></pre>
           <p>
-In this scenario we consider an electronic version of a drivers license.
+In this scenario, we consider an electronic version of a drivers license.
           </p>
           <pre class="example nohighlight"
           title="Credential without Proof for Features"
           data-include="TestVectors/FeatureInputs/license.json"
           data-include-format="text"></pre>
           <p>
-To preserve the holder's privacy the only <em>mandatory</em> fields are the
-"issuer" and "expirationDate" as realized in the mandatory pointers given below.
+To preserve the holder's privacy, the only <em>mandatory</em> fields are the
+"issuer" and "expirationDate", as realized in the mandatory pointers given below.
           </p>
           <pre class="example nohighlight"
           title="Mandatory Pointers for Features"
@@ -3138,7 +3139,7 @@ as shown below.
           data-include="TestVectors/HolderBinding/addBaseDocCanon.json"
           data-include-format="text"></pre>
           <p>
-To prevent possible information leakage from the ordering of the blank node IDs
+To prevent possible information leakage from the ordering of the blank node IDs,
 these are processed through a PRF (i.e., the HMAC) to give the canonicalized HMAC
 document shown below. This represents an ordered list of statements that will be
 subject to mandatory and selective disclosure, i.e., it is from this list that
@@ -3159,7 +3160,7 @@ its index in the previous list of statements is remembered.
           data-include="TestVectors/HolderBinding/addBaseTransform.json"
           data-include-format="text"></pre>
           <p>
-The next step is to create the base proof configuration and canonicalize it.
+The next steps are to create the base proof configuration and canonicalize it.
 This is shown in the following two examples.
           </p>
           <pre class="example nohighlight"
@@ -3180,11 +3181,11 @@ shown below in hexadecimal format.
           data-include="TestVectors/HolderBinding/addHashData.json"
           data-include-format="text"></pre>
           <p>
-Now we utilize the <em>blind signature generation</em> procedure of
+Now we use the <em>blind signature generation</em> procedure of
 [[CFRG-Blind-BBS-Signature]] in the
 <a href="#base-proof-serialization-bbs-2023"></a>
 procedure.
-Shown below are the computed |bbsSignature|,  |bbsHeader|, |publicKey|,
+Shown below are the computed |bbsSignature|, |bbsHeader|, |publicKey|,
 |hmacKey|, |mandatoryPointers|, |signerBlind|, and |featureOption|, where byte
 data is shown in hexadecimal.
           </p>
@@ -3205,7 +3206,7 @@ used in the signed base document shown below.
           <section>
             <h5>Holder Binding Derived Proof</h5>
             <p>
-As explained in section <a href="derived-proof"></a> we utilze a
+As explained in section <a href="derived-proof"></a> we use a
 mocked random number generation procedure and demonstrate the use of a
 |presentationHeader|. The same |seed| and |presentationHeader| are used here
 and are repeated below.
@@ -3230,7 +3231,7 @@ recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|
           <p>
 Next, the holder needs to indicate what else, if anything, they wish to reveal
 to the verifiers, by specifying JSON pointers for selective disclosure. In this
-case the holder only wishes to reveal their driving priveledges.
+case, the holder only wishes to reveal their driving privileges.
           </p>
           <pre class="example nohighlight"
           title="Selective Disclosure Pointers for Features"
@@ -3253,7 +3254,7 @@ appropriately updated information to the verifier about which statements are
 mandatory, and the indexes for the selected non-mandatory statements. Running
 step 6 of the
 <a href="#createdisclosuredata"></a> yields an abundance of information about
-various statement groups relative to the original document. Below we show a
+various statement groups relative to the original document. Below, we show a
 portion of the indexes for those groups.
           </p>
           <pre class="example nohighlight"
@@ -3276,14 +3277,14 @@ shown below.
           <p>
 The last important piece of disclosure data is a mapping of canonical blank node
 IDs to HMAC-based shuffled IDs, the `labelMap`, computed according to Section
-<a href="#createdisclosuredata"></a>. This is shown below along with
+<a href="#createdisclosuredata"></a>. This is shown below, along with
 the rest of the disclosure data minus the reveal document. Note that here we are
-showing  the results appropriate to the |featureOption| equal to
-`"anonymous_holder_binding"` which utilizes the <em>blind proof generation</em>
+showing the results appropriate to the |featureOption| equal to
+`"anonymous_holder_binding"` which uses the <em>blind proof generation</em>
 procedure of [[CFRG-Blind-BBS-Signature]]. Note that |blindAdjDisclosedIdxs| is
 the final set of BBS selective indexes used in the proof serialization process
-and comes from the blind BBS proof generation function which takes as inputs
-the |adjSelectiveIndexes|.
+and comes from the blind BBS proof generation function which takes
+the |adjSelectiveIndexes| as inputs.
           </p>
           <pre class="example nohighlight"
           title="Disclosure Data for Holder Binding"
@@ -3305,7 +3306,7 @@ Finally, using the disclosure data above with the algorithm of Section
           <section>
             <h5>Issuer PID Base Proof</h5>
             <p>
-To issue a credential under the <em>pseudonym with issuer-known PID</em> feature
+To issue a credential under the <em>pseudonym with issuer-known PID</em> feature,
 the issuer generates a cryptographically random |pid| value for a holder. This
 value is shared with the holder but is otherwise kept secret. This value is
 shown below.
@@ -3314,11 +3315,11 @@ shown below.
           data-include="TestVectors/FeatureInputs/issuerPid.json"
           data-include-format="text"></pre>
           <p>
-This example will make use of the same key material shown in
-<a href="#example-private-and-public-keys-for-signature-0"></a>. It will
-utilize the same unsigned document shown in
-<a href="#example-credential-without-proof-for-features"></a> and the same
-mandatory pointers shown in
+This example will make use of the same key material as shown in
+<a href="#example-private-and-public-keys-for-signature-0"></a>,
+the same unsigned document as shown in
+<a href="#example-credential-without-proof-for-features"></a>, and the same
+mandatory pointers as shown in
 <a href="#example-mandatory-pointers-for-features"></a>. This results in the
 same canonical document as in
 <a href="#example-canonical-document-for-features"></a>, the same HMAC document
@@ -3336,12 +3337,12 @@ Combining this with the above assumptions leads to the same base hashes as in
 <a href="#example-add-base-hashes-for-features"></a>.
           </p>
           <p>
-Since |featureOption| is equal to `"pseudonym_issuer_pid"` the procedure of
+Since |featureOption| is equal to `"pseudonym_issuer_pid"`, the procedure of
 section <a href="#base-proof-serialization-bbs-2023">Base Proof
 Serialization</a> will produce the output shown below. This makes use of the
 signature generation algorithm of [[CFRG-Pseudonym-BBS-Signature]]. Note the
 inclusion of the
-|pid| value as this needs to be communicated to the holder.
+|pid| value, as this needs to be communicated to the holder.
           </p>
           <pre class="example nohighlight" title="Add Base Signing for Issuer PID" data-include="TestVectors/PseudoIssuerPid/addRawBaseSignatureInfo.json"
           data-include-format="text"></pre>
@@ -3357,11 +3358,11 @@ used in the signed base document shown below.
           <section>
             <h5>Issuer PID Derived Proof</h5>
             <p>
-As explained in section <a href="#derived-proof"></a> we utilze a
+As explained in section <a href="#derived-proof"></a>, we use a
 mocked random number generation procedure and demonstrate the use of a
-|presentationHeader|. The same |seed| and |presentationHeader| are used here
+|presentationHeader|. The same |seed| and |presentationHeader|
 as given in
-<a href="#example-seed-and-presentation-header-values"></a>.
+<a href="#example-seed-and-presentation-header-values"></a> are used here.
             </p>
             <p>
 To create a derived proof, a holder starts with a signed document
@@ -3370,7 +3371,7 @@ the final example from
 <a href="#example-signed-base-document-for-issuer-pid"></a>, above. The first
 step is to run the algorithm of Section <a href="#parsebaseproofvalue"></a> to
 recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
-|pid|, and |featureOption| as shown below.
+|pid|, and |featureOption|, as shown below.
             </p>
             <pre class="example nohighlight"
             title="Recovered Base Signature Data for Issuer PID"
@@ -3379,7 +3380,7 @@ recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|
             <p>
 Next, the holder needs to indicate what else, if anything, they wish to reveal
 to the verifiers, by specifying JSON pointers for selective disclosure. In this
-case the holder reveals the same information as given in
+case, the holder reveals the same information as given in
 <a href="#example-selective-disclosure-pointers-for-features"></a>. This results
 in the same |revealDocument|
 as shown in
@@ -3393,7 +3394,7 @@ Running <a href="#createdisclosuredata"></a> yields the same information for
 <a href="#example-adjusted-mandatory-and-selective-indexes-for-features"></a>.
             </p>
             <p>
-Within <a href="#createdisclosuredata"></a> we compute the |psuedonym| based on
+Within <a href="#createdisclosuredata"></a>, we compute the |pseudonym| based on
 the |verfifier_id| shown below.
             </p>
             <pre class="example nohighlight"
@@ -3424,7 +3425,7 @@ document shown below.
           <section>
             <h5>Hidden PID Commitment Generation</h5>
             <p>
-The first step in using the <em>pseudonym with hidden PID</em> feature is for the
+The first steps in using the <em>pseudonym with hidden PID</em> feature are for the
 holder to generate its secret |pid| value and then compute a commitment with
 proof for this value according to the <em>commitment computation</em> procedure
 of [[CFRG-Blind-BBS-Signature]]. Example values and outputs of this procedure
@@ -3449,17 +3450,17 @@ The addition of a base proof under the pseudonym with hidden PID option begins
 with the issuer receiving a |commitmentWithProof| value from the holder and then
 verifying that value with the <em>commitment verification</em> procedure of
 [[CFRG-Blind-BBS-Signature]].
-This example will make use of the same key material shown in
-<a href="#example-private-and-public-keys-for-signature-0"></a>. It will utilize
-the same unsigned document shown in
-<a href="#example-credential-without-proof-for-features"></a> and the same
-mandatory pointers shown in
+This example will make use of the same key material as shown in
+<a href="#example-private-and-public-keys-for-signature-0"></a>,
+the same unsigned document as shown in
+<a href="#example-credential-without-proof-for-features"></a>, and the same
+mandatory pointers as shown in
 <a href="#example-mandatory-pointers-for-features"></a>. This results in the
-same canonical document as in
+same canonical document as shown in
 <a href="#example-canonical-document-for-features"></a>,
-the same canonical HMAC document as in
+the same canonical HMAC document as shown in
 <a href="#example-canonical-hmac-document-for-features"></a>, and the same "add
-base transformation" as in
+base transformation" as shown in
 <a href="#example-add-base-transformation-for-features"></a>.
           </p>
           <p>
@@ -3471,12 +3472,12 @@ Combining this with the above assumptions leads to the same base hashes as in
 <a href="#example-add-base-hashes-for-features"></a>.
           </p>
           <p>
-Since |featureOption| is equal to `"pseudonym_hidden_pid"` the procedure of
+Since |featureOption| is equal to `"pseudonym_hidden_pid"`, the procedure of
 section <a href="#base-proof-serialization-bbs-2023"></a> will produce the
 output shown below. This makes use of the
 signature generation algorithm of [[CFRG-Pseudonym-BBS-Signature]]. Note the
-inclusion of the |featureOption| as well as the |signerBlind| value as this
-needs to be communicated to the holder.
+inclusion of the |featureOption| as well as the |signerBlind| value, as these
+need to be communicated to the holder.
           </p>
           <pre class="example nohighlight"
           title="Add Base Signing for Hidden PID"
@@ -3484,7 +3485,7 @@ needs to be communicated to the holder.
           data-include-format="text"></pre>
           <p>
 Finally, the values above are run through the algorithm of section
-<a href="#serializebaseproofvalue"></a>, to produce the `proofValue` which is
+<a href="#serializebaseproofvalue"></a>, producing the `proofValue` which is
 used in the signed base document shown below.
           </p>
           <pre class="example nohighlight"
@@ -3495,10 +3496,10 @@ used in the signed base document shown below.
           <section>
             <h5>Hidden PID Derived Proof</h5>
             <p>
-As explained in section <a href="#derived-proof"></a> we utilze a
+As explained in section <a href="#derived-proof"></a>, we use a
 mocked random number generation procedure and demonstrate the use of a
-|presentationHeader|. The same |seed| and |presentationHeader| are used here
-as given in <a href="#example-seed-and-presentation-header-values"></a>.
+|presentationHeader|. The same |seed| and |presentationHeader| as given in
+<a href="#example-seed-and-presentation-header-values"></a> are used here.
                         </p>
                         <p>
 To create a derived proof, a holder starts with a signed document
@@ -3507,7 +3508,7 @@ from
 <a href="#example-signed-base-document-for-hidden-pid"></a>, above. The first
 step is to run the algorithm of Section <a href="#parsebaseproofvalue"></a> to
 recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
-|signerBlind|, and |featureOption| as shown below.
+|signerBlind|, and |featureOption|, as shown below.
           </p>
           <pre class="example nohighlight"
           title="Recovered Base Signature Data for Hidden PID"
@@ -3516,19 +3517,19 @@ recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|
           <p>
 Next, the holder needs to indicate what else, if anything, they wish to reveal
 to the verifiers, by specifying JSON pointers for selective disclosure. In this
-case the holder reveals the same information as given in
+case, the holder reveals the same information as given in
 <a href="#example-selective-disclosure-pointers-for-features"></a>.
 This results in the same |revealDocument|
 as shown in <a href="#example-unsigned-reveal-document-for-features"></a>.
           <p>
 Running <a href="#createdisclosuredata"></a> yields the same information for
-derived group indexes shown in
+derived group indexes as shown in
 <a href="#example-derived-group-indexes-for-features"></a> and the same
-adjusted mandatory and selective indexes in
+adjusted mandatory and selective indexes as shown in
 <a href="#example-adjusted-mandatory-and-selective-indexes-for-features"></a>.
           </p>
           <p>
-Within <a href="#createdisclosuredata"></a> we compute the |psuedonym| based on
+Within <a href="#createdisclosuredata"></a>, we compute the |pseudonym| based on
 the same |verfifier_id| shown in <a href="example-verifier-id"></a>.
 The final output of <a href="#createdisclosuredata"></a> is shown below. Note
 the inclusion of the computed |pseudonym| and the |featureOption| value.
