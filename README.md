@@ -5,13 +5,13 @@
 This specification describes a
 [Data Integrity Cryptosuite](https://www.w3.org/TR/vc-data-integrity/)
 using the
-[BBS+ Signature Algorithm](https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html)
+[BBS Signature Scheme](https://datatracker.ietf.org/doc/draft-irtf-cfrg-bbs-signatures/)
 using
-[BLS12-381](https://tools.ietf.org/id/draft-yonezawa-pairing-friendly-curves-00.html#rfc.section.2.4)
+[BLS12-381](https://datatracker.ietf.org/doc/draft-irtf-cfrg-pairing-friendly-curves/)
 elliptic curve based key pairs.
 
-Due to the properties of a
-[BBS+ Signatures](https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html)
+Due to the properties of the
+[BBS Signature Scheme](https://datatracker.ietf.org/doc/draft-irtf-cfrg-bbs-signatures/)
 a zero knowledge proof can be derived from the signature, whereby the party
 generating the proof can elect to selectively disclose statements from the
 originally signed payload.
