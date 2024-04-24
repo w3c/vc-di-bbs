@@ -21,13 +21,14 @@ We encourage contributions meeting the
 issues and Pull Requests in the GitHub repository, discussions also occur on the
 [public-vc-wg](http://lists.w3.org/Archives/Public/public-vc-wg/) mailing list.
 
-## Known Implementations
+## Verifiable Credentials Working Group
 
-The following is a list of known implementations of this specification
-
-- [jsonld-signatures-bbs](https://github.com/mattrglobal/jsonld-signatures-bbs) (Typescript + Rust)
-- [aries-framework-go](https://github.com/hyperledger/aries-framework-go) (Golang)
-- [go-bbs](https://github.com/suutaku/go-bbs) (Golang)
+* Group page: [https://www.w3.org/2017/vc/WG/](https://www.w3.org/2017/vc/WG/)
+* Charter: [https://www.w3.org/2022/06/verifiable-credentials-wg-charter.html](https://www.w3.org/2022/06/verifiable-credentials-wg-charter.html)
+* Chairs
+  * Brent Zundel - @brentzundel
+* W3C Staff Contact
+  * Ivan Herman - @iherman
 
 ### Other Relevant VC Working Group Repositories
 * [Use Cases](https://www.w3.org/TR/vc-use-cases)
