@@ -795,8 +795,8 @@ Initialize |hmac| to an HMAC API using |hmacKey|. The HMAC uses the same hash
 algorithm used in the signature algorithm, i.e., SHA-256.
             </li>
             <li>
-Initialize |labelMapFactoryFunction| to the result of calling the
-|createShuffledIdLabelMapFunction| algorithm passing |hmac| as |HMAC|.
+Initialize |labelMapFactoryFunction| to the result of calling the algorithm of
+section <a href="#createshuffledidlabelmapfunction"></a> passing |hmac| as |HMAC|.
             </li>
             <li>
 Initialize |combinedPointers| to the concatenation of |mandatoryPointers|
@@ -1213,8 +1213,8 @@ object returned when calling the algorithm in Section
 <a href="#parsederivedproofvalue"></a>, passing |proofValue| from |proof|.
             </li>
             <li>
-Initialize |labelMapFactoryFunction| to the result of calling the
-"`createLabelMapFunction`" algorithm.
+Initialize |labelMapFactoryFunction| to the result of calling the algorithm of
+section <a href="#createshuffledidlabelmapfunction"></a>.
             </li>
             <li>
 Initialize |nquads| to the result of calling the "`labelReplacementCanonicalize`"
@@ -1679,10 +1679,6 @@ To verify a derived proof, perform the following steps:
             <li>
 Let |unsecuredDocument| be a copy of |securedDocument| with
 the `proof` value removed.
-            </li>
-            <li>
-Let |proofConfig| be a copy of |securedDocument|.|proof| with `proofValue`
-removed.
             </li>
             <li>
 Let |proof| be the value of |securedDocument|.|proof|.
