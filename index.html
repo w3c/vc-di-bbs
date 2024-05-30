@@ -1677,6 +1677,14 @@ To verify a derived proof, perform the following steps:
 
           <ol class="algorithm">
             <li>
+Let |publicKeyBytes| be the result of retrieving the
+public key bytes associated with the
+|proof|.|verificationMethod| value as described in the
+Data Integrity [[VC-DATA-INTEGRITY]] specification,
+<a data-cite="vc-data-integrity#algorithms">
+Section 4: Retrieve Verification Method</a>.
+            </li>
+            <li>
 Let |unsecuredDocument| be a copy of |securedDocument| with
 the `proof` value removed.
             </li>
@@ -1706,7 +1714,7 @@ applying the verification algorithm `ProofVerify(PK, proof, header, ph,
 disclosed_messages, disclosed_indexes)` of [[CFRG-BBS-SIGNATURE]] with `PK` set
 as the public key of the original issuer, `proof` set as `bbsProof`, `header`
 set as `bbsHeader`, `disclosed_messages` set as `disclosedMessages`, `ph` set as
-`presentationHeader`, and `disclosed_indexes` set as `selectiveIndexes`.
+`presentationHeader`, and `disclosed_indexes` set as `selectedIndexes`.
               </li>
               <li>
 If the |featureOption| equals `"anonymous_holder_binding"`,
