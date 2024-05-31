@@ -1191,7 +1191,7 @@ BBS-protected <a>verifiable credential</a>. The inputs include a JSON-LD
 document (|document|), a BBS disclosure proof (|proof|),
 and any custom JSON-LD API options (such as a document loader). A single
 <em>verify data</em> object value is produced as output containing the following
-fields: |bbsProof|, |proofHash|, |mandatoryHash|, |selectedIndexes|,
+fields: |bbsProof|, |proofHash|, |mandatoryHash|, |selectiveIndexes|,
 |presentationHeader|, |nonMandatory|, |featureOption|, and, possibly,
 |pseudonym|.
           </p>
@@ -1692,7 +1692,7 @@ the `proof` value removed.
 Let |proof| be the value of |securedDocument|.|proof|.
             </li>
             <li>
-Initialize |bbsProof|, |proofHash|, |mandatoryHash|, |selectedIndexes|,
+Initialize |bbsProof|, |proofHash|, |mandatoryHash|, |selectiveIndexes|,
 |presentationHeader|, |nonMandatory|, |featureOption|, and, possibly,
 |pseudonym|, to the values associated
 with their property names in the object returned when calling the algorithm in
@@ -1714,7 +1714,7 @@ applying the verification algorithm `ProofVerify(PK, proof, header, ph,
 disclosed_messages, disclosed_indexes)` of [[CFRG-BBS-SIGNATURE]] with `PK` set
 as the public key of the original issuer, `proof` set as `bbsProof`, `header`
 set as `bbsHeader`, `disclosed_messages` set as `disclosedMessages`, `ph` set as
-`presentationHeader`, and `disclosed_indexes` set as `selectedIndexes`.
+`presentationHeader`, and `disclosed_indexes` set as `selectiveIndexes`.
               </li>
               <li>
 If the |featureOption| equals `"anonymous_holder_binding"`,
