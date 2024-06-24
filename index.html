@@ -1500,16 +1500,13 @@ in the Data Integrity [[VC-DATA-INTEGRITY]] specification,
 <a data-cite="vc-data-integrity#algorithms">
 Section 4: Algorithms</a>. Required inputs are
 cryptographic hash data (|hashData|),
-<em>proof options</em> (|options|), |featureOption|, and, if required,
+|featureOption|, and, if required,
 |commitment_with_proof|.
 If |featureOption| is set to `"anonymous_holder_binding"` or
 `"pseudonym_hidden_pid"`, the
 |commitment_with_proof| input MUST be supplied; if not supplied, an error SHOULD be
 returned.
-The <em>proof options</em> MUST contain a type identifier for the
-<a data-cite="vc-data-integrity#dfn-cryptosuite">
-cryptographic suite</a> (|type|) and MAY contain a cryptosuite
-identifier (|cryptosuite|). A single <em>digital proof</em> value
+A single <em>digital proof</em> value
 represented as series of bytes is produced as output.
           </p>
 
