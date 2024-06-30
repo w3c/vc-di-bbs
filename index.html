@@ -688,13 +688,14 @@ parameter "pid" or
 
           <ol class="algorithm">
             <li>
-Ensure the `proofValue` string starts with
+If the `proofValue` string does not start with
 <span class="codepoint" translate="no">
   <bdi lang="en"><code title="LATIN SMALL LETTER U">u</code></bdi>
   (<code class="codepoint">U+0075</code>
   <code class="uname">LATIN SMALL LETTER U</code>)</span>,
-indicating that it is a `multibase-base64url-no-pad-encoded` value, and throw
-an error if it does not.
+indicating that it is a `multibase-base64url-no-pad-encoded` value,
+an error MUST be raised and SHOULD convey an error type of
+<a data-cite="VC-DATA-INTEGRITY#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
             </li>
             <li>
 Initialize |decodedProofValue| to the result of base64url-no-pad-decoding the
@@ -721,8 +722,9 @@ If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x08`, set
 |featureOption| to `"pseudonym_hidden_pid"`.
                 </li>
                 <li>
-If the |decodedProofValue| starts with any other three byte sequence, throw an
-error.
+If the |decodedProofValue| starts with any other three byte sequence,
+an error MUST be raised and SHOULD convey an error type of
+<a data-cite="VC-DATA-INTEGRITY#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
                 </li>
               </ol>
 
@@ -1125,13 +1127,14 @@ contains a set of six or seven elements, having the names "bbsProof",
 
           <ol class="algorithm">
             <li>
-Ensure the `proofValue` string starts with
+If the `proofValue` string does not start with
 <span class="codepoint" translate="no">
   <bdi lang="en"><code title="LATIN SMALL LETTER U">u</code></bdi>
   (<code class="codepoint">U+0075</code>,
   <code class="uname">LATIN SMALL LETTER U</code>)</span>, indicating that
-it is a `multibase-base64url-no-pad-encoded` value, and throw an error if it does
-not.
+it is a `multibase-base64url-no-pad-encoded` value,
+an error MUST be raised and SHOULD convey an error type of
+<a data-cite="VC-DATA-INTEGRITY#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
             </li>
             <li>
 Initialize |decodedProofValue| to the result of base64url-no-pad-decoding the
@@ -1161,11 +1164,12 @@ If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
 
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
-bytes that follow the three-byte BBS disclosure proof header. Ensure the result
-is an array of five or six elements —
-a byte array, a map of integers to integers, an
-array of integers, another array of integers, and one or two byte arrays;
-otherwise, throw an error.
+bytes that follow the three-byte BBS disclosure proof header. If the result
+is not an array of five or six elements —
+a byte array, a map of integers to integers,
+two arrays of integers, and one or two byte arrays;
+an error MUST be raised and SHOULD convey an error type of
+<a data-cite="VC-DATA-INTEGRITY#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
             </li>
             <li>
 Replace the second element in `components` using the result of calling the
@@ -1463,13 +1467,15 @@ Let |proofConfig| be a clone of the |options| object.
             </li>
             <li>
 If |proofConfig|.|type| is not set to `DataIntegrityProof` and/or
-|proofConfig|.|cryptosuite| is not set to `bbs-2023`, an
-`INVALID_PROOF_CONFIGURATION` error MUST be raised.
+|proofConfig|.|cryptosuite| is not set to `bbs-2023`, an error MUST be raised
+and SHOULD convey an error type of
+<a data-cite="VC-DATA-INTEGRITY#PROOF_GENERATION_ERROR">PROOF_GENERATION_ERROR</a>.
             </li>
             <li>
-If |proofConfig|.|created| is set and the value is not a
-valid [[XMLSCHEMA11-2]] datetime, an `INVALID_PROOF_DATETIME` error MUST be
-raised.
+If |proofConfig|.|created| is set and if the value is not a
+valid [[XMLSCHEMA11-2]] datetime, an error MUST be raised and SHOULD convey an
+error type of
+<a data-cite="VC-DATA-INTEGRITY#PROOF_GENERATION_ERROR">PROOF_GENERATION_ERROR</a>.
             </li>
             <li>
 Set |proofConfig|.|@context| to
@@ -1504,9 +1510,13 @@ cryptographic hash data (|hashData|),
 |commitment_with_proof|.
 If |featureOption| is set to `"anonymous_holder_binding"` or
 `"pseudonym_hidden_pid"`, the
-|commitment_with_proof| input MUST be supplied; if not supplied, an error SHOULD be
-returned.
-A single <em>digital proof</em> value
+|commitment_with_proof| input MUST be supplied; if not supplied,
+an error MUST be raised and SHOULD convey an error type of
+<a data-cite="VC-DATA-INTEGRITY#PROOF_GENERATION_ERROR">PROOF_GENERATION_ERROR</a>.
+The <em>proof options</em> MUST contain a type identifier for the
+<a data-cite="vc-data-integrity#dfn-cryptosuite">
+cryptographic suite</a> (|type|) and MAY contain a cryptosuite
+identifier (|cryptosuite|). A single <em>digital proof</em> value
 represented as series of bytes is produced as output.
           </p>
 
