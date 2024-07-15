@@ -1538,13 +1538,14 @@ of |featureOption|.
                 <li>
 If |featureOption| equals `"baseline"`, compute the
 `bbsSignature` using the `Sign` procedure of [[CFRG-BBS-Signature]],
-with appropriate key material, `bbsHeader` for the `header`, and `bbsMessages`
+with appropriate key material, |bbsHeader| for the `header`, and |bbsMessages|
 for the `messages`.
                 </li>
                 <li>
 If |featureOption| equals `"anonymous_holder_binding"` , compute the
-`bbsSignature` using the `Sign` procedure of [[CFRG-Blind-BBS-Signature]],
-with appropriate key material, `bbsHeader` for the `header`, and `bbsMessages`
+`bbsSignature` using the `BlindSign` procedure of [[CFRG-Blind-BBS-Signature]],
+with appropriate key material, |commitment_with_proof| for the
+`commitment_with_proof`, |bbsHeader| for the `header`, and |bbsMessages|
 for the `messages`. If the signing procedure uses the optional |signer_blind|
 parameter, retain this value for use when calling
 <a href="#serializebaseproofvalue"></a> (below). This provides for the
@@ -1553,8 +1554,9 @@ parameter, retain this value for use when calling
                 <li>
 If |featureOption| equals `"pseudonym_issuer_pid"`, generate a
 cryptographically random 32 byte |pid| value. Compute the
-`bbsSignature` using the `Sign` procedure of [[CFRG-Pseudonym-BBS-Signature]],
-with appropriate key material, `bbsHeader` for the `header`, `bbsMessages`
+`bbsSignature` using the `Signer Provided PID Signature Generation`  procedure
+of [[CFRG-Pseudonym-BBS-Signature]],
+with appropriate key material, |bbsHeader| for the `header`, |bbsMessages|
 for the `messages`, and |pid| for the `pid`. Retain the |pid| value for use when
 calling <a href="#serializebaseproofvalue"></a> below.
 This provides for <a href="#pseudonyms-with-issuer-known-pid">Pseudonym with
@@ -1562,9 +1564,9 @@ Issuer-known PID</a> feature.
                 </li>
                 <li>
 If |featureOption| equals `"pseudonym_hidden_pid"`, compute
-the `bbsSignature` using the `Sign` procedure of
-[[CFRG-Pseudonym-BBS-Signature]], with appropriate key material, `bbsHeader`
-for the `header`, `bbsMessages` for the `messages`, and |commitment_with_proof|
+the `bbsSignature` using the `Hidden PID Signature Generation` procedure of
+[[CFRG-Pseudonym-BBS-Signature]], with appropriate key material, |bbsHeader|
+for the `header`, |bbsMessages| for the `messages`, and |commitment_with_proof|
 for the `commitment_with_proof`. If the signing procedure uses the optional
 |signer_blind| parameter retain this value for use when calling
 <a href="#serializebaseproofvalue"></a> below.
