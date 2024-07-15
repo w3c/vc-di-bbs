@@ -878,7 +878,7 @@ where `PK` is the original issuers public key, `signature` is the
                 </li>
                 <li>
 If |featureOption| equals `"anonymous_holder_binding"`,
-set `bbsProof` to the value computed by the `ProofGen` procedure from
+set `bbsProof` to the value computed by the `BlindProofGen` procedure from
 [[CFRG-Blind-BBS-Signature]], where |PK| is the original issuers public key,
 |signature| is the
 |bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|,
@@ -887,16 +887,15 @@ set `bbsProof` to the value computed by the `ProofGen` procedure from
 |holder_secret|, and |proverBlind| that was used to compute the
 |commitment_with_proof|. This is the
 <a href="#anonymous-holder-binding">Anonymous Holder Binding</a> feature option.
-In addition to the |bbsProof|, the Blind BBS `ProofGen` procedure will also
-produce an updated (adjusted) list of indexes which should be used to update
-the |selectiveIndexes| variable in subsequent processing. <span class="note">To
+<span class="note">To
 be updated when IETF API is finalized.</span>
                 </li>
                 <li>
 If |featureOption| equals `"pseudonym_issuer_pid"`, compute the |pseudonym|
-according to the procedures given
+according to the `Calculate Pseudonym` procedure given
 in [[CFRG-Pseudonym-BBS-Signature]],
-and set |bsProof| to the value computed by the `ProofGen` procedure from
+and set |bsProof| to the value computed by the
+`Signer Provided PID Proof Generation` procedure from
 [[CFRG-Pseudonym-BBS-Signature]], where |PK| is the original issuers public key,
 |signature| is the
 |bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|
@@ -908,9 +907,10 @@ feature option. <span class="note">To be updated when IETF API is finalized.
                 </li>
                 <li>
 If |featureOption| equals `"pseudonym_hidden_pid"`, compute the |pseudonym|
-according to the procedures given
+according to the `Calculate Pseudonym` procedure given
 in [[CFRG-Pseudonym-BBS-Signature]],
-and set |bsProof| to the value computed by the `ProofGen` procedure from
+and set |bsProof| to the value computed by the
+`Hidden PID Proof Generation with Pseudonym` procedure from
 [[CFRG-Pseudonym-BBS-Signature]], where |PK| is the original issuers public key,
 |signature| is the
 |bbsSignature|, |header| is the |bbsHeader|, |ph| is the  |presentationHeader|
@@ -923,6 +923,11 @@ feature option. <span class="note">To be updated when IETF API is finalized.
                 </li>
               </ol>
             </li>
+          <li>
+If |featureOption| equals `"anonymous_holder_binding"`,
+`"pseudonym_issuer_pid"`, or `"pseudonym_hidden_pid"` set the |L| parameter
+equal to the length of the |bbsMessages| array.
+          </li>
 
 
             <li>
@@ -953,7 +958,7 @@ value associated with `inputLabel` as a key in `labelMap` as the value.
             </li>
             <li>
 Return an object with properties matching |bbsProof|, "verifierLabelMap" for |labelMap|,
-|mandatoryIndexes|, |selectiveIndexes|, |revealDocument|, and |pseudonym|, if
+|mandatoryIndexes|, |selectiveIndexes|, |revealDocument|, |pseudonym|, and |L| if
 computed.
             </li>
           </ol>
@@ -1027,7 +1032,7 @@ are a BBS proof (|bbsProof|), a label map (|labelMap|), an
 array of mandatory indexes (|mandatoryIndexes|), an array of
 selective indexes (|selectiveIndexes|), and a BBS presentation header
 (|presentationHeader|), the |featureOption| indicator, and possibly a
-|pseudonym| value depending on the |featureOption| value.
+|pseudonym| and |L| value depending on the |featureOption| value.
 A single <em>derived proof</em>
 value, serialized as a byte string, is produced as output.
           </p>
@@ -1063,13 +1068,13 @@ disclosure proof header bytes `0xd9`, `0x5d`, and `0x05`.
                     </li>
                     <li>
 Initialize |components| to an array with elements containing the values of
-|bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|, and
-|presentationHeader|.
+|bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
+|presentationHeader| and |L|.
                     </li>
                   </ol>
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_issuer_pid"`:
+If |featureOption| equals `"pseudonym_issuer_pid"` or `"pseudonym_hidden_pid"`:
                   <ol class="algorithm">
                     <li>
 Initialize |proofValue| to start with the
@@ -1078,26 +1083,11 @@ disclosure proof header bytes `0xd9`, `0x5d`, and `0x07`.
                     <li>
 Initialize |components| to an array with elements containing the values of
 |bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
-|presentationHeader|, and |pseudonym|.
-                    </li>
-                  </ol>
-                </li>
-                <li>
-If |featureOption| equals `"pseudonym_hidden_pid"`:
-                  <ol class="algorithm">
-                    <li>
-Initialize |proofValue| to start with the
-disclosure proof header bytes `0xd9`, `0x5d`, and `0x09`.
-                    </li>
-                    <li>
-Initialize |components| to an array with elements containing the values of
-|bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
-|presentationHeader|, and |pseudonym|.
+|presentationHeader|, |pseudonym|, and |L|.
                     </li>
                   </ol>
                 </li>
               </ol>
-
             <li>
 CBOR-encode |components| per [[RFC8949]] where CBOR tagging MUST NOT be used on
 any of the |components|. Append the produced encoded value to |proofValue|.
