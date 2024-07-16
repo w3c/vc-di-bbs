@@ -1758,7 +1758,7 @@ Return a [=verification result=] with [=struct/items=]:
 The cryptographic properties of BBS signatures permit variants that
 can support advanced functionalities. This specification is limited to
 supporting only the most relevant of these enhancements, which we explain in the
-following sections. The variables |commitment_with_proof|, |use_pseudonyms|,
+following sections. The variables |commitment_with_proof|,
 |pid|, and |pseudonym| are associated with these features and are not otherwise
 needed for BBS signatures and proofs.
       </p>
@@ -1934,7 +1934,7 @@ sense that some additional input, task, or output is generated
             </tr>
             <tr>
               <td>Pseudonym with Hidden Pid</td>
-              <td><em>baseline</em> + selected index adjustment</td>
+              <td><em>baseline</em></td>
               <td><em>baseline</em> + commitment with proof to secret pid from holder</td>
               <td>Pseudonym/Blind BBS</td>
             </tr>
@@ -2033,13 +2033,8 @@ sense that some additional input, task, or output is generated
               <td><em>baseline</em></td>
             </tr>
             <tr>
-              <td>Pseudonym with Issuer Pid </td>
+              <td>Pseudonym (issuer known and hidden) </td>
               <td>`0xd9`, `0x5d`, and `0x07`</td>
-              <td><em>baseline</em> + pseudonym</td>
-            </tr>
-            <tr>
-              <td>Pseudonym with Hidden Pid</td>
-              <td>`0xd9`, `0x5d`, and `0x09`</td>
               <td><em>baseline</em> + pseudonym</td>
             </tr>
           </tbody>
@@ -2066,14 +2061,9 @@ sense that some additional input, task, or output is generated
               <td>Blind BBS</td>
             </tr>
             <tr>
-              <td>Pseudonym with Issuer Pid</td>
+              <td>Pseudonym (issuer known and hidden)</td>
               <td><em>baseline</em> + verifier id (known to verifier),  pseudonym (included in derived proof)</td>
               <td>Pseudonym BBS</td>
-            </tr>
-            <tr>
-              <td>Pseudonym with Hidden Pid</td>
-              <td><em>baseline</em> + verifier id (known to verifier), pseudonym (included in derived proof)</td>
-              <td>Pseudonym/Blind BBS</td>
             </tr>
           </tbody>
         </table>
