@@ -1144,11 +1144,7 @@ If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
                 </li>
                 <li>
 If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
-`0x07`, set |featureOption| to `"pseudonym_issuer_pid"`.
-                </li>
-                <li>
-If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
-`0x09`, set |featureOption| to `"pseudonym_hidden_pid"`.
+`0x07`, set |featureOption| to `"pseudonym"`.
                 </li>
               </ol>
 
@@ -1720,16 +1716,9 @@ applying the verification algorithm `ProofVerify` algorithm of
   be updated when IETF API is finalized.</span>
               </li>
               <li>
-If the |featureOption| equals `"pseudonym_issuer_pid"`, initialize |verified|
+If the |featureOption| equals `"pseudonym"`, initialize |verified|
 to the result of
-applying the verification algorithm `PseudonymProofVerify()` of
-[[CFRG-Pseudonym-BBS-Signature]]. <span class="note">To be updated when IETF
-API is finalized.</span>
-              </li>
-              <li>
-If the |featureOption| equals `"pseudonym_hidden_pid"`, initialize |verified|
-to the result of
-applying the verification algorithm `PseudonymHiddenPidProofVerify()` of
+applying the verification algorithm `ProofVerifyWithPseudonym` of
 [[CFRG-Pseudonym-BBS-Signature]]. <span class="note">To be updated when IETF
 API is finalized.</span>
               </li>
