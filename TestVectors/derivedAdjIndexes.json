@@ -1,4 +1,4 @@
 {
-  "adjMandatoryIndexes":[0,1,2,5,6,8,9,10,14,15,16,17,18,19],
-  "adjSelectiveIndexes":[3,4,5,8,9,10]
+    "adjMandatoryIndexes":[0,1,2,5,6,8,9,10,14,15,16,17,18,19],
+    "adjSelectiveIndexes":[3,4,5,8,9,10]
 }
