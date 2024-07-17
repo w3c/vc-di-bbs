@@ -925,7 +925,7 @@ feature option. <span class="note">To be updated when IETF API is finalized.
             </li>
           <li>
 If |featureOption| equals `"anonymous_holder_binding"`,
-`"pseudonym_issuer_pid"`, or `"pseudonym_hidden_pid"` set the |L| parameter
+`"pseudonym_issuer_pid"`, or `"pseudonym_hidden_pid"`, set the |L| parameter
 equal to the length of the |bbsMessages| array.
           </li>
 
@@ -1032,7 +1032,7 @@ are a BBS proof (|bbsProof|), a label map (|labelMap|), an
 array of mandatory indexes (|mandatoryIndexes|), an array of
 selective indexes (|selectiveIndexes|), and a BBS presentation header
 (|presentationHeader|), the |featureOption| indicator, and possibly a
-|pseudonym| and |L| value depending on the |featureOption| value.
+|pseudonym| and/or |L| value depending on the |featureOption| value.
 A single <em>derived proof</em>
 value, serialized as a byte string, is produced as output.
           </p>
@@ -1069,7 +1069,7 @@ disclosure proof header bytes `0xd9`, `0x5d`, and `0x05`.
                     <li>
 Initialize |components| to an array with elements containing the values of
 |bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
-|presentationHeader| and |L|.
+|presentationHeader|, and |L|.
                     </li>
                   </ol>
                 </li>
@@ -1078,7 +1078,7 @@ If |featureOption| equals `"pseudonym_issuer_pid"` or `"pseudonym_hidden_pid"`:
                   <ol class="algorithm">
                     <li>
 Initialize |proofValue| to start with the
-disclosure proof header bytes `0xd9`, `0x5d`, and `0x07`.
+disclosure proof header bytes: `0xd9`, `0x5d`, and `0x07`.
                     </li>
                     <li>
 Initialize |components| to an array with elements containing the values of
@@ -1540,7 +1540,7 @@ parameter, retain this value for use when calling
                 <li>
 If |featureOption| equals `"pseudonym_issuer_pid"`, generate a
 cryptographically random 32 byte |pid| value. Compute the
-`bbsSignature` using the `Signer Provided PID Signature Generation`  procedure
+`bbsSignature` using the `Signer Provided PID Signature Generation` procedure
 of [[CFRG-Pseudonym-BBS-Signature]],
 with appropriate key material, |bbsHeader| for the `header`, |bbsMessages|
 for the `messages`, and |pid| for the `pid`. Retain the |pid| value for use when
