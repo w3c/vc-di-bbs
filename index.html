@@ -926,7 +926,7 @@ feature option. <span class="note">To be updated when IETF API is finalized.
           <li>
 If |featureOption| equals `"anonymous_holder_binding"`,
 `"pseudonym_issuer_pid"`, or `"pseudonym_hidden_pid"`, set the |lengthBBSMessages| parameter
-equal to the length of the |bbsMessages| array.
+to the length of the |bbsMessages| array.
           </li>
 
 
@@ -958,8 +958,8 @@ value associated with `inputLabel` as a key in `labelMap` as the value.
             </li>
             <li>
 Return an object with properties matching |bbsProof|, "verifierLabelMap" for |labelMap|,
-|mandatoryIndexes|, |selectiveIndexes|, |revealDocument|, |pseudonym|, and |lengthBBSMessages| if
-computed.
+|mandatoryIndexes|, |selectiveIndexes|, |revealDocument|, |pseudonym|, and, if
+computed, |lengthBBSMessages|.
             </li>
           </ol>
 
@@ -1031,8 +1031,8 @@ The following algorithm serializes a derived proof value. The required inputs
 are a BBS proof (|bbsProof|), a label map (|labelMap|), an
 array of mandatory indexes (|mandatoryIndexes|), an array of
 selective indexes (|selectiveIndexes|), and a BBS presentation header
-(|presentationHeader|), the |featureOption| indicator, and possibly a
-|pseudonym| and/or |lengthBBSMessages| value depending on the |featureOption| value.
+(|presentationHeader|), the |featureOption| indicator, and,
+depending on the |featureOption| value, a |pseudonym| and/or |lengthBBSMessages| value.
 A single <em>derived proof</em>
 value, serialized as a byte string, is produced as output.
           </p>
@@ -1111,8 +1111,8 @@ The required input is a derived proof value (|proofValue|). A
 single <em>derived proof value</em> object is produced as output, which
 contains a set of six or seven elements, having the names "bbsProof",
 "labelMap", "mandatoryIndexes", "selectiveIndexes", "presentationHeader",
-"featureOption", and possibly "pseudonym" and/or "lengthBBSMessages" depending
-on the value of the |featureOption| parameter.
+"featureOption", and, depending on the value of the |featureOption| parameter, 
+"pseudonym" and/or "lengthBBSMessages".
           </p>
 
           <ol class="algorithm">
@@ -1151,7 +1151,7 @@ If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS disclosure proof header. If the result
-is not an array of five to seven elements —
+is not an array of five, six, or seven elements —
 a byte array, a map of integers to integers,
 two arrays of integers, and one or two byte arrays;
 an error MUST be raised and SHOULD convey an error type of
@@ -1163,8 +1163,8 @@ algorithm in Section <a href="#decompresslabelmap"></a>, passing the existing
 second element of `components` as `compressedLabelMap`.
             </li>
             <li>
-Return <em>derived proof value</em> as an object with properties set to the five
-elements, using the names "bbsProof", "labelMap", "mandatoryIndexes",
+Return <em>derived proof value</em> as an object with properties set to the five,
+six, or seven elements, using the names "bbsProof", "labelMap", "mandatoryIndexes",
 "selectiveIndexes", "presentationHeader", and optional "pseudonym" and/or
 "lengthBBSMessages", respectively.
 In addition, add |featureOption| and its value to the object.
@@ -1240,7 +1240,7 @@ primitive, passing |mandatory|.
             <li>
 Return an object with properties matching |baseSignature|, |proofHash|,
 |nonMandatory|, |mandatoryHash|, |selectiveIndexes|, |featureOption|, and,
-possibly |pseudonym| and/or |lengthBBSMessages|.
+possibly, |pseudonym| and/or |lengthBBSMessages|.
             </li>
           </ol>
 
@@ -1713,14 +1713,14 @@ set as `bbsHeader`, `disclosed_messages` set as `disclosedMessages`, `ph` set as
               <li>
 If the |featureOption| equals `"anonymous_holder_binding"`,
 initialize |verified| to the result of
-applying the verification algorithm `ProofVerify` algorithm of
+applying the `ProofVerify` verification algorithm of
 [[CFRG-Blind-BBS-Signature]] using |lengthBBSMessages| for the `"L"` parameter.
 <span class="note">To be updated when IETF API is finalized.</span>
               </li>
               <li>
 If the |featureOption| equals `"pseudonym"`, initialize |verified|
 to the result of
-applying the verification algorithm `ProofVerifyWithPseudonym` of
+applying the `ProofVerifyWithPseudonym` verification algorithm of
 [[CFRG-Pseudonym-BBS-Signature]] using |lengthBBSMessages| for the `"L"`
 parameter. <span class="note">To be updated when IETF
 API is finalized.</span>
