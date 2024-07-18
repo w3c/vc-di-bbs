@@ -924,9 +924,13 @@ feature option. <span class="note">To be updated when IETF API is finalized.
               </ol>
             </li>
           <li>
-If |featureOption| equals `"anonymous_holder_binding"`,
-`"pseudonym_issuer_pid"`, or `"pseudonym_hidden_pid"`, set the |lengthBBSMessages| parameter
+If |featureOption| equals `"anonymous_holder_binding"` or
+`"pseudonym_hidden_pid"`, set the |lengthBBSMessages| parameter
 to the length of the |bbsMessages| array.
+If |featureOption| equals `"pseudonym_issuer_pid"` set the |lengthBBSMessages|
+parameter to the length of the |bbsMessages| array + 1. <span class="note">This
+is due to the PID in the issuer known PID case being considered a "BBS message".
+</span>
           </li>
 
 
@@ -1111,7 +1115,7 @@ The required input is a derived proof value (|proofValue|). A
 single <em>derived proof value</em> object is produced as output, which
 contains a set of six or seven elements, having the names "bbsProof",
 "labelMap", "mandatoryIndexes", "selectiveIndexes", "presentationHeader",
-"featureOption", and, depending on the value of the |featureOption| parameter, 
+"featureOption", and, depending on the value of the |featureOption| parameter,
 "pseudonym" and/or "lengthBBSMessages".
           </p>
 
