@@ -1157,7 +1157,8 @@ Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS disclosure proof header. If the result
 is not an array of five, six, or seven elements —
 a byte array, a map of integers to integers,
-two arrays of integers, and one or two byte arrays;
+two arrays of integers, one or two byte arrays, and an optional element
+determined by the featureOption;
 an error MUST be raised and SHOULD convey an error type of
 <a data-cite="VC-DATA-INTEGRITY#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
             </li>
