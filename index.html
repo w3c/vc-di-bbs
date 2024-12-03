@@ -170,13 +170,13 @@
             title: "Blind BBS Signatures",
             authors: ["V. Kalos", "G. Bernstein"],
             date: "2024",
-            href: "https://www.ietf.org/archive/id/draft-kalos-bbs-blind-signatures-00.html#name-proof-generation"
+            href: "https://www.ietf.org/archive/id/draft-kalos-bbs-blind-signatures-00.html#name-proof-generationhttps://www.ietf.org/archive/id/draft-kalos-bbs-blind-signatures-03.html"
           },
           "CFRG-Pseudonym-BBS-Signature": {
             title: "BBS per Verifier Linkability",
             authors: ["V. Kalos"],
-            date: "2023",
-            href: "https://www.ietf.org/archive/id/draft-vasilis-bbs-per-verifier-linkability-00.html"
+            date: "2024",
+            href: "https://www.ietf.org/archive/id/draft-kalos-bbs-per-verifier-linkability-00.html"
           }
         },
         lint: { "informative-dfn": false },
@@ -1780,33 +1780,32 @@ To provide for this functionality, a holder generates a |holder_secret| value
 which should generally be at least 32 bytes long and cryptographically randomly
 generated. This value is never shared by the holder. Instead, the holder
 generates a commitment along with a zero knowledge proof of knowledge of this
-value, using the "Commitment Generation" procedure of [[CFRG-Blind-BBS-Signature]].
+value, using the "Commitment Computation" operation of [[CFRG-Blind-BBS-Signature]].
 This computation involves cryptographically random values and computes
 the |commitment_with_proof| and |secret_prover_blind| values. The
 |commitment_with_proof| is conveyed to the issuer while the
 |secret_prover_blind| is kept secret and is retained by the holder for use
 in generation of derived proofs.
-Note that a holder can run the "Commitment Generation" procedure multiple times
+Note that a holder can run the "Commitment Computation" operation multiple times
 to produce unlinkable |commitment_with_proof| values for use with different issuers.
         </p>
         <p>
-The issuer, on receipt of the |commitment_with_proof|, follows the procedures of
+The issuer, on receipt of the |commitment_with_proof|, follows the procedures
+of this specification and uses the "Blind Signature Generation" operation of
 [[CFRG-Blind-BBS-Signature]] to produce a base proof (signature) over the document
-with the commitment furnished by the holder. If the issuer chooses to use the
-|signer_blind| parameter when creating the signature in
-[[CFRG-Blind-BBS-Signature]], this value needs to be conveyed to the holder as
-part of the base proof value.
+with the |commitment_with_proof| furnished by the holder.
         </p>
         <p>
 When the holder wants to create a selectively disclosed document with derived
-proof, they use their |holder_secret| (as a "commited message"), the
-|secret_prover_blind|, and, if supplied in the base proof, the |signer_blind|
-in the proof generation procedure of
-[[CFRG-Blind-BBS-Signature]].
+proof, they use the procedures of this specification and the "Proof Generation"
+operation of [[CFRG-Blind-BBS-Signature]]. They use their |holder_secret| as
+the only "message" in the |commited messages| array and supply thier
+|secret_prover_blind|.
         </p>
         <p>
-Verification of the revealed document with derived proof uses the "regular" BBS
-proof verification procedures of [[CFRG-BBS-SIGNATURE]].
+Verification of the revealed document with derived proof uses the procedures
+of this specification and the "Proof Verification" operation of
+[[CFRG-Blind-BBS-Signature]].
         </p>
 
       </section>
