@@ -593,7 +593,7 @@ BBS signature, HMAC key, and mandatory pointers.
 The required inputs are a base signature |bbsSignature|, |bbsHeader|,
 |publicKey|, an HMAC key |hmacKey|, an array of
 |mandatoryPointers|, |featureOption|, and depending on
-the |featureOption| value the |pid|, and |signer_blind| values.
+the |featureOption| value possibly the |signer_nym_entropy| value.
 A single <em>base proof</em> string value is produced as output.
           </p>
 
@@ -624,13 +624,12 @@ header bytes `0xd9`, `0x5d`, and `0x04`.
                 </li>
                 <li>
 Initialize |components| to an array with six elements containing the values of:
-|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|, and
-|signerBlind|.
+|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, and |mandatoryPointers|.
                 </li>
               </ol>
             </li>
             <li>
-If |featureOption| equals `"pseudonym_issuer_pid"`:
+If |featureOption| equals `"pseudonym"`:
               <ol class="algorithm">
                 <li>
 Initialize a byte array, |proofValue|, that starts with the BBS base proof
@@ -639,12 +638,12 @@ header bytes `0xd9`, `0x5d`, and `0x06`.
                 <li>
 Initialize |components| to an array with six elements containing the values of:
 |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|, and
-|pid|.
+|signer_nym_entropy|.
                 </li>
               </ol>
             </li>
             <li>
-If |featureOption| equals `"pseudonym_hidden_pid"`:
+If |featureOption| equals `"holder_binding_pseudonym"`:
               <ol class="algorithm">
                 <li>
 Initialize a byte array, |proofValue|, that starts with the BBS base proof
@@ -653,7 +652,7 @@ header bytes `0xd9`, `0x5d`, and `0x08`.
                 <li>
 Initialize |components| to an array with six elements containing the values of:
 |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|, and
-|signerBlind|.
+|signer_nym_entropy|.
                 </li>
               </ol>
             </li>
@@ -1921,7 +1920,7 @@ computation of the |pseudonym|.
 
       </section>
       <section>
-        <h3>Pseudonyms and Holder Binding</h3>
+        <h3>Holder Binding and Pseudonyms</h3>
         <p>
 Anonymous holder binding and credential bound pseudonyms are, in a sense,
 orthogonal features, and a holder and credential ecosystem may wish to use both
@@ -1929,7 +1928,7 @@ at the same time. In particular, the holder may wish to bind a verifiable
 credential to a |holder_secret| so that only a holder knowing this value can
 generate a derived proof from the base proof, and bind a |nym_secret| to the
 base proof so that pseudonyms can be bound to the derived proof. This
-corresponds to |featureOption| equals `"pseudonym_holder_binding"`.
+corresponds to |featureOption| equals `"holder_binding_pseudonym"`.
         </p>
         <p>
 An outline of the creation and use of both anonymous holder binding and
