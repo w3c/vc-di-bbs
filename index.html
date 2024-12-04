@@ -1811,6 +1811,112 @@ of this specification and the "Proof Verification" operation of
       </section>
       <section>
         <h3>Credential Bound Pseudonyms</h3>
+          <p>
+BBS signed Verifiable Credentials as specified in this document allow for
+selective disclosure and unlinkable cryptographic proof artifacts, the
+cryptographic information in the derived proofs cannot be linked to other
+proofs or the original signature. This implies that a verifier cannot determine
+if a holder has presented the same credential before (with a different proof
+instantiation) nor can they assert some type of identity. Credential bound
+pseudonyms provide a privacy preserving mechanism to allow for the limited
+linkability of a cryptographic pseudonym. Such a pseudonym may be determined
+strictly by the holder or jointly by the holder and the verifier.
+          </p>
+          <p>
+The type of cryptographic pseudonym (cryptographic identifier/name) here is
+computed from two parts. The first part, the |nym_secret|, is only known to the
+holder, the second part, the |nym_domain|, may be specified by either the holder
+or the verifier and will be shared between the holder and verifier.
+Cryptographic pseudonyms computed from the same |nym_secret| but different
+|nym_domain| values are unlinkable.
+          </p>
+          <p>
+The holder might choose the |nym_domain| to give themselves a pseudonym for
+some type of public forum, e.g., choose |nym_domain| = "Mark Twain". The
+cryptographic pseudonym is calculated by the holder from this |nym_domain| and
+their |nym_secret| is essentially unique and no entity not knowing the
+|nym_secret| and possessing the base verifiable credential bound to the
+pseudonym could assert this pseudonymous identity. Note that the doublet of
+(|nym_domain|, pseudonym) would be sent with the derived credential to assert
+this pseudonymous identity.
+          </p>
+          <p>
+In a different situation, a holder may be using a service from a verifier and a
+verifier wants to track visits over time or monitor use of some resource by the
+holder. In this case the verifier chooses the |nym_domain| that the holder is
+required to use when presenting their derived credential. For example a verifier
+might specify a public |nym_domain| tied to their domain, e.g.,
+"www.nym.example" for the holder to use. A verifier could also
+demonstrate that they support data minimization of a sort by periodically
+changing the |nym_domain|, e.g. tying it to a date,
+"www.nym.example/2025-01-02". This specification does not dictate
+values for the |nym_domain|.
+          </p>
+          <p>
+Finally, to prevent a malicious holder from obtaining another holders
+|nym_secret| and getting a credential bound to that value, the operations from
+the [[CFRG-Pseudonym-BBS-Signature]] have the issuer add in a randomization
+factor, |signer_nym_entropy| that is securely "mixed" with the holders
+portion, the |prover_nym|, during signature generation.
+          </p>
+          <p>
+An outline of the creation and use of credential bound pseudonyms is given in
+the following steps.
+          </p>
+          <ol class="algorithm">
+            <li>
+The holder creates a secure value known as the |prover_nym| that should be at
+least 32 bytes long and generated in cryptographically random manner. They then
+use the "Commitment" operation from [[CFRG-Pseudonym-BBS-Signature]] with an
+empty |committed_messages| array to compute
+the |commitment_with_proof| and |secret_prover_blind|. The
+|commitment_with_proof| is sent with their request to the issuer for a
+credential while the |prover_nym| and |secret_prover_blind| are kept for later
+use by the holder and are never disclosed.
+            </li>
+            <li>
+The issuer receives the holders request for a credential with a bound pseudonym,
+|featureOption| equals `"pseudonym"`, along with the |commitment_with_proof|.
+The issuer uses the procedures in this specification and generates a
+cryptographically random value for the |signer_nym_entropy| and uses the
+"Blind Issuance" operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the
+base proof. Among other information the base proof will contain the
+|signer_nym_entropy| value. If the issuer ever needs reissue a credential to
+this holder that is bound to the same |nym_secret| they should retain the
+|signer_nym_entropy| value, otherwise this value can be discarded.
+            </li>
+            <li>
+The holder on receipt of the credential with bound pseudonym uses the procedures
+in this specification along with the "Verification and Finalization" operation
+from [[CFRG-Pseudonym-BBS-Signature]] with an empty |committed_messages| array
+to both verify the signature and compute
+the |nym_secret| value. This operation uses the |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind| values amongst others. If third
+party monitoring is being utilized then the |nym_secret| value would be securely
+shared with the monitoring organization.
+            </li>
+            <li>
+When the holder wants to generate a derived proof bound to a pseudonym they need
+to determine the |nym_domain|. As previously stated this might be specified by
+the verifier or set by the holder depending on the usage scenario. They then use
+the procedures in this specification and the "Proof Generation with Pseudonym"
+operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
+This operation takes as inputs the |nym_secret|, |nym_domain|, empty
+|committed_messages| array and
+|secret_prover_blind| amongst others. In addition to providing the raw
+cryptographic proof value it also returns the |pseudonym| value that gets
+included in the derived proof.
+            </li>
+            <li>
+When a verifier receives a derived proof with bound pseudonym they use the
+procedures in this specification along with the
+"Proof Verification with Pseudonym" operation from
+[[CFRG-Pseudonym-BBS-Signature]] to validate the derived proof. Note that these
+procedures will also validate that the specified |nym_domain| was used in the
+computation of the |pseudonym|.
+            </li>
+          </ol>
+
       </section>
       <section>
         <h3>Pseudonyms and Holder Binding</h3>
