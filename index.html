@@ -1857,7 +1857,9 @@ Finally, to prevent a malicious holder from obtaining another holders
 |nym_secret| and getting a credential bound to that value, the operations from
 the [[CFRG-Pseudonym-BBS-Signature]] have the issuer add in a randomization
 factor, |signer_nym_entropy| that is securely "mixed" with the holders
-portion, the |prover_nym|, during signature generation.
+portion, the |prover_nym|, during signature generation. Hence, the issuer
+provides a cryptographic assurance that the resulting |nym_secret| used by the
+holder is unique.
           </p>
           <p>
 An outline of the creation and use of credential bound pseudonyms is given in
@@ -1920,6 +1922,75 @@ computation of the |pseudonym|.
       </section>
       <section>
         <h3>Pseudonyms and Holder Binding</h3>
+        <p>
+Anonymous holder binding and credential bound pseudonyms are, in a sense,
+orthogonal features, and a holder and credential ecosystem may wish to use both
+at the same time. In particular, the holder may wish to bind a verifiable
+credential to a |holder_secret| so that only a holder knowing this value can
+generate a derived proof from the base proof, and bind a |nym_secret| to the
+base proof so that pseudonyms can be bound to the derived proof. This
+corresponds to |featureOption| equals `"pseudonym_holder_binding"`.
+        </p>
+        <p>
+An outline of the creation and use of both anonymous holder binding and
+credential bound pseudonyms is given in the following steps.
+        </p>
+        <ol class="algorithm">
+          <li>
+The holder creates two secure values known as the |holder_secret| and
+|prover_nym| that should be at
+least 32 bytes long and generated in cryptographically random manner. They then
+use the "Commitment" operation from [[CFRG-Pseudonym-BBS-Signature]] with the
+|committed_messages| array input containing the |holder_secret| as its only
+element, to compute the |commitment_with_proof| and |secret_prover_blind|. The
+|commitment_with_proof| is sent with their request to the issuer for a
+credential while the |holder_secret|, |prover_nym| and |secret_prover_blind| are
+kept for later use by the holder and are never disclosed.
+          </li>
+          <li>
+The issuer receives the holders request for a credential with a bound pseudonym,
+|featureOption| equals `"pseudonym"`, along with the |commitment_with_proof|.
+The issuer uses the procedures in this specification and generates a
+cryptographically random value for the |signer_nym_entropy| and uses the
+"Blind Issuance" operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the
+base proof. Among other information the base proof will contain the
+|signer_nym_entropy| value. If the issuer ever needs reissue a credential to
+this holder that is bound to the same |nym_secret| they should retain the
+|signer_nym_entropy| value, otherwise this value can be discarded.
+          </li>
+          <li>
+The holder on receipt of the credential with bound pseudonym uses the procedures
+in this specification along with the "Verification and Finalization" operation
+from [[CFRG-Pseudonym-BBS-Signature]] with the |committed_messages| array
+containing the |holder_secret| as its only element,
+to both verify the signature and compute
+the |nym_secret| value. This operation uses the |holder_secret|, |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind| values amongst others. If third
+party monitoring is being utilized then the |nym_secret| value would be securely
+shared with the monitoring organization.
+          </li>
+          <li>
+When the holder wants to generate a derived proof bound to a pseudonym they need
+to determine the |nym_domain|. As previously stated this might be specified by
+the verifier or set by the holder depending on the usage scenario. They then use
+the procedures in this specification and the "Proof Generation with Pseudonym"
+operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
+This operation takes as inputs the |nym_secret|, |nym_domain|, the
+|committed_messages| array containing the |holder_secret| as its only element,
+and |secret_prover_blind| amongst others. In addition to providing the raw
+cryptographic proof value it also returns the |pseudonym| value that gets
+included in the derived proof.
+          </li>
+          <li>
+When a verifier receives a derived proof with bound pseudonym they use the
+procedures in this specification along with the
+"Proof Verification with Pseudonym" operation from
+[[CFRG-Pseudonym-BBS-Signature]] to validate the derived proof. Note that these
+procedures will also validate that the specified |nym_domain| was used in the
+computation of the |pseudonym|.
+          </li>
+        </ol>
+
       </section>
       <section class="informative">
         <h3>Optional Feature Summary</h3>
