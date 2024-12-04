@@ -681,8 +681,7 @@ disclosure base proof value. The required input is a proof value
 six or seven elements, using the names "bbsSignature", "bbsHeader",
 "publicKey",
 "hmacKey", "mandatoryPointers", "featureOption", and possibly optional feature
-parameter "pid" or
-"signer_blind", is produced as output.
+parameter "signer_nym_entropy", is produced as output.
           </p>
 
           <ol class="algorithm">
@@ -714,11 +713,11 @@ If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x04`, set
                 </li>
                 <li>
 If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x06`, set
-|featureOption| to `"pseudonym_issuer_pid"`.
+|featureOption| to `"pseudonym"`.
                 </li>
                 <li>
 If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x08`, set
-|featureOption| to `"pseudonym_hidden_pid"`.
+|featureOption| to `"holder_binding_pseudonym"`.
                 </li>
                 <li>
 If the |decodedProofValue| starts with any other three byte sequence,
@@ -744,20 +743,20 @@ and "mandatoryPointers", in that order, and add |featureOption| as a property.
                 <li>
 If |featureOption| equals `"anonymous_holder_binding"`, set the property names
 for the object based on |components| to "bbsSignature", "bbsHeader",
-"publicKey", "hmacKey", "mandatoryPointers", and "signer_blind", in that order, and
+"publicKey", "hmacKey", and "mandatoryPointers", in that order, and
 add |featureOption| as a property.
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_issuer_pid"`, set the property names
+If |featureOption| equals `"pseudonym"`, set the property names
 for the object based on |components| to "bbsSignature", "bbsHeader",
-"publicKey", "hmacKey", "mandatoryPointers", and "pid", in that order, and
-add |featureOption| as a property.
+"publicKey", "hmacKey", "mandatoryPointers", and "signer_nym_entropy", in that
+order, and add |featureOption| as a property.
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_hidden_pid"`, set the property names
+If |featureOption| equals `"holder_binding_pseudonym"`, set the property names
 for the object based on |components| to "bbsSignature", "bbsHeader",
-"publicKey", "hmacKey", "mandatoryPointers", and "signer_blind", in that order, and
-add |featureOption| as a property.
+"publicKey", "hmacKey", "mandatoryPointers", and "signer_nym_entropy", in that
+order, and add |featureOption| as a property.
                 </li>
               </ol>
             </li>
