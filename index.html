@@ -1648,17 +1648,21 @@ have been precomputed by the holder. See
 information.
           </p>
           <p>
-If |featureOption| equals `"pseudonym_issuer_pid"`, the REQUIRED
-additional input is the |verifier_id| which is communicated to the holder by the
-verifier. See <a href="#pseudonyms-with-issuer-known-pid">Pseudonyms with
-Issuer-known PID</a> for background information.
+If |featureOption| equals `"pseudonym"`, the REQUIRED
+additional inputs are the |prover_nym|, |proverBlind| (both known to
+holder), and |nym_dofmain| which is either set by the holder or communicated to
+the holder by the verifier.
+See <a href="#credential-bound-pseudonyms">Credential Bound Pseudonyms</a> for
+background information.
           </p>
           <p>
-If |featureOption| equals `"pseudonym_hidden_pid"`, the REQUIRED
-additional inputs are the |pid|, |proverBlind| (both known to
-holder), and |verifier_id| which is communicated to the holder by the verifier.
-See <a href="#pseudonyms-with-hidden-pid">Pseudonyms with
-Hidden PID</a> for background information.
+If |featureOption| equals `"holder_binding_pseudonym"`, the REQUIRED
+additional inputs are the |holder_secret|, |prover_nym|, |proverBlind| (all
+known to the holder), and |nym_dofmain| which is either set by the holder or
+communicated to
+the holder by the verifier.
+See <a href="#holder-binding-and-pseudonyms">Holder Binding and Pseudonyms</a> for
+background information.
           </p>
           <ol>
             <li>
