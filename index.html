@@ -1056,7 +1056,8 @@ are a BBS proof (|bbsProof|), a label map (|labelMap|), an
 array of mandatory indexes (|mandatoryIndexes|), an array of
 selective indexes (|selectiveIndexes|), and a BBS presentation header
 (|presentationHeader|), the |featureOption| indicator, and,
-depending on the |featureOption| value, a |pseudonym| and/or |lengthBBSMessages| value.
+depending on the |featureOption| value, a |nym_domain|, |pseudonym| and/or
+|lengthBBSMessages| value.
 A single <em>derived proof</em>
 value, serialized as a byte string, is produced as output.
           </p>
@@ -1098,7 +1099,7 @@ Initialize |components| to an array with elements containing the values of
                   </ol>
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_issuer_pid"` or `"pseudonym_hidden_pid"`:
+If |featureOption| equals `"pseudonym"`:
                   <ol class="algorithm">
                     <li>
 Initialize |proofValue| to start with the
@@ -1107,7 +1108,21 @@ disclosure proof header bytes: `0xd9`, `0x5d`, and `0x07`.
                     <li>
 Initialize |components| to an array with elements containing the values of
 |bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
-|presentationHeader|, |pseudonym|, and |lengthBBSMessages|.
+|presentationHeader|, |nym_domain|, |pseudonym|, and |lengthBBSMessages|.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+If |featureOption| equals `"holder_binding_pseudonym"`:
+                  <ol class="algorithm">
+                    <li>
+Initialize |proofValue| to start with the
+disclosure proof header bytes: `0xd9`, `0x5d`, and `0x09`.
+                    </li>
+                    <li>
+Initialize |components| to an array with elements containing the values of
+|bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
+|presentationHeader|, |nym_domain|, |pseudonym|, and |lengthBBSMessages|.
                     </li>
                   </ol>
                 </li>
