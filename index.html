@@ -1737,7 +1737,7 @@ Let |proof| be the value of |securedDocument|.|proof|.
             <li>
 Initialize |bbsProof|, |proofHash|, |mandatoryHash|, |selectiveIndexes|,
 |presentationHeader|, |nonMandatory|, |featureOption|, and, possibly,
-|pseudonym|, to the values associated
+|lengthBBSMessages|, and |pseudonym|, to the values associated
 with their property names in the object returned when calling the algorithm in
 Section <a href="#createverifydata"></a>, passing the |unsecuredDocument|,
 |proof|, and any custom JSON-LD API options (such as a document loader).
@@ -1767,11 +1767,13 @@ applying the `ProofVerify` verification algorithm of
 <span class="note">To be updated when IETF API is finalized.</span>
               </li>
               <li>
-If the |featureOption| equals `"pseudonym"`, initialize |verified|
-to the result of
-applying the `ProofVerifyWithPseudonym` verification algorithm of
+If the |featureOption| equals `"pseudonym"` or `"holder_binding_pseudonym"`,
+initialize |verified|
+to the result of applying the
+"Proof Verification with Pseudonym" operation from
 [[CFRG-Pseudonym-BBS-Signature]] using |lengthBBSMessages| for the `"L"`
-parameter. <span class="note">To be updated when IETF
+parameter and an empty |committed_messages| array.
+<span class="note">To be updated when IETF
 API is finalized.</span>
               </li>
             </ol>
