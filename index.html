@@ -881,7 +881,7 @@ set `bbsProof` to the value computed by the `BlindProofGen` procedure from
 |signature| is the
 |bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|,
 |messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
-`commitment_with_proof`, and `signer_blind`. The holder will also furnish its
+and `commitment_with_proof`. The holder will also furnish its
 |holder_secret|, and |proverBlind| that was used to compute the
 |commitment_with_proof|. This is the
 <a href="#anonymous-holder-binding">Anonymous Holder Binding</a> feature option.
@@ -889,46 +889,68 @@ set `bbsProof` to the value computed by the `BlindProofGen` procedure from
 be updated when IETF API is finalized.</span>
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_issuer_pid"`, compute the |pseudonym|
-according to the `Calculate Pseudonym` procedure given
-in [[CFRG-Pseudonym-BBS-Signature]],
-and set |bsProof| to the value computed by the
-`Signer Provided PID Proof Generation` procedure from
-[[CFRG-Pseudonym-BBS-Signature]], where |PK| is the original issuers public key,
-|signature| is the
-|bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|
-|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|, and
-|pseudonym| is the `pseudonym`. This is for the
-<a href="#pseudonyms-with-issuer-known-pid">Pseudonyms with Issuer-known PID</a>
+If |featureOption| equals `"pseudonym"`,
+use the "Verification and Finalization" operation
+from [[CFRG-Pseudonym-BBS-Signature]] with an empty |committed_messages| array
+to both verify the |bbsSignature| and compute
+the |nym_secret| value. This operation uses the |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind|.
+
+Determine the |nym_domain|. This might be specified by
+the verifier or set by the holder depending on the usage scenario. Use
+the "Proof Generation with Pseudonym"
+operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
+This operation takes as inputs
+|PK|, the original issuers public key,
+|signature|,  the |bbsSignature|, |header| is the |bbsHeader|,
+|ph| is the |presentationHeader|,
+|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
+|nym_secret|, |nym_domain|, empty
+|committed_messages| array, and |secret_prover_blind|. In addition to providing
+the raw
+cryptographic proof value which is assigned to |bbsProof|,
+it also returns the |pseudonym|.
+
+This is for the
+<a href="#credential-bound-pseudonyms">Credential Bound Pseudonyms</a>
 feature option. <span class="note">To be updated when IETF API is finalized.
 </span>
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_hidden_pid"`, compute the |pseudonym|
-according to the `Calculate Pseudonym` procedure given
-in [[CFRG-Pseudonym-BBS-Signature]],
-and set |bsProof| to the value computed by the
-`Hidden PID Proof Generation with Pseudonym` procedure from
-[[CFRG-Pseudonym-BBS-Signature]], where |PK| is the original issuers public key,
-|signature| is the
-|bbsSignature|, |header| is the |bbsHeader|, |ph| is the  |presentationHeader|
+If |featureOption| equals `"holder_binding_pseudonym"`,
+
+use the "Verification and Finalization" operation
+from [[CFRG-Pseudonym-BBS-Signature]] with the |committed_messages| array
+containing the |holder_secret| as its only value,
+to both verify the |bbsSignature| and compute
+the |nym_secret| value. This operation uses the |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind|.
+
+Determine the |nym_domain|. This might be specified by
+the verifier or set by the holder depending on the usage scenario. Use
+the "Proof Generation with Pseudonym"
+operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
+This operation takes as inputs
+|PK|, the original issuers public key,
+|signature|,  the |bbsSignature|, |header| is the |bbsHeader|,
+|ph| is the |presentationHeader|,
 |messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
-|commitment_with_proof|, |pid|, |proverBlind|, |signer_blind|, and
-|pseudonym| is the `pseudonym`. This is for the
-<a href="#pseudonyms-with-hidden-pid">Pseudonyms with Hidden PID</a>
+|nym_secret|, |nym_domain|, the |committed_messages| array containing the
+|holder_secret| as its only value, and |secret_prover_blind|. In addition to
+providing the raw cryptographic proof value which is assigned to |bbsProof|,
+it also returns the |pseudonym|.
+
+This is for the
+<a href="#holder-binding-and-pseudonyms">Holder Binding and Pseudonyms</a>
 feature option. <span class="note">To be updated when IETF API is finalized.
 </span>
                 </li>
               </ol>
             </li>
           <li>
-If |featureOption| equals `"anonymous_holder_binding"` or
-`"pseudonym_hidden_pid"`, set the |lengthBBSMessages| parameter
-to the length of the |bbsMessages| array.
-If |featureOption| equals `"pseudonym_issuer_pid"` set the |lengthBBSMessages|
-parameter to the length of the |bbsMessages| array + 1. <span class="note">This
-is due to the known-issuer PID being considered a "BBS message".
-</span>
+If |featureOption| equals `"anonymous_holder_binding"`,
+`"pseudonym"`, or `"holder_binding_pseudonym"` set the |lengthBBSMessages|
+parameter to the length of the |bbsMessages| array.
           </li>
 
 
