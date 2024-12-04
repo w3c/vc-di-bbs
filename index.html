@@ -2021,21 +2021,23 @@ sense that some additional input, task, or output is generated
             </tr>
             <tr>
               <td>Anonymous Holder Binding</td>
-              <td><em>baseline</em> + selected index adjustment</td>
-              <td><em>baseline</em> + commitment with proof to holder secret from holder</td>
+              <td><em>baseline</em></td>
+              <td><em>baseline</em> + commitment with proof from holder</td>
               <td>Blind BBS</td>
             </tr>
             <tr>
-              <td>Pseudonym with Issuer Pid</td>
-              <td><em>baseline</em> + Generate pid</td>
-              <td><em>baseline</em></td>
+              <td>Credential Bound Pseudonyms</td>
+              <td><em>baseline</em> + generate |signer_nym_entropy| </td>
+              <td><em>baseline + |signer_nym_entropy|, commitment with proof
+                from holder </em></td>
               <td>Pseudonym BBS</td>
             </tr>
             <tr>
-              <td>Pseudonym with Hidden Pid</td>
-              <td><em>baseline</em></td>
-              <td><em>baseline</em> + commitment with proof to secret pid from holder</td>
-              <td>Pseudonym/Blind BBS</td>
+              <td>Holder Binding and Pseudonyms</td>
+              <td><em>baseline</em> + generate |signer_nym_entropy|</td>
+              <td><em>baseline</em> + |signer_nym_entropy|,
+                commitment with proof from holder</td>
+              <td>Pseudonym BBS</td>
             </tr>
           </tbody>
         </table>
@@ -2058,17 +2060,17 @@ sense that some additional input, task, or output is generated
             <tr>
               <td>Anonymous Holder Binding</td>
               <td>`0xd9`, `0x5d`, and `0x04`</td>
-              <td><em>baseline</em> + signerBlind</td>
+              <td><em>baseline</em></td>
             </tr>
             <tr>
-              <td>Pseudonym with Issuer Pid</td>
+              <td>Credential Bound Pseudonyms</td>
               <td>`0xd9`, `0x5d`, and `0x06`</td>
-              <td> <em>baseline</em> + pid</td>
+              <td> <em>baseline</em> + |signer_nym_entropy| </td>
             </tr>
             <tr>
-              <td>Pseudonym with Hidden Pid</td>
+              <td>Holder Binding and Pseudonyms</td>
               <td>`0xd9`, `0x5d`, and `0x08`</td>
-              <td><em>baseline</em> + signerBlind</td>
+              <td><em>baseline</em> + |signer_nym_entropy| </td>
             </tr>
           </tbody>
         </table>
@@ -2087,26 +2089,36 @@ sense that some additional input, task, or output is generated
             <tr>
               <td>Baseline BBS</td>
               <td>BBS derived proof generation from VC with base proof</td>
-              <td><em>baseline</em>: (from base proof serialization) bbsSignature, bbsHeader, publicKey, hmacKey, and mandatoryPointers; selectivePointers (holders choice)</td>
+              <td><em>baseline</em>: (from base proof serialization)
+                bbsSignature, bbsHeader, publicKey, hmacKey, and
+                mandatoryPointers; selectivePointers (holders choice)</td>
               <td>BBS</td>
             </tr>
             <tr>
               <td>Anonymous Holder Binding</td>
               <td><em>baseline</em></td>
-              <td><em>baseline</em> + holder secret, prover blind (both known to holder), signer blind (included in base proof from issuer)</td>
+              <td><em>baseline</em> + |holder_secret|, |prover_blind| (both
+                known to holder)</td>
               <td>Blind BBS</td>
             </tr>
             <tr>
-              <td>Pseudonym with Issuer Pid</td>
-              <td><em>baseline</em> + Generate pseudonym</td>
-              <td><em>baseline</em> + verifier id (from verifier), pid (included in base from issuer)</td>
+              <td>Credential Bound Pseudonyms</td>
+              <td><em>baseline</em> + compute |nym_secret|, compute |pseudonym|
+              </td>
+              <td><em>baseline</em> + |prover_nym|,
+                |prover_blind| (all known to holder), |signer_nym_entropy|
+                (included in base from issuer), |nym_domain|</td>
               <td>Pseudonym BBS</td>
             </tr>
             <tr>
-              <td>Pseudonym with Hidden Pid</td>
-              <td><em>baseline</em> + Generate pseudonym</td>
-              <td><em>baseline</em> + pid, prover blind (both known to holder), signer blind (included in base from issuer), verifier id (from verifier)</td>
-              <td>Pseudonym/Blind BBS</td>
+              <td>Holder Binding and Pseudonyms</td>
+              <td><em>baseline</em> + compute |nym_secret|, compute |pseudonym|
+              </td>
+              <td><em>baseline</em> + |holder_secret|, |prover_nym|,
+                |prover_blind| (all known to holder), |signer_nym_entropy|
+                (included in base from issuer), |nym_domain|
+              </td>
+              <td>Pseudonym BBS</td>
             </tr>
           </tbody>
         </table>
@@ -2124,7 +2136,9 @@ sense that some additional input, task, or output is generated
             <tr>
               <td>Baseline BBS</td>
               <td>`0xd9`, `0x5d`, and `0x03`</td>
-              <td><em>baseline</em>: bbsProof, compressedLabelMap, mandatoryIndexes, selectiveIndexes, presentationHeader</td>
+              <td><em>baseline</em>: bbsProof, compressedLabelMap,
+                mandatoryIndexes, selectiveIndexes, presentationHeader
+              </td>
             </tr>
             <tr>
               <td>Anonymous Holder Binding</td>
@@ -2132,15 +2146,21 @@ sense that some additional input, task, or output is generated
               <td><em>baseline</em></td>
             </tr>
             <tr>
-              <td>Pseudonym (issuer known and hidden) </td>
+              <td>Credential Bound Pseudonyms</td>
               <td>`0xd9`, `0x5d`, and `0x07`</td>
-              <td><em>baseline</em> + pseudonym</td>
+              <td><em>baseline</em> + |pseudonym|, |nym_domain|</td>
+            </tr>
+            <tr>
+              <td>Holder Binding and Pseudonyms</td>
+              <td>`0xd9`, `0x5d`, and `0x09`</td>
+              <td><em>baseline</em> + |pseudonym|, |nym_domain|</td>
             </tr>
           </tbody>
         </table>
 
          <table class="complex data">
-          <caption>Table 5 <em>Verify Derived: Inputs and Algorithms.</em> </caption>
+          <caption>Table 5 <em>Verify Derived: Inputs and Algorithms.</em>
+          </caption>
           <thead>
             <tr>
               <th>Name</th>
@@ -2151,7 +2171,10 @@ sense that some additional input, task, or output is generated
           <tbody>
             <tr>
               <td>BBS baseline</td>
-              <td><em>baseline</em>: (from derived proof serialization) bbsProof, compressedLabelMap, mandatoryIndexes, selectiveIndexes, presentationHeader</td>
+              <td><em>baseline</em>: (from derived proof serialization)
+                bbsProof, compressedLabelMap, mandatoryIndexes,
+                selectiveIndexes, presentationHeader
+              </td>
               <td>BBS</td>
             </tr>
             <tr>
@@ -2160,8 +2183,17 @@ sense that some additional input, task, or output is generated
               <td>Blind BBS</td>
             </tr>
             <tr>
-              <td>Pseudonym (issuer known and hidden)</td>
-              <td><em>baseline</em> + verifier id (known to verifier),  pseudonym (included in derived proof)</td>
+              <td>Credential Bound Pseudonyms</td>
+              <td><em>baseline</em> + |pseudonym| (included in derived proof),
+                |nym_domain|
+              </td>
+              <td>Pseudonym BBS</td>
+            </tr>
+            <tr>
+              <td>Holder Binding and Pseudonyms</td>
+              <td><em>baseline</em> + |pseudonym| (included in derived proof),
+                |nym_domain|
+              </td>
               <td>Pseudonym BBS</td>
             </tr>
           </tbody>
