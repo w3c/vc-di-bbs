@@ -3541,14 +3541,6 @@ used in the signed base document shown below.
           </section>
           <section>
             <h5>Pseudonym Derived Proof</h5>
-            <!-- The holder on receipt of the credential with bound pseudonym uses the procedures
-in this specification along with the "Verification and Finalization" operation
-from [[CFRG-Pseudonym-BBS-Signature]] with an empty |committed_messages| array
-to both verify the signature and compute
-the |nym_secret| value. This operation uses the |prover_nym|,
-|signer_nym_entropy|, and |secret_prover_blind| values amongst others. If third
-party monitoring is being utilized then the |nym_secret| value would be securely
-shared with the monitoring organization. -->
             <p>
 As explained in section <a href="#derived-proof"></a>, we use a
 mocked random number generation procedure and demonstrate the use of a
@@ -3609,6 +3601,155 @@ document shown below.
           <pre class="example nohighlight"
           title="Signed Derived Document for Pseudonym"
           data-include="TestVectors/Pseudonym/derivedRevealDocument.json"
+          data-include-format="text"></pre>
+          </section>
+        </section>
+
+        <section>
+          <h4>Holder Binding and Pseudonym Feature</h4>
+          <section>
+            <h5>Holder Secret and Prover Nym Commitment Generation</h5>
+            <p>
+The first steps in using the <em>holder binding and pseudonym</em> feature are
+for
+the holder to generate its secret |holder_secret| and  |prover_nym| value and
+then compute a
+commitment with proof for this value according to the "Commitment" operation
+from [[CFRG-Pseudonym-BBS-Signature]]. Example values and outputs of this procedure
+are shown below.
+            </p>
+            <pre class="example nohighlight" title="Holder's Secret"
+            data-include="TestVectors/FeatureInputs/holderSecret.json"
+            data-include-format="text"></pre>
+            <pre class="example nohighlight" title="Prover Nym"
+            data-include="TestVectors/FeatureInputs/proverNym.json"
+            data-include-format="text"></pre>
+            <pre class="example nohighlight"
+            title="Holder Secret and Prover Nym Commitment Information"
+            data-include="TestVectors/PseudonymHB/commitmentInfo.json"
+            data-include-format="text"></pre>
+            <p>
+The |holder_secret|, |prover_nym| and |secretProverBlind| are retained by the
+holder and kept
+secret. The |commitmentWithProof| value needs to be communicated to the issuer.
+            </p>
+          </section>
+          <section>
+            <h5>Holder Binding and Pseudonym Base Proof</h5>
+            <p>
+The addition of a base proof under the pseudonym feature option begins
+with the issuer receiving a |commitmentWithProof| value from the holder and
+generating a cryptographically random value for |signer_nym_entropy|.
+            </p>
+            <pre class="example nohighlight" title="Signer Nym Entropy"
+            data-include="TestVectors/FeatureInputs/signerNymEntropy.json"
+            data-include-format="text"></pre>
+            <p>
+This example will make use of the same key material as shown in
+<a href="#example-private-and-public-keys-for-signature-0"></a>,
+the same unsigned document as shown in
+<a href="#example-credential-without-proof-for-features"></a>, and the same
+mandatory pointers as shown in
+<a href="#example-mandatory-pointers-for-features"></a>. This results in the
+same canonical document as shown in
+<a href="#example-canonical-document-for-features"></a>,
+the same canonical HMAC document as shown in
+<a href="#example-canonical-hmac-document-for-features"></a>, and the same "add
+base transformation" as shown in
+<a href="#example-add-base-transformation-for-features"></a>.
+          </p>
+          <p>
+This example makes use of the same proof configuration as in
+<a href="#example-base-proof-configuration-for-features"></a>.
+This results in the same canonical base proof as in
+<a href="#example-canonical-base-proof-configuration-for-features"></a>.
+Combining this with the above assumptions leads to the same base hashes as in
+<a href="#example-add-base-hashes-for-features"></a>.
+          </p>
+          <p>
+Since |featureOption| is equal to `"holder_binding_pseudonym"`, the procedure of
+section <a href="#base-proof-serialization-bbs-2023"></a> will produce the
+output shown below. This makes use of the
+signature generation algorithm of [[CFRG-Pseudonym-BBS-Signature]]. Note the
+inclusion of the  |signer_nym_entropy| and |featureOption| values, as these
+need to be communicated to the holder.
+          </p>
+          <pre class="example nohighlight"
+          title="Add Base Signing for Holder Binding and Pseudonym"
+          data-include="TestVectors/PseudonymHB/addRawBaseSignatureInfo.json"
+          data-include-format="text"></pre>
+          <p>
+Finally, the values above are run through the algorithm of section
+<a href="#serializebaseproofvalue"></a>, producing the `proofValue` which is
+used in the signed base document shown below.
+          </p>
+          <pre class="example nohighlight"
+          title="Signed Base Document for Holder Binding and Pseudonym"
+          data-include="TestVectors/PseudonymHB/addSignedSDBase.json"
+          data-include-format="text"></pre>
+          </section>
+          <section>
+            <h5>Holder Binding and Pseudonym Derived Proof</h5>
+            <p>
+As explained in section <a href="#derived-proof"></a>, we use a
+mocked random number generation procedure and demonstrate the use of a
+|presentationHeader|. The same |seed| and |presentationHeader| as given in
+<a href="#example-seed-and-presentation-header-values"></a> are used here.
+                        </p>
+                        <p>
+To create a derived proof, a holder starts with a signed document
+containing a base proof. The base document we will use for these test vectors is
+from
+<a href="#example-signed-base-document-for-pseudonym"></a>, above. The first
+step is to run the algorithm of Section <a href="#parsebaseproofvalue"></a> to
+recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|,
+|mandatoryPointers|, |signer_nym_entropy| and |featureOption|, as shown below.
+          </p>
+          <pre class="example nohighlight"
+          title="Recovered Base Signature Data for Holder Binding and Pseudonym"
+          data-include="TestVectors/PseudonymHB/derivedRecoveredBaseData.json"
+          data-include-format="text"></pre>
+          <p>
+Next the holder uses the the "Verification and Finalization" operation from
+[[CFRG-Pseudonym-BBS-Signature]] to both verify the signature and compute the
+|nym_secret| value. This operation uses the |holder_secret|, |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind| values amongst others.
+          </p>
+          <pre class="example nohighlight"
+          title="Computed Nym Secret"
+          data-include="TestVectors/PseudonymHB/nymSecret.json"
+          data-include-format="text"></pre>
+          <p>
+Next, the holder needs to indicate what else, if anything, they wish to reveal
+to the verifiers, by specifying JSON pointers for selective disclosure. In this
+case, the holder reveals the same information as given in
+<a href="#example-selective-disclosure-pointers-for-features"></a>.
+This results in the same |revealDocument|
+as shown in <a href="#example-unsigned-reveal-document-for-features"></a>.
+          <p>
+Running <a href="#createdisclosuredata"></a> yields the same information for
+derived group indexes as shown in
+<a href="#example-derived-group-indexes-for-features"></a> and the same
+adjusted mandatory and selective indexes as shown in
+<a href="#example-adjusted-mandatory-and-selective-indexes-for-features"></a>.
+          </p>
+          <p>
+Within <a href="#createdisclosuredata"></a>, we compute the |pseudonym| based on
+the same |verfifier_id| shown in <a href="example-verifier-id"></a>.
+The final output of <a href="#createdisclosuredata"></a> is shown below. Note
+the inclusion of the computed |pseudonym| and the |featureOption| value.
+          </p>
+          <pre class="example nohighlight" title="Disclosure Data for Holder Binding and Pseudonym"
+          data-include="TestVectors/PseudonymHB/derivedDisclosureData.json"
+          data-include-format="text"></pre>
+          <p>
+Finally, using the disclosure data above with the algorithm of section
+<a href="#serializederivedproofvalue"></a>, we obtain the signed derived (reveal)
+document shown below.
+          </p>
+          <pre class="example nohighlight"
+          title="Signed Derived Document for Holder Binding and Pseudonym"
+          data-include="TestVectors/PseudonymHB/derivedRevealDocument.json"
           data-include-format="text"></pre>
           </section>
         </section>

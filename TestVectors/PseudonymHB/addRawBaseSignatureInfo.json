@@ -1,0 +1,12 @@
+{
+  "bbsSignature": "9251f497cb002c19f959a760fa24c5e961df9cb8ff5fbaaef14f2b7f1f41649990c30bd8c1d373e878a5d120123d658a326141275eee7833352d611cc1c05175c9c0f0ddeb0fdec09ad1bfad8796e410",
+  "bbsHeader": "3a5bbf25d34d90b18c35cd2357be6a6f42301e94fc9e52f77e93b773c5614bdf8eea112c04d89e133880f96766ebae73693f75f1bbcbbaa473dc06254bdec4fb",
+  "publicKey": "a4ef1afa3da575496f122b9b78b8c24761531a8a093206ae7c45b80759c168ba4f7a260f9c3367b6c019b4677841104b10665edbe70ba3ebe7d9cfbffbf71eb016f70abfbb163317f372697dc63efd21fc55764f63926a8f02eaea325a2a888f",
+  "hmacKey": "00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+  "mandatoryPointers": [
+    "/issuer",
+    "/expirationDate"
+  ],
+  "signerNymEntropyHex": "25555cf635188a1c33989056f5129e6ab4be0e7c5cc588c48d308e0254eed140",
+  "featureOption": "holder_binding_pseudonym"
+}
