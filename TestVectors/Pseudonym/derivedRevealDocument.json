@@ -15,24 +15,12 @@
     "url": "https://dmv.utopia.example/",
     "image": "https://dmv.utopia.example/logo.png"
   },
-  "issuanceDate": "2023-11-15T10:00:00-07:00",
   "expirationDate": "2028-11-15T12:00:00-06:00",
-  "name": "Utopia Driver's License",
-  "image": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUg...kSuQmCC",
-  "description": "A license granting driving privileges in Utopia.",
   "credentialSubject": {
     "type": "LicensedDriver",
     "driversLicense": {
       "type": "Iso18013DriversLicense",
-      "document_number": "542426814",
-      "family_name": "TURNER",
-      "given_name": "SUSAN",
-      "portrait": "data:image/jpeg;base64,/9j/4AAQSkZJR...RSClooooP/2Q==",
-      "birth_date": "1998-08-28",
-      "issue_date": "2023-01-15T10:00:00-07:00",
-      "expiry_date": "2028-08-27T12:00:00-06:00",
       "issuing_country": "UA",
-      "issuing_authority": "UADMV",
       "driving_privileges": [
         {
           "codes": [
@@ -54,12 +42,7 @@
           "issue_date": "2019-01-01",
           "expiry_date": "2017-01-01"
         }
-      ],
-      "un_distinguishing_sign": "UTA",
-      "aamva_aka_suffix": "1ST",
-      "sex": 2,
-      "aamva_family_name_truncation": "N",
-      "aamva_given_name_truncation": "N"
+      ]
     }
   },
   "proof": {
@@ -68,6 +51,6 @@
     "created": "2023-08-15T23:36:38Z",
     "verificationMethod": "did:key:zUC7DerdEmfZ8f4pFajXgGwJoMkV1ofMTmEG5UoNvnWiPiLuGKNeqgRpLH2TV4Xe5mJ2cXV76gRN7LFQwapF1VFu6x2yrr5ci1mXqC1WNUrnHnLgvfZfMH7h6xP6qsf9EKRQrPQ#zUC7DerdEmfZ8f4pFajXgGwJoMkV1ofMTmEG5UoNvnWiPiLuGKNeqgRpLH2TV4Xe5mJ2cXV76gRN7LFQwapF1VFu6x2yrr5ci1mXqC1WNUrnHnLgvfZfMH7h6xP6qsf9EKRQrPQ",
     "proofPurpose": "assertionMethod",
-    "proofValue": "u2V0IhlhQmKMuC6c2TzkaduRAsxSVDKDDf_snqohFfLolj_Vz3vKYmd_yccbnnRcyw4lvod4TUaD7g2FDUZQQGSbG0LVr6CivAZ0ugxfByGa537ZHiGJYQDpbvyXTTZCxjDXNI1e-am9CMB6U_J5S936Tt3PFYUvfjuoRLATYnhM4gPlnZuuuc2k_dfG7y7qkc9wGJUvexPtYYKTvGvo9pXVJbxIrm3i4wkdhUxqKCTIGrnxFuAdZwWi6T3omD5wzZ7bAGbRneEEQSxBmXtvnC6Pr59nPv_v3HrAW9wq_uxYzF_NyaX3GPv0h_FV2T2OSao8C6uoyWiqIj1ggABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v-CZy9pc3N1ZXJvL2V4cGlyYXRpb25EYXRlwlggFgYYECDYAlltrMK3XIHpBCTzDn53cj3Hh3sCPLhh2S0"
+    "proofValue": "u2V0Jh1kDcLOUaT1U1nk3quDkF17PQzEgDCNHAXEYisVROzDSfZvS4GFz1E4aynx0O6MLP1mvBZWWW_glZDe85r74JP4kMYOvaqFKHoIk7X5O6xZEVZTfE6RuddjfuuCj4uHghxJg5o9x3nvkMJ61NSOkRrgYlEa41cYIkr3YVbUGfgQztG1bn_xNxUtxL_l-ydfETP9kiSnYJr-eOn-HPJvNB8ajdH_Gvvzq-JLE2NONOFwZw5mrNCp2wACj_5BQ-pIj4grP30QE9DYFokxEYi68qvFEsWEiamy-fAhHT5-4CnNr46gY5OYqpzjnAQB4cYWb6jbgYjJP86_YZwpd6LaZEfrliqQOSOKaBGw3ufnMOGjDBILSM5dGlVw96vbx1MjPi-jlA_PqRxXRHjhet-2d5jebfehDak6Jz0Qn1TNYsYguJ8bh47ougc8Q-8eSzzRhoP3WPzWhUbjINQUFqbbWEumtwdyhGyaYo9Cp8N9um8Ds56pGKvqwLZOof9W-uw7uBYdwyBxfL-bu78sKZX2fEWuW4rBLTMf0uq1P54S9lWOuogJyE48tvpSl4l0wYztfg-rEtCryXxRL3bYxc4vz1UIG6Ni1FyyNUtPCcveZt4LHPUgOEoniYt27cKspSRz4WoQoxGckN2d0B1JKbay1MzJWXatdBW28VFG-yxI_kdFz9qfHhbfZ8ZxDhkp4W9lB2ySDIlOaCX6awGJEMIo7jfiLUhNyTPCXFbCeBkJUSMQAaAuUO6RxHxSnGZILBuwsav-Qjs9PV5Ov0jPScKXvkhMWBgNVF6ieQRjcZdvrkFH5J5cDb1T4QAkQ-lbN17h7Ei455BIz6kkyOfq1XEyDago4cypo5qn54R0yuZFZnhntuzhvDTZLkeEN2b-CiY956QBFoMSYegzzZdN9g4BTmnlChIQcUMg_K8PunPdDL0Tb_KiX_5n-q_Ik5RE3MTYwxQANOUKdnqaaKoI3_joYVxIcFOuwDVe5DbOeLhG_o3hYGH0YMCfEXjF6cuUzRoHeJniOMXa9SNV2HVTB8q8KbDVJoN4Fsh0KBmxzKlQAcq52drhnAnsYMj4I_L-vOOwirszTN1u3tpZdn2qzrErcKgcApLyC_livvdA1r0j7hfzYvxT4HVyj8mJr6JYsvqE9ox_zzGxuv-7vQvJXCK-HKhQBn4OjAAEBAgIAhwABAgUGCAmGAAEFBwoQRBEzd6pYMIOGB_8sjcsqB0DvE8LIdBjvtXVZJDIypp2vHilN0JKvgzrU3x6Z4ANMc3uTKRbzeBc"
   }
 }
