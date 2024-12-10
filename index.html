@@ -3275,14 +3275,6 @@ repeated below.
           data-include-format="text">
           </pre>
           <p>
-As part of the <em>blind signature generation</em> from
-[[CFRG-Blind-BBS-Signature]], one can include a |signer_blind| which we show
-below.
-          </p>
-          <pre class="example nohighlight" title="Holder Binding Signer Blind"
-          data-include="TestVectors/FeatureInputs/signerBlindHB.json"
-          data-include-format="text"></pre>
-          <p>
 In this scenario, we consider an electronic version of a drivers license.
           </p>
           <pre class="example nohighlight"
@@ -3354,7 +3346,7 @@ Now we use the <em>blind signature generation</em> procedure of
 <a href="#base-proof-serialization-bbs-2023"></a>
 procedure.
 Shown below are the computed |bbsSignature|, |bbsHeader|, |publicKey|,
-|hmacKey|, |mandatoryPointers|, |signerBlind|, and |featureOption|, where byte
+|hmacKey|, |mandatoryPointers|, and |featureOption|, where byte
 data is shown in hexadecimal.
           </p>
           <pre class="example nohighlight"
@@ -3389,8 +3381,8 @@ containing a base proof. The base document we will use for these test vectors is
 the final example from Section <a href="#holder-binding-base-proof"></a>, above.
 The first step is to run the algorithm of Section
 <a href="#parsebaseproofvalue"></a> to
-recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
-|signerBlind|, and |featureOption| as shown below.
+recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|,
+|mandatoryPointers|, and |featureOption| as shown below.
           </p>
           <pre class="example nohighlight"
           title="Recovered Base Signature Data for Holder Binding"
@@ -3644,7 +3636,7 @@ Since |featureOption| is equal to `"pseudonym_hidden_pid"`, the procedure of
 section <a href="#base-proof-serialization-bbs-2023"></a> will produce the
 output shown below. This makes use of the
 signature generation algorithm of [[CFRG-Pseudonym-BBS-Signature]]. Note the
-inclusion of the |featureOption| as well as the |signerBlind| value, as these
+inclusion of the |featureOption| value, as this
 need to be communicated to the holder.
           </p>
           <pre class="example nohighlight"
@@ -3675,8 +3667,8 @@ containing a base proof. The base document we will use for these test vectors is
 from
 <a href="#example-signed-base-document-for-hidden-pid"></a>, above. The first
 step is to run the algorithm of Section <a href="#parsebaseproofvalue"></a> to
-recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
-|signerBlind|, and |featureOption|, as shown below.
+recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|,
+|mandatoryPointers|, and |featureOption|, as shown below.
           </p>
           <pre class="example nohighlight"
           title="Recovered Base Signature Data for Hidden PID"
