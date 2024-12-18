@@ -1,0 +1,583 @@
+{
+  "groups": {
+    "selective": {
+      "matching": {
+        "dataType": "Map",
+        "value": [
+          [
+            1,
+            "_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n"
+          ],
+          [
+            2,
+            "_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n"
+          ],
+          [
+            8,
+            "_:b0 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n"
+          ],
+          [
+            16,
+            "_:b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n"
+          ],
+          [
+            17,
+            "_:b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n"
+          ],
+          [
+            20,
+            "_:b2 <https://www.w3.org/2018/credentials#credentialSubject> _:b0 .\n"
+          ],
+          [
+            22,
+            "_:b2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+          ],
+          [
+            23,
+            "_:b2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+          ]
+        ]
+      },
+      "nonMatching": {
+        "dataType": "Map",
+        "value": [
+          [
+            0,
+            "<did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg==> .\n"
+          ],
+          [
+            3,
+            "_:b0 <https://schema.org/birthDate> \"1978-07-17\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+          ],
+          [
+            4,
+            "_:b0 <https://schema.org/familyName> \"SMITH\" .\n"
+          ],
+          [
+            5,
+            "_:b0 <https://schema.org/gender> \"Female\" .\n"
+          ],
+          [
+            6,
+            "_:b0 <https://schema.org/givenName> \"JANE\" .\n"
+          ],
+          [
+            7,
+            "_:b0 <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4v43hPwAHIgK1v4tX6wAAAABJRU5ErkJggg==> .\n"
+          ],
+          [
+            9,
+            "_:b0 <https://w3id.org/citizenship#commuterClassification> \"C1\" .\n"
+          ],
+          [
+            10,
+            "_:b0 <https://w3id.org/citizenship#permanentResidentCard> _:b1 .\n"
+          ],
+          [
+            11,
+            "_:b0 <https://w3id.org/citizenship#residentSince> \"2015-01-01\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+          ],
+          [
+            12,
+            "_:b1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCard> .\n"
+          ],
+          [
+            13,
+            "_:b1 <https://schema.org/identifier> \"83627465\" .\n"
+          ],
+          [
+            14,
+            "_:b1 <https://w3id.org/citizenship#lprCategory> \"C09\" .\n"
+          ],
+          [
+            15,
+            "_:b1 <https://w3id.org/citizenship#lprNumber> \"999-999-999\" .\n"
+          ],
+          [
+            18,
+            "_:b2 <https://schema.org/description> \"Government of Utopia Permanent Resident Card.\" .\n"
+          ],
+          [
+            19,
+            "_:b2 <https://schema.org/name> \"Permanent Resident Card\" .\n"
+          ],
+          [
+            21,
+            "_:b2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n"
+          ]
+        ]
+      },
+      "deskolemizedNQuads": [
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_5b442c70-954c-431b-8eb0-5e789d95558d_1 .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+      ]
+    },
+    "mandatory": {
+      "matching": {
+        "dataType": "Map",
+        "value": [
+          [
+            0,
+            "<did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg==> .\n"
+          ],
+          [
+            16,
+            "_:b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n"
+          ],
+          [
+            17,
+            "_:b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n"
+          ],
+          [
+            21,
+            "_:b2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n"
+          ]
+        ]
+      },
+      "nonMatching": {
+        "dataType": "Map",
+        "value": [
+          [
+            1,
+            "_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n"
+          ],
+          [
+            2,
+            "_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n"
+          ],
+          [
+            3,
+            "_:b0 <https://schema.org/birthDate> \"1978-07-17\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+          ],
+          [
+            4,
+            "_:b0 <https://schema.org/familyName> \"SMITH\" .\n"
+          ],
+          [
+            5,
+            "_:b0 <https://schema.org/gender> \"Female\" .\n"
+          ],
+          [
+            6,
+            "_:b0 <https://schema.org/givenName> \"JANE\" .\n"
+          ],
+          [
+            7,
+            "_:b0 <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4v43hPwAHIgK1v4tX6wAAAABJRU5ErkJggg==> .\n"
+          ],
+          [
+            8,
+            "_:b0 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n"
+          ],
+          [
+            9,
+            "_:b0 <https://w3id.org/citizenship#commuterClassification> \"C1\" .\n"
+          ],
+          [
+            10,
+            "_:b0 <https://w3id.org/citizenship#permanentResidentCard> _:b1 .\n"
+          ],
+          [
+            11,
+            "_:b0 <https://w3id.org/citizenship#residentSince> \"2015-01-01\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+          ],
+          [
+            12,
+            "_:b1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCard> .\n"
+          ],
+          [
+            13,
+            "_:b1 <https://schema.org/identifier> \"83627465\" .\n"
+          ],
+          [
+            14,
+            "_:b1 <https://w3id.org/citizenship#lprCategory> \"C09\" .\n"
+          ],
+          [
+            15,
+            "_:b1 <https://w3id.org/citizenship#lprNumber> \"999-999-999\" .\n"
+          ],
+          [
+            18,
+            "_:b2 <https://schema.org/description> \"Government of Utopia Permanent Resident Card.\" .\n"
+          ],
+          [
+            19,
+            "_:b2 <https://schema.org/name> \"Permanent Resident Card\" .\n"
+          ],
+          [
+            20,
+            "_:b2 <https://www.w3.org/2018/credentials#credentialSubject> _:b0 .\n"
+          ],
+          [
+            22,
+            "_:b2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+          ],
+          [
+            23,
+            "_:b2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+          ]
+        ]
+      },
+      "deskolemizedNQuads": [
+        "<did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg==> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n"
+      ]
+    },
+    "combined": {
+      "matching": {
+        "dataType": "Map",
+        "value": [
+          [
+            0,
+            "<did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg==> .\n"
+          ],
+          [
+            1,
+            "_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n"
+          ],
+          [
+            2,
+            "_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n"
+          ],
+          [
+            8,
+            "_:b0 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n"
+          ],
+          [
+            16,
+            "_:b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n"
+          ],
+          [
+            17,
+            "_:b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n"
+          ],
+          [
+            20,
+            "_:b2 <https://www.w3.org/2018/credentials#credentialSubject> _:b0 .\n"
+          ],
+          [
+            21,
+            "_:b2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n"
+          ],
+          [
+            22,
+            "_:b2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+          ],
+          [
+            23,
+            "_:b2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+          ]
+        ]
+      },
+      "nonMatching": {
+        "dataType": "Map",
+        "value": [
+          [
+            3,
+            "_:b0 <https://schema.org/birthDate> \"1978-07-17\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+          ],
+          [
+            4,
+            "_:b0 <https://schema.org/familyName> \"SMITH\" .\n"
+          ],
+          [
+            5,
+            "_:b0 <https://schema.org/gender> \"Female\" .\n"
+          ],
+          [
+            6,
+            "_:b0 <https://schema.org/givenName> \"JANE\" .\n"
+          ],
+          [
+            7,
+            "_:b0 <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4v43hPwAHIgK1v4tX6wAAAABJRU5ErkJggg==> .\n"
+          ],
+          [
+            9,
+            "_:b0 <https://w3id.org/citizenship#commuterClassification> \"C1\" .\n"
+          ],
+          [
+            10,
+            "_:b0 <https://w3id.org/citizenship#permanentResidentCard> _:b1 .\n"
+          ],
+          [
+            11,
+            "_:b0 <https://w3id.org/citizenship#residentSince> \"2015-01-01\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+          ],
+          [
+            12,
+            "_:b1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCard> .\n"
+          ],
+          [
+            13,
+            "_:b1 <https://schema.org/identifier> \"83627465\" .\n"
+          ],
+          [
+            14,
+            "_:b1 <https://w3id.org/citizenship#lprCategory> \"C09\" .\n"
+          ],
+          [
+            15,
+            "_:b1 <https://w3id.org/citizenship#lprNumber> \"999-999-999\" .\n"
+          ],
+          [
+            18,
+            "_:b2 <https://schema.org/description> \"Government of Utopia Permanent Resident Card.\" .\n"
+          ],
+          [
+            19,
+            "_:b2 <https://schema.org/name> \"Permanent Resident Card\" .\n"
+          ]
+        ]
+      },
+      "deskolemizedNQuads": [
+        "<did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg==> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_5b442c70-954c-431b-8eb0-5e789d95558d_1 .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+      ]
+    }
+  },
+  "skolemized": {
+    "expanded": [
+      {
+        "https://www.w3.org/2018/credentials#credentialSubject": [
+          {
+            "https://w3id.org/citizenship#birthCountry": [
+              {
+                "@value": "Arcadia"
+              }
+            ],
+            "https://schema.org/birthDate": [
+              {
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "@value": "1978-07-17"
+              }
+            ],
+            "https://w3id.org/citizenship#commuterClassification": [
+              {
+                "@value": "C1"
+              }
+            ],
+            "https://schema.org/familyName": [
+              {
+                "@value": "SMITH"
+              }
+            ],
+            "https://schema.org/gender": [
+              {
+                "@value": "Female"
+              }
+            ],
+            "https://schema.org/givenName": [
+              {
+                "@value": "JANE"
+              }
+            ],
+            "https://schema.org/image": [
+              {
+                "@id": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4v43hPwAHIgK1v4tX6wAAAABJRU5ErkJggg=="
+              }
+            ],
+            "https://w3id.org/citizenship#permanentResidentCard": [
+              {
+                "https://schema.org/identifier": [
+                  {
+                    "@value": "83627465"
+                  }
+                ],
+                "https://w3id.org/citizenship#lprCategory": [
+                  {
+                    "@value": "C09"
+                  }
+                ],
+                "https://w3id.org/citizenship#lprNumber": [
+                  {
+                    "@value": "999-999-999"
+                  }
+                ],
+                "@type": [
+                  "https://w3id.org/citizenship#PermanentResidentCard"
+                ],
+                "@id": "urn:bnid:_5b442c70-954c-431b-8eb0-5e789d95558d_0"
+              }
+            ],
+            "https://w3id.org/citizenship#residentSince": [
+              {
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "@value": "2015-01-01"
+              }
+            ],
+            "@type": [
+              "https://w3id.org/citizenship#PermanentResident",
+              "https://schema.org/Person"
+            ],
+            "@id": "urn:bnid:_5b442c70-954c-431b-8eb0-5e789d95558d_1"
+          }
+        ],
+        "https://schema.org/description": [
+          {
+            "@value": "Government of Utopia Permanent Resident Card."
+          }
+        ],
+        "https://www.w3.org/2018/credentials#issuer": [
+          {
+            "@id": "did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg",
+            "https://schema.org/image": [
+              {
+                "@id": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg=="
+              }
+            ]
+          }
+        ],
+        "https://schema.org/name": [
+          {
+            "@value": "Permanent Resident Card"
+          }
+        ],
+        "@type": [
+          "https://www.w3.org/2018/credentials#VerifiableCredential",
+          "https://w3id.org/citizenship#PermanentResidentCardCredential"
+        ],
+        "https://www.w3.org/2018/credentials#validFrom": [
+          {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+            "@value": "2024-12-16T00:00:00Z"
+          }
+        ],
+        "https://www.w3.org/2018/credentials#validUntil": [
+          {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+            "@value": "2025-12-16T23:59:59Z"
+          }
+        ],
+        "@id": "urn:bnid:_5b442c70-954c-431b-8eb0-5e789d95558d_2"
+      }
+    ],
+    "compact": {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://w3id.org/citizenship/v4rc1"
+      ],
+      "id": "urn:bnid:_5b442c70-954c-431b-8eb0-5e789d95558d_2",
+      "type": [
+        "VerifiableCredential",
+        "PermanentResidentCardCredential"
+      ],
+      "description": "Government of Utopia Permanent Resident Card.",
+      "name": "Permanent Resident Card",
+      "credentialSubject": {
+        "id": "urn:bnid:_5b442c70-954c-431b-8eb0-5e789d95558d_1",
+        "type": [
+          "PermanentResident",
+          "Person"
+        ],
+        "birthDate": "1978-07-17",
+        "familyName": "SMITH",
+        "gender": "Female",
+        "givenName": "JANE",
+        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4v43hPwAHIgK1v4tX6wAAAABJRU5ErkJggg==",
+        "birthCountry": "Arcadia",
+        "commuterClassification": "C1",
+        "permanentResidentCard": {
+          "id": "urn:bnid:_5b442c70-954c-431b-8eb0-5e789d95558d_0",
+          "type": "PermanentResidentCard",
+          "identifier": "83627465",
+          "lprCategory": "C09",
+          "lprNumber": "999-999-999"
+        },
+        "residentSince": "2015-01-01"
+      },
+      "issuer": {
+        "id": "did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg",
+        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg=="
+      },
+      "validFrom": "2024-12-16T00:00:00Z",
+      "validUntil": "2025-12-16T23:59:59Z"
+    }
+  },
+  "deskolemizedNQuads": [
+    "<did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg==> .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCard> .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_0 <https://schema.org/identifier> \"83627465\" .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_0 <https://w3id.org/citizenship#lprCategory> \"C09\" .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_0 <https://w3id.org/citizenship#lprNumber> \"999-999-999\" .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://schema.org/birthDate> \"1978-07-17\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://schema.org/familyName> \"SMITH\" .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://schema.org/gender> \"Female\" .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://schema.org/givenName> \"JANE\" .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4v43hPwAHIgK1v4tX6wAAAABJRU5ErkJggg==> .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://w3id.org/citizenship#commuterClassification> \"C1\" .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://w3id.org/citizenship#permanentResidentCard> _:_5b442c70-954c-431b-8eb0-5e789d95558d_0 .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://w3id.org/citizenship#residentSince> \"2015-01-01\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://schema.org/description> \"Government of Utopia Permanent Resident Card.\" .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://schema.org/name> \"Permanent Resident Card\" .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_5b442c70-954c-431b-8eb0-5e789d95558d_1 .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+  ],
+  "labelMap": {
+    "dataType": "Map",
+    "value": [
+      [
+        "_5b442c70-954c-431b-8eb0-5e789d95558d_0",
+        "b1"
+      ],
+      [
+        "_5b442c70-954c-431b-8eb0-5e789d95558d_1",
+        "b0"
+      ],
+      [
+        "_5b442c70-954c-431b-8eb0-5e789d95558d_2",
+        "b2"
+      ]
+    ]
+  },
+  "nquads": [
+    "<did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg==> .\n",
+    "_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n",
+    "_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n",
+    "_:b0 <https://schema.org/birthDate> \"1978-07-17\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:b0 <https://schema.org/familyName> \"SMITH\" .\n",
+    "_:b0 <https://schema.org/gender> \"Female\" .\n",
+    "_:b0 <https://schema.org/givenName> \"JANE\" .\n",
+    "_:b0 <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4v43hPwAHIgK1v4tX6wAAAABJRU5ErkJggg==> .\n",
+    "_:b0 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n",
+    "_:b0 <https://w3id.org/citizenship#commuterClassification> \"C1\" .\n",
+    "_:b0 <https://w3id.org/citizenship#permanentResidentCard> _:b1 .\n",
+    "_:b0 <https://w3id.org/citizenship#residentSince> \"2015-01-01\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:b1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCard> .\n",
+    "_:b1 <https://schema.org/identifier> \"83627465\" .\n",
+    "_:b1 <https://w3id.org/citizenship#lprCategory> \"C09\" .\n",
+    "_:b1 <https://w3id.org/citizenship#lprNumber> \"999-999-999\" .\n",
+    "_:b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
+    "_:b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+    "_:b2 <https://schema.org/description> \"Government of Utopia Permanent Resident Card.\" .\n",
+    "_:b2 <https://schema.org/name> \"Permanent Resident Card\" .\n",
+    "_:b2 <https://www.w3.org/2018/credentials#credentialSubject> _:b0 .\n",
+    "_:b2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n",
+    "_:b2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:b2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+  ]
+}

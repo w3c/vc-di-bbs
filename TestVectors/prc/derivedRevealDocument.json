@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://w3id.org/citizenship/v4rc1"
+  ],
+  "type": [
+    "VerifiableCredential",
+    "PermanentResidentCardCredential"
+  ],
+  "issuer": {
+    "id": "did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg",
+    "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg=="
+  },
+  "validFrom": "2024-12-16T00:00:00Z",
+  "validUntil": "2025-12-16T23:59:59Z",
+  "credentialSubject": {
+    "type": [
+      "PermanentResident",
+      "Person"
+    ],
+    "birthCountry": "Arcadia"
+  },
+  "proof": {
+    "type": "DataIntegrityProof",
+    "cryptosuite": "bbs-2023",
+    "created": "2023-08-15T23:36:38Z",
+    "verificationMethod": "did:key:zUC7DerdEmfZ8f4pFajXgGwJoMkV1ofMTmEG5UoNvnWiPiLuGKNeqgRpLH2TV4Xe5mJ2cXV76gRN7LFQwapF1VFu6x2yrr5ci1mXqC1WNUrnHnLgvfZfMH7h6xP6qsf9EKRQrPQ#zUC7DerdEmfZ8f4pFajXgGwJoMkV1ofMTmEG5UoNvnWiPiLuGKNeqgRpLH2TV4Xe5mJ2cXV76gRN7LFQwapF1VFu6x2yrr5ci1mXqC1WNUrnHnLgvfZfMH7h6xP6qsf9EKRQrPQ",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "u2V0DhVkC0Ijffg2oSdpDAAaxIfdBZ43cQO7IlpZaU74Mplsfq2KJtEjgvuiEdPfPDiUrS-aUU61CwH7FzKvNkZjXkVPfxKInWqHtyRBvwFK82607ygGnHigsmwtoWHD4gDhPnpUq57MA8199hbuojdjz7TavC6OvotVNAPuVHmkvp7B4Gc0_ESBhjPzmY7_m4wPdtD1Clm5RZLm6suKvBFmhemrhsGlyQXPWs5dlC9o5gv6Wyu-bBiozlDCFGyGJPjABmevsuZQpPpEgD7yABZOgAYlJeZU7FblvQeuDspkyHNWjcvFbS-Ayhg-r1u3uQVPZCwtqQBApmxcOAzE7e4PTH5UeLACk5kqrh5NEGhtpCCIClFctc5S5PIRUuYhu9QIyFxl8sI-lPc0T3CxHn8XCj8_dbmEq9-qq70DAfn7bw94f3UkidZgUjsGzfvCmtdXop5Q0X1bv2JPezGKj3DOH8-4qRCJuxN3fR_hQ653EzeLw7ewOcbFCcWgJjZaDQ7L8QNb-fQcboe4c0fmX11ExNoXowZkMnne0loGXeS5yQTPww19PrNKqZr47LWZbPfaDqfoXDSWAdv9ddTSNB76N2FsJR1OAmGiBhBwm86u6_oAlItyRCpIN-XoytPdXDRNPD7m9RqPkBW5dJY3HrFdKSXkYUIBHo4OgTFRFJW6Bz5h8VIb5y7LjQjKJCheDsv3Wr2hfYz_asX4Vdvlg_HbjFHXZ5RIEKvkrx68VPMI0biv0pFfyY-kV9ViYE6zoTvL9g7lB6N2O6A-MUH5eK5iyjL7R3I9t_U9CxR29bQQu_xjcnIBpHSnEtXGroMGejc3nOrmjqm9wPLZmUoQWreFVHyc6lvWNgG4-87BgWS26ItowmScaBJRRYdnG6cZ4vOsg-LynCx8QdYbwKyvAnPkvAYLRM_Ao8l_iZAQYBZCvKjAhqFPyhJ3b_LQfT1KbTqBVoDxNdqIAAAEChAAEBQeGAAEHERITRBEzd6o"
+  }
+}
