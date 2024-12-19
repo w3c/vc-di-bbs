@@ -592,8 +592,8 @@ The following algorithm serializes the base proof value, including the
 BBS signature, HMAC key, and mandatory pointers.
 The required inputs are a base signature |bbsSignature|, |bbsHeader|,
 |publicKey|, an HMAC key |hmacKey|, an array of
-|mandatoryPointers|, |featureOption|, and depending on
-the |featureOption| value possibly the |signer_nym_entropy| value.
+|mandatoryPointers|, |featureOption|, and, depending on
+the |featureOption| value, possibly a |signer_nym_entropy| value.
 A single <em>base proof</em> string value is produced as output.
           </p>
 
@@ -785,7 +785,7 @@ produced as output, which contains the |bbsProof|, |labelMap|,
           <ol class="algorithm">
             <li>
 Initialize |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|,
-and |mandatoryPointers|, and
+and |mandatoryPointers|
 to the values of the associated properties in the object
 returned when calling the algorithm in Section
 <a href="#parsebaseproofvalue"></a>, passing the `proofValue` from `proof`.
@@ -882,7 +882,7 @@ set `bbsProof` to the value computed by the `BlindProofGen` procedure from
 |bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|,
 |messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
 and `commitment_with_proof`. The holder will also furnish its
-|holder_secret|, and |proverBlind| that was used to compute the
+|holder_secret|, and the |proverBlind| that was used to compute the
 |commitment_with_proof|. This is the
 <a href="#anonymous-holder-binding">Anonymous Holder Binding</a> feature option.
 <span class="note">To
@@ -897,16 +897,21 @@ the |nym_secret| value. This operation uses the |prover_nym|,
 |signer_nym_entropy|, and |secret_prover_blind|.
 
 Determine the |nym_domain|. This might be specified by
-the verifier or set by the holder depending on the usage scenario. Use
+the verifier or set by the holder, depending on the usage scenario. Use
 the "Proof Generation with Pseudonym"
 operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
 This operation takes as inputs
-|PK|, the original issuers public key,
-|signature|,  the |bbsSignature|, |header| is the |bbsHeader|,
-|ph| is the |presentationHeader|,
-|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
-|nym_secret|, |nym_domain|, empty
-|committed_messages| array, and |secret_prover_blind|. In addition to providing
+the original issuer's public key as |PK|,
+the               |bbsSignature| as |signature|,
+the                  |bbsHeader| as |header|,
+the         |presentationHeader| as |ph|,
+the                |bbsMessages| as |messages|,
+the           |selectiveIndexes| as |disclosed_indexes|,
+                                  a |nym_secret|,
+                                  a |nym_domain|,
+                 an empty array for |committed_messages|,
+and                               a |secret_prover_blind|.
+In addition to providing
 the raw
 cryptographic proof value which is assigned to |bbsProof|,
 it also returns the |pseudonym|.
