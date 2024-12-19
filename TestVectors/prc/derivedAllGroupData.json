@@ -95,7 +95,7 @@
           ],
           [
             18,
-            "_:b2 <https://schema.org/description> \"Government of Utopia Permanent Resident Card.\" .\n"
+            "_:b2 <https://schema.org/description> \"Permanent Resident Card from Government of Utopia.\" .\n"
           ],
           [
             19,
@@ -108,14 +108,14 @@
         ]
       },
       "deskolemizedNQuads": [
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_5b442c70-954c-431b-8eb0-5e789d95558d_1 .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_d3b161e0-573e-4362-81df-e9512fae4442_1 .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
       ]
     },
     "mandatory": {
@@ -205,7 +205,7 @@
           ],
           [
             18,
-            "_:b2 <https://schema.org/description> \"Government of Utopia Permanent Resident Card.\" .\n"
+            "_:b2 <https://schema.org/description> \"Permanent Resident Card from Government of Utopia.\" .\n"
           ],
           [
             19,
@@ -227,9 +227,9 @@
       },
       "deskolemizedNQuads": [
         "<did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg==> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n"
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n"
       ]
     },
     "combined": {
@@ -331,7 +331,7 @@
           ],
           [
             18,
-            "_:b2 <https://schema.org/description> \"Government of Utopia Permanent Resident Card.\" .\n"
+            "_:b2 <https://schema.org/description> \"Permanent Resident Card from Government of Utopia.\" .\n"
           ],
           [
             19,
@@ -341,15 +341,15 @@
       },
       "deskolemizedNQuads": [
         "<did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg==> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_5b442c70-954c-431b-8eb0-5e789d95558d_1 .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
-        "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_d3b161e0-573e-4362-81df-e9512fae4442_1 .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+        "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
       ]
     }
   },
@@ -414,7 +414,7 @@
                 "@type": [
                   "https://w3id.org/citizenship#PermanentResidentCard"
                 ],
-                "@id": "urn:bnid:_5b442c70-954c-431b-8eb0-5e789d95558d_0"
+                "@id": "urn:bnid:_d3b161e0-573e-4362-81df-e9512fae4442_0"
               }
             ],
             "https://w3id.org/citizenship#residentSince": [
@@ -427,12 +427,12 @@
               "https://w3id.org/citizenship#PermanentResident",
               "https://schema.org/Person"
             ],
-            "@id": "urn:bnid:_5b442c70-954c-431b-8eb0-5e789d95558d_1"
+            "@id": "urn:bnid:_d3b161e0-573e-4362-81df-e9512fae4442_1"
           }
         ],
         "https://schema.org/description": [
           {
-            "@value": "Government of Utopia Permanent Resident Card."
+            "@value": "Permanent Resident Card from Government of Utopia."
           }
         ],
         "https://www.w3.org/2018/credentials#issuer": [
@@ -466,7 +466,7 @@
             "@value": "2025-12-16T23:59:59Z"
           }
         ],
-        "@id": "urn:bnid:_5b442c70-954c-431b-8eb0-5e789d95558d_2"
+        "@id": "urn:bnid:_d3b161e0-573e-4362-81df-e9512fae4442_2"
       }
     ],
     "compact": {
@@ -474,15 +474,15 @@
         "https://www.w3.org/ns/credentials/v2",
         "https://w3id.org/citizenship/v4rc1"
       ],
-      "id": "urn:bnid:_5b442c70-954c-431b-8eb0-5e789d95558d_2",
+      "id": "urn:bnid:_d3b161e0-573e-4362-81df-e9512fae4442_2",
       "type": [
         "VerifiableCredential",
         "PermanentResidentCardCredential"
       ],
-      "description": "Government of Utopia Permanent Resident Card.",
+      "description": "Permanent Resident Card from Government of Utopia.",
       "name": "Permanent Resident Card",
       "credentialSubject": {
-        "id": "urn:bnid:_5b442c70-954c-431b-8eb0-5e789d95558d_1",
+        "id": "urn:bnid:_d3b161e0-573e-4362-81df-e9512fae4442_1",
         "type": [
           "PermanentResident",
           "Person"
@@ -495,7 +495,7 @@
         "birthCountry": "Arcadia",
         "commuterClassification": "C1",
         "permanentResidentCard": {
-          "id": "urn:bnid:_5b442c70-954c-431b-8eb0-5e789d95558d_0",
+          "id": "urn:bnid:_d3b161e0-573e-4362-81df-e9512fae4442_0",
           "type": "PermanentResidentCard",
           "identifier": "83627465",
           "lprCategory": "C09",
@@ -513,43 +513,43 @@
   },
   "deskolemizedNQuads": [
     "<did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4z/DiPwAG0ALnwgz64QAAAABJRU5ErkJggg==> .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCard> .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_0 <https://schema.org/identifier> \"83627465\" .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_0 <https://w3id.org/citizenship#lprCategory> \"C09\" .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_0 <https://w3id.org/citizenship#lprNumber> \"999-999-999\" .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://schema.org/birthDate> \"1978-07-17\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://schema.org/familyName> \"SMITH\" .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://schema.org/gender> \"Female\" .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://schema.org/givenName> \"JANE\" .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4v43hPwAHIgK1v4tX6wAAAABJRU5ErkJggg==> .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://w3id.org/citizenship#commuterClassification> \"C1\" .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://w3id.org/citizenship#permanentResidentCard> _:_5b442c70-954c-431b-8eb0-5e789d95558d_0 .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_1 <https://w3id.org/citizenship#residentSince> \"2015-01-01\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://schema.org/description> \"Government of Utopia Permanent Resident Card.\" .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://schema.org/name> \"Permanent Resident Card\" .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_5b442c70-954c-431b-8eb0-5e789d95558d_1 .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
-    "_:_5b442c70-954c-431b-8eb0-5e789d95558d_2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCard> .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_0 <https://schema.org/identifier> \"83627465\" .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_0 <https://w3id.org/citizenship#lprCategory> \"C09\" .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_0 <https://w3id.org/citizenship#lprNumber> \"999-999-999\" .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/Person> .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResident> .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <https://schema.org/birthDate> \"1978-07-17\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <https://schema.org/familyName> \"SMITH\" .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <https://schema.org/gender> \"Female\" .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <https://schema.org/givenName> \"JANE\" .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <https://schema.org/image> <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2P4v43hPwAHIgK1v4tX6wAAAABJRU5ErkJggg==> .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <https://w3id.org/citizenship#birthCountry> \"Arcadia\" .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <https://w3id.org/citizenship#commuterClassification> \"C1\" .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <https://w3id.org/citizenship#permanentResidentCard> _:_d3b161e0-573e-4362-81df-e9512fae4442_0 .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_1 <https://w3id.org/citizenship#residentSince> \"2015-01-01\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://schema.org/description> \"Permanent Resident Card from Government of Utopia.\" .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://schema.org/name> \"Permanent Resident Card\" .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://www.w3.org/2018/credentials#credentialSubject> _:_d3b161e0-573e-4362-81df-e9512fae4442_1 .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://www.w3.org/2018/credentials#validFrom> \"2024-12-16T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
+    "_:_d3b161e0-573e-4362-81df-e9512fae4442_2 <https://www.w3.org/2018/credentials#validUntil> \"2025-12-16T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n"
   ],
   "labelMap": {
     "dataType": "Map",
     "value": [
       [
-        "_5b442c70-954c-431b-8eb0-5e789d95558d_0",
+        "_d3b161e0-573e-4362-81df-e9512fae4442_0",
         "b1"
       ],
       [
-        "_5b442c70-954c-431b-8eb0-5e789d95558d_1",
+        "_d3b161e0-573e-4362-81df-e9512fae4442_1",
         "b0"
       ],
       [
-        "_5b442c70-954c-431b-8eb0-5e789d95558d_2",
+        "_d3b161e0-573e-4362-81df-e9512fae4442_2",
         "b2"
       ]
     ]
@@ -573,7 +573,7 @@
     "_:b1 <https://w3id.org/citizenship#lprNumber> \"999-999-999\" .\n",
     "_:b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
     "_:b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
-    "_:b2 <https://schema.org/description> \"Government of Utopia Permanent Resident Card.\" .\n",
+    "_:b2 <https://schema.org/description> \"Permanent Resident Card from Government of Utopia.\" .\n",
     "_:b2 <https://schema.org/name> \"Permanent Resident Card\" .\n",
     "_:b2 <https://www.w3.org/2018/credentials#credentialSubject> _:b0 .\n",
     "_:b2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n",

@@ -17,7 +17,7 @@
   "_:c14n1 <https://w3id.org/citizenship#residentSince> \"2015-01-01\"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n",
   "_:c14n2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
   "_:c14n2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
-  "_:c14n2 <https://schema.org/description> \"Government of Utopia Permanent Resident Card.\" .\n",
+  "_:c14n2 <https://schema.org/description> \"Permanent Resident Card from Government of Utopia.\" .\n",
   "_:c14n2 <https://schema.org/name> \"Permanent Resident Card\" .\n",
   "_:c14n2 <https://www.w3.org/2018/credentials#credentialSubject> _:c14n1 .\n",
   "_:c14n2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n",

@@ -17,7 +17,7 @@
   "_:b1 <https://w3id.org/citizenship#lprNumber> \"999-999-999\" .\n",
   "_:b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/citizenship#PermanentResidentCardCredential> .\n",
   "_:b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/2018/credentials#VerifiableCredential> .\n",
-  "_:b2 <https://schema.org/description> \"Government of Utopia Permanent Resident Card.\" .\n",
+  "_:b2 <https://schema.org/description> \"Permanent Resident Card from Government of Utopia.\" .\n",
   "_:b2 <https://schema.org/name> \"Permanent Resident Card\" .\n",
   "_:b2 <https://www.w3.org/2018/credentials#credentialSubject> _:b0 .\n",
   "_:b2 <https://www.w3.org/2018/credentials#issuer> <did:key:zDnaeTHxNEBZoKaEo6PdA83fq98ebiFvo3X273Ydu4YmV96rg> .\n",
