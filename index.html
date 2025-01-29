@@ -1879,6 +1879,9 @@ computed from two parts. The first part, the |nym_secret|, is specified by,
 and will only be known by, the
 holder; the second part, the |nym_domain|, may be specified by either the holder
 or the verifier, and will be shared between the holder and verifier.
+An issuer binds a credential to a |nym_secret| during the issuance process. 
+A holder can then compute pseudonyms from the |nym_secret| and prove to
+verifiers that these pseudonyms are bound to the credential the are presenting.
 Cryptographic pseudonyms computed from the same |nym_secret| but different
 |nym_domain| values are unlinkable.
           </p>
