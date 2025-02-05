@@ -1201,7 +1201,7 @@ If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS disclosure proof header. If the result
-is not an array of five, six, seven, or eight elements
+is not an array of five, six, seven, or eight elements,
 an error MUST be raised and SHOULD convey an error type of
 <a data-cite="VC-DATA-INTEGRITY#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
             </li>
@@ -1322,7 +1322,7 @@ is produced as output.
           </p>
           <p>
 The |featureOption| parameter is used to indicate which optional feature, if
-any, is being used. It can take one of the following values `"baseline"`,
+any, is being used. It can take one of the following values: `"baseline"`,
 `"anonymous_holder_binding"`, `"pseudonym"`, or
 `"holder_binding_pseudonym"`. Note that `"baseline"` is used to denote the case of
 no optional features. If |featureOption| is set to
@@ -1599,10 +1599,13 @@ the issuer generates a
 cryptographically random value for the |signer_nym_entropy| and computes the
 `bbsSignature` using the
 "Blind Issuance" operation from [[CFRG-Pseudonym-BBS-Signature]]
-with appropriate key material, |bbsHeader|
-for the `header`, |bbsMessages| for the `messages`, |commitment_with_proof|
-for the `commitment_with_proof`, and
-|signer_nym_entropy| value. If the issuer might ever need to reissue a
+with
+                                appropriate key material,
+            |bbsHeader| for the `header`,
+          |bbsMessages| for the `messages`,
+|commitment_with_proof| for the `commitment_with_proof`, and
+                                |signer_nym_entropy| value.
+If the issuer might ever need to reissue a
 credential to this holder that is bound to the same |nym_secret|, they should
 retain the |signer_nym_entropy| value; otherwise, this value can be discarded.
 <br><br>
