@@ -170,13 +170,13 @@
             title: "Blind BBS Signatures",
             authors: ["V. Kalos", "G. Bernstein"],
             date: "2024",
-            href: "https://www.ietf.org/archive/id/draft-kalos-bbs-blind-signatures-00.html#name-proof-generation"
+            href: "https://www.ietf.org/archive/id/draft-kalos-bbs-blind-signatures-00.html#name-proof-generationhttps://www.ietf.org/archive/id/draft-kalos-bbs-blind-signatures-03.html"
           },
           "CFRG-Pseudonym-BBS-Signature": {
             title: "BBS per Verifier Linkability",
             authors: ["V. Kalos"],
-            date: "2023",
-            href: "https://www.ietf.org/archive/id/draft-vasilis-bbs-per-verifier-linkability-00.html"
+            date: "2024",
+            href: "https://www.ietf.org/archive/id/draft-kalos-bbs-per-verifier-linkability-00.html"
           }
         },
         lint: { "informative-dfn": false },
@@ -592,8 +592,8 @@ The following algorithm serializes the base proof value, including the
 BBS signature, HMAC key, and mandatory pointers.
 The required inputs are a base signature |bbsSignature|, |bbsHeader|,
 |publicKey|, an HMAC key |hmacKey|, an array of
-|mandatoryPointers|, |featureOption|, and depending on
-the |featureOption| value the |pid|, and |signer_blind| values.
+|mandatoryPointers|, |featureOption|, and, depending on
+the |featureOption| value, possibly a |signer_nym_entropy| value.
 A single <em>base proof</em> string value is produced as output.
           </p>
 
@@ -624,13 +624,12 @@ header bytes `0xd9`, `0x5d`, and `0x04`.
                 </li>
                 <li>
 Initialize |components| to an array with six elements containing the values of:
-|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|, and
-|signerBlind|.
+|bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, and |mandatoryPointers|.
                 </li>
               </ol>
             </li>
             <li>
-If |featureOption| equals `"pseudonym_issuer_pid"`:
+If |featureOption| equals `"pseudonym"`:
               <ol class="algorithm">
                 <li>
 Initialize a byte array, |proofValue|, that starts with the BBS base proof
@@ -639,12 +638,12 @@ header bytes `0xd9`, `0x5d`, and `0x06`.
                 <li>
 Initialize |components| to an array with six elements containing the values of:
 |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|, and
-|pid|.
+|signer_nym_entropy|.
                 </li>
               </ol>
             </li>
             <li>
-If |featureOption| equals `"pseudonym_hidden_pid"`:
+If |featureOption| equals `"holder_binding_pseudonym"`:
               <ol class="algorithm">
                 <li>
 Initialize a byte array, |proofValue|, that starts with the BBS base proof
@@ -653,7 +652,7 @@ header bytes `0xd9`, `0x5d`, and `0x08`.
                 <li>
 Initialize |components| to an array with six elements containing the values of:
 |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|, and
-|signerBlind|.
+|signer_nym_entropy|.
                 </li>
               </ol>
             </li>
@@ -682,8 +681,7 @@ disclosure base proof value. The required input is a proof value
 six or seven elements, using the names "bbsSignature", "bbsHeader",
 "publicKey",
 "hmacKey", "mandatoryPointers", "featureOption", and possibly optional feature
-parameter "pid" or
-"signer_blind", is produced as output.
+parameter "signer_nym_entropy", is produced as output.
           </p>
 
           <ol class="algorithm">
@@ -715,11 +713,11 @@ If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x04`, set
                 </li>
                 <li>
 If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x06`, set
-|featureOption| to `"pseudonym_issuer_pid"`.
+|featureOption| to `"pseudonym"`.
                 </li>
                 <li>
 If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x08`, set
-|featureOption| to `"pseudonym_hidden_pid"`.
+|featureOption| to `"holder_binding_pseudonym"`.
                 </li>
                 <li>
 If the |decodedProofValue| starts with any other three byte sequence,
@@ -745,20 +743,20 @@ and "mandatoryPointers", in that order, and add |featureOption| as a property.
                 <li>
 If |featureOption| equals `"anonymous_holder_binding"`, set the property names
 for the object based on |components| to "bbsSignature", "bbsHeader",
-"publicKey", "hmacKey", "mandatoryPointers", and "signer_blind", in that order, and
+"publicKey", "hmacKey", and "mandatoryPointers", in that order, and
 add |featureOption| as a property.
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_issuer_pid"`, set the property names
+If |featureOption| equals `"pseudonym"`, set the property names
 for the object based on |components| to "bbsSignature", "bbsHeader",
-"publicKey", "hmacKey", "mandatoryPointers", and "pid", in that order, and
-add |featureOption| as a property.
+"publicKey", "hmacKey", "mandatoryPointers", and "signer_nym_entropy", in that
+order, and add |featureOption| as a property.
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_hidden_pid"`, set the property names
+If |featureOption| equals `"holder_binding_pseudonym"`, set the property names
 for the object based on |components| to "bbsSignature", "bbsHeader",
-"publicKey", "hmacKey", "mandatoryPointers", and "signer_blind", in that order, and
-add |featureOption| as a property.
+"publicKey", "hmacKey", "mandatoryPointers", and "signer_nym_entropy", in that
+order, and add |featureOption| as a property.
                 </li>
               </ol>
             </li>
@@ -787,8 +785,8 @@ produced as output, which contains the following fields: |bbsProof|,
           <ol class="algorithm">
             <li>
 Initialize |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|,
-|mandatoryPointers|, |pid|, and
-|signer_blind| to the values of the associated properties in the object
+and |mandatoryPointers|
+to the values of the associated properties in the object
 returned when calling the algorithm in Section
 <a href="#parsebaseproofvalue"></a>, passing the `proofValue` from `proof`.
             </li>
@@ -883,54 +881,90 @@ set `bbsProof` to the value computed by the `BlindProofGen` procedure from
 |signature| is the
 |bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|,
 |messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
-`commitment_with_proof`, and `signer_blind`. The holder will also furnish its
-|holder_secret|, and |proverBlind| that was used to compute the
+and `commitment_with_proof`. The holder will also furnish its
+|holder_secret|, and the |proverBlind| that was used to compute the
 |commitment_with_proof|. This is the
 <a href="#anonymous-holder-binding">Anonymous Holder Binding</a> feature option.
 <span class="note">To
 be updated when IETF API is finalized.</span>
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_issuer_pid"`, compute the |pseudonym|
-according to the `Calculate Pseudonym` procedure given
-in [[CFRG-Pseudonym-BBS-Signature]],
-and set |bsProof| to the value computed by the
-`Signer Provided PID Proof Generation` procedure from
-[[CFRG-Pseudonym-BBS-Signature]], where |PK| is the original issuers public key,
-|signature| is the
-|bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|
-|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|, and
-|pseudonym| is the `pseudonym`. This is for the
-<a href="#pseudonyms-with-issuer-known-pid">Pseudonyms with Issuer-known PID</a>
+If |featureOption| equals `"pseudonym"`,
+use the "Verification and Finalization" operation
+from [[CFRG-Pseudonym-BBS-Signature]] with an empty |committed_messages| array
+to both verify the |bbsSignature| and compute
+the |nym_secret| value. This operation uses the |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind|.
+<br><br>
+Determine the |nym_domain|. This might be specified by
+the verifier or set by the holder, depending on the usage scenario. Use
+the "Proof Generation with Pseudonym"
+operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
+This operation takes as inputs
+the original issuer's public key as |PK|,
+the               |bbsSignature| as |signature|,
+the                  |bbsHeader| as |header|,
+the         |presentationHeader| as |ph|,
+the                |bbsMessages| as |messages|,
+the           |selectiveIndexes| as |disclosed_indexes|,
+                                  a |nym_secret|,
+                                  a |nym_domain|,
+                 an empty array for |committed_messages|,
+and                               a |secret_prover_blind|.
+In addition to providing
+the raw
+cryptographic proof value which is assigned to |bbsProof|,
+it also returns the |pseudonym|.
+<br><br>
+This is for the
+<a href="#credential-bound-pseudonyms">Credential-Bound Pseudonyms</a>
 feature option. <span class="note">To be updated when IETF API is finalized.
 </span>
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_hidden_pid"`, compute the |pseudonym|
-according to the `Calculate Pseudonym` procedure given
-in [[CFRG-Pseudonym-BBS-Signature]],
-and set |bsProof| to the value computed by the
-`Hidden PID Proof Generation with Pseudonym` procedure from
-[[CFRG-Pseudonym-BBS-Signature]], where |PK| is the original issuers public key,
-|signature| is the
-|bbsSignature|, |header| is the |bbsHeader|, |ph| is the  |presentationHeader|
+If |featureOption| equals `"holder_binding_pseudonym"`,
+use the "Verification and Finalization" operation
+from [[CFRG-Pseudonym-BBS-Signature]] with the |committed_messages| array
+containing the |holder_secret| as its only value,
+to both verify the |bbsSignature| and compute
+the |nym_secret| value. This operation uses the |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind|.
+<br><br>
+Determine the |nym_domain|. This might be specified by
+the verifier or set by the holder depending on the usage scenario. Use
+the "Proof Generation with Pseudonym"
+operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
+This operation takes as inputs
+|PK|, the original issuers public key,
+|signature|,  the |bbsSignature|, |header| is the |bbsHeader|,
+|ph| is the |presentationHeader|,
 |messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
-|commitment_with_proof|, |pid|, |proverBlind|, |signer_blind|, and
-|pseudonym| is the `pseudonym`. This is for the
-<a href="#pseudonyms-with-hidden-pid">Pseudonyms with Hidden PID</a>
+This operation takes as inputs
+   the                  original issuers public key as |PK|,
+   the                               |bbsSignature| as |signature|,
+   the                                  |bbsHeader| as |header|,
+   the                         |presentationHeader| as |ph|,
+   the                                |bbsMessages| as |messages|,
+   the                           |selectiveIndexes| as |disclosed_indexes|,
+   a                                                   |nym_secret|,
+   a                                                   |nym_domain|,
+   the only value of the |committed_messages| array as |holder_secret|,
+   and a                                               |secret_prover_blind|.
+In addition to
+providing the raw cryptographic proof value which is assigned to |bbsProof|,
+it also returns the |pseudonym|.
+
+This is for the
+<a href="#holder-binding-and-pseudonyms">Holder Binding and Pseudonyms</a>
 feature option. <span class="note">To be updated when IETF API is finalized.
 </span>
                 </li>
               </ol>
             </li>
           <li>
-If |featureOption| equals `"anonymous_holder_binding"` or
-`"pseudonym_hidden_pid"`, set the |lengthBBSMessages| parameter
-to the length of the |bbsMessages| array.
-If |featureOption| equals `"pseudonym_issuer_pid"` set the |lengthBBSMessages|
-parameter to the length of the |bbsMessages| array + 1. <span class="note">This
-is due to the known-issuer PID being considered a "BBS message".
-</span>
+If |featureOption| equals `"anonymous_holder_binding"`,
+`"pseudonym"`, or `"holder_binding_pseudonym"` set the |lengthBBSMessages|
+parameter to the length of the |bbsMessages| array.
           </li>
 
 
@@ -1034,9 +1068,10 @@ Return `map` as <em>decompressed label map</em>.
 The following algorithm serializes a derived proof value. The required inputs
 are a BBS proof (|bbsProof|), a label map (|labelMap|), an
 array of mandatory indexes (|mandatoryIndexes|), an array of
-selective indexes (|selectiveIndexes|), and a BBS presentation header
+selective indexes (|selectiveIndexes|), a BBS presentation header
 (|presentationHeader|), the |featureOption| indicator, and,
-depending on the |featureOption| value, a |pseudonym| and/or |lengthBBSMessages| value.
+depending on the |featureOption| value, a |nym_domain|, |pseudonym|, and/or
+|lengthBBSMessages| value.
 A single <em>derived proof</em>
 value, serialized as a byte string, is produced as output.
           </p>
@@ -1078,7 +1113,7 @@ Initialize |components| to an array with elements containing the values of
                   </ol>
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_issuer_pid"` or `"pseudonym_hidden_pid"`:
+If |featureOption| equals `"pseudonym"`:
                   <ol class="algorithm">
                     <li>
 Initialize |proofValue| to start with the
@@ -1087,7 +1122,21 @@ disclosure proof header bytes: `0xd9`, `0x5d`, and `0x07`.
                     <li>
 Initialize |components| to an array with elements containing the values of
 |bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
-|presentationHeader|, |pseudonym|, and |lengthBBSMessages|.
+|presentationHeader|, |nym_domain|, |pseudonym|, and |lengthBBSMessages|.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+If |featureOption| equals `"holder_binding_pseudonym"`:
+                  <ol class="algorithm">
+                    <li>
+Initialize |proofValue| to start with the
+disclosure proof header bytes: `0xd9`, `0x5d`, and `0x09`.
+                    </li>
+                    <li>
+Initialize |components| to an array with elements containing the values of
+|bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
+|presentationHeader|, |nym_domain|, |pseudonym|, and |lengthBBSMessages|.
                     </li>
                   </ol>
                 </li>
@@ -1113,10 +1162,10 @@ starting with "`u`" and ending with the base64url-no-pad-encoded value of
 The following algorithm parses the components of the derived proof value.
 The required input is a derived proof value (|proofValue|). A
 single <em>derived proof value</em> object is produced as output, which
-contains a set of six or seven elements, having the names "bbsProof",
+contains a set of six to nine elements, having the names "bbsProof",
 "labelMap", "mandatoryIndexes", "selectiveIndexes", "presentationHeader",
 "featureOption", and, depending on the value of the |featureOption| parameter,
-"pseudonym" and/or "lengthBBSMessages".
+"nym_domain", "pseudonym", and/or "lengthBBSMessages".
           </p>
 
           <ol class="algorithm">
@@ -1150,14 +1199,19 @@ If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
 If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
 `0x07`, set |featureOption| to `"pseudonym"`.
                 </li>
+                <li>
+If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
+`0x09`, set |featureOption| to `"holder_binding_pseudonym"`.
+                </li>
               </ol>
+
+              <!-- |bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
+              |presentationHeader|, |nym_domain|, |pseudonym|, and |lengthBBSMessages|. -->
 
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS disclosure proof header. If the result
-is not an array of five, six, or seven elements —
-a byte array, a map of integers to integers,
-two arrays of integers, and one or two byte arrays;
+is not an array of five, six, seven, or eight elements,
 an error MUST be raised and SHOULD convey an error type of
 <a data-cite="VC-DATA-INTEGRITY#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
             </li>
@@ -1168,9 +1222,9 @@ second element of `components` as `compressedLabelMap`.
             </li>
             <li>
 Return <em>derived proof value</em> as an object with properties set to the five,
-six, or seven elements, using the names "bbsProof", "labelMap", "mandatoryIndexes",
-"selectiveIndexes", "presentationHeader", and optional "pseudonym" and/or
-"lengthBBSMessages", respectively.
+six, seven, or eight elements, using the names "bbsProof", "labelMap",
+"mandatoryIndexes", "selectiveIndexes", "presentationHeader", and optional
+"nym_domain", "pseudonym", and/or "lengthBBSMessages", respectively.
 In addition, add |featureOption| and its value to the object.
             </li>
           </ol>
@@ -1278,12 +1332,15 @@ is produced as output.
           </p>
           <p>
 The |featureOption| parameter is used to indicate which optional feature, if
-any, is being used. It can take one of the following values `"baseline"`,
-`"anonymous_holder_binding"`, `"pseudonym_issuer_pid"`, or
-`"pseudonym_hidden_pid"`. Note that `"baseline"` is used to denote the case of
+any, is being used. It can take one of the following values: `"baseline"`,
+`"anonymous_holder_binding"`, `"pseudonym"`, or
+`"holder_binding_pseudonym"`. Note that `"baseline"` is used to denote the case of
 no optional features. If |featureOption| is set to
-`"anonymous_holder_binding"` or `"pseudonym_hidden_pid"`, the
+`"anonymous_holder_binding"`, `"pseudonym"`, or `"holder_binding_pseudonym"`, the
 |commitment_with_proof| input MUST be supplied.
+If |featureOption| is set to
+`"pseudonym"` or `"holder_binding_pseudonym"`, the
+|signer_nym_entropy| input MUST be supplied.
           </p>
 
           <ol class="algorithm">
@@ -1500,9 +1557,14 @@ Section 4: Algorithms</a>. Required inputs are
 cryptographic hash data (|hashData|),
 |featureOption|, and, if required,
 |commitment_with_proof|.
-If |featureOption| is set to `"anonymous_holder_binding"` or
-`"pseudonym_hidden_pid"`, the
+If |featureOption| is set to `"anonymous_holder_binding"`,
+`"pseudonym"`, or `"holder_binding_pseudonym"`, the
 |commitment_with_proof| input MUST be supplied; if not supplied,
+an error MUST be raised and SHOULD convey an error type of
+<a data-cite="VC-DATA-INTEGRITY#PROOF_GENERATION_ERROR">PROOF_GENERATION_ERROR</a>.
+If |featureOption| is set to
+`"pseudonym"` or `"holder_binding_pseudonym"`, the
+|signer_nym_entropy| input MUST be supplied; if not supplied,
 an error MUST be raised and SHOULD convey an error type of
 <a data-cite="VC-DATA-INTEGRITY#PROOF_GENERATION_ERROR">PROOF_GENERATION_ERROR</a>.
 A single <em>digital proof</em> value represented as series of bytes is produced
@@ -1538,42 +1600,38 @@ If |featureOption| equals `"anonymous_holder_binding"` , compute the
 `bbsSignature` using the `BlindSign` procedure of [[CFRG-Blind-BBS-Signature]],
 with appropriate key material, |commitment_with_proof| for the
 `commitment_with_proof`, |bbsHeader| for the `header`, and |bbsMessages|
-for the `messages`. If the signing procedure uses the optional |signer_blind|
-parameter, retain this value for use when calling
-<a href="#serializebaseproofvalue"></a> (below). This provides for the
+for the `messages`. This provides for the
 <a href="#anonymous-holder-binding">Anonymous Holder Binding</a> feature.
                 </li>
                 <li>
-If |featureOption| equals `"pseudonym_issuer_pid"`, generate a
-cryptographically random 32 byte |pid| value. Compute the
-`bbsSignature` using the `Signer Provided PID Signature Generation` procedure
-of [[CFRG-Pseudonym-BBS-Signature]],
-with appropriate key material, |bbsHeader| for the `header`, |bbsMessages|
-for the `messages`, and |pid| for the `pid`. Retain the |pid| value for use when
-calling <a href="#serializebaseproofvalue"></a> below.
-This provides for <a href="#pseudonyms-with-issuer-known-pid">Pseudonym with
-Issuer-known PID</a> feature.
-                </li>
-                <li>
-If |featureOption| equals `"pseudonym_hidden_pid"`, compute
-the `bbsSignature` using the `Hidden PID Signature Generation` procedure of
-[[CFRG-Pseudonym-BBS-Signature]], with appropriate key material, |bbsHeader|
-for the `header`, |bbsMessages| for the `messages`, and |commitment_with_proof|
-for the `commitment_with_proof`. If the signing procedure uses the optional
-|signer_blind| parameter retain this value for use when calling
-<a href="#serializebaseproofvalue"></a> below.
-This provides for the <a href="#pseudonyms-with-hidden-pid">Pseudonym with
-  Hidden PID</a> feature.
+If |featureOption| equals `"pseudonym"` or `"holder_binding_pseudonym"`,
+the issuer generates a
+cryptographically random value for the |signer_nym_entropy| and computes the
+`bbsSignature` using the
+"Blind Issuance" operation from [[CFRG-Pseudonym-BBS-Signature]]
+with
+                                appropriate key material,
+            |bbsHeader| for the `header`,
+          |bbsMessages| for the `messages`,
+|commitment_with_proof| for the `commitment_with_proof`, and
+                                |signer_nym_entropy| values.
+If the issuer might ever need to reissue a
+credential to this holder that is bound to the same |nym_secret|, they should
+retain the |signer_nym_entropy| value; otherwise, this value can be discarded.
+<br><br>
+This provides for the <a href="#credential-bound-pseudonyms">Credential-Bound
+Pseudonyms</a>  or <a href="#holder-binding-and-pseudonyms">Holder Binding and
+Pseudonyms</a> features.
                 </li>
               </ol>
             </li>
             <li>
 Initialize `proofValue to the result of calling the algorithm in Section
 <a href="#serializebaseproofvalue"></a>, passing |bbsSignature|, |bbsHeader|,
-|publicKey|, |hmacKey|, |mandatoryPointers|, |featureOption|, and depending on
-the |featureOption| value and signing options the |pid|, and |signer_blind|
-values as paramters.
-Note `publicKey` is a byte array of the public key, encoded according to
+|publicKey|, |hmacKey|, |mandatoryPointers|, |featureOption|, and, depending on
+the |featureOption| value, |signer_nym_entropy|, as parameters.
+<br><br>
+Note: `publicKey` is a byte array of the public key, encoded according to
 [[CFRG-BBS-SIGNATURE]].
             </li>
             <li>
@@ -1607,17 +1665,20 @@ have been precomputed by the holder. See
 information.
           </p>
           <p>
-If |featureOption| equals `"pseudonym_issuer_pid"`, the REQUIRED
-additional input is the |verifier_id| which is communicated to the holder by the
-verifier. See <a href="#pseudonyms-with-issuer-known-pid">Pseudonyms with
-Issuer-known PID</a> for background information.
+If |featureOption| equals `"pseudonym"`, the REQUIRED
+additional inputs are |prover_nym| and |proverBlind|, which are both known to
+the holder, and |nym_dofmain|, which is either set by the holder or communicated
+to the holder by the verifier.
+See <a href="#credential-bound-pseudonyms">Credential-Bound Pseudonyms</a> for
+background information.
           </p>
           <p>
-If |featureOption| equals `"pseudonym_hidden_pid"`, the REQUIRED
-additional inputs are the |pid|, |proverBlind| (both known to
-holder), and |verifier_id| which is communicated to the holder by the verifier.
-See <a href="#pseudonyms-with-hidden-pid">Pseudonyms with
-Hidden PID</a> for background information.
+If |featureOption| equals `"holder_binding_pseudonym"`, the REQUIRED
+additional inputs are |holder_secret|, |prover_nym|, and |proverBlind|, which are
+all known to the holder, and |nym_dofmain|, which is either set by the holder or
+communicated to the holder by the verifier.
+See <a href="#holder-binding-and-pseudonyms">Holder Binding and Pseudonyms</a> for
+background information.
           </p>
           <ol>
             <li>
@@ -1692,7 +1753,7 @@ Let |proof| be the value of |securedDocument|.|proof|.
             <li>
 Initialize |bbsProof|, |proofHash|, |mandatoryHash|, |selectiveIndexes|,
 |presentationHeader|, |nonMandatory|, |featureOption|, and, possibly,
-|pseudonym|, to the values associated
+|lengthBBSMessages| and/or |pseudonym|, to the values associated
 with their property names in the object returned when calling the algorithm in
 Section <a href="#createverifydata"></a>, passing the |unsecuredDocument|,
 |proof|, and any custom JSON-LD API options (such as a document loader).
@@ -1722,11 +1783,13 @@ applying the `ProofVerify` verification algorithm of
 <span class="note">To be updated when IETF API is finalized.</span>
               </li>
               <li>
-If the |featureOption| equals `"pseudonym"`, initialize |verified|
-to the result of
-applying the `ProofVerifyWithPseudonym` verification algorithm of
+If the |featureOption| equals `"pseudonym"` or `"holder_binding_pseudonym"`,
+initialize |verified|
+to the result of applying the
+"Proof Verification with Pseudonym" operation from
 [[CFRG-Pseudonym-BBS-Signature]] using |lengthBBSMessages| for the `"L"`
-parameter. <span class="note">To be updated when IETF
+parameter and an empty |committed_messages| array.
+<span class="note">To be updated when IETF
 API is finalized.</span>
               </li>
             </ol>
@@ -1754,9 +1817,9 @@ Return a [=verification result=] with [=struct/items=]:
 The cryptographic properties of BBS signatures permit variants that
 can support advanced functionalities. This specification is limited to
 supporting only the most relevant of these enhancements, which we explain in the
-following sections. The variables |commitment_with_proof|,
-|pid|, and |pseudonym| are associated with these features and are not otherwise
-needed for BBS signatures and proofs.
+following sections. The variables |commitment_with_proof|, |holder_secret|,
+|prover_nym|, |signer_nym_entropy|, and |pseudonym| are associated with these
+features and are not otherwise needed for BBS signatures and proofs.
       </p>
       <p class="issue at-risk" title="Optional BBS features are at risk">
 The optional BBS features described in this section, and included in the
@@ -1779,115 +1842,221 @@ document with derived proof that can verify.
 To provide for this functionality, a holder generates a |holder_secret| value
 which should generally be at least 32 bytes long and cryptographically randomly
 generated. This value is never shared by the holder. Instead, the holder
-generates a commitment along with a zero knowledge proof of knowledge of this
-value, using the "Commitment Generation" procedure of [[CFRG-Blind-BBS-Signature]].
+generates a commitment, along with a zero knowledge proof of knowledge of this
+value, using the "Commitment Computation" operation of [[CFRG-Blind-BBS-Signature]].
 This computation involves cryptographically random values and computes
 the |commitment_with_proof| and |secret_prover_blind| values. The
-|commitment_with_proof| is conveyed to the issuer while the
+|commitment_with_proof| is conveyed to the issuer, while the
 |secret_prover_blind| is kept secret and is retained by the holder for use
 in generation of derived proofs.
-Note that a holder can run the "Commitment Generation" procedure multiple times
+Note that a holder can run the "Commitment Computation" operation multiple times,
 to produce unlinkable |commitment_with_proof| values for use with different issuers.
         </p>
         <p>
-The issuer, on receipt of the |commitment_with_proof|, follows the procedures of
-[[CFRG-Blind-BBS-Signature]] to produce a base proof (signature) over the document
-with the commitment furnished by the holder. If the issuer chooses to use the
-|signer_blind| parameter when creating the signature in
-[[CFRG-Blind-BBS-Signature]], this value needs to be conveyed to the holder as
-part of the base proof value.
+The issuer, on receipt of the |commitment_with_proof|, follows the procedures
+of this specification, and uses the "Blind Signature Generation" operation of
+[[CFRG-Blind-BBS-Signature]] to produce a base proof (signature) over the document,
+with the |commitment_with_proof| furnished by the holder.
         </p>
         <p>
 When the holder wants to create a selectively disclosed document with derived
-proof, they use their |holder_secret| (as a "commited message"), the
-|secret_prover_blind|, and, if supplied in the base proof, the |signer_blind|
-in the proof generation procedure of
-[[CFRG-Blind-BBS-Signature]].
+proof, they use the procedures of this specification and the "Proof Generation"
+operation of [[CFRG-Blind-BBS-Signature]]. They use their |holder_secret| as
+the only "message" in the |commited messages| array, and supply their
+|secret_prover_blind|.
         </p>
         <p>
-Verification of the revealed document with derived proof uses the "regular" BBS
-proof verification procedures of [[CFRG-BBS-SIGNATURE]].
+Verification of the revealed document with derived proof uses the procedures
+of this specification and the "Proof Verification" operation of
+[[CFRG-Blind-BBS-Signature]].
         </p>
 
       </section>
       <section>
-        <h3>Pseudonyms with Issuer-known PID</h3>
-        <p>
-This feature is a privacy preserving enhancement that allows a verifier that has
-seen a selectively revealed document with derived proof from a holder to
-recognize that the same holder is presenting a new selectively revealed document
-with derived proof. Note that this may just be a new unlinkable proof (derived
-proof) on the same selectively revealed information. By "privacy preserving," we
-mean that no uniquely identifiable information is added that would allow tracking
-between different verifiers that may share information amongst themselves. This
-variant does allow for the issuer to monitor usage if verifiers share
-information with the issuer.
-        </p>
-        <p>
-To furnish this capability, before creating the base proof for a document, an
-issuer generates a value known as a |pid| (prover id) which should be
-cryptographically random and at least 32 bytes long. This value is shared with
-the holder but otherwise kept secret. This value is then used in creating the
-base proof via the signing procedure in [[CFRG-Pseudonym-BBS-Signature]].
-        </p>
-        <p>
-The holder receives the document with base proof which includes the |pid| value
-from the issuer. The holder obtains a |verifier_id| associated with the verifier
-for which they intend to create a revealed document with derived proof. Using the
-procedures of [[CFRG-Pseudonym-BBS-Signature]], a cryptographic |pseudonym| value
-is generated. The derived proof value is generated via the proof generation
-procedure of [[CFRG-Pseudonym-BBS-Signature]], and this value along with the
-|pseudonym| are given to the verifier. Note that the |pid| value cannot be
-recovered from the |pseudonym|.
-        </p>
-        <p>
-When the verifier receives the revealed document with derived proof and
-|pseudonym|, they use the proof verification procedures of
-[[CFRG-Pseudonym-BBS-Signature]].
-        </p>
+        <h3>Credential-Bound Pseudonyms</h3>
+          <p>
+BBS-signed Verifiable Credentials as specified in this document allow for
+selective disclosure and unlinkable cryptographic proof artifacts. By
+"unlinkable", we mean that the
+cryptographic information in the derived proofs cannot be linked to other
+proofs nor the original signature. This implies that a verifier cannot determine
+whether a holder has presented the same credential before (with a different proof
+instantiation), nor can they assert some type of identity. Credential-bound
+pseudonyms provide a privacy preserving mechanism to allow for the limited
+linkability of a cryptographic pseudonym. Such a pseudonym may be determined
+strictly by the holder, or jointly by the holder and the verifier.
+          </p>
+          <p>
+This type of cryptographic pseudonym (cryptographic identifier/name) is
+computed from two parts. The first part, the |nym_secret|, is specified by,
+and will only be known by, the
+holder; the second part, the |nym_domain|, may be specified by either the holder
+or the verifier, and will be shared between the holder and verifier.
+An issuer binds a credential to a |nym_secret| during the issuance process. 
+A holder can then compute pseudonyms from the |nym_secret| and prove to
+verifiers that these pseudonyms are bound to the credential they are presenting.
+Cryptographic pseudonyms computed from the same |nym_secret| but different
+|nym_domain| values are unlinkable.
+          </p>
+          <p>
+The holder might choose a |nym_domain| to give themselves a pseudonym for some
+type of public forum, e.g., choose <code>|nym_domain| = "Mark Twain"</code>.
+The cryptographic pseudonym calculated by the holder from this |nym_domain|
+with their |nym_secret| is essentially unique, and no entity that does not both
+know the |nym_secret| and possess the base verifiable credential bound to the
+pseudonym could assert this pseudonymous identity. Note that the doublet of
+(|nym_domain|, pseudonym) has to be sent with the derived credential to assert
+this pseudonymous identity.
+          </p>
+          <p>
+In a different situation, a holder may be using a service from a verifier where
+the verifier wants to track visits over time or monitor use of some resource by
+the holder. In this case, the verifier chooses the |nym_domain| that the holder
+needs to use when presenting their derived credential. For example, a
+verifier might specify a public |nym_domain| tied to their DNS domain (e.g.,
+`"www.nym.example"`) for the holder to use. A verifier could also
+demonstrate that they support data minimization, of a sort, by periodically
+changing the |nym_domain| (e.g., tying it to a date,
+`"www.nym.example/2025-01-02"`). This specification does not dictate
+values for the |nym_domain|.
+          </p>
+          <p>
+Finally, to prevent a malicious holder who obtains another holder's
+|nym_secret| from getting a credential bound to that value, the operations
+from the [[CFRG-Pseudonym-BBS-Signature]] have the issuer add a randomization
+factor, |signer_nym_entropy|, that is securely "mixed" with the holder's
+portion, the |prover_nym|, during signature generation. This results in a
+|nym_secret| for which the issuer can provide cryptographic assurance that
+it is unique, to be used by the holder.
+          </p>
+          <p>
+An outline of the creation and use of credential-bound pseudonyms is shown in
+the steps below.
+          </p>
+          <ol class="algorithm">
+            <li>
+The holder creates a secure value, known as the |prover_nym|, that should be
+at least 32 bytes long and generated in cryptographically random manner. They
+then use the "`Commitment`" operation from [[CFRG-Pseudonym-BBS-Signature]]
+with an empty |committed_messages| array to compute
+the |commitment_with_proof| and the |secret_prover_blind|. The holder sends the
+|commitment_with_proof| to the issuer with a request for a credential, but never
+discloses |prover_nym| and |secret_prover_blind|, keeping them for later use.
+            </li>
+            <li>
+The issuer receives the holder's request for a credential with a bound pseudonym
+(|featureOption| equals `"pseudonym"`), along with the |commitment_with_proof|.
+The issuer generates a cryptographically random value for the
+|signer_nym_entropy| and uses the "Blind Issuance" operation from
+[[CFRG-Pseudonym-BBS-Signature]] to produce the base proof. Among other
+information, the base proof will contain the |signer_nym_entropy| value. If the
+issuer might ever need to reissue a credential to this holder that is bound to
+the same |nym_secret|, they should retain the |signer_nym_entropy| value;
+otherwise, this value can be discarded.
+            </li>
+            <li>
+On receipt of the credential with bound pseudonym, the holder uses the procedures
+in this specification, along with the "Verification and Finalization" operation
+from [[CFRG-Pseudonym-BBS-Signature]] with an empty |committed_messages| array,
+to both verify the signature and compute the |nym_secret| value. This operation
+uses the |prover_nym|, |signer_nym_entropy|, and |secret_prover_blind| values,
+amongst others. If third-party monitoring is being used, then the |nym_secret|
+value will need to be securely shared with the monitoring organization.
+            </li>
+            <li>
+When a holder wants to generate a derived proof bound to a pseudonym, they need
+to determine the |nym_domain|. As previously noted, this might be specified by
+the verifier or set by the holder, depending on the usage scenario. They then use
+the procedures in this specification with the "Proof Generation with Pseudonym"
+operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
+This operation takes as inputs the |nym_secret|, |nym_domain|, empty
+|committed_messages| array, and
+|secret_prover_blind|, amongst others. In addition to providing the raw
+cryptographic proof value, it also returns the |pseudonym| value that gets
+included in the derived proof.
+            </li>
+            <li>
+When a verifier receives a derived proof with bound pseudonym, they use the
+procedures in this specification along with the
+"Proof Verification with Pseudonym" operation from
+[[CFRG-Pseudonym-BBS-Signature]] to validate the derived proof. Note that these
+procedures will also validate that the specified |nym_domain| was used in the
+computation of the |pseudonym|.
+            </li>
+          </ol>
+
       </section>
       <section>
-        <h3>Pseudonyms with Hidden PID</h3>
+        <h3>Holder Binding and Pseudonyms</h3>
         <p>
-This feature is a privacy preserving enhancement that allows a verifier that has
-seen a selectively revealed document with derived proof from a holder to
-recognize that the same holder is presenting a new selectively revealed document
-with derived proof. Note that this may just be a new unlinkable proof (derived
-proof) on the same selectively revealed information. By "privacy preserving," we
-mean that no uniquely identifiable information is added that would allow tracking
-between different verifiers that may share information amongst themselves and/or
-with the issuer.
+Anonymous holder binding and credential-bound pseudonyms are, in a sense,
+orthogonal features, and a holder and credential ecosystem may wish to use both
+at the same time. For instance, a holder may wish to bind a verifiable
+credential to a |holder_secret|, so that only a holder knowing this value can
+generate a derived proof from the base proof, and bind a |nym_secret| to the
+base proof so that pseudonyms can be bound to the derived proof. This
+corresponds to the |featureOption| being equal to `"holder_binding_pseudonym"`.
         </p>
         <p>
-To provide for this capability, a holder needs to generate a secret |pid| value
-that should be at least 32 bytes long and generated in cryptographically random
-manner. The holder then uses the "Commitment Generation" procedure of
-[[CFRG-Blind-BBS-Signature]] to generate a |commitment_with_proof| value and
-a private |secret_prover_blind| value.
-This value needs to be conveyed to the issuer who will use it in the issuance
-of a document with base proof, in accordance with
-[[CFRG-Pseudonym-BBS-Signature]], which is sent to the holder. The |pid|
-value is never shared by the holder. If the issuer chooses to use the optional
-|signer_blind| parameter when creating the signature in this value needs to be
-conveyed to the holder as part of the base proof value.
+An outline of the creation and use of both anonymous holder binding and
+credential bound pseudonyms is given in the following steps.
         </p>
-        <p>
-The holder obtains a |verifier_id| associated with the verifier for which
-they intend to create a revealed document with derived proof. Using the
-procedures of [[CFRG-Pseudonym-BBS-Signature]], a cryptographic |pseudonym|
-value is generated from their |pid| value and the |verifier_id|. The derived
-proof value is generated via the proof generation using the |pid|,
-|secret_prover_blind|, |verifier_id|, and |signer_blind| using the
-procedures of [[CFRG-Pseudonym-BBS-Signature]],
-and this value is given to the
-verifier along with the |pseudonym|. Note that the |pid| value cannot be
-recovered from the |pseudonym|.
-        </p>
-        <p>
-When the verifier receives the revealed document with derived proof and
-|pseudonym|, they use the proof verification procedures of
-[[CFRG-Pseudonym-BBS-Signature]].
-        </p>
+        <ol class="algorithm">
+          <li>
+The holder creates two secure values known as the |holder_secret| and
+|prover_nym| that should be at
+least 32 bytes long and generated in cryptographically random manner. They then
+use the "Commitment" operation from [[CFRG-Pseudonym-BBS-Signature]] with the
+|committed_messages| array input containing the |holder_secret| as its only
+element, to compute the |commitment_with_proof| and |secret_prover_blind|. The
+|commitment_with_proof| is sent with their request to the issuer for a
+credential while the |holder_secret|, |prover_nym| and |secret_prover_blind| are
+kept for later use by the holder and are never disclosed.
+          </li>
+          <li>
+The issuer receives the holders request for a credential with a bound pseudonym,
+|featureOption| equals `"pseudonym"`, along with the |commitment_with_proof|.
+The issuer uses the procedures in this specification and generates a
+cryptographically random value for the |signer_nym_entropy| and uses the
+"Blind Issuance" operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the
+base proof. Among other information the base proof will contain the
+|signer_nym_entropy| value. If the issuer ever needs reissue a credential to
+this holder that is bound to the same |nym_secret| they should retain the
+|signer_nym_entropy| value, otherwise this value can be discarded.
+          </li>
+          <li>
+The holder on receipt of the credential with bound pseudonym uses the procedures
+in this specification along with the "Verification and Finalization" operation
+from [[CFRG-Pseudonym-BBS-Signature]] with the |committed_messages| array
+containing the |holder_secret| as its only element,
+to both verify the signature and compute
+the |nym_secret| value. This operation uses the |holder_secret|, |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind| values amongst others. If third
+party monitoring is being utilized then the |nym_secret| value would be securely
+shared with the monitoring organization.
+          </li>
+          <li>
+When the holder wants to generate a derived proof bound to a pseudonym they need
+to determine the |nym_domain|. As previously stated this might be specified by
+the verifier or set by the holder depending on the usage scenario. They then use
+the procedures in this specification and the "Proof Generation with Pseudonym"
+operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
+This operation takes as inputs the |nym_secret|, |nym_domain|, the
+|committed_messages| array containing the |holder_secret| as its only element,
+and |secret_prover_blind| amongst others. In addition to providing the raw
+cryptographic proof value it also returns the |pseudonym| value that gets
+included in the derived proof.
+          </li>
+          <li>
+When a verifier receives a derived proof with bound pseudonym they use the
+procedures in this specification along with the
+"Proof Verification with Pseudonym" operation from
+[[CFRG-Pseudonym-BBS-Signature]] to validate the derived proof. Note that these
+procedures will also validate that the specified |nym_domain| was used in the
+computation of the |pseudonym|.
+          </li>
+        </ol>
+
       </section>
       <section class="informative">
         <h3>Optional Feature Summary</h3>
@@ -1918,21 +2087,23 @@ sense that some additional input, task, or output is generated
             </tr>
             <tr>
               <td>Anonymous Holder Binding</td>
-              <td><em>baseline</em> + selected index adjustment</td>
-              <td><em>baseline</em> + commitment with proof to holder secret from holder</td>
+              <td><em>baseline</em></td>
+              <td><em>baseline</em> + commitment with proof from holder</td>
               <td>Blind BBS</td>
             </tr>
             <tr>
-              <td>Pseudonym with Issuer Pid</td>
-              <td><em>baseline</em> + Generate pid</td>
-              <td><em>baseline</em></td>
+              <td>Credential-Bound Pseudonyms</td>
+              <td><em>baseline</em> + generate |signer_nym_entropy| </td>
+              <td><em>baseline + |signer_nym_entropy|, commitment with proof
+                from holder </em></td>
               <td>Pseudonym BBS</td>
             </tr>
             <tr>
-              <td>Pseudonym with Hidden Pid</td>
-              <td><em>baseline</em></td>
-              <td><em>baseline</em> + commitment with proof to secret pid from holder</td>
-              <td>Pseudonym/Blind BBS</td>
+              <td>Holder Binding and Pseudonyms</td>
+              <td><em>baseline</em> + generate |signer_nym_entropy|</td>
+              <td><em>baseline</em> + |signer_nym_entropy|,
+                commitment with proof from holder</td>
+              <td>Pseudonym BBS</td>
             </tr>
           </tbody>
         </table>
@@ -1955,17 +2126,17 @@ sense that some additional input, task, or output is generated
             <tr>
               <td>Anonymous Holder Binding</td>
               <td>`0xd9`, `0x5d`, and `0x04`</td>
-              <td><em>baseline</em> + signerBlind</td>
+              <td><em>baseline</em></td>
             </tr>
             <tr>
-              <td>Pseudonym with Issuer Pid</td>
+              <td>Credential-Bound Pseudonyms</td>
               <td>`0xd9`, `0x5d`, and `0x06`</td>
-              <td> <em>baseline</em> + pid</td>
+              <td> <em>baseline</em> + |signer_nym_entropy| </td>
             </tr>
             <tr>
-              <td>Pseudonym with Hidden Pid</td>
+              <td>Holder Binding and Pseudonyms</td>
               <td>`0xd9`, `0x5d`, and `0x08`</td>
-              <td><em>baseline</em> + signerBlind</td>
+              <td><em>baseline</em> + |signer_nym_entropy| </td>
             </tr>
           </tbody>
         </table>
@@ -1984,26 +2155,36 @@ sense that some additional input, task, or output is generated
             <tr>
               <td>Baseline BBS</td>
               <td>BBS derived proof generation from VC with base proof</td>
-              <td><em>baseline</em>: (from base proof serialization) bbsSignature, bbsHeader, publicKey, hmacKey, and mandatoryPointers; selectivePointers (holders choice)</td>
+              <td><em>baseline</em>: (from base proof serialization)
+                bbsSignature, bbsHeader, publicKey, hmacKey, and
+                mandatoryPointers; selectivePointers (holders choice)</td>
               <td>BBS</td>
             </tr>
             <tr>
               <td>Anonymous Holder Binding</td>
               <td><em>baseline</em></td>
-              <td><em>baseline</em> + holder secret, prover blind (both known to holder), signer blind (included in base proof from issuer)</td>
+              <td><em>baseline</em> + |holder_secret|, |prover_blind| (both
+                known to holder)</td>
               <td>Blind BBS</td>
             </tr>
             <tr>
-              <td>Pseudonym with Issuer Pid</td>
-              <td><em>baseline</em> + Generate pseudonym</td>
-              <td><em>baseline</em> + verifier id (from verifier), pid (included in base from issuer)</td>
+              <td>Credential Bound Pseudonyms</td>
+              <td><em>baseline</em> + compute |nym_secret|, compute |pseudonym|
+              </td>
+              <td><em>baseline</em> + |prover_nym|,
+                |prover_blind| (all known to holder), |signer_nym_entropy|
+                (included in base from issuer), |nym_domain|</td>
               <td>Pseudonym BBS</td>
             </tr>
             <tr>
-              <td>Pseudonym with Hidden Pid</td>
-              <td><em>baseline</em> + Generate pseudonym</td>
-              <td><em>baseline</em> + pid, prover blind (both known to holder), signer blind (included in base from issuer), verifier id (from verifier)</td>
-              <td>Pseudonym/Blind BBS</td>
+              <td>Holder Binding and Pseudonyms</td>
+              <td><em>baseline</em> + compute |nym_secret|, compute |pseudonym|
+              </td>
+              <td><em>baseline</em> + |holder_secret|, |prover_nym|,
+                |prover_blind| (all known to holder), |signer_nym_entropy|
+                (included in base from issuer), |nym_domain|
+              </td>
+              <td>Pseudonym BBS</td>
             </tr>
           </tbody>
         </table>
@@ -2021,7 +2202,9 @@ sense that some additional input, task, or output is generated
             <tr>
               <td>Baseline BBS</td>
               <td>`0xd9`, `0x5d`, and `0x03`</td>
-              <td><em>baseline</em>: bbsProof, compressedLabelMap, mandatoryIndexes, selectiveIndexes, presentationHeader</td>
+              <td><em>baseline</em>: bbsProof, compressedLabelMap,
+                mandatoryIndexes, selectiveIndexes, presentationHeader
+              </td>
             </tr>
             <tr>
               <td>Anonymous Holder Binding</td>
@@ -2029,15 +2212,21 @@ sense that some additional input, task, or output is generated
               <td><em>baseline</em></td>
             </tr>
             <tr>
-              <td>Pseudonym (issuer known and hidden) </td>
+              <td>Credential Bound Pseudonyms</td>
               <td>`0xd9`, `0x5d`, and `0x07`</td>
-              <td><em>baseline</em> + pseudonym</td>
+              <td><em>baseline</em> + |pseudonym|, |nym_domain|</td>
+            </tr>
+            <tr>
+              <td>Holder Binding and Pseudonyms</td>
+              <td>`0xd9`, `0x5d`, and `0x09`</td>
+              <td><em>baseline</em> + |pseudonym|, |nym_domain|</td>
             </tr>
           </tbody>
         </table>
 
          <table class="complex data">
-          <caption>Table 5 <em>Verify Derived: Inputs and Algorithms.</em> </caption>
+          <caption>Table 5 <em>Verify Derived: Inputs and Algorithms.</em>
+          </caption>
           <thead>
             <tr>
               <th>Name</th>
@@ -2048,7 +2237,10 @@ sense that some additional input, task, or output is generated
           <tbody>
             <tr>
               <td>BBS baseline</td>
-              <td><em>baseline</em>: (from derived proof serialization) bbsProof, compressedLabelMap, mandatoryIndexes, selectiveIndexes, presentationHeader</td>
+              <td><em>baseline</em>: (from derived proof serialization)
+                bbsProof, compressedLabelMap, mandatoryIndexes,
+                selectiveIndexes, presentationHeader
+              </td>
               <td>BBS</td>
             </tr>
             <tr>
@@ -2057,8 +2249,17 @@ sense that some additional input, task, or output is generated
               <td>Blind BBS</td>
             </tr>
             <tr>
-              <td>Pseudonym (issuer known and hidden)</td>
-              <td><em>baseline</em> + verifier id (known to verifier),  pseudonym (included in derived proof)</td>
+              <td>Credential-Bound Pseudonyms</td>
+              <td><em>baseline</em> + |pseudonym| (included in derived proof),
+                |nym_domain|
+              </td>
+              <td>Pseudonym BBS</td>
+            </tr>
+            <tr>
+              <td>Holder Binding and Pseudonyms</td>
+              <td><em>baseline</em> + |pseudonym| (included in derived proof),
+                |nym_domain|
+              </td>
               <td>Pseudonym BBS</td>
             </tr>
           </tbody>
@@ -2833,7 +3034,222 @@ the anonymity set.
 
     <section class="appendix informative">
       <h2>Test Vectors</h2>
-      <p>
+      <section>
+        <h4>Baseline Basic Example</h4>
+        <p>
+The document test
+vectors are based on a purely fictitious permanent resident card, and broken
+into two groups — those
+that would be generated by the issuer ("base proof"), and those that would be
+generated by the holder ("derived proof").
+        </p>
+        <section>
+          <h5>Base Proof</h5>
+          <p>
+To add a selective disclosure base proof to a document, the issuer needs
+the following cryptographic key material:
+          </p>
+          <ol>
+            <li>
+The issuer's private/public key pair, i.e., the key pair corresponding to the
+verification method that will be part of the proof.
+            </li>
+            <li>
+An HMAC key. This is used to randomize the order of the blank node IDs to avoid
+potential information leakage via the blank node ID ordering. This is used only
+once, and is shared between issuer and holder. The HMAC in this case is
+functioning as a pseudorandom function (PRF).
+            </li>
+          </ol>
+          <p>
+The key material used for generating the test vectors to test <i>add base
+proof</i> is shown below. Hexadecimal representation is used for the BBS key
+pairs and the HMAC key.
+          </p>
+          <pre class="example nohighlight"
+          title="Private and Public keys for Signature"
+          data-include="TestVectors/BBSKeyMaterial.json"
+          data-include-format="text">
+          </pre>
+          <p>
+In our scenario, a permanent resident credential is being issued. The unsigned
+permanent resident document is shown below.
+          </p>
+          <pre class="example nohighlight"
+          title="Credential without Proof"
+          data-include="TestVectors/prCredUnsigned.json"
+          data-include-format="text"></pre>
+          <p>
+This mandatory information is specified via an array of JSON pointers,
+as shown below.
+          </p>
+          <pre class="example nohighlight"
+          title="Mandatory Pointers"
+          data-include="TestVectors/prCredMandatory.json"
+          data-include-format="text"></pre>
+          <p>
+The result of applying the above JSON pointers to the document
+is shown below.
+          </p>
+          <pre class="example nohighlight"
+          title="JSON Pointers and Values"
+          data-include="TestVectors/prc/addPointerValues.json"
+          data-include-format="text"></pre>
+          <p>
+Transformation of the unsigned document begins with canonicalizing the document,
+as shown below.
+          </p>
+          <pre class="example nohighlight"
+          title="Canonical Document"
+          data-include="TestVectors/prc/addBaseDocCanon.json"
+          data-include-format="text"></pre>
+          <p>
+To prevent possible information leakage via the ordering of the blank node IDs,
+these IDs are processed through a PRF (i.e., the HMAC) to give the canonicalized
+HMAC document shown below. This represents an ordered list of statements that will
+be subject to "mandatory" and "selective" (or "non-mandatory") disclosure, i.e.,
+when these statements are grouped based on their disclosure requirements, they
+will still be ordered as in this list.
+          </p>
+          <pre class="example nohighlight" title="Canonical HMAC Document"
+          data-include="TestVectors/prc/addBaseDocHMACCanon.json"
+          data-include-format="text"></pre>
+          <p>
+The list from the canonical document above gets grouped into mandatory and
+non-mandatory statements. The final output of the selective disclosure
+transformation process is shown below. Note that the statements are now grouped
+as mandatory or non-mandatory disclosure, and the index of each statement in
+the previous list is remembered.
+          </p>
+          <pre class="example nohighlight" title="Add Base Transformation"
+          data-include="TestVectors/prc/addBaseTransform.json"
+          data-include-format="text"></pre>
+          <p>
+The next step is to create the base proof configuration and canonicalize it.
+This is shown in the following two examples.
+          </p>
+          <pre class="example nohighlight" title="Base Proof Configuration"
+          data-include="TestVectors/prc/addProofConfig.json"
+          data-include-format="text"></pre>
+          <pre class="example nohighlight"
+          title="Canonical Base Proof Configuration"
+          data-include="TestVectors/prc/addProofConfigCanon.txt"
+          data-include-format="text"></pre>
+          <p>
+In the hashing step, we compute the SHA-256 hash of the canonicalized proof
+options to produce the `proofHash`, and we compute the SHA-256 hash of the
+`JOIN` of all the mandatory N-Quads to produce the `mandatoryHash`. These are
+shown below in hexadecimal format.
+          </p>
+          <pre class="example nohighlight" title="Add Base Hashes"
+          data-include="TestVectors/prc/addHashData.json"
+          data-include-format="text"></pre>
+          <p>
+Shown below are the computed `bbsSignature` in hexadecimal, and the
+`mandatoryPointers`. These are are fed to the final serialization step with the
+`hmacKey`.
+          </p>
+          <pre class="example nohighlight" title="Add Base Signing"
+          data-include="TestVectors/prc/addRawBaseSignatureInfo.json"
+          data-include-format="text"></pre>
+          <p>
+Finally, the values above are run through the algorithm of Section
+<a href="#serializebaseproofvalue"></a>, to produce the `proofValue` which is
+used in the signed base document, as shown below.
+          </p>
+          <pre class="example nohighlight" title="Signed Base Document"
+          data-include="TestVectors/prc/addSignedSDBase.json"
+          data-include-format="text"></pre>
+        </section>
+        <section>
+          <h5>Derived Proof</h5>
+          <p>
+Random numbers are used, and an optional `presentationHeader` can be an
+additional input, for the creation of <q>BBS proofs</q>. To furnish a
+deterministic set of test vectors, we used the <q>Mocked Random Scalars</q>
+procedure from [[CFRG-BBS-SIGNATURE]]. The `seed` and `presentationHeader` values
+we used for generation of the derived proof test vectors are given in hex, below.
+          </p>
+          <pre class="example nohighlight"
+          title="seed and presentation header values"
+          data-include="TestVectors/BBSDeriveMaterial.json"
+          data-include-format="text"></pre>
+          <p>
+To create a derived proof, a holder starts with a signed document
+containing a base proof. The base document we will use for these test vectors is
+the final example from Section <a href="#base-proof"></a>, above. The first
+step is to run the algorithm of Section <a href="#parsebaseproofvalue"></a> to
+recover `bbsSignature`, `hmacKey`, and `mandatoryPointers`, as shown below.
+          </p>
+          <pre class="example nohighlight" title="Recovered Base Signature Data"
+          data-include="TestVectors/prc/derivedRecoveredBaseData.json"
+          data-include-format="text"></pre>
+          <p>
+Next, the holder needs to indicate what non-mandatory statements, if any, they
+wish to reveal to the verifiers, by specifying JSON pointers for selective
+disclosure. These are shown below.
+          </p>
+          <pre class="example nohighlight" title="Selective Disclosure Pointers"
+          data-include="TestVectors/prCredSelective.json"
+          data-include-format="text"></pre>
+          <p>
+To produce the `revealDocument` (i.e., the unsigned document that will
+eventually be signed and sent to the verifier), we append the selective pointers
+to the mandatory pointers, and input these combined pointers along with the
+document without proof to the `selectJsonLd` algorithm of [[DI-ECDSA]].
+This gets the result shown below.
+          </p>
+          <pre class="example nohighlight" title="Unsigned Reveal Document"
+          data-include="TestVectors/prc/derivedUnsignedReveal.json"
+          data-include-format="text"></pre>
+          <p>
+Now that we know what the reveal document looks like, we need to furnish
+appropriately updated information to the verifier about which statements are
+mandatory, and the indexes of the selected non-mandatory statements. Running
+step 6 of the
+<a href="#createdisclosuredata"></a> yields abundant information about
+various statement groups relative to the original document. Below, we show a
+portion of the indexes for those groups.
+          </p>
+          <pre class="example nohighlight" title="Derived Group Indexes"
+          data-include="TestVectors/prc/derivedGroupIndexes.json"
+          data-include-format="text"></pre>
+          <p>
+The verifier needs to be able to aggregate and hash the mandatory statements. To
+enable this, we furnish them with a list of the indexes of the mandatory statements,
+adjusted to their positions in the reveal document (i.e., relative to the
+`combinedIndexes`), while the `selectiveIndexes` are adjusted relative to
+their positions within the `nonMandatoryIndexes`. These "adjusted" indexes are
+shown below.
+          </p>
+          <pre class="example nohighlight"
+          title="Adjusted Mandatory and Selective Indexes"
+          data-include="TestVectors/prc/derivedAdjIndexes.json"
+          data-include-format="text"></pre>
+
+          <p>
+The last important piece of disclosure data is the `labelMap`, a mapping of
+canonical blank node IDs to HMAC-based shuffled IDs, computed according to
+Section <a href="#createdisclosuredata"></a>. This is shown below, along with
+the rest of the disclosure data, minus the reveal document.
+          </p>
+          <pre class="example nohighlight" title="Disclosure Data"
+          data-include="TestVectors/prc/derivedDisclosureData.json"
+          data-include-format="text"></pre>
+          <p>
+Finally, using the disclosure data above with the algorithm of Section
+<a href="#serializederivedproofvalue"></a>, we obtain the signed derived (reveal)
+document shown below.
+          </p>
+          <pre class="example nohighlight" title="Signed Derived Document"
+          data-include="TestVectors/prc/derivedRevealDocument.json"
+          data-include-format="text"></pre>
+        </section>
+      </section>
+
+      <section>
+        <h4>Baseline Enhanced Example</h4>
+        <p>
 Demonstration of selective disclosure features including mandatory disclosure,
 selective disclosure, and overlap between those,
 requires an input credential document with more content than previous test
@@ -2844,7 +3260,7 @@ that would be generated by the issuer (base proof) and those that would be
 generated by the holder (derived proof).
         </p>
         <section>
-          <h4>Base Proof</h4>
+          <h5>Base Proof</h5>
           <p>
 To add a selective disclosure base proof to a document, the issuer needs
 the following cryptographic key material:
@@ -2966,7 +3382,7 @@ used in the signed base document shown below.
           data-include-format="text"></pre>
         </section>
         <section>
-          <h4>Derived Proof</h4>
+          <h5>Derived Proof</h5>
           <p>
 Random numbers are used, and an optional `presentationHeader` can be an input,
 for the creation of <q>BBS proofs</q>. To furnish a deterministic set of test
@@ -3053,31 +3469,32 @@ document shown below.
           data-include="TestVectors/derivedRevealDocument.json"
           data-include-format="text"></pre>
         </section>
+      </section>
+      <section>
+        <h4>Anonymous Holder Binding Feature</h4>
         <section>
-          <h4>Anonymous Holder Binding Feature</h4>
-          <section>
-            <h5>Holder Binding Commitment Generation</h5>
-            <p>
+          <h5>Holder Binding Commitment Generation</h5>
+          <p>
 The first steps in using the <em>anonymous holder binding</em> feature are for the
-holder to generate its |holderSecret| value and then compute a commitment with
-proof for this value according to the <em>commitment computation</em> procedure
+holder to generate their |holderSecret| value, and then compute a commitment with
+proof for this value, according to the <em>commitment computation</em> procedure
 of [[CFRG-Blind-BBS-Signature]]. Example values and outputs of this procedure
 are shown below.
-            </p>
-            <pre class="example nohighlight" title="Holder's Secret"
+          </p>
+          <pre class="example nohighlight" title="Holder's Secret"
             data-include="TestVectors/FeatureInputs/holderSecret.json"
             data-include-format="text"></pre>
-            <pre class="example nohighlight"
+          <pre class="example nohighlight"
             title="Holder's Secret Commitment Information"
             data-include="TestVectors/HolderBinding/commitmentInfo.json"
             data-include-format="text"></pre>
-            <p>
-The |holderSecret| and |secretProverBlind| are retained by the holder and kept
-secret. The |commitmentWithProof| value needs to be communicated to the issuer.
-            </p>
-          </section>
-          <section>
-            <h5>Holder Binding Base Proof</h5>
+          <p>
+The |holderSecret| and |secretProverBlind| are to be retained and kept secret by
+the holder. The |commitmentWithProof| value is to be communicated to the issuer.
+          </p>
+        </section>
+        <section>
+          <h5>Holder Binding Base Proof</h5>
           <p>
 The addition of a base proof under the anonymous holder binding option begins
 with the issuer receiving a |commitmentWithProof| value from the holder and then
@@ -3092,14 +3509,6 @@ repeated below.
           data-include="TestVectors/BBSKeyMaterial.json"
           data-include-format="text">
           </pre>
-          <p>
-As part of the <em>blind signature generation</em> from
-[[CFRG-Blind-BBS-Signature]], one can include a |signer_blind| which we show
-below.
-          </p>
-          <pre class="example nohighlight" title="Holder Binding Signer Blind"
-          data-include="TestVectors/FeatureInputs/signerBlindHB.json"
-          data-include-format="text"></pre>
           <p>
 In this scenario, we consider an electronic version of a drivers license.
           </p>
@@ -3172,7 +3581,7 @@ Now we use the <em>blind signature generation</em> procedure of
 <a href="#base-proof-serialization-bbs-2023"></a>
 procedure.
 Shown below are the computed |bbsSignature|, |bbsHeader|, |publicKey|,
-|hmacKey|, |mandatoryPointers|, |signerBlind|, and |featureOption|, where byte
+|hmacKey|, |mandatoryPointers|, and |featureOption|, where byte
 data is shown in hexadecimal.
           </p>
           <pre class="example nohighlight"
@@ -3207,8 +3616,8 @@ containing a base proof. The base document we will use for these test vectors is
 the final example from Section <a href="#holder-binding-base-proof"></a>, above.
 The first step is to run the algorithm of Section
 <a href="#parsebaseproofvalue"></a> to
-recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
-|signerBlind|, and |featureOption| as shown below.
+recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|,
+|mandatoryPointers|, and |featureOption|, as shown below.
           </p>
           <pre class="example nohighlight"
           title="Recovered Base Signature Data for Holder Binding"
@@ -3287,155 +3696,41 @@ Finally, using the disclosure data above with the algorithm of Section
           data-include-format="text"></pre>
           </section>
         </section>
-        <section>
-          <h4>Pseudonym with Issuer-known PID Feature</h4>
-          <section>
-            <h5>Issuer PID Base Proof</h5>
-            <p>
-To issue a credential under the <em>pseudonym with issuer-known PID</em> feature,
-the issuer generates a cryptographically random |pid| value for a holder. This
-value is shared with the holder but is otherwise kept secret. This value is
-shown below.
-          </p>
-          <pre class="example nohighlight" title="Issuer Generated PID"
-          data-include="TestVectors/FeatureInputs/issuerPid.json"
-          data-include-format="text"></pre>
-          <p>
-This example will make use of the same key material as shown in
-<a href="#example-private-and-public-keys-for-signature-0"></a>,
-the same unsigned document as shown in
-<a href="#example-credential-without-proof-for-features"></a>, and the same
-mandatory pointers as shown in
-<a href="#example-mandatory-pointers-for-features"></a>. This results in the
-same canonical document as in
-<a href="#example-canonical-document-for-features"></a>, the same HMAC document
-as in
-<a href="#example-canonical-hmac-document-for-features"></a>, and the same "add
-base transformation" as in
-<a href="#example-add-base-transformation-for-features"></a>.
-          </p>
-          <p>
-This example makes use of the same proof configuration as
-<a href="#example-base-proof-configuration-for-features"></a>.
-This results in the same canonical base proof as in
-<a href="#example-canonical-base-proof-configuration-for-features"></a>.
-Combining this with the above assumptions leads to the same base hashes as in
-<a href="#example-add-base-hashes-for-features"></a>.
-          </p>
-          <p>
-Since |featureOption| is equal to `"pseudonym_issuer_pid"`, the procedure of
-section <a href="#base-proof-serialization-bbs-2023">Base Proof
-Serialization</a> will produce the output shown below. This makes use of the
-signature generation algorithm of [[CFRG-Pseudonym-BBS-Signature]]. Note the
-inclusion of the
-|pid| value, as this needs to be communicated to the holder.
-          </p>
-          <pre class="example nohighlight" title="Add Base Signing for Issuer PID" data-include="TestVectors/PseudoIssuerPid/addRawBaseSignatureInfo.json"
-          data-include-format="text"></pre>
-          <p>
-Finally, the values above are run through the algorithm of Section
-<a href="#serializebaseproofvalue"></a>, to produce the `proofValue` which is
-used in the signed base document shown below.
-          </p>
-          <pre class="example nohighlight" title="Signed Base Document for Issuer PID" data-include="TestVectors/PseudoIssuerPid/addSignedSDBase.json"
-          data-include-format="text"></pre>
-          </section>
 
-          <section>
-            <h5>Issuer PID Derived Proof</h5>
-            <p>
-As explained in section <a href="#derived-proof"></a>, we use a
-mocked random number generation procedure and demonstrate the use of a
-|presentationHeader|. The same |seed| and |presentationHeader|
-as given in
-<a href="#example-seed-and-presentation-header-values"></a> are used here.
-            </p>
-            <p>
-To create a derived proof, a holder starts with a signed document
-containing a base proof. The base document we will use for these test vectors is
-the final example from
-<a href="#example-signed-base-document-for-issuer-pid"></a>, above. The first
-step is to run the algorithm of Section <a href="#parsebaseproofvalue"></a> to
-recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
-|pid|, and |featureOption|, as shown below.
-            </p>
-            <pre class="example nohighlight"
-            title="Recovered Base Signature Data for Issuer PID"
-            data-include="TestVectors/PseudoIssuerPid/derivedRecoveredBaseData.json"
-            data-include-format="text"></pre>
-            <p>
-Next, the holder needs to indicate what else, if anything, they wish to reveal
-to the verifiers, by specifying JSON pointers for selective disclosure. In this
-case, the holder reveals the same information as given in
-<a href="#example-selective-disclosure-pointers-for-features"></a>. This results
-in the same |revealDocument|
-as shown in
-<a href="#example-unsigned-reveal-document-for-features"></a>.
-            </p>
-            <p>
-Running <a href="#createdisclosuredata"></a> yields the same information for
-"derived group indexes" as shown in
-<a href="#example-derived-group-indexes-for-features"></a> and for
-"adjusted mandatory and selective indexes" as shown in
-<a href="#example-adjusted-mandatory-and-selective-indexes-for-features"></a>.
-            </p>
-            <p>
-Within <a href="#createdisclosuredata"></a>, we compute the |pseudonym| based on
-the |verfifier_id| shown below.
-            </p>
-            <pre class="example nohighlight"
-            title="Verifier Id"
-            data-include="TestVectors/FeatureInputs/verifierInfo.json"
-            data-include-format="text"></pre>
-            <p>
-The final output of <a href="#createdisclosuredata"></a> is shown below. Note
-the inclusion of the computed |pseudonym| and the |featureOption| value.
-            </p>
-            <pre class="example nohighlight"
-            title="Disclosure Data for Issuer PID"
-            data-include="TestVectors/PseudoIssuerPid/derivedDisclosureData.json"
-            data-include-format="text"></pre>
-            <p>
-Finally, using the disclosure data above with the algorithm of Section
-<a href="#serializederivedproofvalue"></a>, we obtain the signed derived (reveal)
-document shown below.
-            </p>
-            <pre class="example nohighlight"
-            title="Signed Derived Document for Issuer PID"
-            data-include="TestVectors/PseudoIssuerPid/derivedRevealDocument.json"
-            data-include-format="text"></pre>
-          </section>
-        </section>
         <section>
-          <h4>Pseuonym with Hidden PID Feature</h4>
+          <h4>Credential Bound Pseudonym Feature</h4>
           <section>
-            <h5>Hidden PID Commitment Generation</h5>
+            <h5>Prover Nym Commitment Generation</h5>
             <p>
-The first steps in using the <em>pseudonym with hidden PID</em> feature are for the
-holder to generate its secret |pid| value and then compute a commitment with
-proof for this value according to the <em>commitment computation</em> procedure
-of [[CFRG-Blind-BBS-Signature]]. Example values and outputs of this procedure
+The first steps in using the <em>credential-bound pseudonym</em> feature are for
+the holder to generate their secret |prover_nym| value, and then compute a
+commitment with proof for this value according to the "Commitment" operation
+from [[CFRG-Pseudonym-BBS-Signature]]. Example values and outputs of this procedure
 are shown below.
             </p>
-            <pre class="example nohighlight" title="Hidden PID"
-            data-include="TestVectors/FeatureInputs/hiddenPid.json"
+            <pre class="example nohighlight" title="Prover Nym"
+            data-include="TestVectors/FeatureInputs/proverNym.json"
             data-include-format="text"></pre>
             <pre class="example nohighlight"
-            title="Hidden PID Commitment Information"
-            data-include="TestVectors/PseudoHiddenPid/commitmentInfo.json"
+            title="Prover Nym Commitment Information"
+            data-include="TestVectors/Pseudonym/commitmentInfo.json"
             data-include-format="text"></pre>
             <p>
-The |pid| and |secretProverBlind| are retained by the holder and kept
-secret. The |commitmentWithProof| value needs to be communicated to the issuer.
+The |prover_nym| and |secretProverBlind| are to be retained and kept secret by
+the holder. The |commitmentWithProof| value is to be communicated to the issuer.
             </p>
           </section>
           <section>
-            <h5>Hidden PID Base Proof</h5>
+            <h5>Pseudonym Base Proof</h5>
             <p>
-The addition of a base proof under the pseudonym with hidden PID option begins
-with the issuer receiving a |commitmentWithProof| value from the holder and then
-verifying that value with the <em>commitment verification</em> procedure of
-[[CFRG-Blind-BBS-Signature]].
+The addition of a base proof under the pseudonym feature option begins
+with the issuer receiving a |commitmentWithProof| value from the holder and
+generating a cryptographically random value for |signer_nym_entropy|.
+            </p>
+            <pre class="example nohighlight" title="Signer Nym Entropy"
+            data-include="TestVectors/FeatureInputs/signerNymEntropy.json"
+            data-include-format="text"></pre>
+            <p>
 This example will make use of the same key material as shown in
 <a href="#example-private-and-public-keys-for-signature-0"></a>,
 the same unsigned document as shown in
@@ -3458,16 +3753,16 @@ Combining this with the above assumptions leads to the same base hashes as in
 <a href="#example-add-base-hashes-for-features"></a>.
           </p>
           <p>
-Since |featureOption| is equal to `"pseudonym_hidden_pid"`, the procedure of
+Since |featureOption| is equal to `"pseudonym"`, the procedure of
 section <a href="#base-proof-serialization-bbs-2023"></a> will produce the
 output shown below. This makes use of the
 signature generation algorithm of [[CFRG-Pseudonym-BBS-Signature]]. Note the
-inclusion of the |featureOption| as well as the |signerBlind| value, as these
+inclusion of the |signer_nym_entropy| and |featureOption| values, as these
 need to be communicated to the holder.
           </p>
           <pre class="example nohighlight"
-          title="Add Base Signing for Hidden PID"
-          data-include="TestVectors/PseudoHiddenPid/addRawBaseSignatureInfo.json"
+          title="Add Base Signing for Pseudonym"
+          data-include="TestVectors/Pseudonym/addRawBaseSignatureInfo.json"
           data-include-format="text"></pre>
           <p>
 Finally, the values above are run through the algorithm of section
@@ -3475,12 +3770,161 @@ Finally, the values above are run through the algorithm of section
 used in the signed base document shown below.
           </p>
           <pre class="example nohighlight"
-          title="Signed Base Document for Hidden PID"
-          data-include="TestVectors/PseudoHiddenPid/addSignedSDBase.json"
+          title="Signed Base Document for Pseudonym"
+          data-include="TestVectors/Pseudonym/addSignedSDBase.json"
           data-include-format="text"></pre>
           </section>
           <section>
-            <h5>Hidden PID Derived Proof</h5>
+            <h5>Pseudonym Derived Proof</h5>
+            <p>
+As explained in section <a href="#derived-proof"></a>, we used a
+mocked random number generation procedure to demonstrate the use of a
+|presentationHeader|. The same |seed| and |presentationHeader| as given in
+<a href="#example-seed-and-presentation-header-values"></a> are used here.
+                        </p>
+                        <p>
+To create a derived proof, a holder starts with a signed document
+containing a base proof. The base document we will use for these test vectors is
+from
+<a href="#example-signed-base-document-for-pseudonym"></a>, above. The first
+step is to run the algorithm of Section <a href="#parsebaseproofvalue"></a> to
+recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|,
+|mandatoryPointers|, |signer_nym_entropy|, and |featureOption|, as shown below.
+          </p>
+          <pre class="example nohighlight"
+          title="Recovered Base Signature Data for Pseudonym"
+          data-include="TestVectors/Pseudonym/derivedRecoveredBaseData.json"
+          data-include-format="text"></pre>
+          <p>
+Next, the holder uses the the "Verification and Finalization" operation from
+[[CFRG-Pseudonym-BBS-Signature]] to both verify the signature and compute the
+|nym_secret| value. This operation uses the |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind| values, amongst others.
+          </p>
+          <pre class="example nohighlight"
+          title="Computed Nym Secret"
+          data-include="TestVectors/Pseudonym/nymSecret.json"
+          data-include-format="text"></pre>
+          <p>
+Next, the holder needs to indicate what non-mandatory statements, if any, they
+wish to reveal to the verifiers, by specifying JSON pointers for selective
+disclosure. In this case, the holder reveals the same information as given in
+<a href="#example-selective-disclosure-pointers-for-features"></a>.
+This results in the same |revealDocument|
+as shown in <a href="#example-unsigned-reveal-document-for-features"></a>.
+          <p>
+Running <a href="#createdisclosuredata"></a> yields the same information for
+derived group indexes as shown in
+<a href="#example-derived-group-indexes-for-features"></a> and the same
+adjusted mandatory and selective indexes as shown in
+<a href="#example-adjusted-mandatory-and-selective-indexes-for-features"></a>.
+          </p>
+          <p>
+Within <a href="#createdisclosuredata"></a>, we compute the |pseudonym| based on
+the same |verfifier_id| shown in <a href="example-verifier-id"></a>.
+The final output of <a href="#createdisclosuredata"></a> is shown below. Note
+the inclusion of the |featureOption| and computed |pseudonym| values.
+          </p>
+          <pre class="example nohighlight" title="Disclosure Data for Pseudonym"
+          data-include="TestVectors/Pseudonym/derivedDisclosureData.json"
+          data-include-format="text"></pre>
+          <p>
+Finally, using the disclosure data above with the algorithm of section
+<a href="#serializederivedproofvalue"></a>, we obtain the signed derived (reveal)
+document shown below.
+          </p>
+          <pre class="example nohighlight"
+          title="Signed Derived Document for Pseudonym"
+          data-include="TestVectors/Pseudonym/derivedRevealDocument.json"
+          data-include-format="text"></pre>
+          </section>
+        </section>
+
+        <section>
+          <h4>Holder Binding and Pseudonym Feature</h4>
+          <section>
+            <h5>Holder Secret and Prover Nym Commitment Generation</h5>
+            <p>
+The first steps in using the <em>holder binding and pseudonym</em> feature are
+for
+the holder to generate its |holder_secret| and |prover_nym| values, and
+then compute a
+commitment with proof for these values, according to the "Commitment" operation
+from [[CFRG-Pseudonym-BBS-Signature]]. Example values and outputs of this procedure
+are shown below.
+            </p>
+            <pre class="example nohighlight" title="Holder's Secret"
+            data-include="TestVectors/FeatureInputs/holderSecret.json"
+            data-include-format="text"></pre>
+            <pre class="example nohighlight" title="Prover Nym"
+            data-include="TestVectors/FeatureInputs/proverNym.json"
+            data-include-format="text"></pre>
+            <pre class="example nohighlight"
+            title="Holder Secret and Prover Nym Commitment Information"
+            data-include="TestVectors/PseudonymHB/commitmentInfo.json"
+            data-include-format="text"></pre>
+            <p>
+The |holder_secret|, |prover_nym|, and |secretProverBlind| need to be retained
+and kept secret by the holder. The |commitmentWithProof| value needs to be
+communicated to the issuer.
+            </p>
+          </section>
+          <section>
+            <h5>Holder Binding and Pseudonym Base Proof</h5>
+            <p>
+The addition of a base proof under the pseudonym feature option begins
+with the issuer receiving a |commitmentWithProof| value from the holder and
+generating a cryptographically random value for |signer_nym_entropy|.
+            </p>
+            <pre class="example nohighlight" title="Signer Nym Entropy"
+            data-include="TestVectors/FeatureInputs/signerNymEntropy.json"
+            data-include-format="text"></pre>
+            <p>
+This example will make use of the same key material as shown in
+<a href="#example-private-and-public-keys-for-signature-0"></a>,
+and the same unsigned document as shown in
+<a href="#example-credential-without-proof-for-features"></a>, and the same
+mandatory pointers as shown in
+<a href="#example-mandatory-pointers-for-features"></a>. This results in the
+same canonical document as shown in
+<a href="#example-canonical-document-for-features"></a>,
+the same canonical HMAC document as shown in
+<a href="#example-canonical-hmac-document-for-features"></a>, and the same "add
+base transformation" as shown in
+<a href="#example-add-base-transformation-for-features"></a>.
+          </p>
+          <p>
+This example makes use of the same proof configuration as in
+<a href="#example-base-proof-configuration-for-features"></a>.
+This results in the same canonical base proof as in
+<a href="#example-canonical-base-proof-configuration-for-features"></a>.
+Combining this with the above assumptions leads to the same base hashes as in
+<a href="#example-add-base-hashes-for-features"></a>.
+          </p>
+          <p>
+Since |featureOption| is equal to `"holder_binding_pseudonym"`, the procedure of
+section <a href="#base-proof-serialization-bbs-2023"></a> will produce the
+output shown below. This makes use of the
+signature generation algorithm of [[CFRG-Pseudonym-BBS-Signature]]. Note the
+inclusion of the |signer_nym_entropy| and |featureOption| values, as these
+need to be communicated to the holder.
+          </p>
+          <pre class="example nohighlight"
+          title="Add Base Signing for Holder Binding and Pseudonym"
+          data-include="TestVectors/PseudonymHB/addRawBaseSignatureInfo.json"
+          data-include-format="text"></pre>
+          <p>
+Finally, the values above are run through the algorithm of section
+<a href="#serializebaseproofvalue"></a>, producing the `proofValue` which is
+used in the signed base document shown below.
+          </p>
+          <pre class="example nohighlight"
+          title="Signed Base Document for Holder Binding and Pseudonym"
+          data-include="TestVectors/PseudonymHB/addSignedSDBase.json"
+          data-include-format="text"></pre>
+          </section>
+          <section>
+            <h5>Holder Binding and Pseudonym Derived Proof</h5>
             <p>
 As explained in section <a href="#derived-proof"></a>, we use a
 mocked random number generation procedure and demonstrate the use of a
@@ -3491,17 +3935,28 @@ mocked random number generation procedure and demonstrate the use of a
 To create a derived proof, a holder starts with a signed document
 containing a base proof. The base document we will use for these test vectors is
 from
-<a href="#example-signed-base-document-for-hidden-pid"></a>, above. The first
+<a href="#example-signed-base-document-for-pseudonym"></a>, above. The first
 step is to run the algorithm of Section <a href="#parsebaseproofvalue"></a> to
-recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers|,
-|signerBlind|, and |featureOption|, as shown below.
+recover |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|,
+|mandatoryPointers|, |signer_nym_entropy|, and |featureOption|, as shown below.
           </p>
           <pre class="example nohighlight"
-          title="Recovered Base Signature Data for Hidden PID"
-          data-include="TestVectors/PseudoHiddenPid/derivedRecoveredBaseData.json"
+          title="Recovered Base Signature Data for Holder Binding and Pseudonym"
+          data-include="TestVectors/PseudonymHB/derivedRecoveredBaseData.json"
           data-include-format="text"></pre>
           <p>
-Next, the holder needs to indicate what else, if anything, they wish to reveal
+Next, the holder uses the the "Verification and Finalization" operation from
+[[CFRG-Pseudonym-BBS-Signature]] to both verify the signature and compute the
+|nym_secret| value. This operation uses the |holder_secret|, |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind| values, amongst others.
+          </p>
+          <pre class="example nohighlight"
+          title="Computed Nym Secret"
+          data-include="TestVectors/PseudonymHB/nymSecret.json"
+          data-include-format="text"></pre>
+          <p>
+Next, the holder needs to indicate what non-mandatory statements, if any,
+they wish to reveal
 to the verifiers, by specifying JSON pointers for selective disclosure. In this
 case, the holder reveals the same information as given in
 <a href="#example-selective-disclosure-pointers-for-features"></a>.
@@ -3518,10 +3973,10 @@ adjusted mandatory and selective indexes as shown in
 Within <a href="#createdisclosuredata"></a>, we compute the |pseudonym| based on
 the same |verfifier_id| shown in <a href="example-verifier-id"></a>.
 The final output of <a href="#createdisclosuredata"></a> is shown below. Note
-the inclusion of the computed |pseudonym| and the |featureOption| value.
+the inclusion of the the |featureOption| and computed |pseudonym| values.
           </p>
-          <pre class="example nohighlight" title="Disclosure Data for Hidden PID"
-          data-include="TestVectors/PseudoIssuerPid/derivedDisclosureData.json"
+          <pre class="example nohighlight" title="Disclosure Data for Holder Binding and Pseudonym"
+          data-include="TestVectors/PseudonymHB/derivedDisclosureData.json"
           data-include-format="text"></pre>
           <p>
 Finally, using the disclosure data above with the algorithm of section
@@ -3529,8 +3984,8 @@ Finally, using the disclosure data above with the algorithm of section
 document shown below.
           </p>
           <pre class="example nohighlight"
-          title="Signed Derived Document for Hidden PID"
-          data-include="TestVectors/PseudoIssuerPid/derivedRevealDocument.json"
+          title="Signed Derived Document for Holder Binding and Pseudonym"
+          data-include="TestVectors/PseudonymHB/derivedRevealDocument.json"
           data-include-format="text"></pre>
           </section>
         </section>
