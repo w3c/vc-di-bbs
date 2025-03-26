@@ -357,24 +357,28 @@ during the processing of digital signatures.
         <section>
           <h3>Multikey</h3>
           <p>
-The <a data-cite="VC-DATA-INTEGRITY#multikey">Multikey format</a>, as defined in
-[[VC-DATA-INTEGRITY]], is used to express public keys for the cryptographic
+The <a data-cite="CID#Multikey">Multikey format</a>, defined in
+[[[CID]]], is used to express public keys for the cryptographic
 suites defined in this specification.
           </p>
 
           <p>
 The `publicKeyMultibase` property represents a Multibase-encoded Multikey
-expression of a BLS12-381 public key in the G2 group. The encoding of this field
-is the two-byte prefix `0xeb01` followed
-by the 96-byte compressed public key data.
-The 98-byte value is then encoded using base58-btc (`z`) as the prefix. Any
-other encodings MUST NOT be allowed.
+expression of a BLS12-381 381-bit public key in the G2 group.
+          </p>
+          <p>
+The `publicKeyMultibase` value of the verification method MUST start with the
+base-58-btc prefix (`z`), as defined in the
+<a data-cite="CID#multibase-0">Multibase section</a> of [[[CID]]]. A
+Multibase-encoded BLS12-381 381-bit public key value follows,
+as defined in the <a data-cite="CID#Multikey">Multikey section</a> of
+[[[CID]]]. Any other encoding MUST NOT be allowed.
           </p>
 
           <p class="advisement">
 Developers are advised to not accidentally publish a representation of a private
 key. Implementations of this specification will raise errors in the event of a
-value other than `0xeb01` being used in a `publicKeyMultibase` value.
+Multicodec value other than `0xeb01` being used in a `publicKeyMultibase` value.
           </p>
 
           <pre class="example"
@@ -1894,7 +1898,7 @@ computed from two parts. The first part, the |nym_secret|, is specified by,
 and will only be known by, the
 holder; the second part, the |nym_domain|, may be specified by either the holder
 or the verifier, and will be shared between the holder and verifier.
-An issuer binds a credential to a |nym_secret| during the issuance process. 
+An issuer binds a credential to a |nym_secret| during the issuance process.
 A holder can then compute pseudonyms from the |nym_secret| and prove to
 verifiers that these pseudonyms are bound to the credential they are presenting.
 Cryptographic pseudonyms computed from the same |nym_secret| but different
