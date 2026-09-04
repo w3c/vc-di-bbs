@@ -512,82 +512,6 @@ Return |cryptosuite|.
       </section>
 
       <section>
-        <h3>Selective Disclosure Functions</h3>
-
-        <section>
-          <h4>createShuffledIdLabelMapFunction</h4>
-          <p>
-The following algorithm creates a label map factory function that uses an
-HMAC to shuffle canonical blank node identifiers. The required input is an HMAC
-(previously initialized with a secret key), |HMAC|. A function,
-<em>labelMapFactoryFunction</em>, is produced as output.
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Create a function, |labelMapFactoryFunction|, with one required input
-(a canonical node identifier map, |canonicalIdMap|), that will
-return a blank node identifier map, <em>bnodeIdMap</em>, as output. Set the
-function's implementation to:
-              <ol class="algorithm">
-                <li>
-Generate a new empty bnode identifier map, <em>bnodeIdMap</em>.
-                </li>
-                <li>
-For each map entry, <em>entry</em>, in |canonicalIdMap|:
-                  <ol class="algorithm">
-                    <li>
-Perform an HMAC operation on the canonical identifier from the value in <em>entry</em> to get an HMAC
-digest, <em>digest</em>.
-                    </li>
-                    <li>
-Generate a new string value, <em>b64urlDigest</em>, and initialize it to "u"
-followed by appending a base64url-no-pad encoded version of the <em>digest</em>
-value.
-                    </li>
-                    <li>
-Add a new entry, |newEntry|, to <em>bnodeIdMap</em> using the key
-from <em>entry</em> and <em>b64urlDigest</em> as the value.
-                    </li>
-                  </ol>
-                </li>
-                <li>
-Derive the shuffled mapping from the `bnodeIdMap` as follows:
-                  <ol class="algorithm">
-                    <li>
-Set `hmacIds` to be the sorted array of values from the `bnodeIdMap`, and set
-`bnodeKeys` to be the ordered array of keys from the `bnodeIdMap`.
-                    </li>
-                    <li>
-For each key in `bnodeKeys`, replace the `bnodeIdMap` value for that key with the
-index position of the value in the `hmacIds` array prefixed by "b", i.e.,
-`bnodeIdMap.set(bkey, 'b' + hmacIds.indexOf(bnodeIdMap.get(bkey)))`.
-                    </li>
-                  </ol>
-                </li>
-                <li>
-Return <em>bnodeIdMap</em>.
-                </li>
-              </ol>
-            </li>
-            <li>
-Return |labelMapFactoryFunction|.
-            </li>
-          </ol>
-
-          <p class="note informative">
-It should be noted that step 1.2 in the above algorithm is identical to step 1.2
-in <a href="https://www.w3.org/TR/vc-di-ecdsa/#createhmacidlabelmapfunction">
-Section 3.3.4 `createHmacIdLabelMapFunction`</a> of [[DI-ECDSA]],
-so developers might be able to reuse the code or call the function if implementing
-both.
-          </p>
-        </section>
-
-
-      </section>
-
-      <section>
         <h3>bbs-2023 Functions</h3>
         <section>
           <h4>serializeBaseProofValue</h4>
@@ -769,64 +693,6 @@ order, and add |featureOption| as a property.
         </section>
 
         <section>
-          <h4>compressLabelMap</h4>
-          <p>
-The following algorithm compresses a label map. The required input is
-label map (|labelMap|). The output is a <em>compressed label map</em>.
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Initialize `map` to an empty map.
-            </li>
-            <li>
-For each entry (`k`, `v`) in `labelMap`:
-              <ol class="algorithm">
-                <li>
-Add an entry to `map`, with a key that is a base-10 integer parsed from the
-characters following the "c14n" prefix in `k`, and a value that is a base-10
-integer parsed from the characters following the "b" prefix in `v`.
-                </li>
-              </ol>
-            </li>
-            <li>
-Return `map` as <em>compressed label map</em>.
-            </li>
-          </ol>
-        </section>
-
-        <section>
-          <h4>decompressLabelMap</h4>
-
-          <p>
-The following algorithm decompresses a label map. The required input is a
-compressed label map (|compressedLabelMap|). The output is a
-<em>decompressed label map</em>.
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Initialize `map` to an empty map.
-            </li>
-<!--   const key = 'c14n' + k
-  const value = 'b' + v -->
-            <li>
-For each entry (`k`, `v`) in `compressedLabelMap`:
-              <ol class="algorithm">
-                <li>
-Add an entry to `map`, with a key that adds the prefix "c14n" to `k`, and a value
-that adds a prefix of "b" to `v`.
-                </li>
-              </ol>
-            </li>
-            <li>
-Return `map` as <em>decompressed label map</em>.
-            </li>
-          </ol>
-
-        </section>
-
-        <section>
           <h4>serializeDerivedProofValue</h4>
 
           <p>
@@ -844,7 +710,7 @@ value, serialized as a byte string, is produced as output.
           <ol class="algorithm">
             <li>
 Initialize `compressedLabelMap` to the result of calling the algorithm in
-Section <a href="#compresslabelmap"></a>, passing `labelMap` as the parameter.
+Section <a href="VC-DATA-INTEGRITY-1.1#compresslabelmap"></a>, passing `labelMap` as the parameter.
             </li>
             <li>
  Depending on the value of |featureOption| do the following:
@@ -979,7 +845,7 @@ an error MUST be raised and SHOULD convey an error type of
             </li>
             <li>
 Replace the second element in `components` using the result of calling the
-algorithm in Section <a href="#decompresslabelmap"></a>, passing the existing
+algorithm in Section <a href="C-DATA-INTEGRITY-1.1#decompresslabelmap"></a>, passing the existing
 second element of `components` as `compressedLabelMap`.
             </li>
             <li>
@@ -988,79 +854,6 @@ six, seven, or eight elements, using the names "bbsProof", "labelMap",
 "mandatoryIndexes", "selectiveIndexes", "presentationHeader", and optional
 "nym_domain", "pseudonym", and/or "lengthBBSMessages", respectively.
 In addition, add |featureOption| and its value to the object.
-            </li>
-          </ol>
-
-        </section>
-
-        <section>
-          <h4>createVerifyData</h4>
-
-          <p>
-The following algorithm creates the data needed to perform verification of a
-BBS-protected <a>verifiable credential</a>. The inputs include a JSON-LD
-document (|document|), a BBS disclosure proof (|proof|),
-and any custom JSON-LD API options (such as a document loader). A single
-<em>verify data</em> object value is produced as output containing the following
-fields: |bbsProof|, |proofHash|, |mandatoryHash|, |selectiveIndexes|,
-|presentationHeader|, |nonMandatory|, |featureOption|, and, possibly,
-|pseudonym| and/or |lengthBBSMessages|.
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Initialize |proofHash| to the result of performing RDF Dataset Canonicalization
-[[RDF-CANON]] on the proof options, i.e., the proof  portion of the document
-with the |proofValue| removed. The hash used is the same as that used in
-the signature algorithm, i.e., SHA-256. Note: This step can be
-performed in parallel; it only needs to be completed before this algorithm needs
-to use the |proofHash| value.
-            </li>
-            <li>
-Initialize |bbsProof|, |labelMap|, |mandatoryIndexes|, |selectiveIndexes|,
-|presentationHeader|, |featureOption|, and, possibly, |pseudonym| and/or
-|lengthBBSMessages| to the values
-associated with their property names in the
-object returned when calling the algorithm in Section
-<a href="#parsederivedproofvalue"></a>, passing |proofValue| from |proof|.
-            </li>
-            <li>
-Initialize |labelMapFactoryFunction| to the result of calling the
-"`createLabelMapFunction`" algorithm of [[DI-ECDSA]], passing |labelMap|.
-            </li>
-            <li>
-Initialize |nquads| to the result of calling the "`labelReplacementCanonicalize`"
-algorithm of [[DI-ECDSA]], passing |document|, |labelMapFactoryFunction|, and
-any custom
-JSON-LD API options. Note: This step transforms the document into an array of
-canonical N-Quads with pseudorandom blank node identifiers based on |labelMap|.
-            </li>
-            <li>
-Initialize |mandatory| to an empty array.
-            </li>
-            <li>
-Initialize |nonMandatory| to an empty array.
-            </li>
-            <li>
-For each entry (|index|, |nq|) in |nquads|, separate the N-Quads into mandatory
-and non-mandatory categories:
-              <ol class="algorithm">
-                <li>
-If |mandatoryIndexes| includes |index|, add |nq| to |mandatory|.
-                </li>
-                <li>
-Otherwise, add |nq| to |nonMandatory|.
-                </li>
-              </ol>
-            </li>
-            <li>
-Initialize |mandatoryHash| to the result of calling the "`hashMandatory`"
-primitive, passing |mandatory|.
-            </li>
-            <li>
-Return an object with properties matching |baseSignature|, |proofHash|,
-|nonMandatory|, |mandatoryHash|, |selectiveIndexes|, |featureOption|, and,
-possibly, |pseudonym| and/or |lengthBBSMessages|.
             </li>
           </ol>
 
@@ -1470,27 +1263,32 @@ To verify a derived proof, perform the following steps:
 
           <ol class="algorithm">
             <li>
+Let |unsecuredDocument| be a copy of |document| with the `proof` value removed.
+            </li>
+            <li>
+Initialize the |proofData| object to the result returned by the algorithm of
+[[[#parsederivedproofvalue]]].
+At a minimum, the |proofData| object will contain the fields 
+|bbsProof|, |labelMap|, |mandatoryIndexes|, |selectiveIndexes|, 
+|presentationHeader|  and |featureOption|. It may also contain the fields 
+|nym_domain|, |pseudonym, and/or |lengthBBSMessages| depending on the value
+of |featureOption|.", respectively. 
+            </li>            
+            <li>
+Initialize the |verifyData| object to the value returned by calling the 
+algorithm in Section [[[VC-DATA-INTEGRITY-1.1#CreateVerifyData]]], passing the
+|document|, |proofData|, and any custom JSON-LD API options, such as a document 
+loader. 
+The |verifyData| object will contain the following fields: |proofHash|, 
+|mandatoryHash|, and |nonMandatory|.
+            </li>
+            <li>
 Let |publicKeyBytes| be the result of retrieving the
 public key bytes associated with the
 |proof|.|verificationMethod| value as described in the
 Data Integrity [[VC-DATA-INTEGRITY-1.1]] specification,
 <a data-cite="vc-data-integrity-1.1#algorithms">
 Section 4: Retrieve Verification Method</a>.
-            </li>
-            <li>
-Let |unsecuredDocument| be a copy of |securedDocument| with
-the `proof` value removed.
-            </li>
-            <li>
-Let |proof| be the value of |securedDocument|.|proof|.
-            </li>
-            <li>
-Initialize |bbsProof|, |proofHash|, |mandatoryHash|, |selectiveIndexes|,
-|presentationHeader|, |nonMandatory|, |featureOption|, and, possibly,
-|lengthBBSMessages| and/or |pseudonym|, to the values associated
-with their property names in the object returned when calling the algorithm in
-Section <a href="#createverifydata"></a>, passing the |unsecuredDocument|,
-|proof|, and any custom JSON-LD API options (such as a document loader).
             </li>
             <li>
 Initialize |bbsHeader| to the concatenation of |proofHash| and |mandatoryHash|
