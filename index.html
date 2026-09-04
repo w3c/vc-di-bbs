@@ -1353,17 +1353,17 @@ Let |proof| be a clone of the proof options, |options|.
             </li>
             <li>
 Let |proofConfig| be the result of running the algorithm in
-Section [[[#base-proof-configuration-bbs-2023]]] with
+Section [[[VC-DATA-INTEGRITY-1.1#ProofConfigurationAlg]]] with
 |options| passed as a parameter.
             </li>
             <li>
-Let |transformedData| be the result of running the algorithm in Section
-[[[#base-proof-transformation-bbs-2023]]] with |unsecuredDocument|,
+Let |transformedData| be the result of running the algorithm in
+[[[VC-DATA-INTEGRITY-1.1#TransformSD]]] with |unsecuredDocument|,
 |proofConfig|, and |options| passed as parameters.
             </li>
             <li>
-Let |hashData| be the result of running the algorithm in Section
-[[[#base-proof-hashing-bbs-2023]]] with |transformedData| and |proofConfig|
+Let |hashData| be the result of running the algorithm in
+[[[VC-DATA-INTEGRITY-1.1#HashSD]]] with |transformedData| and |proofConfig|
 passed as a parameters.
             </li>
             <li>
