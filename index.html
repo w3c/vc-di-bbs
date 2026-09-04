@@ -182,7 +182,7 @@
         lint: { "informative-dfn": false },
         postProcess: [],
         xref: [
-          "INFRA", "I18N-GLOSSARY", "VC-DATA-MODEL-2.0", "VC-DATA-INTEGRITY"
+          "INFRA", "I18N-GLOSSARY", "VC-DATA-MODEL-2.0", "VC-DATA-INTEGRITY-1.1", "CID"
         ]
       };
     </script>
@@ -256,7 +256,7 @@ implementation report</a>.
       <p>
 This specification defines a cryptographic suite for the purpose of
 creating, verifying, and deriving proofs using the BBS Signature Scheme in
-conformance with the Data Integrity [[VC-DATA-INTEGRITY]] specification. The
+conformance with the Data Integrity [[VC-DATA-INTEGRITY-1.1]] specification. The
 BBS signature scheme directly provides for selective disclosure and unlinkable
 proofs. It provides four high-level functions that work within the <i>issuer,
 holder, verifier</i> model. Specifically, an issuer uses the BBS `Sign` function to
@@ -305,8 +305,8 @@ the BBS `verifyProof` function to validate the credential.
         <h3>Terminology</h3>
         <p>
 Terminology used throughout this document is defined in the
-<a data-cite="VC-DATA-INTEGRITY#terminology">Terminology</a> section of the
-[[[VC-DATA-INTEGRITY]]] specification.
+<a data-cite="VC-DATA-INTEGRITY-1.1#terminology">Terminology</a> section of the
+[[[VC-DATA-INTEGRITY-1.1]]] specification.
         </p>
 
       </section>
@@ -348,7 +348,7 @@ for <a>verification methods</a> and <a>data integrity proof</a> formats.
         <h2>Verification Methods</h2>
         <p>
 These verification methods are used to verify Data Integrity Proofs
-[[VC-DATA-INTEGRITY]] produced using BLS12-381 cryptographic key material
+[[VC-DATA-INTEGRITY-1.1]] produced using BLS12-381 cryptographic key material
 that is compliant with [[CFRG-BBS-SIGNATURE]]. The encoding formats for these key types
 are provided in this section. Lossless cryptographic key transformation
 processes that result in equivalent cryptographic key material MAY be used
@@ -477,9 +477,9 @@ by default, and abort processing upon detection.
 
         <p>
 This algorithm is used to configure a cryptographic suite to be used by the
-<a data-cite="VC-DATA-INTEGRITY#add-proof">Add Proof</a> and
-<a data-cite="VC-DATA-INTEGRITY#verify-proof">Verify Proof</a>
-functions in [[[VC-DATA-INTEGRITY]]]. The algorithm takes an options object
+<a data-cite="VC-DATA-INTEGRITY-1.1#add-proof">Add Proof</a> and
+<a data-cite="VC-DATA-INTEGRITY-1.1#verify-proof">Verify Proof</a>
+functions in [[[VC-DATA-INTEGRITY-1.1]]]. The algorithm takes an options object
 ([=map=] |options|) as input and returns a [=data integrity cryptographic suite
 instance|cryptosuite instance=] ([=struct=] |cryptosuite|).
         </p>
@@ -508,82 +508,6 @@ Set |cryptosuite|.|verifyProof| to the algorithm in Section
 Return |cryptosuite|.
           </li>
         </ol>
-
-      </section>
-
-      <section>
-        <h3>Selective Disclosure Functions</h3>
-
-        <section>
-          <h4>createShuffledIdLabelMapFunction</h4>
-          <p>
-The following algorithm creates a label map factory function that uses an
-HMAC to shuffle canonical blank node identifiers. The required input is an HMAC
-(previously initialized with a secret key), |HMAC|. A function,
-<em>labelMapFactoryFunction</em>, is produced as output.
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Create a function, |labelMapFactoryFunction|, with one required input
-(a canonical node identifier map, |canonicalIdMap|), that will
-return a blank node identifier map, <em>bnodeIdMap</em>, as output. Set the
-function's implementation to:
-              <ol class="algorithm">
-                <li>
-Generate a new empty bnode identifier map, <em>bnodeIdMap</em>.
-                </li>
-                <li>
-For each map entry, <em>entry</em>, in |canonicalIdMap|:
-                  <ol class="algorithm">
-                    <li>
-Perform an HMAC operation on the canonical identifier from the value in <em>entry</em> to get an HMAC
-digest, <em>digest</em>.
-                    </li>
-                    <li>
-Generate a new string value, <em>b64urlDigest</em>, and initialize it to "u"
-followed by appending a base64url-no-pad encoded version of the <em>digest</em>
-value.
-                    </li>
-                    <li>
-Add a new entry, |newEntry|, to <em>bnodeIdMap</em> using the key
-from <em>entry</em> and <em>b64urlDigest</em> as the value.
-                    </li>
-                  </ol>
-                </li>
-                <li>
-Derive the shuffled mapping from the `bnodeIdMap` as follows:
-                  <ol class="algorithm">
-                    <li>
-Set `hmacIds` to be the sorted array of values from the `bnodeIdMap`, and set
-`bnodeKeys` to be the ordered array of keys from the `bnodeIdMap`.
-                    </li>
-                    <li>
-For each key in `bnodeKeys`, replace the `bnodeIdMap` value for that key with the
-index position of the value in the `hmacIds` array prefixed by "b", i.e.,
-`bnodeIdMap.set(bkey, 'b' + hmacIds.indexOf(bnodeIdMap.get(bkey)))`.
-                    </li>
-                  </ol>
-                </li>
-                <li>
-Return <em>bnodeIdMap</em>.
-                </li>
-              </ol>
-            </li>
-            <li>
-Return |labelMapFactoryFunction|.
-            </li>
-          </ol>
-
-          <p class="note informative">
-It should be noted that step 1.2 in the above algorithm is identical to step 1.2
-in <a href="https://www.w3.org/TR/vc-di-ecdsa/#createhmacidlabelmapfunction">
-Section 3.3.4 `createHmacIdLabelMapFunction`</a> of [[DI-ECDSA]],
-so developers might be able to reuse the code or call the function if implementing
-both.
-          </p>
-        </section>
-
 
       </section>
 
@@ -697,7 +621,7 @@ If the `proofValue` string does not start with
   <code class="uname">LATIN SMALL LETTER U</code>)</span>,
 indicating that it is a `multibase-base64url-no-pad-encoded` value,
 an error MUST be raised and SHOULD convey an error type of
-<a data-cite="VC-DATA-INTEGRITY#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
+<a data-cite="VC-DATA-INTEGRITY-1.1#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
             </li>
             <li>
 Initialize |decodedProofValue| to the result of base64url-no-pad-decoding the
@@ -726,7 +650,7 @@ If the |decodedProofValue| starts with the bytes `0xd9`, `0x5d`, and `0x08`, set
                 <li>
 If the |decodedProofValue| starts with any other three byte sequence,
 an error MUST be raised and SHOULD convey an error type of
-<a data-cite="VC-DATA-INTEGRITY#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
+<a data-cite="VC-DATA-INTEGRITY-1.1#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
                 </li>
               </ol>
 
@@ -769,303 +693,6 @@ order, and add |featureOption| as a property.
         </section>
 
         <section>
-          <h4>createDisclosureData</h4>
-
-          <p>
-The following algorithm creates data to be used to generate a derived proof. The
-inputs include a JSON-LD document (|document|), a BBS base proof
-(|proof|), an array of JSON pointers to use to selectively disclose
-statements (|selectivePointers|), an OPTIONAL BBS
-|presentationHeader| (byte array that defaults to an empty byte array if
-not present), a |featureOption| indicator, additional inputs as required by
-the |featureOption| (see <a href="#add-derived-proof-bbs-2023">Add Derived Proof</a>),
-and any custom JSON-LD API options
-(such as a document loader). A single object, <em>disclosure data</em>, is
-produced as output, which contains the following fields: |bbsProof|,
-|labelMap|, |mandatoryIndexes|, |selectiveIndexes|, |presentationHeader|,
-|revealDocument|, and, if computed, |pseudonym|.
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Initialize |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|,
-and |mandatoryPointers|
-to the values of the associated properties in the object
-returned when calling the algorithm in Section
-<a href="#parsebaseproofvalue"></a>, passing the `proofValue` from `proof`.
-            </li>
-            <li>
-Initialize |hmac| to an HMAC API using |hmacKey|. The HMAC uses the same hash
-algorithm used in the signature algorithm, i.e., SHA-256.
-            </li>
-            <li>
-Initialize |labelMapFactoryFunction| to the result of calling the algorithm of
-section <a href="#createshuffledidlabelmapfunction"></a>, passing |hmac| as |HMAC|.
-            </li>
-            <li>
-Initialize |combinedPointers| to the concatenation of |mandatoryPointers|
-and |selectivePointers|.
-            </li>
-            <li>
-Initialize |groupDefinitions| to a map with the following entries: key of
-the string `"mandatory"` and value of |mandatoryPointers|; key of the string
-`"selective"` and value of |selectivePointers|; and key of the string `"combined"`
-and value of |combinedPointers|.
-            </li>
-            <li>
-Initialize |groups| and |labelMap| to the result of calling the algorithm in
-<a href="https://www.w3.org/TR/vc-di-ecdsa/#canonicalizeandgroup">Section 3.3.16
-canonicalizeAndGroup</a> of the [[DI-ECDSA]] specification, passing |document|
-|labelMapFactoryFunction|,
-|groupDefinitions|, and any custom JSON-LD
-API options. Note: This step transforms the document into an array of canonical
-N-Quads whose order has been shuffled based on 'hmac'-applied blank node
-identifiers, and groups
-the N-Quad strings according to selections based on JSON pointers.
-            </li>
-
-            <li>
-Compute the mandatory indexes relative to their positions in the combined
-statement list, i.e., find the position at which a mandatory statement occurs
-in the list of combined statements. One method for doing this is given below.
-              <ol class="algorithm">
-                <li>
-Initialize |mandatoryIndexes| to an empty array. Set |mandatoryMatch| to
-|groups.mandatory.matching| map; set |combinedMatch| to
-|groups.combined.matching|; and set |combinedIndexes| to the ordered array of
-just the keys of the |combinedMatch| map.
-                </li>
-                <li>
-For each key in the |mandatoryMatch| map, find its index in the |combinedIndexes|
-array (e.g., `combinedIndexes.indexOf(key)`), and add this value to the
-|mandatoryIndexes| array.
-                </li>
-              </ol>
-            </li>
-            <li>
-Compute the selective indexes relative to their positions in the non-mandatory
-statement list, i.e., find the position at which a selected statement occurs in
-the list of non-mandatory statements. One method for doing this is given below.
-              <ol class="algorithm">
-                <li>
-Initialize |selectiveIndexes| to an empty array. Set |selectiveMatch| to the
-|groups.selective.matching| map; set |mandatoryNonMatch| to the map
-|groups.mandatory.nonMatching|; and |nonMandatoryIndexes| to to the ordered
-array of just the keys of the |mandatoryNonMatch| map.
-                </li>
-                <li>
-For each key in the |selectiveMatch| map, find its index in the
-|nonMandatoryIndexes| array (e.g., `nonMandatoryIndexes.indexOf(key)`), and add
-this value to the |selectiveIndexes| array.
-                </li>
-              </ol>
-            </li>
-            <li>
-Initialize |bbsMessages| to an array of byte arrays containing the values in the
-|nonMandatory| array of strings encoded using the UTF-8
-<a>character encoding</a>.
-            </li>
-            <li>
-Set |bbsProof| to the value computed by the appropriate procedure given below
-based on the value of the |featureOption| parameter.
-              <ol class="algorithm">
-                <li>
-If |featureOption| equals `"baseline"`,
-set `bbsProof` to the value computed by the `ProofGen` procedure from
-[[CFRG-BBS-SIGNATURE]], i.e.,
-`ProofGen(PK, signature, header, ph, messages, disclosed_indexes)`,
-where `PK` is the original issuers public key, `signature` is the
-`bbsSignature`, `header` is the `bbsHeader`, `ph` is the  `presentationHeader`
-`messages` is `bbsMessages`, and `disclosed_indexes` is `selectiveIndexes`.
-                </li>
-                <li>
-If |featureOption| equals `"anonymous_holder_binding"`,
-set `bbsProof` to the value computed by the `BlindProofGen` procedure from
-[[CFRG-Blind-BBS-Signature]], where |PK| is the original issuers public key,
-|signature| is the
-|bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|,
-|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
-and `commitment_with_proof`. The holder will also furnish its
-|holder_secret|, and the |proverBlind| that was used to compute the
-|commitment_with_proof|. This is the
-<a href="#anonymous-holder-binding">Anonymous Holder Binding</a> feature option.
-<span class="note">To
-be updated when IETF API is finalized.</span>
-                </li>
-                <li>
-If |featureOption| equals `"pseudonym"`,
-use the "Verification and Finalization" operation
-from [[CFRG-Pseudonym-BBS-Signature]] with an empty |committed_messages| array
-to both verify the |bbsSignature| and compute
-the |nym_secret| value. This operation uses the |prover_nym|,
-|signer_nym_entropy|, and |secret_prover_blind|.
-<br><br>
-Determine the |nym_domain|. This might be specified by
-the verifier or set by the holder, depending on the usage scenario. Use
-the "Proof Generation with Pseudonym"
-operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
-This operation takes as inputs
-the original issuer's public key as |PK|,
-the               |bbsSignature| as |signature|,
-the                  |bbsHeader| as |header|,
-the         |presentationHeader| as |ph|,
-the                |bbsMessages| as |messages|,
-the           |selectiveIndexes| as |disclosed_indexes|,
-                                  a |nym_secret|,
-                                  a |nym_domain|,
-                 an empty array for |committed_messages|,
-and                               a |secret_prover_blind|.
-In addition to providing
-the raw
-cryptographic proof value which is assigned to |bbsProof|,
-it also returns the |pseudonym|.
-<br><br>
-This is for the
-<a href="#credential-bound-pseudonyms">Credential-Bound Pseudonyms</a>
-feature option. <span class="note">To be updated when IETF API is finalized.
-</span>
-                </li>
-                <li>
-If |featureOption| equals `"holder_binding_pseudonym"`,
-use the "Verification and Finalization" operation
-from [[CFRG-Pseudonym-BBS-Signature]] with the |committed_messages| array
-containing the |holder_secret| as its only value,
-to both verify the |bbsSignature| and compute
-the |nym_secret| value. This operation uses the |prover_nym|,
-|signer_nym_entropy|, and |secret_prover_blind|.
-<br><br>
-Determine the |nym_domain|. This might be specified by
-the verifier or set by the holder depending on the usage scenario. Use
-the "Proof Generation with Pseudonym"
-operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
-This operation takes as inputs
-|PK|, the original issuers public key,
-|signature|,  the |bbsSignature|, |header| is the |bbsHeader|,
-|ph| is the |presentationHeader|,
-|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
-This operation takes as inputs
-   the                  original issuers public key as |PK|,
-   the                               |bbsSignature| as |signature|,
-   the                                  |bbsHeader| as |header|,
-   the                         |presentationHeader| as |ph|,
-   the                                |bbsMessages| as |messages|,
-   the                           |selectiveIndexes| as |disclosed_indexes|,
-   a                                                   |nym_secret|,
-   a                                                   |nym_domain|,
-   the only value of the |committed_messages| array as |holder_secret|,
-   and a                                               |secret_prover_blind|.
-In addition to
-providing the raw cryptographic proof value which is assigned to |bbsProof|,
-it also returns the |pseudonym|.
-
-This is for the
-<a href="#holder-binding-and-pseudonyms">Holder Binding and Pseudonyms</a>
-feature option. <span class="note">To be updated when IETF API is finalized.
-</span>
-                </li>
-              </ol>
-            </li>
-          <li>
-If |featureOption| equals `"anonymous_holder_binding"`,
-`"pseudonym"`, or `"holder_binding_pseudonym"` set the |lengthBBSMessages|
-parameter to the length of the |bbsMessages| array.
-          </li>
-
-
-            <li>
-Initialize |revealDocument| to the result of the "selectJsonLd" algorithm from
-[[DI-ECDSA]], passing `document`, and `combinedPointers` as `pointers`.
-            </li>
-            <li>
-Run the RDF Dataset Canonicalization Algorithm [[RDF-CANON]] on
-the joined |combinedGroup|.|deskolemizedNQuads|, passing any custom
-options, and get the canonical bnode identifier map, |canonicalIdMap|.
-Note: This map includes the canonical blank node identifiers that a verifier
-will produce when they canonicalize the reveal document.
-            </li>
-            <li>
-Initialize |verifierLabelMap| to an empty map. This map will map
-the canonical blank node identifiers produced by the verifier when they
-canonicalize the revealed document, to the blank node identifiers that were
-originally signed in the base proof.
-            </li>
-            <li>
-For each key (`inputLabel`) and value (`verifierLabel`) in `canonicalIdMap:
-              <ol class="algorithm">
-                <li>
-Add an entry to `verifierLabelMap`, using `verifierLabel` as the key, and the
-value associated with `inputLabel` as a key in `labelMap` as the value.
-                </li>
-              </ol>
-            </li>
-            <li>
-Return an object with properties matching |bbsProof|, "verifierLabelMap" for |labelMap|,
-|mandatoryIndexes|, |selectiveIndexes|, |revealDocument|, |pseudonym|, and, if
-computed, |lengthBBSMessages|.
-            </li>
-          </ol>
-
-        </section>
-
-        <section>
-          <h4>compressLabelMap</h4>
-          <p>
-The following algorithm compresses a label map. The required input is
-label map (|labelMap|). The output is a <em>compressed label map</em>.
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Initialize `map` to an empty map.
-            </li>
-            <li>
-For each entry (`k`, `v`) in `labelMap`:
-              <ol class="algorithm">
-                <li>
-Add an entry to `map`, with a key that is a base-10 integer parsed from the
-characters following the "c14n" prefix in `k`, and a value that is a base-10
-integer parsed from the characters following the "b" prefix in `v`.
-                </li>
-              </ol>
-            </li>
-            <li>
-Return `map` as <em>compressed label map</em>.
-            </li>
-          </ol>
-        </section>
-
-        <section>
-          <h4>decompressLabelMap</h4>
-
-          <p>
-The following algorithm decompresses a label map. The required input is a
-compressed label map (|compressedLabelMap|). The output is a
-<em>decompressed label map</em>.
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Initialize `map` to an empty map.
-            </li>
-<!--   const key = 'c14n' + k
-  const value = 'b' + v -->
-            <li>
-For each entry (`k`, `v`) in `compressedLabelMap`:
-              <ol class="algorithm">
-                <li>
-Add an entry to `map`, with a key that adds the prefix "c14n" to `k`, and a value
-that adds a prefix of "b" to `v`.
-                </li>
-              </ol>
-            </li>
-            <li>
-Return `map` as <em>decompressed label map</em>.
-            </li>
-          </ol>
-
-        </section>
-
-        <section>
           <h4>serializeDerivedProofValue</h4>
 
           <p>
@@ -1083,7 +710,7 @@ value, serialized as a byte string, is produced as output.
           <ol class="algorithm">
             <li>
 Initialize `compressedLabelMap` to the result of calling the algorithm in
-Section <a href="#compresslabelmap"></a>, passing `labelMap` as the parameter.
+Section <a href="VC-DATA-INTEGRITY-1.1#compresslabelmap"></a>, passing `labelMap` as the parameter.
             </li>
             <li>
  Depending on the value of |featureOption| do the following:
@@ -1181,7 +808,7 @@ If the `proofValue` string does not start with
   <code class="uname">LATIN SMALL LETTER U</code>)</span>, indicating that
 it is a `multibase-base64url-no-pad-encoded` value,
 an error MUST be raised and SHOULD convey an error type of
-<a data-cite="VC-DATA-INTEGRITY#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
+<a data-cite="VC-DATA-INTEGRITY-1.1#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
             </li>
             <li>
 Initialize |decodedProofValue| to the result of base64url-no-pad-decoding the
@@ -1209,19 +836,16 @@ If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
                 </li>
               </ol>
 
-              <!-- |bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
-              |presentationHeader|, |nym_domain|, |pseudonym|, and |lengthBBSMessages|. -->
-
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
 bytes that follow the three-byte BBS disclosure proof header. If the result
 is not an array of five, six, seven, or eight elements,
 an error MUST be raised and SHOULD convey an error type of
-<a data-cite="VC-DATA-INTEGRITY#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
+<a data-cite="VC-DATA-INTEGRITY-1.1#PROOF_VERIFICATION_ERROR">PROOF_VERIFICATION_ERROR</a>.
             </li>
             <li>
 Replace the second element in `components` using the result of calling the
-algorithm in Section <a href="#decompresslabelmap"></a>, passing the existing
+algorithm in Section <a href="C-DATA-INTEGRITY-1.1#decompresslabelmap"></a>, passing the existing
 second element of `components` as `compressedLabelMap`.
             </li>
             <li>
@@ -1230,79 +854,6 @@ six, seven, or eight elements, using the names "bbsProof", "labelMap",
 "mandatoryIndexes", "selectiveIndexes", "presentationHeader", and optional
 "nym_domain", "pseudonym", and/or "lengthBBSMessages", respectively.
 In addition, add |featureOption| and its value to the object.
-            </li>
-          </ol>
-
-        </section>
-
-        <section>
-          <h4>createVerifyData</h4>
-
-          <p>
-The following algorithm creates the data needed to perform verification of a
-BBS-protected <a>verifiable credential</a>. The inputs include a JSON-LD
-document (|document|), a BBS disclosure proof (|proof|),
-and any custom JSON-LD API options (such as a document loader). A single
-<em>verify data</em> object value is produced as output containing the following
-fields: |bbsProof|, |proofHash|, |mandatoryHash|, |selectiveIndexes|,
-|presentationHeader|, |nonMandatory|, |featureOption|, and, possibly,
-|pseudonym| and/or |lengthBBSMessages|.
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Initialize |proofHash| to the result of performing RDF Dataset Canonicalization
-[[RDF-CANON]] on the proof options, i.e., the proof  portion of the document
-with the |proofValue| removed. The hash used is the same as that used in
-the signature algorithm, i.e., SHA-256. Note: This step can be
-performed in parallel; it only needs to be completed before this algorithm needs
-to use the |proofHash| value.
-            </li>
-            <li>
-Initialize |bbsProof|, |labelMap|, |mandatoryIndexes|, |selectiveIndexes|,
-|presentationHeader|, |featureOption|, and, possibly, |pseudonym| and/or
-|lengthBBSMessages| to the values
-associated with their property names in the
-object returned when calling the algorithm in Section
-<a href="#parsederivedproofvalue"></a>, passing |proofValue| from |proof|.
-            </li>
-            <li>
-Initialize |labelMapFactoryFunction| to the result of calling the
-"`createLabelMapFunction`" algorithm of [[DI-ECDSA]], passing |labelMap|.
-            </li>
-            <li>
-Initialize |nquads| to the result of calling the "`labelReplacementCanonicalize`"
-algorithm of [[DI-ECDSA]], passing |document|, |labelMapFactoryFunction|, and
-any custom
-JSON-LD API options. Note: This step transforms the document into an array of
-canonical N-Quads with pseudorandom blank node identifiers based on |labelMap|.
-            </li>
-            <li>
-Initialize |mandatory| to an empty array.
-            </li>
-            <li>
-Initialize |nonMandatory| to an empty array.
-            </li>
-            <li>
-For each entry (|index|, |nq|) in |nquads|, separate the N-Quads into mandatory
-and non-mandatory categories:
-              <ol class="algorithm">
-                <li>
-If |mandatoryIndexes| includes |index|, add |nq| to |mandatory|.
-                </li>
-                <li>
-Otherwise, add |nq| to |nonMandatory|.
-                </li>
-              </ol>
-            </li>
-            <li>
-Initialize |mandatoryHash| to the result of calling the "`hashMandatory`"
-primitive, passing |mandatory|.
-            </li>
-            <li>
-Return an object with properties matching |baseSignature|, |proofHash|,
-|nonMandatory|, |mandatoryHash|, |selectiveIndexes|, |featureOption|, and,
-possibly, |pseudonym| and/or |lengthBBSMessages|.
             </li>
           </ol>
 
@@ -1353,17 +904,17 @@ Let |proof| be a clone of the proof options, |options|.
             </li>
             <li>
 Let |proofConfig| be the result of running the algorithm in
-Section [[[#base-proof-configuration-bbs-2023]]] with
+Section [[[VC-DATA-INTEGRITY-1.1#ProofConfigurationAlg]]] with
 |options| passed as a parameter.
             </li>
             <li>
-Let |transformedData| be the result of running the algorithm in Section
-[[[#base-proof-transformation-bbs-2023]]] with |unsecuredDocument|,
+Let |transformedData| be the result of running the algorithm in
+[[[VC-DATA-INTEGRITY-1.1#TransformSD]]] with |unsecuredDocument|,
 |proofConfig|, and |options| passed as parameters.
             </li>
             <li>
-Let |hashData| be the result of running the algorithm in Section
-[[[#base-proof-hashing-bbs-2023]]] with |transformedData| and |proofConfig|
+Let |hashData| be the result of running the algorithm in
+[[[VC-DATA-INTEGRITY-1.1#HashSD]]] with |transformedData| and |proofConfig|
 passed as a parameters.
             </li>
             <li>
@@ -1373,7 +924,7 @@ Let |proofBytes| be the result of running the algorithm in Section
 parameters.
             </li>
             <li>
-Let |proof|.|proofValue| be a <a data-cite="VC-DATA-INTEGRITY#multibase-0">
+Let |proof|.|proofValue| be a <a data-cite="VC-DATA-INTEGRITY-1.1#multibase-0">
 base64url-encoded Multibase value</a> of the |proofBytes|.
             </li>
             <li>
@@ -1384,171 +935,6 @@ Return |proof| as the [=data integrity proof=].
         </section>
 
         <section>
-          <h4>Base Proof Transformation (bbs-2023)</h4>
-          <p>
-The following algorithm specifies how to transform an unsecured input document
-into a transformed document that is ready to be provided as input to the
-hashing algorithm in Section <a href="#base-proof-hashing-bbs-2023"></a>.
-          </p>
-          <p>
-Required inputs to this algorithm are an
-<a data-cite="vc-data-integrity#dfn-unsecured-data-document">
-unsecured data document</a> (|unsecuredDocument|) and
-transformation options (|options|). The
-transformation options MUST contain a type identifier for the
-<a data-cite="vc-data-integrity#dfn-cryptosuite">
-cryptographic suite</a> (|type|), a cryptosuite
-identifier (|cryptosuite|), and a verification method
-(|verificationMethod|). The transformation options MUST contain an
-array of mandatory JSON pointers (|mandatoryPointers|) and MAY contain
-additional options, such as a JSON-LD document loader. A <em>transformed data
-document</em> is produced as output. Whenever this algorithm encodes strings, it
-MUST use UTF-8 encoding.
-          </p>
-          <ol class="algorithm">
-            <li>
-Initialize |hmac| to an HMAC API using a locally generated and exportable HMAC
-key. The HMAC uses the same hash algorithm used in the signature algorithm,
-i.e., SHA-256. Per the recommendations of [[RFC2104]], the HMAC key MUST be the
-same length as the digest size; for SHA-256, this is 256 bits or 32 bytes.
-            </li>
-            <li>
-Initialize `labelMapFactoryFunction` to the result of calling the
-`createShuffledIdLabelMapFunction` algorithm passing `hmac` as `HMAC`.
-            </li>
-            <li>
-Initialize `groupDefinitions` to a map with an entry with a key of the string
-"`mandatory`" and a value of |mandatoryPointers|.
-            </li>
-            <li>
-Initialize `groups` to the result of calling the algorithm in
-<a href="https://www.w3.org/TR/vc-di-ecdsa/#canonicalizeandgroup">Section 3.3.16
-canonicalizeAndGroup</a> of the [[DI-ECDSA]] specification, passing
-`labelMapFactoryFunction`,
-`groupDefinitions`, `unsecuredDocument` as `document`, and any custom JSON-LD
-API options. Note: This step transforms the document into an array of canonical
-N-Quads whose order has been shuffled based on 'hmac' applied blank node
-identifiers, and groups
-the N-Quad strings according to selections based on JSON pointers.
-            </li>
-            <li>
-Initialize `mandatory` to the values in the `groups.mandatory.matching` map.
-            </li>
-            <li>
-Initialize `nonMandatory` to the values in the `groups.mandatory.nonMatching`
-map.
-            </li>
-            <li>
-Initialize `hmacKey` to the result of exporting the HMAC key from `hmac`.
-            </li>
-            <li>
-Return an object with "`mandatoryPointers`" set to `mandatoryPointers`,
-"`mandatory`" set to `mandatory`, "`nonMandatory`" set to `nonMandatory`,
-and "`hmacKey`" set to `hmacKey`.
-            </li>
-          </ol>
-        </section>
-
-        <section>
-          <h4>Base Proof Hashing (bbs-2023)</h4>
-
-          <p>
-The following algorithm specifies how to cryptographically hash a
-<em>transformed data document</em> and <em>proof configuration</em>
-into cryptographic hash data that is ready to be provided as input to the
-algorithms in Section <a href="#base-proof-serialization-bbs-2023"></a>.
-          </p>
-
-          <p>
-The required inputs to this algorithm are a <em>transformed data document</em>
-(|transformedDocument|) and <em>canonical proof configuration</em>
-(|canonicalProofConfig|). A <em>hash data</em> value represented
-as an object is produced as output.
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Initialize `proofHash` to the result of calling the RDF Dataset Canonicalization
-algorithm [[RDF-CANON]] on `canonicalProofConfig` and then cryptographically
-hashing the result using the same hash that is used by the signature algorithm,
-i.e., SHA-256. Note: This step can be performed in parallel;
-it only needs to be completed before this algorithm terminates, as the result is
-part of the return value.
-            </li>
-            <li>
-Initialize `mandatoryHash` to the result of calling the the algorithm in
-<a href="https://www.w3.org/TR/vc-di-ecdsa/#hashmandatorynquads">Section 3.3.17
-hashMandatoryNQuads</a> of the [[DI-ECDSA]] specification, passing
-|transformedDocument|.`mandatory` and using the SHA-256
-algorithm.
-            </li>
-            <li>
-Initialize `hashData` as a deep copy of |transformedDocument|, and
-add `proofHash` as "`proofHash`" and `mandatoryHash` as "`mandatoryHash`" to that
-object.
-            </li>
-            <li>
-Return `hashData` as <em>hash data</em>.
-            </li>
-          </ol>
-
-        </section>
-
-        <section>
-          <h4>Base Proof Configuration (bbs-2023)</h4>
-
-          <p>
-The following algorithm specifies how to generate a
-<em>proof configuration</em> from a set of <em>proof options</em>
-that is used as input to the
-<a href="#base-proof-hashing-bbs-2023">base proof hashing algorithm</a>.
-          </p>
-
-          <p>
-The required inputs to this algorithm are <em>proof options</em>
-(|options|) and the
-<a data-cite="vc-data-integrity#dfn-unsecured-data-document">unsecured data
-document</a> (|unsecuredDocument|). The <em>proof options</em> MUST contain a
-type identifier for the
-<a data-cite="vc-data-integrity#dfn-cryptosuite">
-cryptographic suite</a> (|type|) and MUST contain a cryptosuite
-identifier (|cryptosuite|). A <em>proof configuration</em>
-object is produced as output.
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Let |proofConfig| be a clone of the |options| object.
-            </li>
-            <li>
-If |proofConfig|.|type| is not set to `DataIntegrityProof` and/or
-|proofConfig|.|cryptosuite| is not set to `bbs-2023`, an error MUST be raised
-and SHOULD convey an error type of
-<a data-cite="VC-DATA-INTEGRITY#PROOF_GENERATION_ERROR">PROOF_GENERATION_ERROR</a>.
-            </li>
-            <li>
-If |proofConfig|.|created| is set and if the value is not a
-valid [[XMLSCHEMA11-2]] datetime, an error MUST be raised and SHOULD convey an
-error type of
-<a data-cite="VC-DATA-INTEGRITY#PROOF_GENERATION_ERROR">PROOF_GENERATION_ERROR</a>.
-            </li>
-            <li>
-Set |proofConfig|.<var>@context</var> to
-|unsecuredDocument|.<var>@context</var>.
-            </li>
-            <li>
-Let |canonicalProofConfig| be the result of applying the RDF Dataset
-Canonicalization Algorithm [[RDF-CANON]] to the |proofConfig|.
-            </li>
-            <li>
-Return |canonicalProofConfig|.
-            </li>
-          </ol>
-
-        </section>
-
-
-        <section>
           <h4>Base Proof Serialization (bbs-2023)</h4>
 
           <p>
@@ -1557,8 +943,8 @@ Credential, specifies how to create a base proof. The base proof is to be
 given only to the holder, who is responsible for generating a derived proof from
 it, exposing only selectively disclosed details in the proof to a verifier. This
 algorithm is designed to be used in conjunction with the algorithms defined
-in the Data Integrity [[VC-DATA-INTEGRITY]] specification,
-<a data-cite="vc-data-integrity#algorithms">
+in the Data Integrity [[VC-DATA-INTEGRITY-1.1]] specification,
+<a data-cite="vc-data-integrity-1.1#algorithms">
 Section 4: Algorithms</a>. Required inputs are
 cryptographic hash data (|hashData|),
 |featureOption|, and, if required,
@@ -1567,12 +953,12 @@ If |featureOption| is set to `"anonymous_holder_binding"`,
 `"pseudonym"`, or `"holder_binding_pseudonym"`, the
 |commitment_with_proof| input MUST be supplied; if not supplied,
 an error MUST be raised and SHOULD convey an error type of
-<a data-cite="VC-DATA-INTEGRITY#PROOF_GENERATION_ERROR">PROOF_GENERATION_ERROR</a>.
+<a data-cite="VC-DATA-INTEGRITY-1.1#PROOF_GENERATION_ERROR">PROOF_GENERATION_ERROR</a>.
 If |featureOption| is set to
 `"pseudonym"` or `"holder_binding_pseudonym"`, the
 |signer_nym_entropy| input MUST be supplied; if not supplied,
 an error MUST be raised and SHOULD convey an error type of
-<a data-cite="VC-DATA-INTEGRITY#PROOF_GENERATION_ERROR">PROOF_GENERATION_ERROR</a>.
+<a data-cite="VC-DATA-INTEGRITY-1.1#PROOF_GENERATION_ERROR">PROOF_GENERATION_ERROR</a>.
 A single <em>digital proof</em> value represented as series of bytes is produced
 as output.
           </p>
@@ -1687,31 +1073,166 @@ See <a href="#holder-binding-and-pseudonyms">Holder Binding and Pseudonyms</a> f
 background information.
           </p>
           <ol>
+
             <li>
-Initialize |bbsProof|,  |labelMap|, |mandatoryIndexes|, |selectiveIndexes|, and
-|revealDocument| to the values associated with their
-property names in the object returned when calling the algorithm in
-Section <a href="#createdisclosuredata"></a>, passing the |document|, |proof|,
-|selectivePointers|, |presentationHeader|, |featureOption|, required additional
-inputs based on the |featureOption|, and any custom JSON-LD API options,
-such as a document loader.
+Let the |proofData| object be the result returned from the algorithm in 
+Section <a href="#parsebaseproofvalue"></a>.
+At a minimum, the |proofData| object will contain the fields |bbsSignature|, 
+|bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers| and |featureOption|. 
+Additional fields may be present depending on the |featureOption| value.
+            </li>
+            <li>
+Initialize |disclosureData| to the object returned when calling the algorithm in
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]], passing the |document|, |proofData|,
+|selectivePointers|, and any custom JSON-LD API options, such as a document
+loader. The |disclosureData| object will contain the following fields: 
+|revealDocument|, |mandatoryIndexes|, |selectiveIndexes|, |verifierLabelMap|
+|mandatory|, and |nonMandatory|.
             </li>
             <li>
 Initialize |newProof| to a shallow copy of |proof|.
             </li>
             <li>
-Replace |proofValue| in |newProof| with the result of calling the algorithm
-in Section <a href="#serializederivedproofvalue"></a>, passing |bbsProof|,
-|labelMap|, |mandatoryIndexes|, |selectiveIndexes|, |featureOption|, and any
-required inputs indicated by the |featureOption|.
+Replace |proofValue| in |newProof| with the result of calling the algorithm in 
+Section <a href="#derived-proof-serialization"></a> passing |proofData| and 
+|disclosureData| as parameters.
             </li>
             <li>
-Set the value of the "`proof`" property in |revealDocument| to |newProof|.
+Set the value of the "proof" property in |revealDocument| to |newProof|.
             </li>
             <li>
 Return |revealDocument| as the <em>selectively revealed document</em>.
             </li>
           </ol>
+        </section>
+
+        <section>
+          <h4>Derived Proof Serialization</h4>
+          <p>
+The following algorithm generates a derived proof. The
+inputs are the |proofData| and |disclosureData| objects.
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Initialize |bbsMessages| to an array of byte arrays containing the values in the
+|nonMandatory| array of strings encoded using the UTF-8
+<a>character encoding</a>.
+            </li>
+            <li>
+Set |bbsProof| to the value computed by the appropriate procedure given below
+based on the value of the |featureOption| parameter.
+              <ol class="algorithm">
+                <li>
+If |featureOption| equals `"baseline"`,
+set `bbsProof` to the value computed by the `ProofGen` procedure from
+[[CFRG-BBS-SIGNATURE]], i.e.,
+`ProofGen(PK, signature, header, ph, messages, disclosed_indexes)`,
+where `PK` is the original issuers public key, `signature` is the
+`bbsSignature`, `header` is the `bbsHeader`, `ph` is the  `presentationHeader`
+`messages` is `bbsMessages`, and `disclosed_indexes` is `selectiveIndexes`.
+                </li>
+                <li>
+If |featureOption| equals `"anonymous_holder_binding"`,
+set `bbsProof` to the value computed by the `BlindProofGen` procedure from
+[[CFRG-Blind-BBS-Signature]], where |PK| is the original issuers public key,
+|signature| is the
+|bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|,
+|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
+and `commitment_with_proof`. The holder will also furnish its
+|holder_secret|, and the |proverBlind| that was used to compute the
+|commitment_with_proof|. This is the
+<a href="#anonymous-holder-binding">Anonymous Holder Binding</a> feature option.
+<span class="note">To
+be updated when IETF API is finalized.</span>
+                </li>
+                <li>
+If |featureOption| equals `"pseudonym"`,
+use the "Verification and Finalization" operation
+from [[CFRG-Pseudonym-BBS-Signature]] with an empty |committed_messages| array
+to both verify the |bbsSignature| and compute
+the |nym_secret| value. This operation uses the |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind|.
+<br><br>
+Determine the |nym_domain|. This might be specified by
+the verifier or set by the holder, depending on the usage scenario. Use
+the "Proof Generation with Pseudonym"
+operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
+This operation takes as inputs
+the original issuer's public key as |PK|,
+the               |bbsSignature| as |signature|,
+the                  |bbsHeader| as |header|,
+the         |presentationHeader| as |ph|,
+the                |bbsMessages| as |messages|,
+the           |selectiveIndexes| as |disclosed_indexes|,
+                                  a |nym_secret|,
+                                  a |nym_domain|,
+                 an empty array for |committed_messages|,
+and                               a |secret_prover_blind|.
+In addition to providing
+the raw
+cryptographic proof value which is assigned to |bbsProof|,
+it also returns the |pseudonym|.
+<br><br>
+This is for the
+<a href="#credential-bound-pseudonyms">Credential-Bound Pseudonyms</a>
+feature option. <span class="note">To be updated when IETF API is finalized.
+</span>
+                </li>
+                <li>
+If |featureOption| equals `"holder_binding_pseudonym"`,
+use the "Verification and Finalization" operation
+from [[CFRG-Pseudonym-BBS-Signature]] with the |committed_messages| array
+containing the |holder_secret| as its only value,
+to both verify the |bbsSignature| and compute
+the |nym_secret| value. This operation uses the |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind|.
+<br><br>
+Determine the |nym_domain|. This might be specified by
+the verifier or set by the holder depending on the usage scenario. Use
+the "Proof Generation with Pseudonym"
+operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
+This operation takes as inputs
+|PK|, the original issuers public key,
+|signature|,  the |bbsSignature|, |header| is the |bbsHeader|,
+|ph| is the |presentationHeader|,
+|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
+This operation takes as inputs
+   the                  original issuers public key as |PK|,
+   the                               |bbsSignature| as |signature|,
+   the                                  |bbsHeader| as |header|,
+   the                         |presentationHeader| as |ph|,
+   the                                |bbsMessages| as |messages|,
+   the                           |selectiveIndexes| as |disclosed_indexes|,
+   a                                                   |nym_secret|,
+   a                                                   |nym_domain|,
+   the only value of the |committed_messages| array as |holder_secret|,
+   and a                                               |secret_prover_blind|.
+In addition to
+providing the raw cryptographic proof value which is assigned to |bbsProof|,
+it also returns the |pseudonym|.
+
+This is for the
+<a href="#holder-binding-and-pseudonyms">Holder Binding and Pseudonyms</a>
+feature option. <span class="note">To be updated when IETF API is finalized.
+</span>
+                </li>
+              </ol>
+            </li>
+            <li>
+If |featureOption| equals `"anonymous_holder_binding"`,
+`"pseudonym"`, or `"holder_binding_pseudonym"` set the |lengthBBSMessages|
+parameter to the length of the |bbsMessages| array.
+            </li>
+
+            <li>
+Return the value returned by the algorithm of [[[#serializederivedproofvalue]]] 
+with parameters matching |bbsProof|, "verifierLabelMap" for |labelMap|,
+|mandatoryIndexes|, |selectiveIndexes|, |revealDocument|, |pseudonym|, and, if
+computed, |lengthBBSMessages|.
+            </li>
+          </ol>
+
 
         </section>
 
@@ -1742,27 +1263,32 @@ To verify a derived proof, perform the following steps:
 
           <ol class="algorithm">
             <li>
+Let |unsecuredDocument| be a copy of |document| with the `proof` value removed.
+            </li>
+            <li>
+Initialize the |proofData| object to the result returned by the algorithm of
+[[[#parsederivedproofvalue]]].
+At a minimum, the |proofData| object will contain the fields 
+|bbsProof|, |labelMap|, |mandatoryIndexes|, |selectiveIndexes|, 
+|presentationHeader|  and |featureOption|. It may also contain the fields 
+|nym_domain|, |pseudonym, and/or |lengthBBSMessages| depending on the value
+of |featureOption|.", respectively. 
+            </li>            
+            <li>
+Initialize the |verifyData| object to the value returned by calling the 
+algorithm in Section [[[VC-DATA-INTEGRITY-1.1#CreateVerifyData]]], passing the
+|document|, |proofData|, and any custom JSON-LD API options, such as a document 
+loader. 
+The |verifyData| object will contain the following fields: |proofHash|, 
+|mandatoryHash|, and |nonMandatory|.
+            </li>
+            <li>
 Let |publicKeyBytes| be the result of retrieving the
 public key bytes associated with the
 |proof|.|verificationMethod| value as described in the
-Data Integrity [[VC-DATA-INTEGRITY]] specification,
-<a data-cite="vc-data-integrity#algorithms">
+Data Integrity [[VC-DATA-INTEGRITY-1.1]] specification,
+<a data-cite="vc-data-integrity-1.1#algorithms">
 Section 4: Retrieve Verification Method</a>.
-            </li>
-            <li>
-Let |unsecuredDocument| be a copy of |securedDocument| with
-the `proof` value removed.
-            </li>
-            <li>
-Let |proof| be the value of |securedDocument|.|proof|.
-            </li>
-            <li>
-Initialize |bbsProof|, |proofHash|, |mandatoryHash|, |selectiveIndexes|,
-|presentationHeader|, |nonMandatory|, |featureOption|, and, possibly,
-|lengthBBSMessages| and/or |pseudonym|, to the values associated
-with their property names in the object returned when calling the algorithm in
-Section <a href="#createverifydata"></a>, passing the |unsecuredDocument|,
-|proof|, and any custom JSON-LD API options (such as a document loader).
             </li>
             <li>
 Initialize |bbsHeader| to the concatenation of |proofHash| and |mandatoryHash|
@@ -2278,7 +1804,7 @@ sense that some additional input, task, or output is generated
       <p class="advisement">
         Before reading this section, readers are urged to familiarize themselves
         with general security advice provided in the
-        <a href="https://www.w3.org/TR/vc-data-integrity/#security-considerations">
+        <a href="https://www.w3.org/TR/vc-data-integrity-1.1/#security-considerations">
         Security Considerations section of the Data Integrity specification</a>.
       </p>
 
@@ -2985,7 +2511,7 @@ maps terms to IRIs, does not generally affect unlinkability.
         <section>
           <h4>Linkage via Proof Options and Mandatory Reveal</h4>
           <p>
-In the [[vc-data-integrity]] specification, a number of properties of the
+In the [[VC-DATA-INTEGRITY-1.1]] specification, a number of properties of the
 `proof` attribute of a VC are given. Care has to be taken that optional fields
 ought not provide strong linkage across verifiers. The optional fields include:
 <em>id</em>, <em>created</em>, <em>expires</em>, <em>domain</em>,
@@ -3000,7 +2526,6 @@ grained as possible, relative to the number of VCs being issued over time.
 The <em>issuer</em> can also compel a <em>holder</em> to reveal certain
 statements to a <em>verifier</em> via the `mandatoryPointers` input used in the
 creation of the <em>Base Proof</em>. See section
-<a href="#base-proof-transformation-bbs-2023"></a>,
 <a href="#example-mandatory-pointers"></a>, and
 <a href="#example-json-pointers-and-values"></a>. By <q>compel</q> we mean that
 a generated Derived Proof will not verify unless these statements are revealed
@@ -3212,8 +2737,8 @@ This gets the result shown below.
 Now that we know what the reveal document looks like, we need to furnish
 appropriately updated information to the verifier about which statements are
 mandatory, and the indexes of the selected non-mandatory statements. Running
-step 6 of the
-<a href="#createdisclosuredata"></a> yields abundant information about
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]
+yields abundant information about
 various statement groups relative to the original document. Below, we show a
 portion of the indexes for those groups.
           </p>
@@ -3236,7 +2761,7 @@ shown below.
           <p>
 The last important piece of disclosure data is the `labelMap`, a mapping of
 canonical blank node IDs to HMAC-based shuffled IDs, computed according to
-Section <a href="#createdisclosuredata"></a>. This is shown below, along with
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]. This is shown below, along with
 the rest of the disclosure data, minus the reveal document.
           </p>
           <pre class="example nohighlight" title="Disclosure Data"
@@ -3436,8 +2961,8 @@ to get the result shown below.
 Now that we know what the revealed document looks like, we need to furnish
 appropriately updated information to the verifier about which statements are
 mandatory, and the indexes for the selected non-mandatory statements. Running
-step 6 of the
-<a href="#createdisclosuredata"></a> yields an abundance of information about
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]] 
+yields an abundance of information about
 various statement groups relative to the original document. Below we show a
 portion of the indexes for those groups.
           </p>
@@ -3460,7 +2985,7 @@ shown below.
           <p>
 The last important piece of disclosure data is a mapping of canonical blank node
 IDs to HMAC-based shuffled IDs, the `labelMap`, computed according to Section
-<a href="#createdisclosuredata"></a>. This is shown below along with
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]. This is shown below along with
 the rest of the disclosure data minus the reveal document.
           </p>
           <pre class="example nohighlight" title="Disclosure Data"
@@ -3653,8 +3178,8 @@ to get the result shown below.
 Now that we know what the revealed document looks like, we need to furnish
 appropriately updated information to the verifier about which statements are
 mandatory, and the indexes for the selected non-mandatory statements. Running
-step 6 of the
-<a href="#createdisclosuredata"></a> yields an abundance of information about
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]] 
+yields an abundance of information about
 various statement groups relative to the original document. Below, we show a
 portion of the indexes for those groups.
           </p>
@@ -3678,7 +3203,7 @@ shown below.
           <p>
 The last important piece of disclosure data is a mapping of canonical blank node
 IDs to HMAC-based shuffled IDs, the `labelMap`, computed according to Section
-<a href="#createdisclosuredata"></a>. This is shown below, along with
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]. This is shown below, along with
 the rest of the disclosure data minus the reveal document. Note that here we are
 showing the results appropriate to the |featureOption| equal to
 `"anonymous_holder_binding"` which uses the <em>blind proof generation</em>
@@ -3819,16 +3344,19 @@ disclosure. In this case, the holder reveals the same information as given in
 This results in the same |revealDocument|
 as shown in <a href="#example-unsigned-reveal-document-for-features"></a>.
           <p>
-Running <a href="#createdisclosuredata"></a> yields the same information for
+Running [[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]] yields the same 
+information for
 derived group indexes as shown in
 <a href="#example-derived-group-indexes-for-features"></a> and the same
 adjusted mandatory and selective indexes as shown in
 <a href="#example-adjusted-mandatory-and-selective-indexes-for-features"></a>.
           </p>
           <p>
-Within <a href="#createdisclosuredata"></a>, we compute the |pseudonym| based on
+Within [[[#serializederivedproofvalue]]], we compute 
+the |pseudonym| based on
 the same |verfifier_id| shown in <a href="example-verifier-id"></a>.
-The final output of <a href="#createdisclosuredata"></a> is shown below. Note
+The final output of [[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]
+is shown below. Note
 the inclusion of the |featureOption| and computed |pseudonym| values.
           </p>
           <pre class="example nohighlight" title="Disclosure Data for Pseudonym"
@@ -3969,16 +3497,17 @@ case, the holder reveals the same information as given in
 This results in the same |revealDocument|
 as shown in <a href="#example-unsigned-reveal-document-for-features"></a>.
           <p>
-Running <a href="#createdisclosuredata"></a> yields the same information for
+Running [[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]
+yields the same information for
 derived group indexes as shown in
 <a href="#example-derived-group-indexes-for-features"></a> and the same
 adjusted mandatory and selective indexes as shown in
 <a href="#example-adjusted-mandatory-and-selective-indexes-for-features"></a>.
           </p>
           <p>
-Within <a href="#createdisclosuredata"></a>, we compute the |pseudonym| based on
+Within [[[#serializederivedproofvalue]]], we compute the |pseudonym| based on
 the same |verfifier_id| shown in <a href="example-verifier-id"></a>.
-The final output of <a href="#createdisclosuredata"></a> is shown below. Note
+The final output of [[[#serializederivedproofvalue]]] is shown below. Note
 the inclusion of the the |featureOption| and computed |pseudonym| values.
           </p>
           <pre class="example nohighlight" title="Disclosure Data for Holder Binding and Pseudonym"
