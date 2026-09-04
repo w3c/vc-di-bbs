@@ -182,7 +182,7 @@
         lint: { "informative-dfn": false },
         postProcess: [],
         xref: [
-          "INFRA", "I18N-GLOSSARY", "VC-DATA-MODEL-2.0", "VC-DATA-INTEGRITY-1.1"
+          "INFRA", "I18N-GLOSSARY", "VC-DATA-MODEL-2.0", "VC-DATA-INTEGRITY-1.1", "CID"
         ]
       };
     </script>
@@ -769,245 +769,6 @@ order, and add |featureOption| as a property.
         </section>
 
         <section>
-          <h4>createDisclosureData</h4>
-
-          <p>
-The following algorithm creates data to be used to generate a derived proof. The
-inputs include a JSON-LD document (|document|), a BBS base proof
-(|proof|), an array of JSON pointers to use to selectively disclose
-statements (|selectivePointers|), an OPTIONAL BBS
-|presentationHeader| (byte array that defaults to an empty byte array if
-not present), a |featureOption| indicator, additional inputs as required by
-the |featureOption| (see <a href="#add-derived-proof-bbs-2023">Add Derived Proof</a>),
-and any custom JSON-LD API options
-(such as a document loader). A single object, <em>disclosure data</em>, is
-produced as output, which contains the following fields: |bbsProof|,
-|labelMap|, |mandatoryIndexes|, |selectiveIndexes|, |presentationHeader|,
-|revealDocument|, and, if computed, |pseudonym|.
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Initialize |bbsSignature|, |bbsHeader|, |publicKey|, |hmacKey|,
-and |mandatoryPointers|
-to the values of the associated properties in the object
-returned when calling the algorithm in Section
-<a href="#parsebaseproofvalue"></a>, passing the `proofValue` from `proof`.
-            </li>
-            <li>
-Initialize |hmac| to an HMAC API using |hmacKey|. The HMAC uses the same hash
-algorithm used in the signature algorithm, i.e., SHA-256.
-            </li>
-            <li>
-Initialize |labelMapFactoryFunction| to the result of calling the algorithm of
-section <a href="#createshuffledidlabelmapfunction"></a>, passing |hmac| as |HMAC|.
-            </li>
-            <li>
-Initialize |combinedPointers| to the concatenation of |mandatoryPointers|
-and |selectivePointers|.
-            </li>
-            <li>
-Initialize |groupDefinitions| to a map with the following entries: key of
-the string `"mandatory"` and value of |mandatoryPointers|; key of the string
-`"selective"` and value of |selectivePointers|; and key of the string `"combined"`
-and value of |combinedPointers|.
-            </li>
-            <li>
-Initialize |groups| and |labelMap| to the result of calling the algorithm in
-<a href="https://www.w3.org/TR/vc-di-ecdsa/#canonicalizeandgroup">Section 3.3.16
-canonicalizeAndGroup</a> of the [[DI-ECDSA]] specification, passing |document|
-|labelMapFactoryFunction|,
-|groupDefinitions|, and any custom JSON-LD
-API options. Note: This step transforms the document into an array of canonical
-N-Quads whose order has been shuffled based on 'hmac'-applied blank node
-identifiers, and groups
-the N-Quad strings according to selections based on JSON pointers.
-            </li>
-
-            <li>
-Compute the mandatory indexes relative to their positions in the combined
-statement list, i.e., find the position at which a mandatory statement occurs
-in the list of combined statements. One method for doing this is given below.
-              <ol class="algorithm">
-                <li>
-Initialize |mandatoryIndexes| to an empty array. Set |mandatoryMatch| to
-|groups.mandatory.matching| map; set |combinedMatch| to
-|groups.combined.matching|; and set |combinedIndexes| to the ordered array of
-just the keys of the |combinedMatch| map.
-                </li>
-                <li>
-For each key in the |mandatoryMatch| map, find its index in the |combinedIndexes|
-array (e.g., `combinedIndexes.indexOf(key)`), and add this value to the
-|mandatoryIndexes| array.
-                </li>
-              </ol>
-            </li>
-            <li>
-Compute the selective indexes relative to their positions in the non-mandatory
-statement list, i.e., find the position at which a selected statement occurs in
-the list of non-mandatory statements. One method for doing this is given below.
-              <ol class="algorithm">
-                <li>
-Initialize |selectiveIndexes| to an empty array. Set |selectiveMatch| to the
-|groups.selective.matching| map; set |mandatoryNonMatch| to the map
-|groups.mandatory.nonMatching|; and |nonMandatoryIndexes| to to the ordered
-array of just the keys of the |mandatoryNonMatch| map.
-                </li>
-                <li>
-For each key in the |selectiveMatch| map, find its index in the
-|nonMandatoryIndexes| array (e.g., `nonMandatoryIndexes.indexOf(key)`), and add
-this value to the |selectiveIndexes| array.
-                </li>
-              </ol>
-            </li>
-            <li>
-Initialize |bbsMessages| to an array of byte arrays containing the values in the
-|nonMandatory| array of strings encoded using the UTF-8
-<a>character encoding</a>.
-            </li>
-            <li>
-Set |bbsProof| to the value computed by the appropriate procedure given below
-based on the value of the |featureOption| parameter.
-              <ol class="algorithm">
-                <li>
-If |featureOption| equals `"baseline"`,
-set `bbsProof` to the value computed by the `ProofGen` procedure from
-[[CFRG-BBS-SIGNATURE]], i.e.,
-`ProofGen(PK, signature, header, ph, messages, disclosed_indexes)`,
-where `PK` is the original issuers public key, `signature` is the
-`bbsSignature`, `header` is the `bbsHeader`, `ph` is the  `presentationHeader`
-`messages` is `bbsMessages`, and `disclosed_indexes` is `selectiveIndexes`.
-                </li>
-                <li>
-If |featureOption| equals `"anonymous_holder_binding"`,
-set `bbsProof` to the value computed by the `BlindProofGen` procedure from
-[[CFRG-Blind-BBS-Signature]], where |PK| is the original issuers public key,
-|signature| is the
-|bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|,
-|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
-and `commitment_with_proof`. The holder will also furnish its
-|holder_secret|, and the |proverBlind| that was used to compute the
-|commitment_with_proof|. This is the
-<a href="#anonymous-holder-binding">Anonymous Holder Binding</a> feature option.
-<span class="note">To
-be updated when IETF API is finalized.</span>
-                </li>
-                <li>
-If |featureOption| equals `"pseudonym"`,
-use the "Verification and Finalization" operation
-from [[CFRG-Pseudonym-BBS-Signature]] with an empty |committed_messages| array
-to both verify the |bbsSignature| and compute
-the |nym_secret| value. This operation uses the |prover_nym|,
-|signer_nym_entropy|, and |secret_prover_blind|.
-<br><br>
-Determine the |nym_domain|. This might be specified by
-the verifier or set by the holder, depending on the usage scenario. Use
-the "Proof Generation with Pseudonym"
-operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
-This operation takes as inputs
-the original issuer's public key as |PK|,
-the               |bbsSignature| as |signature|,
-the                  |bbsHeader| as |header|,
-the         |presentationHeader| as |ph|,
-the                |bbsMessages| as |messages|,
-the           |selectiveIndexes| as |disclosed_indexes|,
-                                  a |nym_secret|,
-                                  a |nym_domain|,
-                 an empty array for |committed_messages|,
-and                               a |secret_prover_blind|.
-In addition to providing
-the raw
-cryptographic proof value which is assigned to |bbsProof|,
-it also returns the |pseudonym|.
-<br><br>
-This is for the
-<a href="#credential-bound-pseudonyms">Credential-Bound Pseudonyms</a>
-feature option. <span class="note">To be updated when IETF API is finalized.
-</span>
-                </li>
-                <li>
-If |featureOption| equals `"holder_binding_pseudonym"`,
-use the "Verification and Finalization" operation
-from [[CFRG-Pseudonym-BBS-Signature]] with the |committed_messages| array
-containing the |holder_secret| as its only value,
-to both verify the |bbsSignature| and compute
-the |nym_secret| value. This operation uses the |prover_nym|,
-|signer_nym_entropy|, and |secret_prover_blind|.
-<br><br>
-Determine the |nym_domain|. This might be specified by
-the verifier or set by the holder depending on the usage scenario. Use
-the "Proof Generation with Pseudonym"
-operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
-This operation takes as inputs
-|PK|, the original issuers public key,
-|signature|,  the |bbsSignature|, |header| is the |bbsHeader|,
-|ph| is the |presentationHeader|,
-|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
-This operation takes as inputs
-   the                  original issuers public key as |PK|,
-   the                               |bbsSignature| as |signature|,
-   the                                  |bbsHeader| as |header|,
-   the                         |presentationHeader| as |ph|,
-   the                                |bbsMessages| as |messages|,
-   the                           |selectiveIndexes| as |disclosed_indexes|,
-   a                                                   |nym_secret|,
-   a                                                   |nym_domain|,
-   the only value of the |committed_messages| array as |holder_secret|,
-   and a                                               |secret_prover_blind|.
-In addition to
-providing the raw cryptographic proof value which is assigned to |bbsProof|,
-it also returns the |pseudonym|.
-
-This is for the
-<a href="#holder-binding-and-pseudonyms">Holder Binding and Pseudonyms</a>
-feature option. <span class="note">To be updated when IETF API is finalized.
-</span>
-                </li>
-              </ol>
-            </li>
-          <li>
-If |featureOption| equals `"anonymous_holder_binding"`,
-`"pseudonym"`, or `"holder_binding_pseudonym"` set the |lengthBBSMessages|
-parameter to the length of the |bbsMessages| array.
-          </li>
-
-
-            <li>
-Initialize |revealDocument| to the result of the "selectJsonLd" algorithm from
-[[DI-ECDSA]], passing `document`, and `combinedPointers` as `pointers`.
-            </li>
-            <li>
-Run the RDF Dataset Canonicalization Algorithm [[RDF-CANON]] on
-the joined |combinedGroup|.|deskolemizedNQuads|, passing any custom
-options, and get the canonical bnode identifier map, |canonicalIdMap|.
-Note: This map includes the canonical blank node identifiers that a verifier
-will produce when they canonicalize the reveal document.
-            </li>
-            <li>
-Initialize |verifierLabelMap| to an empty map. This map will map
-the canonical blank node identifiers produced by the verifier when they
-canonicalize the revealed document, to the blank node identifiers that were
-originally signed in the base proof.
-            </li>
-            <li>
-For each key (`inputLabel`) and value (`verifierLabel`) in `canonicalIdMap:
-              <ol class="algorithm">
-                <li>
-Add an entry to `verifierLabelMap`, using `verifierLabel` as the key, and the
-value associated with `inputLabel` as a key in `labelMap` as the value.
-                </li>
-              </ol>
-            </li>
-            <li>
-Return an object with properties matching |bbsProof|, "verifierLabelMap" for |labelMap|,
-|mandatoryIndexes|, |selectiveIndexes|, |revealDocument|, |pseudonym|, and, if
-computed, |lengthBBSMessages|.
-            </li>
-          </ol>
-
-        </section>
-
-        <section>
           <h4>compressLabelMap</h4>
           <p>
 The following algorithm compresses a label map. The required input is
@@ -1208,9 +969,6 @@ If the |decodedProofValue| starts with the header bytes `0xd9`, `0x5d`, and
 `0x09`, set |featureOption| to `"holder_binding_pseudonym"`.
                 </li>
               </ol>
-
-              <!-- |bbsProof|, |compressedLabelMap|, |mandatoryIndexes|, |selectiveIndexes|,
-              |presentationHeader|, |nym_domain|, |pseudonym|, and |lengthBBSMessages|. -->
 
             <li>
 Initialize `components` to an array that is the result of CBOR-decoding the
@@ -1522,31 +1280,166 @@ See <a href="#holder-binding-and-pseudonyms">Holder Binding and Pseudonyms</a> f
 background information.
           </p>
           <ol>
+
             <li>
-Initialize |bbsProof|,  |labelMap|, |mandatoryIndexes|, |selectiveIndexes|, and
-|revealDocument| to the values associated with their
-property names in the object returned when calling the algorithm in
-Section <a href="#createdisclosuredata"></a>, passing the |document|, |proof|,
-|selectivePointers|, |presentationHeader|, |featureOption|, required additional
-inputs based on the |featureOption|, and any custom JSON-LD API options,
-such as a document loader.
+Let the |proofData| object be the result returned from the algorithm in 
+Section <a href="#parsebaseproofvalue"></a>.
+At a minimum, the |proofData| object will contain the fields |bbsSignature|, 
+|bbsHeader|, |publicKey|, |hmacKey|, |mandatoryPointers| and |featureOption|. 
+Additional fields may be present depending on the |featureOption| value.
+            </li>
+            <li>
+Initialize |disclosureData| to the object returned when calling the algorithm in
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]], passing the |document|, |proofData|,
+|selectivePointers|, and any custom JSON-LD API options, such as a document
+loader. The |disclosureData| object will contain the following fields: 
+|revealDocument|, |mandatoryIndexes|, |selectiveIndexes|, |verifierLabelMap|
+|mandatory|, and |nonMandatory|.
             </li>
             <li>
 Initialize |newProof| to a shallow copy of |proof|.
             </li>
             <li>
-Replace |proofValue| in |newProof| with the result of calling the algorithm
-in Section <a href="#serializederivedproofvalue"></a>, passing |bbsProof|,
-|labelMap|, |mandatoryIndexes|, |selectiveIndexes|, |featureOption|, and any
-required inputs indicated by the |featureOption|.
+Replace |proofValue| in |newProof| with the result of calling the algorithm in 
+Section <a href="#derived-proof-serialization"></a> passing |proofData| and 
+|disclosureData| as parameters.
             </li>
             <li>
-Set the value of the "`proof`" property in |revealDocument| to |newProof|.
+Set the value of the "proof" property in |revealDocument| to |newProof|.
             </li>
             <li>
 Return |revealDocument| as the <em>selectively revealed document</em>.
             </li>
           </ol>
+        </section>
+
+        <section>
+          <h4>Derived Proof Serialization</h4>
+          <p>
+The following algorithm generates a derived proof. The
+inputs are the |proofData| and |disclosureData| objects.
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Initialize |bbsMessages| to an array of byte arrays containing the values in the
+|nonMandatory| array of strings encoded using the UTF-8
+<a>character encoding</a>.
+            </li>
+            <li>
+Set |bbsProof| to the value computed by the appropriate procedure given below
+based on the value of the |featureOption| parameter.
+              <ol class="algorithm">
+                <li>
+If |featureOption| equals `"baseline"`,
+set `bbsProof` to the value computed by the `ProofGen` procedure from
+[[CFRG-BBS-SIGNATURE]], i.e.,
+`ProofGen(PK, signature, header, ph, messages, disclosed_indexes)`,
+where `PK` is the original issuers public key, `signature` is the
+`bbsSignature`, `header` is the `bbsHeader`, `ph` is the  `presentationHeader`
+`messages` is `bbsMessages`, and `disclosed_indexes` is `selectiveIndexes`.
+                </li>
+                <li>
+If |featureOption| equals `"anonymous_holder_binding"`,
+set `bbsProof` to the value computed by the `BlindProofGen` procedure from
+[[CFRG-Blind-BBS-Signature]], where |PK| is the original issuers public key,
+|signature| is the
+|bbsSignature|, |header| is the |bbsHeader|, |ph| is the |presentationHeader|,
+|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
+and `commitment_with_proof`. The holder will also furnish its
+|holder_secret|, and the |proverBlind| that was used to compute the
+|commitment_with_proof|. This is the
+<a href="#anonymous-holder-binding">Anonymous Holder Binding</a> feature option.
+<span class="note">To
+be updated when IETF API is finalized.</span>
+                </li>
+                <li>
+If |featureOption| equals `"pseudonym"`,
+use the "Verification and Finalization" operation
+from [[CFRG-Pseudonym-BBS-Signature]] with an empty |committed_messages| array
+to both verify the |bbsSignature| and compute
+the |nym_secret| value. This operation uses the |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind|.
+<br><br>
+Determine the |nym_domain|. This might be specified by
+the verifier or set by the holder, depending on the usage scenario. Use
+the "Proof Generation with Pseudonym"
+operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
+This operation takes as inputs
+the original issuer's public key as |PK|,
+the               |bbsSignature| as |signature|,
+the                  |bbsHeader| as |header|,
+the         |presentationHeader| as |ph|,
+the                |bbsMessages| as |messages|,
+the           |selectiveIndexes| as |disclosed_indexes|,
+                                  a |nym_secret|,
+                                  a |nym_domain|,
+                 an empty array for |committed_messages|,
+and                               a |secret_prover_blind|.
+In addition to providing
+the raw
+cryptographic proof value which is assigned to |bbsProof|,
+it also returns the |pseudonym|.
+<br><br>
+This is for the
+<a href="#credential-bound-pseudonyms">Credential-Bound Pseudonyms</a>
+feature option. <span class="note">To be updated when IETF API is finalized.
+</span>
+                </li>
+                <li>
+If |featureOption| equals `"holder_binding_pseudonym"`,
+use the "Verification and Finalization" operation
+from [[CFRG-Pseudonym-BBS-Signature]] with the |committed_messages| array
+containing the |holder_secret| as its only value,
+to both verify the |bbsSignature| and compute
+the |nym_secret| value. This operation uses the |prover_nym|,
+|signer_nym_entropy|, and |secret_prover_blind|.
+<br><br>
+Determine the |nym_domain|. This might be specified by
+the verifier or set by the holder depending on the usage scenario. Use
+the "Proof Generation with Pseudonym"
+operation from [[CFRG-Pseudonym-BBS-Signature]] to produce the derived proof.
+This operation takes as inputs
+|PK|, the original issuers public key,
+|signature|,  the |bbsSignature|, |header| is the |bbsHeader|,
+|ph| is the |presentationHeader|,
+|messages| is |bbsMessages|, |disclosed_indexes| is |selectiveIndexes|,
+This operation takes as inputs
+   the                  original issuers public key as |PK|,
+   the                               |bbsSignature| as |signature|,
+   the                                  |bbsHeader| as |header|,
+   the                         |presentationHeader| as |ph|,
+   the                                |bbsMessages| as |messages|,
+   the                           |selectiveIndexes| as |disclosed_indexes|,
+   a                                                   |nym_secret|,
+   a                                                   |nym_domain|,
+   the only value of the |committed_messages| array as |holder_secret|,
+   and a                                               |secret_prover_blind|.
+In addition to
+providing the raw cryptographic proof value which is assigned to |bbsProof|,
+it also returns the |pseudonym|.
+
+This is for the
+<a href="#holder-binding-and-pseudonyms">Holder Binding and Pseudonyms</a>
+feature option. <span class="note">To be updated when IETF API is finalized.
+</span>
+                </li>
+              </ol>
+            </li>
+            <li>
+If |featureOption| equals `"anonymous_holder_binding"`,
+`"pseudonym"`, or `"holder_binding_pseudonym"` set the |lengthBBSMessages|
+parameter to the length of the |bbsMessages| array.
+            </li>
+
+            <li>
+Return the value returned by the algorithm of [[[#serializederivedproofvalue]]] 
+with parameters matching |bbsProof|, "verifierLabelMap" for |labelMap|,
+|mandatoryIndexes|, |selectiveIndexes|, |revealDocument|, |pseudonym|, and, if
+computed, |lengthBBSMessages|.
+            </li>
+          </ol>
+
 
         </section>
 
@@ -2835,7 +2728,6 @@ grained as possible, relative to the number of VCs being issued over time.
 The <em>issuer</em> can also compel a <em>holder</em> to reveal certain
 statements to a <em>verifier</em> via the `mandatoryPointers` input used in the
 creation of the <em>Base Proof</em>. See section
-<a href="#base-proof-transformation-bbs-2023"></a>,
 <a href="#example-mandatory-pointers"></a>, and
 <a href="#example-json-pointers-and-values"></a>. By <q>compel</q> we mean that
 a generated Derived Proof will not verify unless these statements are revealed
@@ -3047,8 +2939,8 @@ This gets the result shown below.
 Now that we know what the reveal document looks like, we need to furnish
 appropriately updated information to the verifier about which statements are
 mandatory, and the indexes of the selected non-mandatory statements. Running
-step 6 of the
-<a href="#createdisclosuredata"></a> yields abundant information about
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]
+yields abundant information about
 various statement groups relative to the original document. Below, we show a
 portion of the indexes for those groups.
           </p>
@@ -3071,7 +2963,7 @@ shown below.
           <p>
 The last important piece of disclosure data is the `labelMap`, a mapping of
 canonical blank node IDs to HMAC-based shuffled IDs, computed according to
-Section <a href="#createdisclosuredata"></a>. This is shown below, along with
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]. This is shown below, along with
 the rest of the disclosure data, minus the reveal document.
           </p>
           <pre class="example nohighlight" title="Disclosure Data"
@@ -3271,8 +3163,8 @@ to get the result shown below.
 Now that we know what the revealed document looks like, we need to furnish
 appropriately updated information to the verifier about which statements are
 mandatory, and the indexes for the selected non-mandatory statements. Running
-step 6 of the
-<a href="#createdisclosuredata"></a> yields an abundance of information about
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]] 
+yields an abundance of information about
 various statement groups relative to the original document. Below we show a
 portion of the indexes for those groups.
           </p>
@@ -3295,7 +3187,7 @@ shown below.
           <p>
 The last important piece of disclosure data is a mapping of canonical blank node
 IDs to HMAC-based shuffled IDs, the `labelMap`, computed according to Section
-<a href="#createdisclosuredata"></a>. This is shown below along with
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]. This is shown below along with
 the rest of the disclosure data minus the reveal document.
           </p>
           <pre class="example nohighlight" title="Disclosure Data"
@@ -3488,8 +3380,8 @@ to get the result shown below.
 Now that we know what the revealed document looks like, we need to furnish
 appropriately updated information to the verifier about which statements are
 mandatory, and the indexes for the selected non-mandatory statements. Running
-step 6 of the
-<a href="#createdisclosuredata"></a> yields an abundance of information about
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]] 
+yields an abundance of information about
 various statement groups relative to the original document. Below, we show a
 portion of the indexes for those groups.
           </p>
@@ -3513,7 +3405,7 @@ shown below.
           <p>
 The last important piece of disclosure data is a mapping of canonical blank node
 IDs to HMAC-based shuffled IDs, the `labelMap`, computed according to Section
-<a href="#createdisclosuredata"></a>. This is shown below, along with
+[[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]. This is shown below, along with
 the rest of the disclosure data minus the reveal document. Note that here we are
 showing the results appropriate to the |featureOption| equal to
 `"anonymous_holder_binding"` which uses the <em>blind proof generation</em>
@@ -3654,16 +3546,19 @@ disclosure. In this case, the holder reveals the same information as given in
 This results in the same |revealDocument|
 as shown in <a href="#example-unsigned-reveal-document-for-features"></a>.
           <p>
-Running <a href="#createdisclosuredata"></a> yields the same information for
+Running [[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]] yields the same 
+information for
 derived group indexes as shown in
 <a href="#example-derived-group-indexes-for-features"></a> and the same
 adjusted mandatory and selective indexes as shown in
 <a href="#example-adjusted-mandatory-and-selective-indexes-for-features"></a>.
           </p>
           <p>
-Within <a href="#createdisclosuredata"></a>, we compute the |pseudonym| based on
+Within [[[#serializederivedproofvalue]]], we compute 
+the |pseudonym| based on
 the same |verfifier_id| shown in <a href="example-verifier-id"></a>.
-The final output of <a href="#createdisclosuredata"></a> is shown below. Note
+The final output of [[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]
+is shown below. Note
 the inclusion of the |featureOption| and computed |pseudonym| values.
           </p>
           <pre class="example nohighlight" title="Disclosure Data for Pseudonym"
@@ -3804,16 +3699,17 @@ case, the holder reveals the same information as given in
 This results in the same |revealDocument|
 as shown in <a href="#example-unsigned-reveal-document-for-features"></a>.
           <p>
-Running <a href="#createdisclosuredata"></a> yields the same information for
+Running [[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]
+yields the same information for
 derived group indexes as shown in
 <a href="#example-derived-group-indexes-for-features"></a> and the same
 adjusted mandatory and selective indexes as shown in
 <a href="#example-adjusted-mandatory-and-selective-indexes-for-features"></a>.
           </p>
           <p>
-Within <a href="#createdisclosuredata"></a>, we compute the |pseudonym| based on
+Within [[[#serializederivedproofvalue]]], we compute the |pseudonym| based on
 the same |verfifier_id| shown in <a href="example-verifier-id"></a>.
-The final output of <a href="#createdisclosuredata"></a> is shown below. Note
+The final output of [[[#serializederivedproofvalue]]] is shown below. Note
 the inclusion of the the |featureOption| and computed |pseudonym| values.
           </p>
           <pre class="example nohighlight" title="Disclosure Data for Holder Binding and Pseudonym"
