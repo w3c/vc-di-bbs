@@ -3352,12 +3352,10 @@ adjusted mandatory and selective indexes as shown in
 <a href="#example-adjusted-mandatory-and-selective-indexes-for-features"></a>.
           </p>
           <p>
-Within [[[#serializederivedproofvalue]]], we compute 
-the |pseudonym| based on
-the same |verfifier_id| shown in <a href="example-verifier-id"></a>.
-The final output of [[[VC-DATA-INTEGRITY-1.1#CreateDisclosureData]]]
-is shown below. Note
-the inclusion of the |featureOption| and computed |pseudonym| values.
+As described in [[[#add-derived-proof-bbs-2023]]], the proof generation
+operation computes the |pseudonym| using the |nym_secret| and |nym_domain|.
+The disclosure data shown below includes the |featureOption| and the computed
+|pseudonym|.
           </p>
           <pre class="example nohighlight" title="Disclosure Data for Pseudonym"
           data-include="TestVectors/Pseudonym/derivedDisclosureData.json"
@@ -3505,10 +3503,10 @@ adjusted mandatory and selective indexes as shown in
 <a href="#example-adjusted-mandatory-and-selective-indexes-for-features"></a>.
           </p>
           <p>
-Within [[[#serializederivedproofvalue]]], we compute the |pseudonym| based on
-the same |verfifier_id| shown in <a href="example-verifier-id"></a>.
-The final output of [[[#serializederivedproofvalue]]] is shown below. Note
-the inclusion of the the |featureOption| and computed |pseudonym| values.
+As described in [[[#add-derived-proof-bbs-2023]]], the proof generation
+operation computes the |pseudonym| using the |nym_secret| and |nym_domain|.
+The disclosure data shown below includes the |featureOption| and the computed
+|pseudonym|.
           </p>
           <pre class="example nohighlight" title="Disclosure Data for Holder Binding and Pseudonym"
           data-include="TestVectors/PseudonymHB/derivedDisclosureData.json"
