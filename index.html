@@ -1263,11 +1263,12 @@ To verify a derived proof, perform the following steps:
 
           <ol class="algorithm">
             <li>
-Let |unsecuredDocument| be a copy of |document| with the `proof` value removed.
+Let |unsecuredDocument| be a copy of |securedDocument| with the `proof` value removed.
+Let |proof| be |securedDocument|.|proof|.
             </li>
             <li>
-Initialize the |proofData| object to the result returned by the algorithm of
-[[[#parsederivedproofvalue]]].
+Initialize |proofData| to the result of the algorithm in Section
+[[[#parsederivedproofvalue]]], passing |proof|.|proofValue|.
 At a minimum, the |proofData| object will contain the fields 
 |bbsProof|, |labelMap|, |mandatoryIndexes|, |selectiveIndexes|, 
 |presentationHeader|  and |featureOption|. It may also contain the fields 
@@ -1275,12 +1276,14 @@ At a minimum, the |proofData| object will contain the fields
 of |featureOption|.", respectively. 
             </li>            
             <li>
-Initialize the |verifyData| object to the value returned by calling the 
-algorithm in Section [[[VC-DATA-INTEGRITY-1.1#CreateVerifyData]]], passing the
-|document|, |proofData|, and any custom JSON-LD API options, such as a document 
-loader. 
-The |verifyData| object will contain the following fields: |proofHash|, 
-|mandatoryHash|, and |nonMandatory|.
+Set |proofData|.|verifierLabelMap| to |proofData|.|labelMap| for the
+CreateVerifyData call. Let |bbsProof|, |selectiveIndexes|,
+|presentationHeader|, |featureOption|, and, if present,
+|lengthBBSMessages| be the corresponding fields of |proofData|.
+Initialize |verifyData| to the result of the algorithm in Section
+[[[VC-DATA-INTEGRITY-1.1#CreateVerifyData]]], passing the
+|unsecuredDocument|, |proofData|, and any custom JSON-LD API options,
+such as a document loader.
             </li>
             <li>
 Let |publicKeyBytes| be the result of retrieving the
@@ -1291,9 +1294,10 @@ Data Integrity [[VC-DATA-INTEGRITY-1.1]] specification,
 Section 4: Retrieve Verification Method</a>.
             </li>
             <li>
-Initialize |bbsHeader| to the concatenation of |proofHash| and |mandatoryHash|
-in that order. Initialize |disclosedMessages| to an array of byte arrays
-obtained from the UTF-8 encoding of the elements of the |nonMandatory| array.
+Initialize |bbsHeader| to the concatenation of |verifyData|.|proofHash|
+and |verifyData|.|mandatoryHash| in that order. Initialize |disclosedMessages|
+to an array of byte arrays obtained from the UTF-8 encoding of the elements
+of |verifyData|.|nonMandatory|.
             </li>
             <li>
 Initialize |verified| to the result of applying the verification
