@@ -709,8 +709,8 @@ value, serialized as a byte string, is produced as output.
 
           <ol class="algorithm">
             <li>
-Initialize `compressedLabelMap` to the result of calling the algorithm in
-Section <a href="VC-DATA-INTEGRITY-1.1#compresslabelmap"></a>, passing `labelMap` as the parameter.
+Initialize `compressedLabelMap` to the result of calling the <a data-cite="VC-DATA-INTEGRITY-1.1#compresslabelmap">compressLabelMap</a> algorithm,
+passing `labelMap`.
             </li>
             <li>
  Depending on the value of |featureOption| do the following:
@@ -845,8 +845,8 @@ an error MUST be raised and SHOULD convey an error type of
             </li>
             <li>
 Replace the second element in `components` using the result of calling the
-algorithm in Section <a href="VC-DATA-INTEGRITY-1.1#decompresslabelmap"></a>, passing the existing
-second element of `components` as `compressedLabelMap`.
+<a data-cite="VC-DATA-INTEGRITY-1.1#decompresslabelmap">decompressLabelMap</a> algorithm,
+passing the existing second element of `components` as `compressedLabelMap`.
             </li>
             <li>
 Return <em>derived proof value</em> as an object with properties set to the five,
